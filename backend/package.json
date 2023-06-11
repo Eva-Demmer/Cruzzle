@@ -2,7 +2,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "nodemon --watch . --exec ts-node index.ts",
-    "migrate": "node migrate.ts",
+    "migrate": "ts-node migrate.ts",
     "start": "node dist/index.js",
     "lint": "echo '----- Checking Backend...' && npx prettier --debug-check . && eslint --ext .ts . && echo '----- Done!'",
     "fix": "prettier --write . && eslint --fix --ext .ts ."
