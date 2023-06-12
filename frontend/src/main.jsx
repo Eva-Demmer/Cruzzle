@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ThemeProvider } from "@mui/material";
 
 import Login from "./pages/Login";
 import ErrorPage from "./pages/ErrorPage";
@@ -21,6 +22,7 @@ import AdminIdeas from "./pages/admin/AdminIdeas";
 import Settings from "./pages/Settings";
 
 import "./styles/main.scss";
+import themeMui from "./themes/muiTheme";
 
 const router = createBrowserRouter([
   {
@@ -78,9 +80,10 @@ const router = createBrowserRouter([
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider theme={themeMui}>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>
 );
