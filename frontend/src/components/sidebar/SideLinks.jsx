@@ -20,7 +20,7 @@ import Collapse from "@mui/material/Collapse";
 function SideLinks() {
   const [open, setOpen] = useState(true);
   const location = useLocation();
-  const isAdmin = true;
+  const isAdmin = false; // TODO: add to context
 
   const iconSize = (item) => {
     return `h-6 w-6 ${location.pathname === item.to ? "text-primary-50" : ""}`;
