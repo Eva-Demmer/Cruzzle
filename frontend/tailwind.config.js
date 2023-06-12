@@ -2,12 +2,17 @@
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   corePlugins: {
-    preflight: true,
+    preflight: false,
   },
   important: "#root",
   theme: {
     extend: {
-      primaryC: "#9C27B0",
+      colors: {
+        primary: {
+          50: "#A73FB9", // text color
+          900: "#9C27B0", // default
+        },
+      },
     },
   },
   plugins: [],
