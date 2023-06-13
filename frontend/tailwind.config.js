@@ -7,6 +7,9 @@ module.exports = {
   important: "#root",
   theme: {
     extend: {
+      transitionDuration: {
+        2000: "2000ms",
+      },
       colors: {
         primary: {
           50: "#A73FB9", // text color

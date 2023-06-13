@@ -12,7 +12,11 @@ function AvatarProfile() {
         elevation={4}
         className="rounded-full h-48 w-48 flex items-center justify-center relative"
       >
-        <Avatar alt="profil-picture" src={imgUrl} className="w-40 h-40 z-10" />
+        <Avatar
+          alt="profil-picture"
+          src={imgUrl}
+          className="w-40 h-40 z-10 shadow shadow-black border-solid border-black border"
+        />
         <AvatarDoghnut />
         <Paper
           elevation={4}
