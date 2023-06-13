@@ -12,6 +12,7 @@ module.exports = {
           50: "#A73FB9", // text color
           900: "#9C27B0", // default
         },
+        "bg-primary": "#FAF4FB",
       },
     },
   },
