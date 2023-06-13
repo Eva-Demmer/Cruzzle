@@ -37,7 +37,7 @@ function AvatarDoghnut() {
         xmlns="http://www.w3.org/2000/svg"
       >
         <circle
-          className="h-full w-full rotate-90 stroke-primary-900 origin-center transition-all duration-2000 ease-in-out"
+          className="h-full w-full rotate-90 stroke-primary-100 origin-center transition-all duration-2000 ease-in-out"
           ref={barRef}
           r={radius}
           cx={radius + strokeWidth}
