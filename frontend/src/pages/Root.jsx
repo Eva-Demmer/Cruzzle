@@ -4,7 +4,7 @@ import Sidebar from "../components/sidebar/Sidebar";
 function Root() {
   return (
     <div className="flex h-screen">
-      <div className="w-64 bg-fuchsia-100">
+      <div className="w-full absolute bg-white sm:relative sm:w-60 lg:w-64 ">
         <Sidebar />
       </div>
 

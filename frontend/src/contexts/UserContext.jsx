@@ -16,6 +16,7 @@ const initialUser = {
   agency: "New agency",
   position: "New position",
   score: 750,
+  level: 16,
 };
 
 export const UserContext = createContext({});
