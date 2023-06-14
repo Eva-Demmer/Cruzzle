@@ -23,7 +23,7 @@ function Root() {
       <div
         className={`${
           activeMenu ? "absolute h-full" : ""
-        } flex flex-col w-full bg-white sm:relative sm:w-60 lg:w-64`}
+        } flex flex-col w-full bg-white sm:relative sm:w-60 lg:w-64 sm:border-solid sm:border-t-[0px] sm:border-b-[0px] sm:border-l-[0px] sm:border-r-[1px] sm:border-gray-300`}
       >
         {!smallQuery && (
           <HeaderNav setActiveMenu={setActiveMenu} activeMenu={activeMenu} />

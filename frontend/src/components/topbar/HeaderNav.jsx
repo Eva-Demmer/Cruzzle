@@ -48,18 +48,21 @@ function HeaderNav({ activeMenu, setActiveMenu }) {
       {!openSearch && (
         <>
           {smallQuery && (
-            <SearchBar
-              onSearch={handleSearch}
-              searchRef={searchRef}
-              search={search}
-              setSearch={setSearch}
-            />
+            <div>
+              <SearchBar
+                onSearch={handleSearch}
+                searchRef={searchRef}
+                search={search}
+                setSearch={setSearch}
+              />
+            </div>
           )}
-          {!smallQuery && (
-            <>
+
+          <div className="mx-2">
+            {!smallQuery && (
               <IconButton
                 type="button"
-                aria-label="search-icon"
+                aria-label="logo-icon"
                 onClick={() => {
                   navigate("/");
                   setActiveMenu(false);
@@ -67,50 +70,54 @@ function HeaderNav({ activeMenu, setActiveMenu }) {
               >
                 <img className="w-8 h-8" src={LogoMobile} alt="logo cruzzle" />
               </IconButton>
-              <IconButton
-                type="button"
-                aria-label="search-icon"
-                onClick={() => setOpenSearch(true)}
-              >
-                <MagnifyingGlassIcon className="h-7 w-7" />
-              </IconButton>
-              <Fab
-                color="primary"
-                aria-label="add"
-                className="h-9 w-9"
-                onClick={() => {
-                  navigate("/ideas/new");
-                  setActiveMenu(false);
-                }}
-                sx={{
-                  boxShadow: 1,
-                  "&:hover": { boxShadow: 2 },
-                  "&:active, &.Mui-focusVisible": { boxShadow: 4 },
-                }}
-              >
-                <PlusIcon className="w-6 h-6" />
-              </Fab>
-            </>
-          )}
+            )}
+          </div>
+          <div className="flex flex-1 items-center justify-around mx-2 sm:flex-none">
+            {!smallQuery && (
+              <>
+                <IconButton
+                  type="button"
+                  aria-label="search-icon"
+                  onClick={() => setOpenSearch(true)}
+                >
+                  <MagnifyingGlassIcon className="h-7 w-7" />
+                </IconButton>
+                <Fab
+                  color="primary"
+                  aria-label="add"
+                  className="h-9 w-9"
+                  onClick={() => {
+                    navigate("/ideas/new");
+                    setActiveMenu(false);
+                  }}
+                  sx={{
+                    boxShadow: 1,
+                    "&:hover": { boxShadow: 2 },
+                    "&:active, &.Mui-focusVisible": { boxShadow: 4 },
+                  }}
+                >
+                  <PlusIcon className="w-6 h-6" />
+                </Fab>
+              </>
+            )}
 
-          {smallQuery && (
-            <Tooltip title="Langages" className="mx-1">
+            {smallQuery && (
+              <Tooltip title="Langages" className="mx-1">
+                <IconButton>
+                  <GlobeAltIcon className="h-7 w-7" />
+                </IconButton>
+              </Tooltip>
+            )}
+
+            <Tooltip title="Notifications" className="mx-1">
               <IconButton>
-                <GlobeAltIcon className="h-7 w-7" />
+                <Badge badgeContent={notificationCount} color="secondary">
+                  <BellIcon className="h-7 w-7" />
+                </Badge>
               </IconButton>
             </Tooltip>
-          )}
 
-          <Tooltip title="Notifications" className="mx-1">
-            <IconButton>
-              <Badge badgeContent={notificationCount} color="secondary">
-                <BellIcon className="h-7 w-7" />
-              </Badge>
-            </IconButton>
-          </Tooltip>
-
-          {!smallQuery && (
-            <>
+            {!smallQuery && (
               <IconButton
                 onClick={() => {
                   navigate(`users/${id}`);
@@ -119,11 +126,16 @@ function HeaderNav({ activeMenu, setActiveMenu }) {
               >
                 <AvatarNavbar />
               </IconButton>
+            )}
+          </div>
+
+          {!smallQuery && (
+            <div className="mx-2">
               <HambugerMenu
                 setActiveMenu={setActiveMenu}
                 activeMenu={activeMenu}
               />
-            </>
+            </div>
           )}
         </>
       )}
