@@ -24,6 +24,7 @@ import AdminUsers from "./pages/admin/AdminUsers";
 import AdminIdeas from "./pages/admin/AdminIdeas";
 
 import Settings from "./pages/Settings";
+import Search from "./pages/Search";
 
 import "./styles/main.scss";
 
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
       {
         path: "settings/",
         element: <Settings />,
+      },
+      {
+        path: "search/",
+        element: <Search />,
       },
     ],
   },
