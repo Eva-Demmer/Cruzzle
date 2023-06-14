@@ -74,11 +74,10 @@ function SideLinks() {
   ];
 
   return (
-    <div className="flex flex-col flex-1 mt-12">
+    <div className="flex flex-col flex-1 mt-12 w-full">
       <List
         sx={{
           width: "100%",
-          maxWidth: 360,
           bgcolor: "background.transparent",
         }}
         component="nav"
@@ -92,7 +91,7 @@ function SideLinks() {
                   key={item.primary}
                   component={Link}
                   to={item.to}
-                  className={`${
+                  className={`w-full ${
                     location.pathname === item.to
                       ? "Mui-selected text-primary-50"
                       : ""
@@ -107,7 +106,7 @@ function SideLinks() {
               {((item.subLink && !item.admin) ||
                 (item.subLink && item.admin && isAdmin)) && (
                 <React.Fragment key={item.primary}>
-                  <ListItemButton onClick={handleClick} className="">
+                  <ListItemButton onClick={handleClick} className="w-full">
                     <ListItemIcon>
                       <item.icon className={iconSize(item)} />
                     </ListItemIcon>
