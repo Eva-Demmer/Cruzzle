@@ -30,7 +30,7 @@ function SearchBar({ onSearch, searchRef, setSearch, search }) {
             </IconButton>
           </InputAdornment>
         }
-        className="rounded-full h-9"
+        className="rounded-full h-9 bg-white"
       />
     </div>
   );
