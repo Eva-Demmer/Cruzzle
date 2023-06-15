@@ -1,8 +1,7 @@
 import { useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-import PropTypes from "prop-types";
-import { Fab, IconButton, Tooltip, Badge } from "@mui/material";
+import { Fab, IconButton, Tooltip, Badge, Button } from "@mui/material";
 import {
   ArrowLeftIcon,
   BellIcon,
@@ -20,10 +19,15 @@ import LogoMobile from "../../assets/logo/logoMobile.svg";
 import { sm } from "../../utils/mediaQueries";
 
 import { UserContext } from "../../contexts/UserContext";
+import AccountSettings from "./AccountSettings";
+import { LanguageContext } from "../../contexts/LanguageContext";
+import { MenuContext } from "../../contexts/MenuContext";
 
-function HeaderNav({ activeMenu, setActiveMenu }) {
+function HeaderNav() {
   const [search, setSearch] = useState("");
   const [openSearch, setOpenSearch] = useState(false);
+  const { setActiveMenu } = useContext(MenuContext);
+  const { language } = useContext(LanguageContext);
 
   const { id } = useContext(UserContext);
 
@@ -102,9 +106,36 @@ function HeaderNav({ activeMenu, setActiveMenu }) {
             )}
 
             {smallQuery && (
+              <Button
+                variant="contained"
+                color="secondary"
+                startIcon={<PlusIcon className="h-6 w-6" />}
+                className="flex rounded-full mx-2"
+                onClick={() => navigate("/ideas/new")}
+                sx={{
+                  boxShadow: 1,
+                  "&:hover": { boxShadow: 2 },
+                  "&:active, &.Mui-focusVisible": { boxShadow: 4 },
+                }}
+              >
+                Cruzzle
+              </Button>
+            )}
+
+            {smallQuery && (
               <Tooltip title="Langages" className="mx-1">
                 <IconButton>
-                  <GlobeAltIcon className="h-7 w-7" />
+                  <Badge
+                    badgeContent={language}
+                    sx={{
+                      "& .MuiBadge-badge": {
+                        color: "white",
+                        backgroundColor: "#717171",
+                      },
+                    }}
+                  >
+                    <GlobeAltIcon className="h-7 w-7" />
+                  </Badge>
                 </IconButton>
               </Tooltip>
             )}
@@ -116,6 +147,8 @@ function HeaderNav({ activeMenu, setActiveMenu }) {
                 </Badge>
               </IconButton>
             </Tooltip>
+
+            {smallQuery && <AccountSettings />}
 
             {!smallQuery && (
               <IconButton
@@ -131,10 +164,7 @@ function HeaderNav({ activeMenu, setActiveMenu }) {
 
           {!smallQuery && (
             <div className="mx-2">
-              <HambugerMenu
-                setActiveMenu={setActiveMenu}
-                activeMenu={activeMenu}
-              />
+              <HambugerMenu />
             </div>
           )}
         </>
@@ -162,10 +192,5 @@ function HeaderNav({ activeMenu, setActiveMenu }) {
     </div>
   );
 }
-
-HeaderNav.propTypes = {
-  activeMenu: PropTypes.bool.isRequired,
-  setActiveMenu: PropTypes.func.isRequired,
-};
 
 export default HeaderNav;
