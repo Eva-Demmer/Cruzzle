@@ -27,6 +27,8 @@ import Settings from "./pages/Settings";
 import Search from "./pages/Search";
 
 import "./styles/main.scss";
+import LanguageProvider from "./contexts/LanguageContext";
+import MenuProvider from "./contexts/MenuContext";
 
 const router = createBrowserRouter([
   {
@@ -93,7 +95,11 @@ root.render(
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={themeMui}>
         <UserProvider>
-          <RouterProvider router={router} />
+          <MenuProvider>
+            <LanguageProvider>
+              <RouterProvider router={router} />
+            </LanguageProvider>
+          </MenuProvider>
         </UserProvider>
       </ThemeProvider>
     </StyledEngineProvider>

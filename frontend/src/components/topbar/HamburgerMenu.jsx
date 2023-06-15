@@ -1,7 +1,9 @@
-import PropTypes from "prop-types";
+import { useContext } from "react";
+import { MenuContext } from "../../contexts/MenuContext";
 import "hamburgers/dist/hamburgers.css";
 
-function HambugerMenu({ activeMenu, setActiveMenu }) {
+function HambugerMenu() {
+  const { activeMenu, setActiveMenu } = useContext(MenuContext);
   const handleClick = () => {
     setActiveMenu(!activeMenu);
   };
@@ -20,10 +22,5 @@ function HambugerMenu({ activeMenu, setActiveMenu }) {
     </button>
   );
 }
-
-HambugerMenu.propTypes = {
-  activeMenu: PropTypes.bool.isRequired,
-  setActiveMenu: PropTypes.func.isRequired,
-};
 
 export default HambugerMenu;

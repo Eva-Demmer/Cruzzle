@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import List from "@mui/material/List";
@@ -16,10 +16,13 @@ import {
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
 import Collapse from "@mui/material/Collapse";
+import LogoutLinks from "./LogoutLinks";
+import { MenuContext } from "../../contexts/MenuContext";
 
 function SideLinks() {
   const [open, setOpen] = useState(true);
   const location = useLocation();
+  const { activeMenu, setActiveMenu } = useContext(MenuContext);
   const isAdmin = false; // TODO: add to context
 
   const iconSize = (item) => {
@@ -28,6 +31,10 @@ function SideLinks() {
 
   const handleClick = () => {
     setOpen(!open);
+  };
+
+  const handleGoTo = () => {
+    setActiveMenu(!activeMenu);
   };
 
   const navlinks = [
@@ -91,6 +98,7 @@ function SideLinks() {
                   key={item.primary}
                   component={Link}
                   to={item.to}
+                  onClick={() => handleGoTo}
                   className={`w-full ${
                     location.pathname === item.to
                       ? "Mui-selected text-primary-50"
@@ -141,6 +149,7 @@ function SideLinks() {
             </React.Fragment>
           );
         })}
+        <LogoutLinks />
       </List>
     </div>
   );
