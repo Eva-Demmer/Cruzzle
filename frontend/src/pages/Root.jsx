@@ -1,15 +1,16 @@
 import { Outlet } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useLayoutEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import Sidebar from "../components/sidebar/Sidebar";
 import HeaderNav from "../components/topbar/HeaderNav";
 import { sm } from "../utils/mediaQueries";
+import { MenuContext } from "../contexts/MenuContext";
 
 function Root() {
   const smallQuery = useMediaQuery(sm);
-  const [activeMenu, setActiveMenu] = useState(false);
+  const { activeMenu, setActiveMenu } = useContext(MenuContext);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (smallQuery && !activeMenu) {
       setActiveMenu(true);
     }
@@ -25,16 +26,12 @@ function Root() {
           activeMenu ? "absolute h-full" : ""
         } flex flex-col w-full bg-white sm:relative sm:w-60 lg:w-64 sm:border-solid sm:border-t-[0px] sm:border-b-[0px] sm:border-l-[0px] sm:border-r-[1px] sm:border-gray-300`}
       >
-        {!smallQuery && (
-          <HeaderNav setActiveMenu={setActiveMenu} activeMenu={activeMenu} />
-        )}
+        {!smallQuery && <HeaderNav />}
         {activeMenu && <Sidebar />}
       </div>
 
       <div className="flex flex-col flex-1">
-        {smallQuery && (
-          <HeaderNav setActiveMenu={setActiveMenu} activeMenu={activeMenu} />
-        )}
+        {smallQuery && <HeaderNav />}
 
         <div className="flex-1">
           {/* Page */}

@@ -16,7 +16,7 @@ function SearchBar({ onSearch, searchRef, setSearch, search }) {
         id="searchBar"
         value={search}
         ref={searchRef}
-        placeholder="Search something..."
+        placeholder="Search..."
         onChange={(e) => setSearch(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && handleSearch()}
         endAdornment={
