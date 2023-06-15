@@ -24,9 +24,12 @@ import AdminUsers from "./pages/admin/AdminUsers";
 import AdminIdeas from "./pages/admin/AdminIdeas";
 
 import Settings from "./pages/Settings";
+import Search from "./pages/Search";
 
 import "./styles/main.scss";
 import IdeaProvider from "./contexts/IdeaContext";
+import LanguageProvider from "./contexts/LanguageContext";
+import MenuProvider from "./contexts/MenuContext";
 
 const router = createBrowserRouter([
   {
@@ -79,6 +82,10 @@ const router = createBrowserRouter([
         path: "settings/",
         element: <Settings />,
       },
+      {
+        path: "search/",
+        element: <Search />,
+      },
     ],
   },
 ]);
@@ -90,7 +97,11 @@ root.render(
       <ThemeProvider theme={themeMui}>
         <UserProvider>
           <IdeaProvider>
-            <RouterProvider router={router} />
+            <MenuProvider>
+              <LanguageProvider>
+                <RouterProvider router={router} />
+              </LanguageProvider>
+            </MenuProvider>
           </IdeaProvider>
         </UserProvider>
       </ThemeProvider>
