@@ -26,6 +26,7 @@ import AdminIdeas from "./pages/admin/AdminIdeas";
 import Settings from "./pages/Settings";
 
 import "./styles/main.scss";
+import IdeaProvider from "./contexts/IdeaContext";
 
 const router = createBrowserRouter([
   {
@@ -88,7 +89,9 @@ root.render(
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={themeMui}>
         <UserProvider>
-          <RouterProvider router={router} />
+          <IdeaProvider>
+            <RouterProvider router={router} />
+          </IdeaProvider>
         </UserProvider>
       </ThemeProvider>
     </StyledEngineProvider>
