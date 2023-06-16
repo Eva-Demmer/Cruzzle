@@ -33,7 +33,7 @@ function Root() {
       <div className="flex flex-col flex-1">
         {smallQuery && <HeaderNav />}
 
-        <div className="flex-1">
+        <div className="flex-1 overflow-y-auto">
           {/* Page */}
           <Outlet />
         </div>
