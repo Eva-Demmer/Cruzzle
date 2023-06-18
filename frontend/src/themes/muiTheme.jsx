@@ -18,6 +18,21 @@ const themeMui = createTheme({
     primary: {
       main: "#9C27B0",
     },
+    secondary: {
+      main: "#AFE2B1",
+    },
+    succes: {
+      main: "#2E7D32",
+    },
+    error: {
+      main: "#9C27B0",
+    },
+    warning: {
+      main: "#ED6C02",
+    },
+    info: {
+      main: "#2196F3",
+    },
   },
 });
 

@@ -6,25 +6,33 @@ import FilterbarDate from "./FilterbarDate";
 import FilterbarAutor from "./FilterbarAutor";
 import FilterbarCategory from "./FilterbarCategory";
 import FilterbarTrending from "./FilterbarTrending";
+import FilterPanel from "./FilterPanel";
 import { FilterContext } from "../../contexts/FilterContext";
 
 function Filterbar() {
   const {
-    publishedBeforeXDaysFromNow,
-    publishedAfterXDaysFromNow,
+    filterPanelIsOpen,
+    publicationDateStart,
+    publicationDateEnd,
     autorSelectionTag,
     selectedCategories,
     trendingTag,
+    titleContains,
+    hasAttachment,
+    hasNoComment,
   } = useContext(FilterContext);
 
   useEffect(() => {
     const url = import.meta.env.VITE_BACKEND_URL;
     const requestBody = {
-      publishedBeforeXDaysFromNow,
-      publishedAfterXDaysFromNow,
+      publicationDateStart,
+      publicationDateEnd,
       autorSelectionTag,
       selectedCategories,
       trendingTag,
+      titleContains,
+      hasAttachment,
+      hasNoComment,
     };
 
     axios
@@ -35,11 +43,14 @@ function Filterbar() {
       })
       .catch((error) => console.error("error from filterbar request", error));
   }, [
-    publishedBeforeXDaysFromNow,
-    publishedAfterXDaysFromNow,
+    publicationDateStart,
+    publicationDateEnd,
     autorSelectionTag,
     selectedCategories,
     trendingTag,
+    titleContains,
+    hasAttachment,
+    hasNoComment,
   ]);
 
   return (
@@ -47,16 +58,17 @@ function Filterbar() {
       <HorizontalScroll>
         <div className="w-fit min-w-full flex flex-row-reverse lg:block">
           <div className="w-fit pt-2 pl-2 flex justify-end lg:w-full">
-            <FilterbarDate />
+            <FilterbarDate isDisable={filterPanelIsOpen} />
           </div>
           <div className="w-full pt-2 flex justify-start gap-2 lg:w-full lg:justify-between">
-            <FilterBtnAdvanceSearch />
-            <FilterbarAutor />
-            <FilterbarCategory />
-            <FilterbarTrending />
+            <FilterBtnAdvanceSearch isDisable={filterPanelIsOpen} />
+            <FilterbarAutor isDisable={filterPanelIsOpen} />
+            <FilterbarCategory isDisable={filterPanelIsOpen} />
+            <FilterbarTrending isDisable={filterPanelIsOpen} />
           </div>
         </div>
       </HorizontalScroll>
+      {filterPanelIsOpen && <FilterPanel />}
     </div>
   );
 }

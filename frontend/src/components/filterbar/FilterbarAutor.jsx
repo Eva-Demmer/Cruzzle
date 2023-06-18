@@ -1,21 +1,21 @@
 import { useContext } from "react";
+import PropTypes from "prop-types";
 import { MenuItem, FormControl, Select } from "@mui/material";
 import { PencilIcon } from "@heroicons/react/24/outline";
 import { FilterContext } from "../../contexts/FilterContext";
 
-export default function FilterAutor() {
-  const { filterPanelIsOpen, autorSelectionTag, setAutorSelectionTag } =
-    useContext(FilterContext);
+export default function FilterAutor({ isDisable }) {
+  const { autorSelectionTag, setAutorSelectionTag } = useContext(FilterContext);
 
   const handleChange = (event) => {
     setAutorSelectionTag(event.target.value);
   };
 
   return (
-    <FormControl sx={{ minWidth: 120 }} disabled={filterPanelIsOpen}>
+    <FormControl disabled={isDisable}>
       <Select
         id="filter-autor-select"
-        className="h-10 w-full rounded-full"
+        className="h-10 w-40 rounded-full"
         color="primary"
         value={autorSelectionTag}
         onChange={handleChange}
@@ -40,3 +40,7 @@ export default function FilterAutor() {
     </FormControl>
   );
 }
+
+FilterAutor.propTypes = {
+  isDisable: PropTypes.bool.isRequired,
+};
