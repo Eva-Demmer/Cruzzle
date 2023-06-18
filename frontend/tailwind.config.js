@@ -16,6 +16,9 @@ module.exports = {
           100: "#D1B5E1", // Ring DoghnutAvatar
           900: "#9C27B0", // default
         },
+        blue: "#2196F3",
+        orange: "#ED6C02",
+        green: "#AFE2B1",
       },
     },
   },

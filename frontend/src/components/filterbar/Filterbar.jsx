@@ -1,5 +1,4 @@
-import { Container, Box } from "@mui/material";
-
+import HorizontalScroll from "../scroller/HorizontalScroll";
 import FilterBtnAdvanceSearch from "./FilterBtnAdvanceSearch";
 import FilterbarDate from "./FilterbarDate";
 import FilterbarAutor from "./FilterbarAutor";
@@ -8,17 +7,21 @@ import FilterbarTrending from "./FilterbarTrending";
 
 function Filterbar() {
   return (
-    <Container className="filterbar px-0">
-      <Box className="px-0 pb-4 flex justify-end">
-        <FilterbarDate className="" />
-      </Box>
-      <Box className="px-0 pb-4 flex justify-between">
-        <FilterBtnAdvanceSearch />
-        <FilterbarAutor />
-        <FilterbarCategory />
-        <FilterbarTrending />
-      </Box>
-    </Container>
+    <div className="filterbar w-full">
+      <HorizontalScroll>
+        <div className="w-fit min-w-full flex flex-row-reverse lg:block">
+          <div className="w-fit pt-2 pl-2 flex justify-end lg:w-full">
+            <FilterbarDate />
+          </div>
+          <div className="w-full pt-2 flex justify-start gap-2 lg:w-full lg:justify-between">
+            <FilterBtnAdvanceSearch />
+            <FilterbarAutor />
+            <FilterbarCategory />
+            <FilterbarTrending />
+          </div>
+        </div>
+      </HorizontalScroll>
+    </div>
   );
 }
 

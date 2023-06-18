@@ -11,7 +11,7 @@ export default function FilterAutor() {
   };
 
   return (
-    <FormControl className="w-40">
+    <FormControl sx={{ minWidth: 120 }}>
       <Select
         id="filter-autor-select"
         className="h-10 w-full rounded-full"

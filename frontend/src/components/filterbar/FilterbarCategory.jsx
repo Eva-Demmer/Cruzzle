@@ -20,7 +20,7 @@ export default function FilterbarCategory() {
 
   return (
     <div>
-      <FormControl className="w-80">
+      <FormControl sx={{ width: [200, 200, 250, 350] }}>
         <Select
           id="filter-category-select"
           className="h-10 rounded-full"

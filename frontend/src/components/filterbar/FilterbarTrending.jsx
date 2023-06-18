@@ -13,7 +13,7 @@ export default function FilterbarTrending() {
   };
 
   return (
-    <FormControl className="w-40">
+    <FormControl sx={{ minWidth: 150 }}>
       <Select
         id="filter-trending-select"
         className="h-10 w-full rounded-full"

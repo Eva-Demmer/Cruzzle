@@ -12,7 +12,7 @@ export default function FilterbarAutor() {
   };
 
   return (
-    <FormControl className="w-40">
+    <FormControl sx={{ minWidth: 150 }}>
       <Select
         id="filter-date-select"
         className="h-10 rounded-full"
