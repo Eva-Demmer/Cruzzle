@@ -1,12 +1,13 @@
 import { useContext } from "react";
+import PropTypes from "prop-types";
 import { OutlinedInput, MenuItem, FormControl, Select } from "@mui/material";
 import { Square3Stack3DIcon } from "@heroicons/react/24/outline";
 import { IdeaContext } from "../../contexts/IdeaContext";
 import { FilterContext } from "../../contexts/FilterContext";
 
-export default function FilterbarCategory() {
+export default function FilterbarCategory({ isDisable }) {
   const { categoryList } = useContext(IdeaContext);
-  const { filterPanelIsOpen, selectedCategories, setSelectedCategories } =
+  const { selectedCategories, setSelectedCategories } =
     useContext(FilterContext);
 
   const handleChange = (event) => {
@@ -18,10 +19,7 @@ export default function FilterbarCategory() {
 
   return (
     <div>
-      <FormControl
-        sx={{ width: [200, 200, 250, 350] }}
-        disabled={filterPanelIsOpen}
-      >
+      <FormControl sx={{ width: 270 }} disabled={isDisable}>
         <Select
           id="filter-category-select"
           className="h-10 rounded-full"
@@ -53,3 +51,7 @@ export default function FilterbarCategory() {
     </div>
   );
 }
+
+FilterbarCategory.propTypes = {
+  isDisable: PropTypes.bool.isRequired,
+};

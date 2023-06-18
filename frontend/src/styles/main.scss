@@ -25,6 +25,14 @@
     @apply text-zinc-500 text-2xl py-2;
   }
 
+  h4 {
+    @apply text-zinc-500 text-xl py-2;
+  }
+
+  h5 {
+    @apply text-zinc-500 text-lg py-2;
+  }
+
   @variants toto {
       .no-scrollbar::-webkit-scrollbar {
           display: none;

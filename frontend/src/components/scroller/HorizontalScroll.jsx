@@ -29,7 +29,7 @@ function HorizontalScroll({ children }) {
 
   return (
     <div
-      className="w-full overflow-x-scroll overscroll-x-contain overflow-y-hidden no-scrollbar"
+      className="w-full overflow-x-scroll overscroll-x-contain no-scrollbar"
       ref={containerRef}
     >
       {children}

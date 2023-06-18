@@ -1,18 +1,18 @@
 import { useContext } from "react";
+import PropTypes from "prop-types";
 import { MenuItem, FormControl, Select } from "@mui/material";
 import { EyeIcon } from "@heroicons/react/24/outline";
 import { FilterContext } from "../../contexts/FilterContext";
 
-export default function FilterbarTrending() {
-  const { filterPanelIsOpen, trendingTag, setTrendingTag } =
-    useContext(FilterContext);
+export default function FilterbarTrending({ isDisable }) {
+  const { trendingTag, setTrendingTag } = useContext(FilterContext);
 
   const handleChange = (event) => {
     setTrendingTag(event.target.value);
   };
 
   return (
-    <FormControl sx={{ width: 155 }} disabled={filterPanelIsOpen}>
+    <FormControl sx={{ width: 155 }} disabled={isDisable}>
       <Select
         id="filter-trending-select"
         className="h-10 w-full rounded-full"
@@ -42,3 +42,7 @@ export default function FilterbarTrending() {
     </FormControl>
   );
 }
+
+FilterbarTrending.propTypes = {
+  isDisable: PropTypes.bool.isRequired,
+};
