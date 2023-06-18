@@ -1,14 +1,12 @@
 import { useContext } from "react";
 import { OutlinedInput, MenuItem, FormControl, Select } from "@mui/material";
-
 import { Square3Stack3DIcon } from "@heroicons/react/24/outline";
-
 import { IdeaContext } from "../../contexts/IdeaContext";
 import { FilterContext } from "../../contexts/FilterContext";
 
 export default function FilterbarCategory() {
   const { categoryList } = useContext(IdeaContext);
-  const { selectedCategories, setSelectedCategories } =
+  const { filterPanelIsOpen, selectedCategories, setSelectedCategories } =
     useContext(FilterContext);
 
   const handleChange = (event) => {
@@ -20,7 +18,10 @@ export default function FilterbarCategory() {
 
   return (
     <div>
-      <FormControl sx={{ width: [200, 200, 250, 350] }}>
+      <FormControl
+        sx={{ width: [200, 200, 250, 350] }}
+        disabled={filterPanelIsOpen}
+      >
         <Select
           id="filter-category-select"
           className="h-10 rounded-full"
@@ -36,15 +37,15 @@ export default function FilterbarCategory() {
                 {selected.length === 0 ? (
                   <span>all Categories</span>
                 ) : (
-                  selected.join(", ")
+                  selected.map((id) => categoryList[id].name).join(", ")
                 )}
               </>
             );
           }}
         >
           {categoryList.map((cat) => (
-            <MenuItem key={cat} value={cat}>
-              {cat}
+            <MenuItem key={cat.id} value={cat.id}>
+              {cat.name}
             </MenuItem>
           ))}
         </Select>

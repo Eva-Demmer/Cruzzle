@@ -1,28 +1,29 @@
-import { useState } from "react";
+import { useContext } from "react";
 import { MenuItem, FormControl, Select } from "@mui/material";
-
 import { PencilIcon } from "@heroicons/react/24/outline";
+import { FilterContext } from "../../contexts/FilterContext";
 
 export default function FilterAutor() {
-  const [autorFilterValue, setAutorFilterValue] = useState("writenByAll");
+  const { filterPanelIsOpen, autorSelectionTag, setAutorSelectionTag } =
+    useContext(FilterContext);
 
   const handleChange = (event) => {
-    setAutorFilterValue(event.target.value);
+    setAutorSelectionTag(event.target.value);
   };
 
   return (
-    <FormControl sx={{ minWidth: 120 }}>
+    <FormControl sx={{ minWidth: 120 }} disabled={filterPanelIsOpen}>
       <Select
         id="filter-autor-select"
         className="h-10 w-full rounded-full"
         color="primary"
-        value={autorFilterValue}
+        value={autorSelectionTag}
         onChange={handleChange}
         renderValue={(value) => {
           const textDict = {
-            writenByAll: "all autors",
-            writenByMyAgency: "my agency",
-            writenByMe: "me",
+            all: "all autors",
+            currentUserAgency: "my agency",
+            currentUser: "me",
           };
           return (
             <>
@@ -32,9 +33,9 @@ export default function FilterAutor() {
           );
         }}
       >
-        <MenuItem value="writenByAll">all autors</MenuItem>
-        <MenuItem value="writenByMyAgency">my agency</MenuItem>
-        <MenuItem value="writenByMe">me</MenuItem>
+        <MenuItem value="all">all autors</MenuItem>
+        <MenuItem value="currentUserAgency">my agency</MenuItem>
+        <MenuItem value="currentUser">me</MenuItem>
       </Select>
     </FormControl>
   );

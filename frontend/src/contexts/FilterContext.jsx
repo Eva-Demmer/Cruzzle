@@ -4,38 +4,43 @@ import PropTypes from "prop-types";
 export const FilterContext = createContext({});
 
 function FilterProvider({ children }) {
+  const [filterPanelIsOpen, setFilterPanelIsOpen] = useState(false);
   const [publishedBeforeXDaysFromNow, setPublishedBeforeXDaysFromNow] =
     useState(30);
   const [publishedAfterXDaysFromNow, setPublishedAfterXDaysFromNow] =
     useState(0);
-  const [autorList, setAutorList] = useState([]);
+  const [autorSelectionTag, setAutorSelectionTag] = useState("all");
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [trending, setTrending] = useState("recent");
+  const [trendingTag, setTrendingTag] = useState("recent");
 
   const contextValue = useMemo(() => {
     return {
+      filterPanelIsOpen,
+      setFilterPanelIsOpen,
       publishedBeforeXDaysFromNow,
       setPublishedBeforeXDaysFromNow,
       publishedAfterXDaysFromNow,
       setPublishedAfterXDaysFromNow,
-      autorList,
-      setAutorList,
+      autorSelectionTag,
+      setAutorSelectionTag,
       selectedCategories,
       setSelectedCategories,
-      trending,
-      setTrending,
+      trendingTag,
+      setTrendingTag,
     };
   }, [
+    filterPanelIsOpen,
+    setFilterPanelIsOpen,
     publishedBeforeXDaysFromNow,
     setPublishedBeforeXDaysFromNow,
     publishedAfterXDaysFromNow,
     setPublishedAfterXDaysFromNow,
-    autorList,
-    setAutorList,
+    autorSelectionTag,
+    setAutorSelectionTag,
     selectedCategories,
     setSelectedCategories,
-    trending,
-    setTrending,
+    trendingTag,
+    setTrendingTag,
   ]);
 
   return (

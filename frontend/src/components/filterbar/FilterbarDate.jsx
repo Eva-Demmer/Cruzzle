@@ -1,18 +1,20 @@
 import { useContext } from "react";
 import { MenuItem, FormControl, Select } from "@mui/material";
-
 import { FilterContext } from "../../contexts/FilterContext";
 
 export default function FilterbarAutor() {
-  const { publishedBeforeXDaysFromNow, setPublishedBeforeXDaysFromNow } =
-    useContext(FilterContext);
+  const {
+    filterPanelIsOpen,
+    publishedBeforeXDaysFromNow,
+    setPublishedBeforeXDaysFromNow,
+  } = useContext(FilterContext);
 
   const handleChange = (event) => {
     setPublishedBeforeXDaysFromNow(event.target.value);
   };
 
   return (
-    <FormControl sx={{ minWidth: 150 }}>
+    <FormControl sx={{ width: [135, 135, 155] }} disabled={filterPanelIsOpen}>
       <Select
         id="filter-date-select"
         className="h-10 rounded-full"
