@@ -16,8 +16,9 @@ module.exports = {
           100: "#D1B5E1", // Ring DoghnutAvatar
           900: "#9C27B0", // default
         },
+        statusGreen: "#B3E6B5",
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 };

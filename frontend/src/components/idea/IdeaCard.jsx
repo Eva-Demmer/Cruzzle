@@ -37,7 +37,7 @@ export default function IdeaCard({ isMini, idea }) {
           isMini
             ? "max-w-xl py-1 border-solid border-green border-4 border-t-0 border-b-0 border-r-0"
             : "max-w-4xl"
-        } flex flex-col  min-h-fit rounded-xl shadow-lg lg:flex-row relative bg-transparent group-hover:bg-slate-100 duration-100`}
+        } flex flex-col  min-h-fit rounded-xl shadow-lg lg:flex-row relative bg-white group-hover:bg-slate-100 duration-100`}
       >
         <div
           className={`${
