@@ -8,8 +8,6 @@ import FilterbarTrending from "./FilterbarTrending";
 import FilterPanel from "./FilterPanel";
 import { FilterContext } from "../../contexts/FilterContext";
 
-import fetcher from "../../services/api.services";
-
 function Filterbar() {
   const {
     filterPanelIsOpen,
@@ -21,7 +19,6 @@ function Filterbar() {
     titleContains,
     hasAttachment,
     hasNoComment,
-    setIdeasFiltered,
   } = useContext(FilterContext);
 
   useEffect(() => {
@@ -35,10 +32,7 @@ function Filterbar() {
       hasAttachment,
       hasNoComment,
     };
-
-    fetcher("/ideas", requestBody)
-      .then((data) => setIdeasFiltered(data))
-      .catch((error) => console.error("error setting filtered ideas", error));
+    console.info(requestBody);
   }, [
     publicationDateStart,
     publicationDateEnd,
