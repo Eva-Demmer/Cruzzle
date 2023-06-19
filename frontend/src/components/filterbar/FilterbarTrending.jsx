@@ -12,7 +12,7 @@ export default function FilterbarTrending({ isDisable }) {
   };
 
   return (
-    <FormControl sx={{ width: 155 }} disabled={isDisable}>
+    <FormControl disabled={isDisable} className="w-full">
       <Select
         id="filter-trending-select"
         className="h-10 w-full rounded-full"

@@ -13,10 +13,9 @@ export default function FilterBtnPanelanceSearch() {
 
   return (
     <Button
-      sx={{ minWidth: 145, fontSize: "16px" }}
       variant="outlined"
       color="primary"
-      className="w-22 h-10 normal-case rounded-full"
+      className="w-36 h-10 text-base normal-case rounded-full"
       onClick={handleClick}
     >
       <FunnelIcon className="w-4 mr-2" />

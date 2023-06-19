@@ -12,10 +12,10 @@ export default function FilterAutor({ isDisable }) {
   };
 
   return (
-    <FormControl disabled={isDisable}>
+    <FormControl disabled={isDisable} className="w-full">
       <Select
         id="filter-autor-select"
-        className="h-10 w-40 rounded-full"
+        className="h-10 w-full rounded-full"
         color="primary"
         value={autorSelectionTag}
         onChange={handleChange}

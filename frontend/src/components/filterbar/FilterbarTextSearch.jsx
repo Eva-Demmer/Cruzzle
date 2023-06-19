@@ -18,7 +18,7 @@ function FilterbarTextSearch() {
   return (
     <TextField
       id="filter-text-search"
-      placeholder="Enter text"
+      placeholder="search by key words..."
       value={titleContains}
       onChange={handleChange}
       InputProps={{

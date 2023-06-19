@@ -39,7 +39,7 @@ function FilterPanel() {
   };
 
   return (
-    <div className="filter-panel h-screen w-80 fixed z-50 top-0 right-0 py-12 px-6 flex flex-col gap-6 border-solid border-gray-300 border-t-[0px] border-b-[0px] border-r-[0px] border-l-[1px] bg-white">
+    <div className="filter-panel h-screen w-screen md:w-80 fixed z-50 top-0 right-0 py-12 px-6 flex flex-col gap-2 md:gap-6 border-solid border-gray-300 border-t-[0px] border-b-[0px] border-r-[0px] border-l-[1px] bg-white">
       <h4>Filters</h4>
       <FilterbarCategory isDisable={!filterPanelIsOpen} />
       <FilterbarAutor isDisable={!filterPanelIsOpen} />
@@ -71,19 +71,17 @@ function FilterPanel() {
 
       <footer className="grow flex flex-col items-center justify-end">
         <Button
-          sx={{ width: 160, fontSize: "16px" }}
           variant="outlined"
           color="warning"
-          className="w-22 h-8 rounded-full mb-4"
+          className="w-40 h-8 rounded-full mb-4"
           onClick={handleClickReset}
         >
           Reset
         </Button>
         <Button
-          sx={{ width: 160, fontSize: "16px" }}
           variant="outlined"
           color="primary"
-          className="w-22 h-8 rounded-full"
+          className="w-40 h-8 rounded-full"
           onClick={() => setFilterPanelIsOpen(!filterPanelIsOpen)}
         >
           Close

@@ -21,7 +21,7 @@ function FilterbarDatePicker() {
   return (
     <>
       <DatePicker
-        className="filter-date-start w-[270px] mb-4"
+        className="filter-date-start min-w-[270px] mb-4"
         slotProps={{ textField: { size: "small" } }}
         format="DD/MM/YYYY"
         formatDensity="spacious"
@@ -30,7 +30,7 @@ function FilterbarDatePicker() {
         onChange={handleChangeStart}
       />
       <DatePicker
-        className="filter-date-end w-[270px] bg-white"
+        className="filter-date-end min-w-[270px] bg-white"
         slotProps={{ textField: { size: "small" } }}
         format="DD/MM/YYYY"
         formatDensity="spacious"

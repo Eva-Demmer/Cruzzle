@@ -18,37 +18,35 @@ export default function FilterbarCategory({ isDisable }) {
   };
 
   return (
-    <div>
-      <FormControl sx={{ width: 270 }} disabled={isDisable}>
-        <Select
-          id="filter-category-select"
-          className="h-10 rounded-full"
-          multiple
-          displayEmpty
-          value={selectedCategories}
-          onChange={handleChange}
-          input={<OutlinedInput />}
-          renderValue={(selected) => {
-            return (
-              <>
-                <Square3Stack3DIcon className="w-4 mr-2" />
-                {selected.length === 0 ? (
-                  <span>all Categories</span>
-                ) : (
-                  selected.map((id) => categoryList[id].name).join(", ")
-                )}
-              </>
-            );
-          }}
-        >
-          {categoryList.map((cat) => (
-            <MenuItem key={cat.id} value={cat.id}>
-              {cat.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </div>
+    <FormControl disabled={isDisable} className="w-full">
+      <Select
+        id="filter-category-select"
+        className="h-10 w-full rounded-full"
+        multiple
+        displayEmpty
+        value={selectedCategories}
+        onChange={handleChange}
+        input={<OutlinedInput />}
+        renderValue={(selected) => {
+          return (
+            <>
+              <Square3Stack3DIcon className="w-4 mr-2" />
+              {selected.length === 0 ? (
+                <span>all categories</span>
+              ) : (
+                selected.map((id) => categoryList[id].name).join(", ")
+              )}
+            </>
+          );
+        }}
+      >
+        {categoryList.map((cat) => (
+          <MenuItem key={cat.id} value={cat.id}>
+            {cat.name}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
 }
 

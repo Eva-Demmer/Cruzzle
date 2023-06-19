@@ -35,14 +35,13 @@ export default function FilterbarAutor({ isDisable }) {
   useEffect(() => {
     const daysDiff = publicationDateEnd.diff(publicationDateStart, "day");
     setDateDelta(daysDiff);
-    console.info(daysDiff);
   }, [publicationDateStart, publicationDateEnd]);
 
   return (
-    <FormControl sx={{ width: [135, 135, 155] }} disabled={isDisable}>
+    <FormControl disabled={isDisable} className="w-40">
       <Select
         id="filter-date-select"
-        className="h-10 rounded-full"
+        className="h-10 w-full rounded-full"
         color="primary"
         value={dateDelta}
         onChange={handleChange}
