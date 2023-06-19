@@ -25,7 +25,7 @@ function FilterbarDatePicker() {
         slotProps={{ textField: { size: "small" } }}
         format="DD/MM/YYYY"
         formatDensity="spacious"
-        defaultValue={publicationDateStart}
+        value={publicationDateStart}
         maxDate={publicationDateEnd}
         onChange={handleChangeStart}
       />
@@ -34,7 +34,7 @@ function FilterbarDatePicker() {
         slotProps={{ textField: { size: "small" } }}
         format="DD/MM/YYYY"
         formatDensity="spacious"
-        defaultValue={publicationDateEnd}
+        value={publicationDateEnd}
         minDate={publicationDateStart}
         disableFuture
         onChange={handleChangeEnd}
