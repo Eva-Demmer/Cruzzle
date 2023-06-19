@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { useMediaQuery } from "react-responsive";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Chip from "@mui/material/Chip";
@@ -8,11 +7,9 @@ import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/outline";
 import IdeaCardActions from "./IdeaCardActions";
-import { lg } from "../../utils/mediaQueries";
 import { UserContext } from "../../contexts/UserContext";
 
 export default function IdeaCard({ isMini, idea }) {
-  const lgQuery = useMediaQuery(lg);
   const { id: userNum } = useContext(UserContext);
   const {
     id,
@@ -34,36 +31,24 @@ export default function IdeaCard({ isMini, idea }) {
       className={`${
         isMini
           ? "max-w-xl py-1 border-solid border-primary-50 border-4 border-t-0 border-b-0 border-r-0"
-          : "max-w-4xl"
-      } flex lg:flex-row relative shadow-lg bg-white hover:bg-slate-100 duration-100 rounded-xl group`}
+          : "max-w-6xl min-w-[250px]"
+      } flex shadow-lg bg-white hover:bg-slate-100 duration-100 rounded-xl group sm:flex-row relative`}
     >
       <Link
-        className="flex flex-col lg:flex-row no-underline w-full max-w-4xl"
+        className="flex flex-col no-underline w-full sm:flex-row "
         to={`/idea/${id}`}
       >
         <div
           className={`${
             isMini
               ? "hidden"
-              : "w-full h-32 bg-cover bg-center rounded-t-xl sm:h-48 lg:w-1/4 lg:h-auto lg:rounded-l-xl lg:rounded-r-none opacity-100 group-hover:opacity-90 duration-100"
+              : "w-full h-32 bg-cover bg-center opacity-100 group-hover:opacity-90 duration-100 rounded-t-xl sm:h-auto sm:w-1/4 sm:rounded-l-xl sm:rounded-r-none"
           }`}
           style={{
             backgroundImage: `url(${imgUrl})`,
           }}
         />
-        <div
-          className={`${
-            isMini ? "w-auto" : "max-w-4xl lg:w-3/4"
-          } pl-6 p-4 relative`}
-        >
-          {!isMini && !lgQuery && (
-            <IdeaCardActions
-              userId={userId}
-              isFavorite={isFavorite}
-              user={userNum}
-              id={id}
-            />
-          )}
+        <div className={`${isMini ? "w-auto" : "max-w-4xl sm:w-3/4"} pl-6 p-4`}>
           <div className="flex items-center gap-2 mb-3 justify-start">
             {isPrivate ? (
               <LockClosedIcon
@@ -86,11 +71,19 @@ export default function IdeaCard({ isMini, idea }) {
               />
             ))}
           </div>
-          <h2 className="mr-8 text-lg text-black font-medium no-underline">
+          <h2
+            className={`${
+              isMini ? "font-normal text-base text-gray-700" : "text-black"
+            } mr-8 text-lg font-medium no-underline max-w-xl`}
+          >
             {title}
           </h2>
 
-          <p className="mr-8 mt-2 text-gray-600 dark:text-gray-300">
+          <p
+            className={`${
+              isMini ? "text-gray-400" : "text-gray-600"
+            } mr-8 mt-2 `}
+          >
             {context}
           </p>
           {!isMini && (
@@ -140,7 +133,7 @@ export default function IdeaCard({ isMini, idea }) {
           )}
         </div>
       </Link>
-      {!isMini && lgQuery && (
+      {!isMini && (
         <IdeaCardActions
           userId={userId}
           isFavorite={isFavorite}
@@ -152,6 +145,7 @@ export default function IdeaCard({ isMini, idea }) {
   );
 }
 
+// Changera avec les données réelles
 IdeaCard.propTypes = {
   isMini: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
   idea: PropTypes.shape({

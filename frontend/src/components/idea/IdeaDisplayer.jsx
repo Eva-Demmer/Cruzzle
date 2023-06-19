@@ -7,7 +7,7 @@ function IdeaDisplayer({ isMini }) {
   const { ideas } = useContext(IdeasContext);
 
   return (
-    <div className="flex flex-col gap-7 px-4 pt-8 w-auto h-[calc(100vh-64px)] overflow-scroll no-scrollbar::-webkit-scrollbar no-scrollbar">
+    <div className="flex flex-col gap-7 px-4 pt-6 overflow-scroll no-scrollbar::-webkit-scrollbar no-scrollbar">
       {ideas.map((idea) => (
         <IdeaCard key={idea.id} isMini={isMini} idea={idea} />
       ))}
