@@ -56,11 +56,11 @@ function Filterbar() {
   return (
     <div className="filterbar w-full">
       <HorizontalScroll>
-        <div className="w-fit min-w-full flex flex-row-reverse  lg:block">
-          <div className="w-fit pt-2 pl-2 flex justify-end lg:w-full">
+        <div className="w-fit min-w-full flex flex-row-reverse items-center lg:block">
+          <div className="w-fit my-2 flex justify-end lg:w-full">
             <FilterbarDate isDisable={filterPanelIsOpen} />
           </div>
-          <div className="w-full pt-2 flex justify-start gap-2 lg:w-full lg:justify-between">
+          <div className="w-full my-2 flex justify-start gap-2 lg:w-full lg:justify-between">
             <FilterBtnAdvanceSearch isDisable={filterPanelIsOpen} />
             <span className="w-36">
               <FilterbarAutor isDisable={filterPanelIsOpen} />
