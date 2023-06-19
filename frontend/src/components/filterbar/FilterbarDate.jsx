@@ -43,7 +43,8 @@ export default function FilterbarAutor({ isDisable }) {
         id="filter-date-select"
         className="h-10 w-full rounded-full"
         color="primary"
-        value={dateDelta}
+        value={deltaList.includes(dateDelta) ? dateDelta : ""}
+        displayEmpty
         onChange={handleChange}
         renderValue={(value) => {
           const textDict = {
