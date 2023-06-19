@@ -20,6 +20,7 @@ function FilterProvider({ children }) {
   const [titleContains, setTitleContains] = useState([]);
   const [hasAttachment, setHasAttachment] = useState(false);
   const [hasNoComment, setHasNoComment] = useState(false);
+  const [ideasFiltered, setIdeasFiltered] = useState([]);
 
   const contextValue = useMemo(() => {
     return {
@@ -43,6 +44,8 @@ function FilterProvider({ children }) {
       setHasAttachment,
       hasNoComment,
       setHasNoComment,
+      ideasFiltered,
+      setIdeasFiltered,
     };
   }, [
     filterPanelIsOpen,
@@ -65,6 +68,8 @@ function FilterProvider({ children }) {
     setHasAttachment,
     hasNoComment,
     setHasNoComment,
+    ideasFiltered,
+    setIdeasFiltered,
   ]);
 
   return (

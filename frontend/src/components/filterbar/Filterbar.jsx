@@ -1,5 +1,4 @@
 import { useContext, useEffect } from "react";
-import axios from "axios";
 import HorizontalScroll from "../scroller/HorizontalScroll";
 import FilterBtnAdvanceSearch from "./FilterBtnAdvanceSearch";
 import FilterbarDate from "./FilterbarDate";
@@ -8,6 +7,8 @@ import FilterbarCategory from "./FilterbarCategory";
 import FilterbarTrending from "./FilterbarTrending";
 import FilterPanel from "./FilterPanel";
 import { FilterContext } from "../../contexts/FilterContext";
+
+import fetcher from "../../services/api.services";
 
 function Filterbar() {
   const {
@@ -20,10 +21,10 @@ function Filterbar() {
     titleContains,
     hasAttachment,
     hasNoComment,
+    setIdeasFiltered,
   } = useContext(FilterContext);
 
   useEffect(() => {
-    const url = import.meta.env.VITE_BACKEND_URL;
     const requestBody = {
       publicationDateStart,
       publicationDateEnd,
@@ -35,13 +36,9 @@ function Filterbar() {
       hasNoComment,
     };
 
-    axios
-      .get(`${url}/ideas`, requestBody)
-      .then((response) => response.data)
-      .then(() => {
-        console.info("request sent : ", requestBody);
-      })
-      .catch((error) => console.error("error from filterbar request", error));
+    fetcher("/ideas", requestBody)
+      .then((data) => setIdeasFiltered(data))
+      .catch((error) => console.error("error setting filtered ideas", error));
   }, [
     publicationDateStart,
     publicationDateEnd,
