@@ -14,7 +14,6 @@ import { UserContext } from "../../contexts/UserContext";
 export default function IdeaCard({ isMini, idea }) {
   const lgQuery = useMediaQuery(lg);
   const { id: userNum } = useContext(UserContext);
-
   const {
     id,
     title,
@@ -31,13 +30,16 @@ export default function IdeaCard({ isMini, idea }) {
   } = idea;
 
   return (
-    <Link className="no-underline w-auto max-w-4xl group" to={`/idea/${id}`}>
-      <div
-        className={`${
-          isMini
-            ? "max-w-xl py-1 border-solid border-green border-4 border-t-0 border-b-0 border-r-0"
-            : "max-w-4xl"
-        } flex flex-col  min-h-fit rounded-xl shadow-lg lg:flex-row relative bg-white group-hover:bg-slate-100 duration-100`}
+    <div
+      className={`${
+        isMini
+          ? "max-w-xl py-1 border-solid border-primary-50 border-4 border-t-0 border-b-0 border-r-0"
+          : "max-w-4xl"
+      } flex lg:flex-row relative shadow-lg bg-white hover:bg-slate-100 duration-100 rounded-xl group`}
+    >
+      <Link
+        className="flex flex-col lg:flex-row no-underline w-full max-w-4xl"
+        to={`/idea/${id}`}
       >
         <div
           className={`${
@@ -137,21 +139,21 @@ export default function IdeaCard({ isMini, idea }) {
             </div>
           )}
         </div>
-        {!isMini && lgQuery && (
-          <IdeaCardActions
-            userId={userId}
-            isFavorite={isFavorite}
-            user={userNum}
-            id={id}
-          />
-        )}
-      </div>
-    </Link>
+      </Link>
+      {!isMini && lgQuery && (
+        <IdeaCardActions
+          userId={userId}
+          isFavorite={isFavorite}
+          user={userNum}
+          id={id}
+        />
+      )}
+    </div>
   );
 }
 
 IdeaCard.propTypes = {
-  isMini: PropTypes.bool.isRequired,
+  isMini: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
   idea: PropTypes.shape({
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
@@ -167,7 +169,21 @@ IdeaCard.propTypes = {
         color: PropTypes.string.isRequired,
       })
     ).isRequired,
-    comments: PropTypes.number.isRequired,
+    comments: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        userId: PropTypes.number.isRequired,
+        body: PropTypes.string.isRequired,
+        createdAt: PropTypes.string.isRequired,
+        likes: PropTypes.arrayOf(
+          PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            userId: PropTypes.number.isRequired,
+            createdAt: PropTypes.string.isRequired,
+          })
+        ),
+      })
+    ).isRequired,
     team: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,

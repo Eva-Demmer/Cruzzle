@@ -7,7 +7,7 @@ function IdeaDisplayer({ isMini }) {
   const { ideas } = useContext(IdeasContext);
 
   return (
-    <div className="flex flex-col gap-7 px-4 pt-8 w-auto h-[calc(100vh-64px)] overflow-scroll scrollbar-hide">
+    <div className="flex flex-col gap-7 px-4 pt-8 w-auto h-[calc(100vh-64px)] overflow-scroll no-scrollbar::-webkit-scrollbar no-scrollbar">
       {ideas.map((idea) => (
         <IdeaCard key={idea.id} isMini={isMini} idea={idea} />
       ))}
@@ -18,5 +18,5 @@ function IdeaDisplayer({ isMini }) {
 export default IdeaDisplayer;
 
 IdeaDisplayer.propTypes = {
-  isMini: PropTypes.bool.isRequired,
+  isMini: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
 };
