@@ -27,6 +27,7 @@ import Settings from "./pages/Settings";
 import Search from "./pages/Search";
 
 import "./styles/main.scss";
+import IdeaProvider from "./contexts/IdeaContext";
 import LanguageProvider from "./contexts/LanguageContext";
 import MenuProvider from "./contexts/MenuContext";
 
@@ -95,11 +96,13 @@ root.render(
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={themeMui}>
         <UserProvider>
-          <MenuProvider>
-            <LanguageProvider>
-              <RouterProvider router={router} />
-            </LanguageProvider>
-          </MenuProvider>
+          <IdeaProvider>
+            <MenuProvider>
+              <LanguageProvider>
+                <RouterProvider router={router} />
+              </LanguageProvider>
+            </MenuProvider>
+          </IdeaProvider>
         </UserProvider>
       </ThemeProvider>
     </StyledEngineProvider>

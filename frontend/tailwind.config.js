@@ -18,6 +18,16 @@ module.exports = {
         },
         secondary: {
           600: "#7C7C7C", // text subtext color
+        chip: {
+          blue: "#2196F3",
+          orange: "#ED6C02",
+          green: "#AFE2B1",
+        },
+        status: {
+          green: "#AFE2B1",
+        },
+        user: {
+          warningRed: "#D32F2F",
         },
       },
     },
