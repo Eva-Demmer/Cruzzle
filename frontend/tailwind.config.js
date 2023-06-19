@@ -17,7 +17,8 @@ module.exports = {
           900: "#9C27B0", // default
         },
         secondary: {
-          600: "#7C7C7C", // text subtext color},
+          600: "#7C7C7C", // text subtext color
+          },
         chip: {
           blue: "#2196F3",
           orange: "#ED6C02",
