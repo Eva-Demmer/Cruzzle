@@ -30,7 +30,7 @@ function Root() {
         {activeMenu && <Sidebar />}
       </div>
 
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-col flex-grow w-full md:w-80">
         {smallQuery && <HeaderNav />}
 
         <div className="flex-1">
