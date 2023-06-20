@@ -1,35 +1,29 @@
 import { Request, Response } from "express";
-import dotenv, { DotenvConfigOptions } from "dotenv";
-// import database from "" <-----------implement later;
+import { getDBConnection } from "../config/database";
 
-// import { UserReqBody } from "../interfaces/users.interface";
+import { getAllUsers, getUserById } from "../models/user.model";
 
-dotenv.config(<DotenvConfigOptions>{ silent: true });
-
-const getUsers = (req: Request, res: Response) => {
-  res.send("here is users list");
+const getUsers = async (req: Request, res: Response) => {
+  try {
+    const connection = await getDBConnection();
+    const data = await getAllUsers(connection);
+    res.status(200).json(data);
+    connection.release();
+  } catch (error) {
+    res.status(500).send(error);
+  }
 };
 
-const getUsersById = (req: Request, res: Response) => {
+const getUserbyId = async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id, 10);
-  res.send(`here is user ${id}`);
+  try {
+    const connection = await getDBConnection();
+    const data = await getUserById(connection, id);
+    res.status(200).json(data);
+    connection.release();
+  } catch (error) {
+    res.status(500).send(error);
+  }
 };
 
-const postUser = (req: Request, res: Response) => {
-  console.info(req.body);
-  res.sendStatus(201);
-};
-
-const updateUserById = (req: Request, res: Response) => {
-  const id: number = parseInt(req.params.id, 10);
-  console.info(id, req.body);
-  res.sendStatus(201);
-};
-
-const deleteUserById = (req: Request, res: Response) => {
-  const id: number = parseInt(req.params.id, 10);
-  console.info(id, req.body);
-  res.sendStatus(204);
-};
-
-export { getUsers, getUsersById, postUser, updateUserById, deleteUserById };
+export { getUsers, getUserbyId };
