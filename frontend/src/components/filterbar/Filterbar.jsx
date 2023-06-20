@@ -22,7 +22,7 @@ function Filterbar() {
   } = useContext(FilterContext);
 
   useEffect(() => {
-    const requestBody = {
+    const requestItems = {
       publicationDateStart,
       publicationDateEnd,
       autorSelectionTag,
@@ -32,7 +32,7 @@ function Filterbar() {
       hasAttachment,
       hasNoComment,
     };
-    console.info(requestBody);
+    console.info(requestItems);
   }, [
     publicationDateStart,
     publicationDateEnd,
@@ -56,7 +56,7 @@ function Filterbar() {
             <span className="w-36">
               <FilterbarAutor isDisable={filterPanelIsOpen} />
             </span>
-            <span className="min-w-40 md:flex-grow">
+            <span className="min-w-40 w-40 md:flex-grow">
               <FilterbarCategory isDisable={filterPanelIsOpen} />
             </span>
             <span className="w-40">
