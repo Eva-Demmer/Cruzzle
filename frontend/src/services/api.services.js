@@ -10,7 +10,6 @@ const serializer = (reqItems) => {
 
 const fetcher = (route, reqItems) => {
   const serializedParams = serializer(reqItems);
-  console.info(reqItems);
   console.info(`${url}${route}?${serializedParams}`);
 
   //   axios
