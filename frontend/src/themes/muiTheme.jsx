@@ -17,6 +17,7 @@ const themeMui = createTheme({
   palette: {
     primary: {
       main: "#9C27B0",
+      contrastText: "#FCFAFF",
     },
   },
 });
