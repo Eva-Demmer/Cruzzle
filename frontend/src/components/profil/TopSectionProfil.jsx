@@ -57,12 +57,17 @@ function TopSectionProfil() {
             </span>
           </Button>
         )}
-        <img src={imgBanner} alt="banner" className=" h-53 w-full " />
+        <div
+          className="w-full h-64 bg-cover bg-center"
+          style={{
+            backgroundImage: `url(${imgBanner})`,
+          }}
+        />
       </div>
       <div className="flex w-full justify-between items-center mb-4 md:mb-1">
-        <h1 className="ml-5 font-regular text-2xl">
+        <h2 className="ml-5 font-regular text-2xl text-black">
           {firstname} {lastname}
-        </h1>
+        </h2>
         {isCurrentUserProfile && !smallQuery && (
           <Button variant="outlined" className="rounded-3xl w-32 h-11 mr-7">
             <span className="flex gap-2 text-primary-900">
@@ -73,25 +78,25 @@ function TopSectionProfil() {
         )}
       </div>
       <div className="flex flex-col gap-2 ml-5 lg:flex-row lg:gap-12">
-        <div className="flex gap-1 justify-start">
+        <div className="flex gap-1 justify-start items-center">
           <BriefcaseIcon className="h-6 w-6 text-secondary-600" />
-          <h4 className="font-medium text-secondary-600">
+          <p className="font-medium text-secondary-600">
             {agency}, {position}
-          </h4>
+          </p>
         </div>
-        <div className="flex justify-start">
+        <div className="flex justify-start items-center">
           <MapPinIcon className="h-6 w-6 text-secondary-600" />
-          <h4 className="ml-1 font-medium text-secondary-600">
+          <p className="ml-1 font-medium text-secondary-600">
             {city}, {country}
-          </h4>
+          </p>
         </div>
-        <div className="flex justify-start">
+        <div className="flex justify-start items-center">
           <LinkIcon className="h-6 w-6 text-secondary-600" />
-          <h4 className="ml-1 font-medium">
+          <p className="ml-1 font-medium">
             <a href={`mailto:${mail}`} className="text-bg-primary-900">
               {mail}
             </a>
-          </h4>
+          </p>
         </div>
       </div>
     </div>
