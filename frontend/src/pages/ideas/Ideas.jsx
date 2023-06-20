@@ -2,7 +2,6 @@ import IdeaDisplayer from "../../components/idea/IdeaDisplayer";
 import IdeasProvider from "../../contexts/IdeasContext";
 import FilterProvider from "../../contexts/FilterContext";
 import Filterbar from "../../components/filterbar/Filterbar";
-// import AddTeamToPdcButton from "../../components/AddTeamToPdcButton";
 
 function Ideas() {
   return (
