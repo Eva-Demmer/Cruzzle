@@ -23,7 +23,7 @@ function FilterbarTextSearch() {
 
   const handleClear = () => {
     setValue("");
-    setTitleContains("");
+    setTitleContains(null);
   };
 
   return (

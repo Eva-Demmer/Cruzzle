@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-
 import { findAll, findById } from "../models/user.model";
 
 const getUsers = async (req: Request, res: Response) => {
@@ -11,7 +10,7 @@ const getUsers = async (req: Request, res: Response) => {
   }
 };
 
-const getUserbyId = async (req: Request, res: Response) => {
+const getUserById = async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id, 10);
   try {
     const data = await findById(id);
@@ -25,4 +24,4 @@ const getUserbyId = async (req: Request, res: Response) => {
   }
 };
 
-export { getUsers, getUserbyId };
+export { getUsers, getUserById };

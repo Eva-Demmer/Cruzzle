@@ -1,10 +1,12 @@
-import queryString from "query-string";
+import qs from "qs";
 // import axios from "axios";
 
 const url = import.meta.env.VITE_BACKEND_URL;
 
 const serializer = (reqItems) => {
-  const encodedParams = queryString.stringify(reqItems);
+  const encodedParams = qs.stringify(reqItems, {
+    skipNulls: true,
+  });
   return encodedParams;
 };
 

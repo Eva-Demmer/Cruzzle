@@ -33,7 +33,7 @@ function Filterbar() {
       hasAttachment,
       hasNoComment,
     };
-    fetcher("/api/ideas", reqItems);
+    fetcher("/api/ideas/filter", reqItems);
   }, [
     publicationDateStart,
     publicationDateEnd,

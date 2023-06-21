@@ -1,13 +1,13 @@
 import { RowDataPacket } from "mysql2";
 import { getDBConnection } from "../config/database";
-// import { User } from "../interfaces/users.interface"; <-- POST PUT will be typed with interface
+import { IdeaFilterQuery } from "../interfaces/ideas.interface";
 
 const findAll = async (): Promise<RowDataPacket[] | undefined> => {
   let connection;
   try {
     connection = await getDBConnection();
     const [response] = await connection.query<RowDataPacket[]>(
-      "SELECT * FROM users"
+      "SELECT * FROM ideas"
     );
 
     if (response) {
@@ -24,7 +24,7 @@ const findById = async (id: number): Promise<RowDataPacket[] | undefined> => {
   try {
     connection = await getDBConnection();
     const [response] = await connection.query<RowDataPacket[]>(
-      "SELECT * FROM users WHERE id = ?",
+      "SELECT * FROM ideas WHERE id = ?",
       [id]
     );
 
@@ -37,4 +37,25 @@ const findById = async (id: number): Promise<RowDataPacket[] | undefined> => {
   }
 };
 
-export { findAll, findById };
+const findByFilter = async (
+  filterQuery: IdeaFilterQuery
+): Promise<RowDataPacket[] | undefined> => {
+  console.info(filterQuery);
+
+  let connection;
+  try {
+    connection = await getDBConnection();
+    const [response] = await connection.query<RowDataPacket[]>(
+      `SELECT * FROM ideas`
+    );
+
+    if (response) {
+      return response;
+    }
+    return undefined;
+  } finally {
+    connection?.release();
+  }
+};
+
+export { findAll, findById, findByFilter };
