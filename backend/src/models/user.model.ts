@@ -1,22 +1,40 @@
-import { PoolConnection } from "mysql2/promise";
+import { RowDataPacket } from "mysql2";
+import { getDBConnection } from "../config/database";
 import { User } from "../interfaces/users.interface";
 
-const getAllUsers = async (connection: PoolConnection): Promise<User[]> => {
-  const queryResult = await connection.query("SELECT * FROM users");
-  const data = queryResult[0] as User[];
-  return data;
+const findAll = async (): Promise<User[] | undefined> => {
+  let connection;
+  try {
+    connection = await getDBConnection();
+    const [response] = await connection.query<RowDataPacket[]>(
+      "SELECT * FROM users"
+    );
+
+    if (response) {
+      return response as User[];
+    }
+    return undefined;
+  } finally {
+    connection?.release();
+  }
 };
 
-const getUserById = async (
-  connection: PoolConnection,
-  id: number
-): Promise<User | null> => {
-  const queryResult = await connection.query(
-    "SELECT * FROM users WHERE id = ?",
-    [id]
-  );
-  const data = queryResult[0] as User[];
-  return data ? data[0] : null;
+const findById = async (id: number): Promise<User[] | undefined> => {
+  let connection;
+  try {
+    connection = await getDBConnection();
+    const [response] = await connection.query<RowDataPacket[]>(
+      "SELECT * FROM users WHERE id = ?",
+      [id]
+    );
+
+    if (response) {
+      return response as User[];
+    }
+    return undefined;
+  } finally {
+    connection?.release();
+  }
 };
 
-export { getAllUsers, getUserById };
+export { findAll, findById };
