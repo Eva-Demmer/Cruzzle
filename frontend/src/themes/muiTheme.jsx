@@ -34,6 +34,9 @@ const themeMui = createTheme({
     info: {
       main: "#2196F3",
     },
+    white: {
+      main: "#ffffff",
+    },
   },
 });
 
