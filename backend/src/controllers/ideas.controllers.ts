@@ -14,10 +14,10 @@ const getIdeaById = async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id, 10);
   try {
     const data = await findById(id);
-    if (!data || data.length === 0) {
-      res.status(404).send("Idea not found");
+    if (data) {
+      res.status(200).json(data);
     } else {
-      res.status(200).json(data[0]);
+      res.status(404).send("Idea not found");
     }
   } catch (error) {
     res.status(500).send(error);

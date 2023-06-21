@@ -1,39 +1,26 @@
-import { RowDataPacket } from "mysql2";
-import { getDBConnection } from "../config/database";
-// import { User } from "../interfaces/users.interface"; <-- POST PUT will be typed with interface
+import { PrismaClient } from "@prisma/client";
 
-const findAll = async (): Promise<RowDataPacket[] | undefined> => {
-  let connection;
+const prisma = new PrismaClient();
+
+const findAll = async () => {
   try {
-    connection = await getDBConnection();
-    const [response] = await connection.query<RowDataPacket[]>(
-      "SELECT * FROM users"
-    );
-
-    if (response) {
-      return response;
-    }
-    return undefined;
+    const data = await prisma.user.findMany();
+    return data;
   } finally {
-    connection?.release();
+    await prisma.$disconnect();
   }
 };
 
-const findById = async (id: number): Promise<RowDataPacket[] | undefined> => {
-  let connection;
+const findById = async (id: number) => {
   try {
-    connection = await getDBConnection();
-    const [response] = await connection.query<RowDataPacket[]>(
-      "SELECT * FROM users WHERE id = ?",
-      [id]
-    );
-
-    if (response) {
-      return response;
-    }
-    return undefined;
+    const response = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+    return response;
   } finally {
-    connection?.release();
+    await prisma.$disconnect();
   }
 };
 

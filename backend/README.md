@@ -16,9 +16,12 @@ DB_PORT=your_db_port
 DB_USER=your_db_user
 DB_PASSWORD=your_db_password
 DB_NAME=your_db_name
+DB_PRISMA_URL=mysql://DB_USER:DB_PASSWORD@DB_HOST:DB_PORT/DB_NAME
+
 ```
 
 4. Adapt _database.sql_ with your own tables. Import the script in your SQL server. You can do it manually or run _migrate_ script (either using `npm run migrate` or `yarn run migrate`).
+4. BIS - Connection and communication with database works with an ORM, run `prisma-init` to do build schema and @client access 
 5. Start the server in dev mode with `npm run dev` or `yarn run dev`. This will run `index.js` using _nodemon_.
 6. Go to `localhost:5000` with your favorite browser.
 7. From this starter kit, create your own web application.

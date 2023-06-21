@@ -1,60 +1,66 @@
-import { RowDataPacket } from "mysql2";
-import { getDBConnection } from "../config/database";
+import { PrismaClient } from "@prisma/client";
+import dayjs from "dayjs";
 import { IdeaFilterQuery } from "../interfaces/ideas.interface";
 
-const findAll = async (): Promise<RowDataPacket[] | undefined> => {
-  let connection;
-  try {
-    connection = await getDBConnection();
-    const [response] = await connection.query<RowDataPacket[]>(
-      "SELECT * FROM ideas"
-    );
+const prisma = new PrismaClient();
 
-    if (response) {
-      return response;
-    }
-    return undefined;
+const findAll = async () => {
+  try {
+    const data = await prisma.idea.findMany();
+    return data;
   } finally {
-    connection?.release();
+    await prisma.$disconnect();
   }
 };
 
-const findById = async (id: number): Promise<RowDataPacket[] | undefined> => {
-  let connection;
+const findById = async (id: number) => {
   try {
-    connection = await getDBConnection();
-    const [response] = await connection.query<RowDataPacket[]>(
-      "SELECT * FROM ideas WHERE id = ?",
-      [id]
-    );
-
-    if (response) {
-      return response;
-    }
-    return undefined;
+    const response = await prisma.idea.findUnique({
+      where: {
+        id,
+      },
+    });
+    return response;
   } finally {
-    connection?.release();
+    await prisma.$disconnect();
   }
 };
 
-const findByFilter = async (
-  filterQuery: IdeaFilterQuery
-): Promise<RowDataPacket[] | undefined> => {
-  console.info(filterQuery);
+const findByFilter = async (filterQuery: IdeaFilterQuery) => {
+  const {
+    publicationDateStart,
+    publicationDateEnd,
+    autorSelectionTag,
+    selectedCategories = null,
+    trendingTag,
+    titleContains = null,
+    hasAttachment,
+    hasNoComment,
+  } = filterQuery;
 
-  let connection;
+  console.info(publicationDateStart);
+  console.info(publicationDateEnd);
+  console.info(autorSelectionTag);
+  console.info(selectedCategories);
+  console.info(trendingTag);
+  console.info(titleContains);
+  console.info(hasAttachment);
+  console.info(hasNoComment);
   try {
-    connection = await getDBConnection();
-    const [response] = await connection.query<RowDataPacket[]>(
-      `SELECT * FROM ideas`
-    );
-
-    if (response) {
-      return response;
-    }
-    return undefined;
+    const data = await prisma.idea.findMany({
+      where: {
+        created_at: {
+          gte: dayjs(publicationDateStart).subtract(1, "day").toISOString(),
+          lte: publicationDateEnd,
+        },
+      },
+      orderBy: {
+        created_at: "asc",
+      },
+    });
+    return data;
   } finally {
-    connection?.release();
+    await prisma.$disconnect();
   }
 };
 
