@@ -1,5 +1,7 @@
 import { useContext } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
+import "dayjs/locale/fr";
 import { FilterContext } from "../../contexts/FilterContext";
 
 function FilterbarDatePicker() {
@@ -11,11 +13,11 @@ function FilterbarDatePicker() {
   } = useContext(FilterContext);
 
   const handleChangeStart = (event) => {
-    setPublicationDateStart(event);
+    setPublicationDateStart(event.$d);
   };
 
   const handleChangeEnd = (event) => {
-    setPublicationDateEnd(event);
+    setPublicationDateEnd(event.$d);
   };
 
   return (
@@ -25,8 +27,8 @@ function FilterbarDatePicker() {
         slotProps={{ textField: { size: "small" } }}
         format="DD/MM/YYYY"
         formatDensity="spacious"
-        value={publicationDateStart}
-        maxDate={publicationDateEnd}
+        value={dayjs(publicationDateStart)}
+        maxDate={dayjs(publicationDateEnd).subtract(1, "day")}
         onChange={handleChangeStart}
       />
       <DatePicker
@@ -34,8 +36,8 @@ function FilterbarDatePicker() {
         slotProps={{ textField: { size: "small" } }}
         format="DD/MM/YYYY"
         formatDensity="spacious"
-        value={publicationDateEnd}
-        minDate={publicationDateStart}
+        value={dayjs(publicationDateEnd)}
+        minDate={dayjs(publicationDateStart)}
         disableFuture
         onChange={handleChangeEnd}
       />

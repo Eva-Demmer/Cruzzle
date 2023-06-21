@@ -4,7 +4,6 @@ import * as fs from "fs";
 import * as path from "path";
 
 import routes from "./routes/index";
-import { createDBConnection } from "./config/database";
 
 // create express app
 const app: Application = express();
@@ -50,16 +49,5 @@ if (fs.existsSync(reactIndexFile)) {
     res.sendFile(reactIndexFile);
   });
 }
-
-// create database connection pool
-(async () => {
-  try {
-    await createDBConnection();
-    console.info("⚡️[server]: connection successfully established");
-  } catch (err) {
-    console.error("Failed to establish database connection", err);
-    process.exit(1);
-  }
-})();
 
 export default app;

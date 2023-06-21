@@ -25,15 +25,20 @@ export default function FilterbarAutor({ isDisable }) {
   useEffect(() => {
     if (deltaList.includes(dateDelta)) {
       setisDisableByCustomDate(false);
-      setPublicationDateEnd(dayjs().locale("fr"));
-      setPublicationDateStart(dayjs().locale("fr").subtract(dateDelta, "day"));
+      setPublicationDateEnd(dayjs().locale("fr").$d);
+      setPublicationDateStart(
+        dayjs().locale("fr").subtract(dateDelta, "day").$d
+      );
     } else {
       setisDisableByCustomDate(true);
     }
   }, [dateDelta]);
 
   useEffect(() => {
-    const daysDiff = publicationDateEnd.diff(publicationDateStart, "day");
+    const daysDiff = dayjs(publicationDateEnd).diff(
+      dayjs(publicationDateStart),
+      "day"
+    );
     setDateDelta(daysDiff);
   }, [publicationDateStart, publicationDateEnd]);
 

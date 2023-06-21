@@ -21,7 +21,7 @@ interface IdeaFilterQuery {
   publicationDateStart?: string;
   publicationDateEnd?: string;
   autorSelectionTag?: string;
-  selectedCategories?: string;
+  selectedCategories?: string[];
   trendingTag?: string;
   titleContains?: string;
   hasAttachment?: string;
