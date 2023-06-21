@@ -17,7 +17,7 @@ function FilterProvider({ children }) {
   const [autorSelectionTag, setAutorSelectionTag] = useState("all");
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [trendingTag, setTrendingTag] = useState("recent");
-  const [titleContains, setTitleContains] = useState([]);
+  const [titleContains, setTitleContains] = useState("");
   const [hasAttachment, setHasAttachment] = useState(false);
   const [hasNoComment, setHasNoComment] = useState(false);
   const [ideasFiltered, setIdeasFiltered] = useState([]);
