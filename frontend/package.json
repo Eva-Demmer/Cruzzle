@@ -18,6 +18,7 @@
     "dayjs": "^1.11.8",
     "hamburgers": "^1.2.1",
     "prop-types": "^15.8.1",
+    "query-string": "^8.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-responsive": "^9.0.2",

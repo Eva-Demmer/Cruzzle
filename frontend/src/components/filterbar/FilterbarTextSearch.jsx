@@ -1,17 +1,28 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { TextField, IconButton } from "@mui/material";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { FilterContext } from "../../contexts/FilterContext";
 
 function FilterbarTextSearch() {
-  const { titleContains, setTitleContains } = useContext(FilterContext);
+  const { setTitleContains } = useContext(FilterContext);
+  const [value, setValue] = useState("");
 
   const handleChange = (event) => {
-    console.info(event.target.value);
-    setTitleContains(event.target.value);
+    setValue(event.target.value);
   };
 
-  const handleClearClick = () => {
+  const handleSubmit = () => {
+    setTitleContains(value);
+  };
+
+  const handleKeydown = (event) => {
+    if (event.key === "Enter") {
+      handleSubmit();
+    }
+  };
+
+  const handleClear = () => {
+    setValue("");
     setTitleContains("");
   };
 
@@ -19,17 +30,28 @@ function FilterbarTextSearch() {
     <TextField
       id="filter-text-search"
       placeholder="search by key words..."
-      value={titleContains}
+      value={value}
       onChange={handleChange}
+      onBlur={handleSubmit}
+      onKeyDown={handleKeydown}
       InputProps={{
         sx: { height: 40, width: 270 },
         endAdornment: (
-          <IconButton
-            onClick={handleClearClick}
-            sx={{ visibility: titleContains ? "visible" : "hidden" }}
-          >
-            <XMarkIcon className="w-4" />
-          </IconButton>
+          <>
+            <IconButton
+              onClick={handleSubmit}
+              sx={{ visibility: value ? "visible" : "hidden" }}
+            >
+              <CheckIcon className="w-4" />
+            </IconButton>
+            {value && <span className="text-gray-400">|</span>}
+            <IconButton
+              onClick={handleClear}
+              sx={{ visibility: value ? "visible" : "hidden" }}
+            >
+              <XMarkIcon className="w-4" />
+            </IconButton>
+          </>
         ),
       }}
     />

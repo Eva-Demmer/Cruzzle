@@ -7,6 +7,7 @@ import FilterbarCategory from "./FilterbarCategory";
 import FilterbarTrending from "./FilterbarTrending";
 import FilterPanel from "./FilterPanel";
 import { FilterContext } from "../../contexts/FilterContext";
+import { fetcher } from "../../services/api.services";
 
 function Filterbar() {
   const {
@@ -22,7 +23,7 @@ function Filterbar() {
   } = useContext(FilterContext);
 
   useEffect(() => {
-    const requestItems = {
+    const reqItems = {
       publicationDateStart,
       publicationDateEnd,
       autorSelectionTag,
@@ -32,7 +33,7 @@ function Filterbar() {
       hasAttachment,
       hasNoComment,
     };
-    console.info(requestItems);
+    fetcher("/api/ideas", reqItems);
   }, [
     publicationDateStart,
     publicationDateEnd,
