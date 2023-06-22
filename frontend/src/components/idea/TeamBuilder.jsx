@@ -45,6 +45,7 @@ export default function TeamBuilder({ list, onChange, getOptions }) {
     <div className="list-button flex flex-col items-center w-full gap-4 p-6 sm:flex-row sm:justify-start sm:items-start sm:gap-8">
       <div className="w-full sm:w-1/2 lg:max-w-[400px]">
         <Autocomplete
+          disableCloseOnSelect
           multiple
           sx={{ minWidth: 250 }}
           open={open}

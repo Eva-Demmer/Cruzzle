@@ -30,7 +30,6 @@ export default function TeamBuilderList({ list, onChange }) {
           />
           <Fab
             color="white"
-            disableElevation
             aria-label="remove"
             sx={{ minWidth: 40, width: 40, height: 40 }}
             value={person}
