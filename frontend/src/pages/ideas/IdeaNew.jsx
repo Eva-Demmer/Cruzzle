@@ -1,4 +1,15 @@
 import { useLocation } from "react-router-dom";
+import { Divider } from "@mui/material";
+
+import IdeaForm from "../../components/createidea/IdeaForm";
+import IdeaHeader from "../../components/createidea/IdeaHeader";
+import IdeaTabs from "../../components/createidea/IdeaTabs";
+import IdeaUpload from "../../components/createidea/IdeaUpload";
+import IdeaCloud from "../../components/createidea/IdeaCloud";
+
+import IdeaFormProvider from "../../contexts/IdeaFormContext";
+import IdeaButtons from "../../components/createidea/IdeaButtons";
+import IdeaError from "../../components/createidea/IdeaError";
 
 function IdeaNew() {
   const location = useLocation();
@@ -15,10 +26,19 @@ function IdeaNew() {
           {`${isNewIdea ? "Create" : "Modify"} idea, add files and pictures`}
         </p>
       </div>
-
-      {/* 
-      <div className="my-8" aria-label="Cloud Share"></div>
-      <div className="my-8" aria-label="Teams"></div> */}
+      <IdeaFormProvider>
+        <IdeaForm>
+          <IdeaHeader />
+          <Divider />
+          <IdeaTabs />
+          <Divider />
+          <IdeaUpload />
+          <IdeaCloud />
+          <Divider />
+          <IdeaButtons />
+          <IdeaError />
+        </IdeaForm>
+      </IdeaFormProvider>
     </div>
   );
 }

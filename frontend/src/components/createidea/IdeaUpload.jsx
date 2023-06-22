@@ -1,11 +1,13 @@
 import { useContext, useState } from "react";
 
+import handleFileProcessing from "../../utils/handleFileProcessing";
+import formatBytes from "../../utils/formatBytes";
+
 import dragdrop from "../../assets/idea/dragdrop.svg";
 import UploadButton from "../styledComponents/UploadButton";
-
 import TableFilesUpload from "./TableFilesUpload";
 import Dropzone from "../styledComponents/Dropzone";
-import handleFileProcessing from "../../utils/handleFileProcessing";
+
 import { IdeaFormContext } from "../../contexts/IdeaFormContext";
 
 const columns = [
@@ -97,7 +99,7 @@ function IdeaUpload() {
               <div className="flex flex-col items-center">
                 <h2 className="text-sm font-bold my-2">Supported files</h2>
                 <p className="text-xs font-normal my-2">
-                  4 MB max and 10 files max
+                  {formatBytes(maxSizeInKB * 1024)} max and {maxFiles} files max
                 </p>
                 <p className="text-xs font-normal my-2">
                   jpg, jpeg, docx, pdf...

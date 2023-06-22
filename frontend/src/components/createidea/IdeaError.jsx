@@ -3,7 +3,7 @@ import { Alert, Snackbar, AlertTitle } from "@mui/material";
 
 import { IdeaFormContext } from "../../contexts/IdeaFormContext";
 
-function FormErrorSnackbar() {
+function IdeaError() {
   const { errorFiles, setOpen, open } = useContext(IdeaFormContext);
   return (
     errorFiles.length > 0 && (
@@ -32,4 +32,4 @@ function FormErrorSnackbar() {
     )
   );
 }
-export default FormErrorSnackbar;
+export default IdeaError;

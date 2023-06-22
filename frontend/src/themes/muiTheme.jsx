@@ -26,7 +26,7 @@ const themeMui = createTheme({
       main: "#2E7D32",
     },
     error: {
-      main: "#9C27B0",
+      main: "#d32f2f",
     },
     warning: {
       main: "#ED6C02",

@@ -20,7 +20,7 @@ function UploadButton({ children, accept, multiple = false, onChange, id }) {
         <Button
           component="span"
           variant="contained"
-          color="secondary"
+          color="primary"
           className="w-[110px] rounded-full mx-2 my-2 sm:w-[174px]"
           sx={{
             boxShadow: 1,
