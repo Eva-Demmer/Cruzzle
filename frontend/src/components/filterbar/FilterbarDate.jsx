@@ -25,9 +25,12 @@ export default function FilterbarAutor({ isDisable }) {
   useEffect(() => {
     if (deltaList.includes(dateDelta)) {
       setisDisableByCustomDate(false);
-      setPublicationDateEnd(dayjs().locale("fr").$d);
+      setPublicationDateEnd(dayjs().locale("fr").format("YYYY-MM-DD HH:mm:ss"));
       setPublicationDateStart(
-        dayjs().locale("fr").subtract(dateDelta, "day").$d
+        dayjs()
+          .locale("fr")
+          .subtract(dateDelta, "day")
+          .format("YYYY-MM-DD HH:mm:ss")
       );
     } else {
       setisDisableByCustomDate(true);

@@ -13,11 +13,13 @@ function FilterbarDatePicker() {
   } = useContext(FilterContext);
 
   const handleChangeStart = (event) => {
-    setPublicationDateStart(event.$d);
+    const inputDate = event.$d;
+    setPublicationDateStart(dayjs(inputDate).format("YYYY-MM-DD HH:mm:ss"));
   };
 
   const handleChangeEnd = (event) => {
-    setPublicationDateEnd(event.$d);
+    const inputDate = event.$d;
+    setPublicationDateEnd(dayjs(inputDate).format("YYYY-MM-DD HH:mm:ss"));
   };
 
   return (
@@ -37,7 +39,7 @@ function FilterbarDatePicker() {
         format="DD/MM/YYYY"
         formatDensity="spacious"
         value={dayjs(publicationDateEnd)}
-        minDate={dayjs(publicationDateStart)}
+        minDate={dayjs(publicationDateStart).add(1, "day")}
         disableFuture
         onChange={handleChangeEnd}
       />

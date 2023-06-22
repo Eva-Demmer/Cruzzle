@@ -38,7 +38,7 @@ const findByFilter = async (filterQuery: IdeaFilterQuery) => {
     hasNoComment,
   } = filterQuery;
 
-  console.info(publicationDateStart);
+  console.info(publicationDateStart, dayjs(publicationDateStart).toISOString());
   console.info(publicationDateEnd);
   console.info(autorSelectionTag);
   console.info(selectedCategories);
@@ -51,7 +51,7 @@ const findByFilter = async (filterQuery: IdeaFilterQuery) => {
       where: {
         created_at: {
           gte: dayjs(publicationDateStart).subtract(1, "day").toISOString(),
-          lte: publicationDateEnd,
+          lte: dayjs(publicationDateEnd).toISOString(),
         },
       },
       orderBy: {

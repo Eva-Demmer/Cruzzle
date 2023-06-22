@@ -116,8 +116,8 @@ CREATE TABLE `idea` (
 );
 INSERT INTO `idea` (`title`, `context`, `user_id`, `created_at`, `archived_at`, `deleted_at`, `goal`, `profits`, `risks`, `cloudshare`, `primary_img`, `views`)
 VALUES
-  ('Idea 1', 'Lorem ipsum dolor sit amet.', 1, '2022-11-23T12:33:11.230Z', NULL, NULL, 'Achieve a sustainable future.', 'Increase revenue and market share.', 'Mitigate potential risks.', NULL, 'https://picsum.photos/500/500', 200),
-  ('Idea 2', 'Consectetur adipiscing elit.', 2, '2023-05-20T12:33:11.230Z', NULL, NULL, 'Improve user experience.', 'Expand into new markets.', 'Manage competitive challenges.', NULL, 'https://picsum.photos/500/500', 50);
+  ('Idea 1', 'Lorem ipsum dolor sit amet. Consectetur adipiscing elit.', 1, '2022-11-23 12:33:11', NULL, NULL, 'Achieve a sustainable future.', 'Increase revenue and market share.', 'Mitigate potential risks.', NULL, 'https://picsum.photos/500/500', 200),
+  ('Idea 2', 'Consectetur adipiscing elit. Lorem ipsum dolor sit amet. ', 2, '2023-05-20 12:33:11', NULL, NULL, 'Improve user experience.', 'Expand into new markets.', 'Manage competitive challenges.', NULL, 'https://picsum.photos/500/500', 50);
 
 
 
@@ -149,10 +149,10 @@ CREATE TABLE `user` (
 );
 INSERT INTO `user` (`mail`, `hashed_password`, `role_id`, `avatar_url`, `banner_url`, `firstname`, `lastname`, `birthdate`, `share_birthdate`, `phone`, `share_phone`, `biography`, `agency_id`, `joined_at`, `position_id`, `score_comment`, `score_idea`, `score_like`, `is_active`)
 VALUES
-  ('super.admin@example.com', '$argon2id$v=19$m=16,t=2,p=1$emVmZXpmemZlemVmZWR6ZXplZg$rqZkhxu5YbqCGHPNrjJZpQ', 88, 'https://picsum.photos/200', 'https://picsum.photos/1000/300', 'Sarah', 'Conor', '1972-11-12T12:33:11.230Z', false, '+33655758466', false, 'Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.', 1, '2017-06-13T12:33:11.230Z', 1, 999, 999, 999, true),
-  ('admin@example.com', '$argon2id$v=19$m=16,t=2,p=1$emVmZXpmemZlemVmZWR6ZXplZg$rqZkhxu5YbqCGHPNrjJZpQ', 55, 'https://picsum.photos/200', 'https://picsum.photos/1000/300', 'Nelson', 'Monfort', '1955-04-22T12:33:11.230Z', true, '+33659862414', true, 'This is a vrai plaisir to colaborate with vous.', 2, '2017-06-13T12:33:11.230Z', 1, 200, 500, 800, true),
-  ('user1@example.com', '$argon2id$v=19$m=16,t=2,p=1$emVmZXpmemZlemVmZWR6ZXplZg$rqZkhxu5YbqCGHPNrjJZpQ', 0, 'https://picsum.photos/200', 'https://picsum.photos/1000/300', 'John', 'Doe', '1988-01-23T12:33:11.230Z', true, '+33659862414', true, 'Lorem ipsum dolor sit amet.', 3, '2017-06-13T12:33:11.230Z', 1, 0, 0, 0, true),
-  ('user1@example.com', '$argon2id$v=19$m=16,t=2,p=1$emVmZXpmemZlemVmZWR6ZXplZg$rqZkhxu5YbqCGHPNrjJZpQ', 0, 'https://picsum.photos/200', 'https://picsum.photos/1000/300', 'Florent', 'Panini', '1981-03-05T12:33:11.230Z', true, '+33659862414', true, 'Lorem ipsum dolor sit amet.', 2, '2017-06-13T12:33:11.230Z', 1, 0, 0, 0, false);
+  ('super.admin@example.com', '$argon2id$v=19$m=16,t=2,p=1$emVmZXpmemZlemVmZWR6ZXplZg$rqZkhxu5YbqCGHPNrjJZpQ', 88, 'https://picsum.photos/200', 'https://picsum.photos/1000/300', 'Sarah', 'Conor', '1972-11-12 12:33:11', false, '+33655758466', false, 'Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.', 1, '2017-06-13 12:33:11', 1, 999, 999, 999, true),
+  ('admin@example.com', '$argon2id$v=19$m=16,t=2,p=1$emVmZXpmemZlemVmZWR6ZXplZg$rqZkhxu5YbqCGHPNrjJZpQ', 55, 'https://picsum.photos/200', 'https://picsum.photos/1000/300', 'Nelson', 'Monfort', '1955-04-22 12:33:11', true, '+33659862414', true, 'This is a vrai plaisir to colaborate with vous.', 2, '2017-06-13 12:33:11', 1, 200, 500, 800, true),
+  ('user1@example.com', '$argon2id$v=19$m=16,t=2,p=1$emVmZXpmemZlemVmZWR6ZXplZg$rqZkhxu5YbqCGHPNrjJZpQ', 0, 'https://picsum.photos/200', 'https://picsum.photos/1000/300', 'John', 'Doe', '1988-01-23 12:33:11', true, '+33659862414', true, 'Lorem ipsum dolor sit amet.', 3, '2017-06-13 12:33:11', 1, 0, 0, 0, true),
+  ('user1@example.com', '$argon2id$v=19$m=16,t=2,p=1$emVmZXpmemZlemVmZWR6ZXplZg$rqZkhxu5YbqCGHPNrjJZpQ', 0, 'https://picsum.photos/200', 'https://picsum.photos/1000/300', 'Florent', 'Panini', '1981-03-05 12:33:11', true, '+33659862414', true, 'Lorem ipsum dolor sit amet.', 2, '2017-06-13 12:33:11', 1, 0, 0, 0, false);
 
 
 
