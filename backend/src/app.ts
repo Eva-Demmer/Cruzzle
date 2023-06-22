@@ -50,5 +50,4 @@ if (fs.existsSync(reactIndexFile)) {
   });
 }
 
-// ready to export
 export default app;

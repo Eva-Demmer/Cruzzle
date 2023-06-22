@@ -98,6 +98,7 @@ function HeaderNav() {
                     boxShadow: 1,
                     "&:hover": { boxShadow: 2 },
                     "&:active, &.Mui-focusVisible": { boxShadow: 4 },
+                    zIndex: 2,
                   }}
                 >
                   <PlusIcon className="w-6 h-6" />
@@ -108,7 +109,7 @@ function HeaderNav() {
             {smallQuery && (
               <Button
                 variant="contained"
-                color="secondary"
+                color="primary"
                 startIcon={<PlusIcon className="h-6 w-6" />}
                 className="flex rounded-full mx-2"
                 onClick={() => navigate("/ideas/new")}
@@ -142,7 +143,7 @@ function HeaderNav() {
 
             <Tooltip title="Notifications" className="mx-1">
               <IconButton>
-                <Badge badgeContent={notificationCount} color="secondary">
+                <Badge badgeContent={notificationCount} color="primary">
                   <BellIcon className="h-7 w-7" />
                 </Badge>
               </IconButton>

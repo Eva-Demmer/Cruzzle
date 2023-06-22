@@ -25,6 +25,7 @@ git config --global core.autocrlf false
 ### Available Commands
 
 - `migrate` : Run the database migration script
+- `prisma-init`: Run ORM initalalisation to the existing database
 - `dev` : Starts both servers (frontend + backend) in one terminal
 - `dev-front` : Starts the React frontend server
 - `dev-back` : Starts the Express backend server

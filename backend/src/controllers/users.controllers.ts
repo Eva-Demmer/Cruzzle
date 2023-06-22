@@ -1,35 +1,27 @@
 import { Request, Response } from "express";
-import dotenv, { DotenvConfigOptions } from "dotenv";
-// import database from "" <-----------implement later;
+import { findAll, findById } from "../models/user.model";
 
-// import { UserReqBody } from "../interfaces/users.interface";
-
-dotenv.config(<DotenvConfigOptions>{ silent: true });
-
-const getUsers = (req: Request, res: Response) => {
-  res.send("here is users list");
+const getUsers = async (req: Request, res: Response) => {
+  try {
+    const data = await findAll();
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 };
 
-const getUsersById = (req: Request, res: Response) => {
+const getUserById = async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id, 10);
-  res.send(`here is user ${id}`);
+  try {
+    const data = await findById(id);
+    if (data) {
+      res.status(200).json(data);
+    } else {
+      res.status(404).send("Idea not found");
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
 };
 
-const postUser = (req: Request, res: Response) => {
-  console.info(req.body);
-  res.sendStatus(201);
-};
-
-const updateUserById = (req: Request, res: Response) => {
-  const id: number = parseInt(req.params.id, 10);
-  console.info(id, req.body);
-  res.sendStatus(201);
-};
-
-const deleteUserById = (req: Request, res: Response) => {
-  const id: number = parseInt(req.params.id, 10);
-  console.info(id, req.body);
-  res.sendStatus(204);
-};
-
-export { getUsers, getUsersById, postUser, updateUserById, deleteUserById };
+export { getUsers, getUserById };
