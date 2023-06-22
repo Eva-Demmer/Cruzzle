@@ -1,10 +1,5 @@
 import { useLocation } from "react-router-dom";
 
-import IdeaTabs from "../../components/createidea/IdeaTabs";
-import IdeaHeader from "../../components/createidea/IdeaHeader";
-import IdeaAuthorization from "../../components/createidea/IdeaAuthorization";
-import IdeaUpload from "../../components/createidea/IdeaUpload";
-
 function IdeaNew() {
   const location = useLocation();
 
@@ -21,10 +16,6 @@ function IdeaNew() {
         </p>
       </div>
 
-      <IdeaHeader />
-      <IdeaAuthorization />
-      <IdeaTabs />
-      <IdeaUpload />
       {/* 
       <div className="my-8" aria-label="Cloud Share"></div>
       <div className="my-8" aria-label="Teams"></div> */}
