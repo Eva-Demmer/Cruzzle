@@ -3,10 +3,17 @@ import { useContext } from "react";
 import { IdeaFormContext } from "../../contexts/IdeaFormContext";
 
 function IdeaForm({ children }) {
-  const { handleSubmit, filesAttachment } = useContext(IdeaFormContext);
+  const { handleSubmit, filesAttachment, teamSelect } =
+    useContext(IdeaFormContext);
 
   const onSubmit = (data) => {
+    console.info(teamSelect);
     const formData = new FormData();
+
+    teamSelect.forEach((collaborator, index) => {
+      const key = `team_${index}`;
+      formData.append(key, collaborator);
+    });
 
     filesAttachment
       .map((item, index) => ({
@@ -27,8 +34,16 @@ function IdeaForm({ children }) {
 
     for (const key in dataWithoutCategories) {
       if (Object.prototype.hasOwnProperty.call(dataWithoutCategories, key)) {
-        formData.append(key, dataWithoutCategories[key]);
+        const value = dataWithoutCategories[key];
+        if (value) {
+          formData.append(key, value);
+        }
       }
+    }
+
+    // Valeur du formData pour le submit
+    for (const pair of formData.entries()) {
+      console.info(`${pair[0]},${pair[1]}`);
     }
 
     // Request Axios to post

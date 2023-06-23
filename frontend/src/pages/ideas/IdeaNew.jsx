@@ -10,6 +10,7 @@ import IdeaCloud from "../../components/createidea/IdeaCloud";
 import IdeaFormProvider from "../../contexts/IdeaFormContext";
 import IdeaButtons from "../../components/createidea/IdeaButtons";
 import IdeaError from "../../components/createidea/IdeaError";
+import IdeaTeam from "../../components/createidea/IdeaTeam";
 
 function IdeaNew() {
   const location = useLocation();
@@ -35,6 +36,7 @@ function IdeaNew() {
           <IdeaUpload />
           <IdeaCloud />
           <Divider />
+          <IdeaTeam />
           <IdeaButtons />
           <IdeaError />
         </IdeaForm>
