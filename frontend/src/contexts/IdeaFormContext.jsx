@@ -12,6 +12,7 @@ function IdeaFormProvider({ children }) {
   const [primaryImg, setPrimaryImg] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [valueCategories, setValueCategories] = useState([]);
+  const [teamSelect, setTeamSelect] = useState([]);
   const [dataform, setDataform] = useState(null);
 
   const contextValue = useMemo(
@@ -31,6 +32,8 @@ function IdeaFormProvider({ children }) {
       setValueCategories,
       dataform,
       setDataform,
+      teamSelect,
+      setTeamSelect,
     }),
     [
       open,
@@ -47,6 +50,8 @@ function IdeaFormProvider({ children }) {
       setValueCategories,
       dataform,
       setDataform,
+      teamSelect,
+      setTeamSelect,
     ]
   );
 

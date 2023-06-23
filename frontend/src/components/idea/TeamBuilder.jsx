@@ -42,7 +42,10 @@ export default function TeamBuilder({ list, onChange, getOptions }) {
   };
 
   return (
-    <div className="list-button flex flex-col items-center w-full gap-4 p-6 sm:flex-row sm:justify-start sm:items-start sm:gap-8">
+    <div
+      className="flex flex-col items-center w-full gap-4 sm:flex-row sm:justify-start sm:items-start sm:gap-8"
+      aria-label="list-button"
+    >
       <div className="w-full sm:w-1/2 lg:max-w-[400px]">
         <Autocomplete
           disableCloseOnSelect
@@ -57,17 +60,20 @@ export default function TeamBuilder({ list, onChange, getOptions }) {
           }}
           onChange={handleChange}
           isOptionEqualToValue={(option, value) =>
-            option.firstName === value.firstName
+            `${option.firstname} ${option.lastname}` ===
+            `${value.firstname} ${value.lastname}`
           }
-          getOptionLabel={(option) => option.firstName}
+          getOptionLabel={(option) => `${option.firstname} ${option.lastname}`}
           options={options}
           value={list}
           loading={loading}
           renderInput={(params) => (
             <TextField
               {...params}
-              label="Gather your team"
+              label="Collaborators"
+              placeholder="Gather your team"
               value={list}
+              InputLabelProps={{ shrink: true }}
               InputProps={{
                 ...params.InputProps,
                 endAdornment: (
@@ -96,7 +102,7 @@ TeamBuilder.propTypes = {
       id: PropTypes.number.isRequired,
       firstname: PropTypes.string.isRequired,
       lastname: PropTypes.string.isRequired,
-      imgUrl: PropTypes.string.isRequired,
+      avatar_url: PropTypes.string.isRequired,
     })
   ).isRequired,
   onChange: PropTypes.func.isRequired,
