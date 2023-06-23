@@ -6,6 +6,6 @@ export const xxl = { query: "(min-width: 1536px)" };
 
 // TO USE:
 
-// import { useMediaQuery } from "react-responsive;
+// import { useMediaQuery } from "@mui/material";
 // import { sm } from "../../utils/mediaQueries";
 // const smallQuery = useMediaQuery(sm);
