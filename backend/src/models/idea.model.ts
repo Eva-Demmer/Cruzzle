@@ -120,6 +120,20 @@ const deleteIdea = async (id: number) => {
   }
 };
 
+const archiveIdea = async (id: number) => {
+  try {
+    const response = await prisma.idea.update({
+      where: { id },
+      data: { archived_at: new Date() },
+    });
+    return response;
+  } catch (error) {
+    throw new Error("Idea not found");
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
 export {
   findAll,
   findById,
@@ -127,4 +141,5 @@ export {
   createIdea,
   addPrimaryImgIdea,
   deleteIdea,
+  archiveIdea,
 };
