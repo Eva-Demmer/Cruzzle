@@ -4,6 +4,7 @@ import {
   getIdeaById,
   getIdeaByFilter,
   postIdea,
+  deleteIdeaById,
 } from "../controllers/ideas.controllers";
 import { uploadFilesIdea } from "../middlewares/multer.middlewares";
 
@@ -21,5 +22,6 @@ router.get("/filter", getIdeaByFilter);
 router.get("/:id", getIdeaById);
 
 router.post("/", uploadFilesIdea, postIdea);
+router.delete("/:id", deleteIdeaById);
 
 export default router;

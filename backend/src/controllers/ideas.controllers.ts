@@ -5,6 +5,7 @@ import {
   findByFilter,
   createIdea,
   addPrimaryImgIdea,
+  deleteIdea,
 } from "../models/idea.model";
 import { uploadToFirebase } from "../services/uploadTofFirebase";
 import { UploadedFiles } from "../interfaces/uploadedfiles.interface";
@@ -116,4 +117,14 @@ const postIdea = async (req: Request, res: Response) => {
   }
 };
 
-export { getIdeas, getIdeaById, getIdeaByFilter, postIdea };
+const deleteIdeaById = async (req: Request, res: Response) => {
+  const id: number = parseInt(req.params.id, 10);
+  try {
+    const data = await deleteIdea(id);
+    res.status(204).json(data);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+export { getIdeas, getIdeaById, getIdeaByFilter, postIdea, deleteIdeaById };
