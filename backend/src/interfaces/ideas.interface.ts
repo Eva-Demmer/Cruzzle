@@ -18,6 +18,8 @@ interface Idea {
 }
 
 interface IdeaFilterQuery {
+  userId?: string;
+  userAgencyId?: string;
   publicationDateStart?: string;
   publicationDateEnd?: string;
   autorSelectionTag?: string;

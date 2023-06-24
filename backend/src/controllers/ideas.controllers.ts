@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
-import { findAll, findById, findByFilter } from "../models/idea.model";
+import { findAll, findById } from "../models/idea.model";
+import findByFilter from "../models/ideaFilter.model";
+import { IdeaFilterQuery } from "../interfaces/ideas.interface";
 
 const getIdeas = async (req: Request, res: Response) => {
   try {
@@ -25,7 +27,7 @@ const getIdeaById = async (req: Request, res: Response) => {
 };
 
 const getIdeaByFilter = async (req: Request, res: Response) => {
-  const filterQuery = req.query;
+  const filterQuery: IdeaFilterQuery = req.query;
   try {
     const data = await findByFilter(filterQuery);
     res.status(200).json(data);
