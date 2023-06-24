@@ -16,11 +16,10 @@ model agency {
 }
 
 model attachment {
-  id           Int    @id @default(autoincrement())
-  idea_id      Int
-  content_type String @db.VarChar(255)
-  content_url  String @db.VarChar(255)
-  idea         idea   @relation(fields: [idea_id], references: [id], onUpdate: Restrict, map: "attachment_ibfk_1")
+  id          Int    @id @default(autoincrement())
+  idea_id     Int
+  content_url String @db.VarChar(255)
+  idea        idea   @relation(fields: [idea_id], references: [id], onUpdate: Restrict, map: "attachment_ibfk_1")
 
   @@index([idea_id], map: "idea_id")
 }

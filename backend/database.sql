@@ -190,7 +190,6 @@ VALUES
 CREATE TABLE `attachment` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
   `idea_id` integer NOT NULL,
-  `content_type` varchar(255) NOT NULL,
   `content_url` varchar(255) NOT NULL,
   FOREIGN KEY (`idea_id`) REFERENCES `idea` (`id`)
 );
