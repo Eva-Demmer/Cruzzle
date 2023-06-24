@@ -22,9 +22,9 @@ export function Modal({ isOpen, onClose, onSave, children }) {
       role="presentation"
       ref={globalOverlay}
       onClick={handleClose}
-      className="black-overlay flex items-center justify-center w-full absolute inset-0 z-[100] bg-black bg-opacity-50"
+      className="black-overlay flex items-center justify-center w-full absolute inset-0 z-[9000] bg-black bg-opacity-50"
     >
-      <div className="rounded-lg shadow-lg flex flex-col w-full m-2 max-h-[97%] overflow-scroll no-scrollbar::-webkit-scrollbar no-scrollbar sm:mx-16 lg:max-w-[800px] bg-white">
+      <div className="rounded-lg shadow-lg flex flex-col w-full m-2 max-h-[97%] overflow-scroll no-scrollbar::-webkit-scrollbar no-scrollbar sm:mx-16 lg:w-fit lg:min-w-[450px] bg-white">
         <div className="flex flex-col gap-4 px-2 pt-10 pb-8 sm:px-8 sm:pt-16 sm:pb-10">
           {children}
         </div>
