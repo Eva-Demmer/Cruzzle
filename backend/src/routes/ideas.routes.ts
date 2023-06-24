@@ -3,7 +3,9 @@ import {
   getIdeas,
   getIdeaById,
   getIdeaByFilter,
+  postIdea,
 } from "../controllers/ideas.controllers";
+import { uploadFilesIdea } from "../middlewares/multer.middlewares";
 
 const router = express.Router();
 
@@ -17,5 +19,7 @@ router.get("/", getIdeas);
 router.get("/filter", getIdeaByFilter);
 
 router.get("/:id", getIdeaById);
+
+router.post("/", uploadFilesIdea, postIdea);
 
 export default router;
