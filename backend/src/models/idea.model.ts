@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import dayjs from "dayjs";
-import { IdeaFilterQuery } from "../interfaces/ideas.interface";
+import { Idea, IdeaFilterQuery, PostIdea } from "../interfaces/ideas.interface";
 
 const prisma = new PrismaClient();
 
@@ -64,4 +64,46 @@ const findByFilter = async (filterQuery: IdeaFilterQuery) => {
   }
 };
 
-export { findAll, findById, findByFilter };
+const createIdea = async (dataIdea: Idea, userId: number): Promise<Idea> => {
+  const { title, context, ...otherDataIdea } = dataIdea;
+
+  const data: PostIdea = {
+    user_id: userId,
+    title,
+    context,
+  };
+  for (const field in otherDataIdea) {
+    if (dataIdea[field]) {
+      data[field] = dataIdea[field];
+    }
+  }
+
+  try {
+    const createdIdea: Idea = await prisma.idea.create({
+      data,
+    });
+    return createdIdea;
+  } catch (error) {
+    throw new Error("Error creating new idea");
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+const addPrimaryImgIdea = async (id: number, url: string) => {
+  try {
+    const response = await prisma.idea.update({
+      where: {
+        id,
+      },
+      data: { primary_img: url },
+    });
+    return response;
+  } catch (error) {
+    throw new Error("Error creating new idea");
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+export { findAll, findById, findByFilter, createIdea, addPrimaryImgIdea };
