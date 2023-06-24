@@ -37,6 +37,9 @@ const themeMui = createTheme({
     white: {
       main: "#ffffff",
     },
+    grey: {
+      main: "#c4c4c4",
+    },
   },
 });
 

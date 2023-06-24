@@ -10,6 +10,9 @@ module.exports = {
       transitionDuration: {
         2000: "2000ms",
       },
+      dropShadow: {
+        top: "0px -8px 16px rgba(0, 0, 0, 0.10)",
+      },
       colors: {
         primary: {
           50: "#A73FB9", // text color

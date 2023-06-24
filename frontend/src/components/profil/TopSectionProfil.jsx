@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import {
   MapPinIcon,
   LinkIcon,
@@ -12,9 +12,11 @@ import { UserContext } from "../../contexts/UserContext";
 import AvatarUserProfile from "../avatar/AvatarUserProfile";
 import ModifierButton from "./ModifierButton";
 import { sm } from "../../utils/mediaQueries";
+import ModalEditImage from "./ModalEditImage";
 
 function TopSectionProfil() {
   const {
+    imgUrl,
     imgBanner,
     firstname,
     lastname,
@@ -28,6 +30,17 @@ function TopSectionProfil() {
   const userId = useParams();
   const isCurrentUserProfile = parseInt(userId.id, 10) === parseInt(id, 10);
   const smallQuery = useMediaQuery(sm);
+  const [isOpenAvatar, setIsOpenAvatar] = useState(false);
+  const [isOpenBanner, setIsOpenBanner] = useState(false);
+
+  const toggleModal = (state, setter) => {
+    setter(!state);
+  };
+
+  // const handleSave = (src, newSrc) => {
+  //   src = newSrc;
+  // };
+
   return (
     <div className="flex flex-col flex-start">
       <div className="relative mb-16">
@@ -36,14 +49,18 @@ function TopSectionProfil() {
             <AvatarUserProfile />
             {isCurrentUserProfile && (
               <div className="absolute left-16 bottom-[-4px]">
-                <ModifierButton />
+                <ModifierButton
+                  onClick={() => toggleModal(isOpenAvatar, setIsOpenAvatar)}
+                />
               </div>
             )}
           </div>
         </div>
         {isCurrentUserProfile && (
           <div className="absolute right-7 bottom-[+20px] md:bottom-[+20px] md:right-5">
-            <ModifierButton />
+            <ModifierButton
+              onClick={() => toggleModal(isOpenBanner, setIsOpenBanner)}
+            />
           </div>
         )}
         {isCurrentUserProfile && smallQuery && (
@@ -99,6 +116,25 @@ function TopSectionProfil() {
           </p>
         </div>
       </div>
+      <ModalEditImage
+        isOpen={isOpenAvatar}
+        src={imgUrl}
+        onClose={() => toggleModal(isOpenAvatar, setIsOpenAvatar)}
+        onSave={() => console.info("bonjour")}
+        width="158"
+        height="158"
+        radius="150"
+      />
+
+      <ModalEditImage
+        isOpen={isOpenBanner}
+        src={imgBanner}
+        onClose={() => toggleModal(isOpenBanner, setIsOpenBanner)}
+        onSave={() => console.info("bonjour")}
+        width="1136"
+        height="256"
+        radius="0"
+      />
     </div>
   );
 }
