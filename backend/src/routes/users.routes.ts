@@ -1,5 +1,11 @@
 import express, { Request, Response, NextFunction } from "express";
-import { getUsers, getUserById } from "../controllers/users.controllers";
+import {
+  getUsers,
+  getUserById,
+  // postUser,
+  putUser,
+  deleteUser,
+} from "../controllers/users.controllers";
 
 const router = express.Router();
 
@@ -11,5 +17,8 @@ router.use(timeLog);
 
 router.get("/", getUsers);
 router.get("/:id", getUserById);
+// router.post("/", postUser);
+router.put("/:id", putUser);
+router.delete("/:id", deleteUser);
 
 export default router;
