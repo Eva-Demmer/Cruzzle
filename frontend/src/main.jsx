@@ -33,6 +33,7 @@ import "./styles/main.scss";
 import IdeaProvider from "./contexts/IdeaContext";
 import LanguageProvider from "./contexts/LanguageContext";
 import MenuProvider from "./contexts/MenuContext";
+import FilterProvider from "./contexts/FilterContext";
 
 const router = createBrowserRouter([
   {
@@ -102,12 +103,14 @@ root.render(
           <IdeaProvider>
             <MenuProvider>
               <LanguageProvider>
-                <LocalizationProvider
-                  dateAdapter={AdapterDayjs}
-                  adapterLocale="fr"
-                >
-                  <RouterProvider router={router} />
-                </LocalizationProvider>
+                <FilterProvider>
+                  <LocalizationProvider
+                    dateAdapter={AdapterDayjs}
+                    adapterLocale="fr"
+                  >
+                    <RouterProvider router={router} />
+                  </LocalizationProvider>
+                </FilterProvider>
               </LanguageProvider>
             </MenuProvider>
           </IdeaProvider>

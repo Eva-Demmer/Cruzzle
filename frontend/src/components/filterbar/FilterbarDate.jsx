@@ -16,22 +16,24 @@ export default function FilterbarAutor({ isDisable }) {
     setPublicationDateEnd,
   } = useContext(FilterContext);
   const [isDisableByCustomDate, setisDisableByCustomDate] = useState(false);
+
+  const today = dayjs().locale("fr");
+  const publicationDateEndIsToday =
+    dayjs(publicationDateEnd).diff(today, "day") === 0;
   const deltaList = [30, 7, 0];
 
   const handleChange = (event) => {
-    setDateDelta(event.target.value);
+    const { value } = event.target;
+    setDateDelta(value);
+    setPublicationDateEnd(dayjs().locale("fr").format("YYYY-MM-DD HH:mm:ss"));
+    setPublicationDateStart(
+      dayjs().locale("fr").subtract(value, "day").format("YYYY-MM-DD HH:mm:ss")
+    );
   };
 
   useEffect(() => {
-    if (deltaList.includes(dateDelta)) {
+    if (deltaList.includes(dateDelta) && publicationDateEndIsToday) {
       setisDisableByCustomDate(false);
-      setPublicationDateEnd(dayjs().locale("fr").format("YYYY-MM-DD HH:mm:ss"));
-      setPublicationDateStart(
-        dayjs()
-          .locale("fr")
-          .subtract(dateDelta, "day")
-          .format("YYYY-MM-DD HH:mm:ss")
-      );
     } else {
       setisDisableByCustomDate(true);
     }
