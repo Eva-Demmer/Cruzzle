@@ -14,13 +14,13 @@ export default function TeamBuilderList({ list, onChange }) {
   };
 
   return (
-    <div className="list bg-gray-100">
+    <div aria-label="list">
       {list.map((person) => (
         <ListItem key={person.firstname} sx={{ height: 64 }}>
           <ListItemAvatar>
             <Avatar
               alt={`${person.firstname} ${person.lastname}`}
-              src={person.imgUrl}
+              src={person.avatar_url}
               sx={{ width: 40, height: 40 }}
             />
           </ListItemAvatar>
@@ -49,7 +49,7 @@ TeamBuilderList.propTypes = {
       id: PropTypes.number.isRequired,
       firstname: PropTypes.string.isRequired,
       lastname: PropTypes.string.isRequired,
-      imgUrl: PropTypes.string.isRequired,
+      avatar_url: PropTypes.string.isRequired,
     })
   ).isRequired,
   onChange: PropTypes.func.isRequired,
