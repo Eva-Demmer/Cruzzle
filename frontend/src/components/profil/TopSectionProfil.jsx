@@ -37,10 +37,6 @@ function TopSectionProfil() {
     setter(!state);
   };
 
-  // const handleSave = (src, newSrc) => {
-  //   src = newSrc;
-  // };
-
   return (
     <div className="flex flex-col flex-start">
       <div className="relative mb-16">
@@ -120,7 +116,6 @@ function TopSectionProfil() {
         isOpen={isOpenAvatar}
         src={imgUrl}
         onClose={() => toggleModal(isOpenAvatar, setIsOpenAvatar)}
-        onSave={() => console.info("bonjour")}
         width="158"
         height="158"
         radius="150"
@@ -130,7 +125,6 @@ function TopSectionProfil() {
         isOpen={isOpenBanner}
         src={imgBanner}
         onClose={() => toggleModal(isOpenBanner, setIsOpenBanner)}
-        onSave={() => console.info("bonjour")}
         width="1136"
         height="256"
         radius="0"
