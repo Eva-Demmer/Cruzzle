@@ -5,10 +5,12 @@ import Sidebar from "../components/sidebar/Sidebar";
 import HeaderNav from "../components/topbar/HeaderNav";
 import { sm } from "../utils/mediaQueries";
 import { MenuContext } from "../contexts/MenuContext";
+import { ScrollContext } from "../contexts/ScrollContext";
 
 function Root() {
   const smallQuery = useMediaQuery(sm);
   const { activeMenu, setActiveMenu } = useContext(MenuContext);
+  const { divRef } = useContext(ScrollContext);
 
   useLayoutEffect(() => {
     if (smallQuery && !activeMenu) {
@@ -20,23 +22,22 @@ function Root() {
   }, [smallQuery]);
 
   return (
-    <div className="flex flex-col h-screen sm:flex-row">
+    <div className="flex h-screen overflow-hidden">
+      {smallQuery && <Sidebar />}
       <div
-        className={`${
-          activeMenu ? "absolute h-full" : ""
-        } flex flex-col w-full bg-white sm:relative sm:w-60 lg:w-64 sm:border-solid sm:border-t-[0px] sm:border-b-[0px] sm:border-l-[0px] sm:border-r-[1px] sm:border-gray-300`}
+        className="h-full relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
+        ref={divRef}
+        id="scrollbar"
       >
-        {!smallQuery && <HeaderNav />}
-        {activeMenu && <Sidebar />}
-      </div>
-
-      <div className="flex flex-col flex-grow w-full md:w-80">
-        {smallQuery && <HeaderNav />}
-
-        <div className="flex-1 overflow-y-auto">
-          {/* Page */}
-          <Outlet />
+        <div className="h-screen sm:h-auto sticky flex flex-col top-0 z-50 w-full">
+          <HeaderNav />
+          {!smallQuery && activeMenu && <Sidebar />}
         </div>
+        <main>
+          <div className="mx-auto max-w-screen-2xl">
+            <Outlet />
+          </div>
+        </main>
       </div>
     </div>
   );
