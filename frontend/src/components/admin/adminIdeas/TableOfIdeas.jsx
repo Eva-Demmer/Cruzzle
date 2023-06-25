@@ -6,6 +6,7 @@ import ActionIcons from "./ActionIcons";
 
 const columns = [
   { field: "title", headerName: "Title", width: 200 },
+  { field: "user_id", headerName: "Autor", width: 130 },
   {
     field: "created_at",
     headerName: "Created at",
@@ -69,12 +70,9 @@ TableOfIdeas.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
-      context: PropTypes.string.isRequired,
       user_id: PropTypes.number.isRequired,
       created_at: PropTypes.string.isRequired,
-      goal: PropTypes.string.isRequired,
-      profits: PropTypes.string.isRequired,
-      risks: PropTypes.string.isRequired,
+      deleted_at: PropTypes.string.isRequired,
       views: PropTypes.number.isRequired,
     })
   ).isRequired,
