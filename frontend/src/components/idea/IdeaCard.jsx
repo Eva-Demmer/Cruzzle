@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
@@ -5,7 +6,6 @@ import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
-import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/outline";
 import IdeaCardActions from "./IdeaCardActions";
 import { UserContext } from "../../contexts/UserContext";
 
@@ -15,15 +15,14 @@ export default function IdeaCard({ isMini, idea }) {
     id,
     title,
     context,
-    userId,
-    createdAt,
-    isPrivate,
-    isFavorite,
-    status,
-    tags,
-    comments,
-    team,
-    imgUrl,
+    user,
+    created_at,
+    archived_at,
+    deleted_at,
+    idea_category,
+    _count,
+    idea_teams,
+    primary_img,
   } = idea;
 
   return (
@@ -45,27 +44,18 @@ export default function IdeaCard({ isMini, idea }) {
               : "w-full h-32 bg-cover bg-center opacity-100 group-hover:opacity-90 duration-100 rounded-t-xl sm:h-auto sm:w-1/4 sm:rounded-l-xl sm:rounded-r-none"
           }`}
           style={{
-            backgroundImage: `url(${imgUrl})`,
+            backgroundImage: `url(${primary_img})`,
           }}
         />
         <div className={`${isMini ? "w-auto" : "max-w-4xl sm:w-3/4"} pl-6 p-4`}>
           <div className="flex items-center gap-2 mb-3 justify-start">
-            {isPrivate ? (
-              <LockClosedIcon
-                className={`${isMini ? "hidden" : "h-6 w-6 text-gray-500"}`}
-              />
-            ) : (
-              <LockOpenIcon
-                className={`${isMini ? "hidden" : "h-6 w-6 text-gray-500"}`}
-              />
-            )}
-            {tags.map((tag) => (
+            {idea_category.map((tag) => (
               <Chip
                 sx={{
                   borderColor: tag.color,
                 }}
-                key={tag.name}
-                label={tag.name}
+                key={tag.label}
+                label={tag.label}
                 variant="outlined"
                 size="small"
               />
@@ -90,21 +80,21 @@ export default function IdeaCard({ isMini, idea }) {
             <div className="flex items-center justify-between mt-6 text-gray-400">
               <div className="hidden text-sm sm:flex">
                 <span className="mr-1">Date : </span>
-                <span className="font-bold">{createdAt}</span>
+                <span className="font-bold">{created_at.slice(0, 10)}</span>
               </div>
               <Stack direction="row" className="items-center">
                 <span className="text-sm mr-1">Status : </span>
                 <Chip
-                  label={status}
+                  label={archived_at || deleted_at ? "Closed" : "Ongoing"}
                   size="small"
                   variant="filled"
                   className={
-                    status === "Archived" ? "bg-blue-300" : "bg-statusGreen"
+                    archived_at || deleted_at ? "bg-slate-200" : "bg-green-300"
                   }
                 />
               </Stack>
               <div className="text-sm">
-                <span className="font-bold mr-1">{comments.length}</span>
+                <span className="font-bold mr-1">{_count.comment}</span>
                 <span>replies</span>
               </div>
               <Stack direction="row" className="hidden items-center lg:flex">
@@ -119,11 +109,11 @@ export default function IdeaCard({ isMini, idea }) {
                     },
                   }}
                 >
-                  {team.map((u) => (
+                  {idea_teams.map((u) => (
                     <Avatar
                       key={u.id}
                       alt={`${u.firstname} ${u.lastname}`}
-                      src={u.imgUrl}
+                      src={u.avatar_url}
                       sx={{ width: 32, height: 32 }}
                     />
                   ))}
@@ -133,14 +123,7 @@ export default function IdeaCard({ isMini, idea }) {
           )}
         </div>
       </Link>
-      {!isMini && (
-        <IdeaCardActions
-          userId={userId}
-          isFavorite={isFavorite}
-          user={userNum}
-          id={id}
-        />
-      )}
+      {!isMini && <IdeaCardActions userId={user.id} user={userNum} id={id} />}
     </div>
   );
 }
@@ -152,40 +135,28 @@ IdeaCard.propTypes = {
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     context: PropTypes.string.isRequired,
-    userId: PropTypes.number.isRequired,
-    createdAt: PropTypes.string.isRequired,
-    isPrivate: PropTypes.bool.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
-    status: PropTypes.string.isRequired,
-    tags: PropTypes.arrayOf(
+    user: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+    }),
+    created_at: PropTypes.string.isRequired,
+    archived_at: PropTypes.string,
+    deleted_at: PropTypes.string,
+    idea_category: PropTypes.arrayOf(
       PropTypes.shape({
-        name: PropTypes.string.isRequired,
+        label: PropTypes.string.isRequired,
         color: PropTypes.string.isRequired,
       })
     ).isRequired,
-    comments: PropTypes.arrayOf(
+    _count: PropTypes.shape({
+      idea_like: PropTypes.number.isRequired,
+      comment: PropTypes.number.isRequired,
+      attachment: PropTypes.number.isRequired,
+    }).isRequired,
+    idea_teams: PropTypes.arrayOf(
       PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        userId: PropTypes.number.isRequired,
-        body: PropTypes.string.isRequired,
-        createdAt: PropTypes.string.isRequired,
-        likes: PropTypes.arrayOf(
-          PropTypes.shape({
-            id: PropTypes.number.isRequired,
-            userId: PropTypes.number.isRequired,
-            createdAt: PropTypes.string.isRequired,
-          })
-        ),
+        avatar_url: PropTypes.string.isRequired,
       })
     ).isRequired,
-    team: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        firstname: PropTypes.string.isRequired,
-        lastname: PropTypes.string.isRequired,
-        imgUrl: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    imgUrl: PropTypes.string.isRequired,
+    primary_img: PropTypes.string.isRequired,
   }).isRequired,
 };
