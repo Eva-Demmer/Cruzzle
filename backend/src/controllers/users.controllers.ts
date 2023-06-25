@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import {
   findAll,
   findById,
-  // create,
+  create,
   update,
   remove,
 } from "../models/user.model";
@@ -30,15 +30,15 @@ const getUserById = async (req: Request, res: Response) => {
   }
 };
 
-// const postUser = async (req: Request, res: Response) => {
-//   try {
-//     const user = req.body;
-//     const createdUser = await create(user);
-//     res.status(201).json(createdUser);
-//   } catch (error) {
-//     res.status(500).send(error);
-//   }
-// };
+const postUser = async (req: Request, res: Response) => {
+  try {
+    const user = req.body;
+    const createdUser = await create(user);
+    res.status(201).json(createdUser);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
 const putUser = async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id, 10);
@@ -69,4 +69,4 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
-export { getUsers, getUserById, putUser, deleteUser };
+export { getUsers, getUserById, postUser, putUser, deleteUser };

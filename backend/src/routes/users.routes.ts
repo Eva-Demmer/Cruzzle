@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import {
   getUsers,
   getUserById,
-  // postUser,
+  postUser,
   putUser,
   deleteUser,
 } from "../controllers/users.controllers";
@@ -17,7 +17,7 @@ router.use(timeLog);
 
 router.get("/", getUsers);
 router.get("/:id", getUserById);
-// router.post("/", postUser);
+router.post("/", postUser);
 router.put("/:id", putUser);
 router.delete("/:id", deleteUser);
 
