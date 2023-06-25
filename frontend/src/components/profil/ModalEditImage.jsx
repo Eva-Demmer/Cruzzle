@@ -8,48 +8,43 @@ import AspectRatioIcon from "@mui/icons-material/AspectRatio";
 import { Modal } from "../modal/Modal";
 import UploadButton from "../styledComponents/UploadButton";
 
-function ModalEditImage({
-  isOpen,
-  src,
-  radius,
-  onClose,
-  onSave,
-  height,
-  width,
-}) {
+function ModalEditImage({ isOpen, src, radius, onClose, height, width }) {
   if (!isOpen) return null;
   const [slideScaleValue, setSlideScaleValue] = useState(10);
   const [slideRotateValue, setSlideRotateValue] = useState(0);
-  // const [imgInfo, setImageInfo] = useState();
+  const [newAvatar, setNewAvatar] = useState(src);
   const cropRef = useRef(null);
 
-  // const handleSave = async () => {
-  //   if (cropRef) {
-  //     const dataUrl = cropRef.current.getImage().toDataURL();
-  //     const result = await fetch(dataUrl);
-  //     const blob = await result.blob();
-  //     setImageInfo(URL.createObjectURL(blob));
-  //     console.info(imgInfo);
-  //   }
-  // };
+  const handleSave = async () => {
+    if (cropRef) {
+      const dataUrl = cropRef.current.getImageScaledToCanvas().toDataURL();
+      const result = await fetch(dataUrl);
+      const blob = await result.blob();
+      setNewAvatar(URL.createObjectURL(blob));
+      setSlideScaleValue(10);
+      setSlideRotateValue(0);
+      console.info("handleSave");
+    }
+  };
 
-  // const handleImgChange = (e) => {
-  //   setImageInfo(URL.createObjectURL(e.target.files[0]));
-  //   // setModalOpen(true);
-  // };
+  const handleImgChange = (e) => {
+    setNewAvatar(URL.createObjectURL(e.target.files[0]));
+  };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} onSave={onSave}>
+    <Modal isOpen={isOpen} onClose={onClose} onSave={handleSave}>
       <div className="flex flex-col items-center justify-center">
-        <UploadButton accept="image/*">New file</UploadButton>
+        <UploadButton accept="image/*" onChange={handleImgChange}>
+          New file
+        </UploadButton>
         <AvatarEditor
           ref={cropRef}
-          image={src}
+          image={newAvatar}
           width={parseInt(width)}
           height={parseInt(height)}
           border={50}
           borderRadius={parseInt(radius)}
-          color={[255, 255, 255, 0.6]} // RGBA
+          color={[255, 255, 255, 0.6]}
           scale={slideScaleValue / 10}
           rotate={slideRotateValue}
         />
@@ -99,7 +94,6 @@ ModalEditImage.propTypes = {
   width: PropTypes.string.isRequired,
   height: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
 };
 
 export default ModalEditImage;
