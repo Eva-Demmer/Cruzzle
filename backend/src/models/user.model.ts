@@ -14,16 +14,29 @@ const findAll = async () => {
 
 const findById = async (id: number) => {
   try {
-    const response = await prisma.user.findUnique({
+    const data = await prisma.user.findUnique({
       where: {
         id,
       },
     });
-    return response;
+    return data;
   } finally {
     await prisma.$disconnect();
   }
 };
+
+// const findByEmail = async (mail: string) => {
+//   try {
+//     const data = await prisma.user.findUnique({
+//       where: {
+//         mail,
+//       },
+//     });
+//     return data;
+//   } finally {
+//     await prisma.$disconnect();
+//   }
+// };
 
 const create = async (user: User) => {
   try {
@@ -52,6 +65,8 @@ const create = async (user: User) => {
       },
     });
     return createdUser;
+  } catch (error) {
+    throw new Error("Error creating user.");
   } finally {
     await prisma.$disconnect();
   }
@@ -59,29 +74,46 @@ const create = async (user: User) => {
 
 const update = async (id: number, updatedUser: User) => {
   try {
-    const result = await prisma.user.update({
+    const data = await prisma.user.update({
       where: {
         id,
       },
       data: updatedUser,
     });
-    return result;
+    return data;
+  } catch (error) {
+    throw new Error("Error updating user.");
   } finally {
     await prisma.$disconnect();
   }
 };
 
-const remove = async (id: number) => {
+const deactivate = async (id: number) => {
   try {
-    const result = await prisma.user.delete({
-      where: {
-        id,
-      },
+    const data = await prisma.user.update({
+      where: { id },
+      data: { is_active: false },
     });
-    return !!result;
+    return data;
+  } catch (error) {
+    throw new Error("Error making user inactive.");
   } finally {
     await prisma.$disconnect();
   }
 };
 
-export { findAll, findById, create, update, remove };
+const reactivate = async (id: number) => {
+  try {
+    const data = await prisma.user.update({
+      where: { id },
+      data: { is_active: true },
+    });
+    return data;
+  } catch (error) {
+    throw new Error("Error reactivating user.");
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+export { findAll, findById, create, update, deactivate, reactivate };

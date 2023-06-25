@@ -2,9 +2,10 @@ import express, { Request, Response, NextFunction } from "express";
 import {
   getUsers,
   getUserById,
-  postUser,
-  putUser,
-  deleteUser,
+  createUser,
+  updateUser,
+  deactivateUser,
+  reactivateUser,
 } from "../controllers/users.controllers";
 
 const router = express.Router();
@@ -17,8 +18,9 @@ router.use(timeLog);
 
 router.get("/", getUsers);
 router.get("/:id", getUserById);
-router.post("/", postUser);
-router.put("/:id", putUser);
-router.delete("/:id", deleteUser);
+router.post("/", createUser);
+router.put("/:id", updateUser);
+router.put("/:id", deactivateUser);
+router.put("/:id", reactivateUser);
 
 export default router;

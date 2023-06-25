@@ -2,9 +2,11 @@ import { Request, Response } from "express";
 import {
   findAll,
   findById,
+  // findByEmail,
   create,
   update,
-  remove,
+  deactivate,
+  reactivate,
 } from "../models/user.model";
 
 const getUsers = async (req: Request, res: Response) => {
@@ -30,7 +32,21 @@ const getUserById = async (req: Request, res: Response) => {
   }
 };
 
-const postUser = async (req: Request, res: Response) => {
+// const getUserByEmail = async (req: Request, res: Response) => {
+//   const { email } = req.params;
+//   try {
+//     const data = await findByEmail(email);
+//     if (data) {
+//       res.status(200).json(data);
+//     } else {
+//       res.status(404).send("User not found");
+//     }
+//   } catch (error) {
+//     res.status(500).send(error);
+//   }
+// };
+
+const createUser = async (req: Request, res: Response) => {
   try {
     const user = req.body;
     const createdUser = await create(user);
@@ -40,7 +56,7 @@ const postUser = async (req: Request, res: Response) => {
   }
 };
 
-const putUser = async (req: Request, res: Response) => {
+const updateUser = async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id, 10);
   const updatedUser = req.body;
   try {
@@ -55,12 +71,12 @@ const putUser = async (req: Request, res: Response) => {
   }
 };
 
-const deleteUser = async (req: Request, res: Response) => {
+const deactivateUser = async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id, 10);
   try {
-    const result = await remove(id);
+    const result = await deactivate(id);
     if (result) {
-      res.sendStatus(204);
+      res.status(200).json(result);
     } else {
       res.status(404).send("User not found");
     }
@@ -69,4 +85,25 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
-export { getUsers, getUserById, postUser, putUser, deleteUser };
+const reactivateUser = async (req: Request, res: Response) => {
+  const id: number = parseInt(req.params.id, 10);
+  try {
+    const result = await reactivate(id);
+    if (result) {
+      res.status(200).json(result);
+    } else {
+      res.status(404).send("User not found");
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+export {
+  getUsers,
+  getUserById,
+  createUser,
+  updateUser,
+  deactivateUser,
+  reactivateUser,
+};

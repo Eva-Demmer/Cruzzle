@@ -1,5 +1,4 @@
 // import bcrypt from "bcrypt";
-// // import * as bcrypt from "bcrypt";
 // import { Request, Response, NextFunction } from "express";
 
 // // Number of salt rounds for password hashing
@@ -40,7 +39,7 @@
 // ) => {
 //   try {
 //     const { password } = req.body;
-//     const { hashedPassword } = req.user; // Assuming you have a 'user' property with the hashed password
+//     const { hashedPassword } = req.user;
 
 //     // Compare provided password with hashed password
 //     const passwordMatch = await bcrypt.compare(password, hashedPassword);
