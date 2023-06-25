@@ -2,13 +2,14 @@ import { Request, Response } from "express";
 import {
   findAll,
   findById,
-  // findByEmail,
+  findByEmail,
   create,
   update,
   deactivate,
   reactivate,
 } from "../models/user.model";
 
+// Show all users
 const getUsers = async (req: Request, res: Response) => {
   try {
     const data = await findAll();
@@ -18,6 +19,7 @@ const getUsers = async (req: Request, res: Response) => {
   }
 };
 
+// Show specific user based on their ID
 const getUserById = async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id, 10);
   try {
@@ -32,30 +34,33 @@ const getUserById = async (req: Request, res: Response) => {
   }
 };
 
-// const getUserByEmail = async (req: Request, res: Response) => {
-//   const { email } = req.params;
-//   try {
-//     const data = await findByEmail(email);
-//     if (data) {
-//       res.status(200).json(data);
-//     } else {
-//       res.status(404).send("User not found");
-//     }
-//   } catch (error) {
-//     res.status(500).send(error);
-//   }
-// };
+// Show specific user based on their email address
+const getUserByEmail = async (req: Request, res: Response) => {
+  const { mail } = req.body;
+  try {
+    const data = await findByEmail(mail);
+    if (data) {
+      res.status(200).json(data);
+    } else {
+      res.status(404).send("User not found");
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
+// Create new user
 const createUser = async (req: Request, res: Response) => {
   try {
     const user = req.body;
-    const createdUser = await create(user);
+    const createdUser = await create(user); //
     res.status(201).json(createdUser);
   } catch (error) {
     res.status(500).send(error);
   }
 };
 
+// Update user
 const updateUser = async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id, 10);
   const updatedUser = req.body;
@@ -71,6 +76,7 @@ const updateUser = async (req: Request, res: Response) => {
   }
 };
 
+// Set is_active to false
 const deactivateUser = async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id, 10);
   try {
@@ -85,6 +91,7 @@ const deactivateUser = async (req: Request, res: Response) => {
   }
 };
 
+// Set is_active to true
 const reactivateUser = async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id, 10);
   try {
@@ -102,6 +109,7 @@ const reactivateUser = async (req: Request, res: Response) => {
 export {
   getUsers,
   getUserById,
+  getUserByEmail,
   createUser,
   updateUser,
   deactivateUser,

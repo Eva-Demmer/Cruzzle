@@ -2,7 +2,6 @@ import express, { Request, Response, NextFunction } from "express";
 import {
   getUsers,
   getUserById,
-  getUserByEmail,
   createUser,
   updateUser,
   deactivateUser,
@@ -18,15 +17,14 @@ const timeLog = (req: Request, res: Response, next: NextFunction) => {
 };
 router.use(timeLog);
 
-router.get("/email", getUserByEmail);
-
-router.post("/", hashPassword, createUser);
 router.get("/", getUsers);
 router.get("/:id", getUserById);
+router.put("/:id", updateUser); // user et admin
 
-router.put("/:id", updateUser);
-
-router.delete("/:id", deactivateUser);
-router.put("/:id", reactivateUser);
+// api/admin/users/:id
+// api/admin/users/
+router.post("/", hashPassword, createUser); // admin
+router.delete("/:id", deactivateUser); // admin
+router.put("/:id", reactivateUser); // admin
 
 export default router;

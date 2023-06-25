@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import User from "../interfaces/users.interface";
+import { User, CreateUser } from "../interfaces/users.interface";
 
 const prisma = new PrismaClient();
 
@@ -25,43 +25,33 @@ const findById = async (id: number) => {
   }
 };
 
-// const findByEmail = async (mail: string) => {
-//   try {
-//     const data = await prisma.user.findUnique({
-//       where: {
-//         mail,
-//       },
-//     });
-//     return data;
-//   } finally {
-//     await prisma.$disconnect();
-//   }
-// };
+// TODO: change to findUnique once Prisma changed
+const findByEmail = async (mail: string) => {
+  try {
+    const data = await prisma.user.findMany({
+      where: {
+        mail,
+      },
+    });
+    return data;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
 
-const create = async (user: User) => {
+const create = async (user: CreateUser) => {
   try {
     const createdUser = await prisma.user.create({
       data: {
         mail: user.mail,
         hashed_password: user.hashed_password,
         role_id: user.role_id,
-        avatar_url: user.avatar_url,
-        banner_url: user.banner_url,
         firstname: user.firstname,
         lastname: user.lastname,
-        birthdate: user.birthdate,
-        share_birthdate: user.share_birthdate,
-        phone: user.phone,
-        share_phone: user.share_phone,
-        biography: user.biography,
         agency_id: user.agency_id,
         joined_at: user.joined_at,
         position_id: user.position_id,
-        score_comment: user.score_comment,
-        score_idea: user.score_idea,
-        score_like: user.score_like,
-        created_at: user.created_at,
-        is_active: user.is_active,
+        is_active: true,
       },
     });
     return createdUser;
@@ -96,7 +86,7 @@ const deactivate = async (id: number) => {
     });
     return data;
   } catch (error) {
-    throw new Error("Error making user inactive.");
+    throw new Error("Error deactivating user.");
   } finally {
     await prisma.$disconnect();
   }
@@ -116,4 +106,12 @@ const reactivate = async (id: number) => {
   }
 };
 
-export { findAll, findById, create, update, deactivate, reactivate };
+export {
+  findAll,
+  findById,
+  findByEmail,
+  create,
+  update,
+  deactivate,
+  reactivate,
+};

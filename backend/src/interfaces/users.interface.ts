@@ -15,11 +15,23 @@ interface User {
   agency_id?: number;
   joined_at?: string;
   position_id?: number;
-  score_comment: number;
-  score_idea: number;
-  score_like: number;
-  created_at: Date;
+  score_comment?: number;
+  score_idea?: number;
+  score_like?: number;
+  created_at?: Date;
   is_active?: boolean | null;
 }
 
-export default User;
+interface CreateUser {
+  mail: string;
+  hashed_password: string;
+  role_id: number;
+  firstname: string;
+  lastname: string;
+  agency_id: number;
+  joined_at: string;
+  position_id: number;
+  is_active: boolean;
+}
+
+export { User, CreateUser };
