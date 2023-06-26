@@ -27,6 +27,7 @@ const ideasData = [
     risks: "Manage supplier relationships.",
     cloudshare: null,
     primary_img: "https://picsum.photos/500/500",
+    isFavorite: true,
     views: 120,
     idea_category: [
       {
@@ -159,6 +160,8 @@ const ideasData = [
     cloudshare: null,
     primary_img: "https://picsum.photos/500/500",
     views: 120,
+    isFavorite: false,
+
     idea_category: [
       {
         id: 1,

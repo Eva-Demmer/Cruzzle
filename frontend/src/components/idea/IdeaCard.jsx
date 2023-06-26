@@ -19,6 +19,7 @@ export default function IdeaCard({ isMini, idea }) {
     created_at,
     archived_at,
     deleted_at,
+    isFavorite,
     idea_category,
     _count,
     idea_teams,
@@ -123,7 +124,14 @@ export default function IdeaCard({ isMini, idea }) {
           )}
         </div>
       </Link>
-      {!isMini && <IdeaCardActions userId={user.id} user={userNum} id={id} />}
+      {!isMini && (
+        <IdeaCardActions
+          userId={user.id}
+          user={userNum}
+          id={id}
+          isFavorite={isFavorite}
+        />
+      )}
     </div>
   );
 }
@@ -135,6 +143,7 @@ IdeaCard.propTypes = {
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     context: PropTypes.string.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
     user: PropTypes.shape({
       id: PropTypes.number.isRequired,
     }),
