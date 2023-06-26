@@ -106,4 +106,25 @@ const addPrimaryImgIdea = async (id: number, url: string) => {
   }
 };
 
-export { findAll, findById, findByFilter, createIdea, addPrimaryImgIdea };
+const deleteIdea = async (id: number) => {
+  try {
+    const response = await prisma.idea.update({
+      where: { id },
+      data: { deleted_at: new Date() },
+    });
+    return response;
+  } catch (error) {
+    throw new Error("Idea not found");
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+export {
+  findAll,
+  findById,
+  findByFilter,
+  createIdea,
+  addPrimaryImgIdea,
+  deleteIdea,
+};
