@@ -47,45 +47,6 @@ function LoginForm() {
     e.preventDefault();
   };
 
-  // //  Call on backend
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   // Check if all fields are filled out
-  //   if (mail === "" || password === "") {
-  //     setAlertMessage("Please fill out all the fields!");
-  //     setShowAlert(true);
-  //   } else {
-  //     try {
-  //       // Make the HTTP request to backend API
-  //       const response = await axios.post(
-  //         "http://localhost:6001/api/users/login",
-  //         { mail, password }
-  //       );
-
-  //       // Check the response status
-  //       if (response.status === 200) {
-  //         // Extract the JWT token from the response data
-  //         const { token } = response.data;
-
-  //         // Store the token in localStorage
-  //         localStorage.setItem("token", token);
-
-  //         // Redirect to the home page
-  //         navigate("/");
-  //       } else {
-  //         // Handle unsuccessful login (status code other than 200)
-  //         setAlertMessage("Wrong email or password.");
-  //         setShowAlert(true);
-  //       }
-  //     } catch (error) {
-  //       // Handle any errors that occur during the request
-  //       console.error("Login failed:", error);
-  //       setAlertMessage("Login failed. Please try again later.");
-  //       setShowAlert(true);
-  //     }
-  //   }
-  // };
-
   //  Call on backend
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -106,6 +67,9 @@ function LoginForm() {
 
         // Store the token in localStorage
         localStorage.setItem("token", token);
+
+        // Add the token to the Authorization header
+        axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
         // Redirect to the home page
         navigate("/");
@@ -130,7 +94,7 @@ function LoginForm() {
             setShowAlert(true);
           }
         } else {
-          // Handle network errors
+          // Network error
           setAlertMessage("Network error. Please try again later.");
           setShowAlert(true);
         }

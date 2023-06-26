@@ -10,9 +10,10 @@ dotenv.config();
 const JWT_SECRET =
   "eb7e49b3511f9638e9478224a105556a4edab4afbc70e6f364b13907f2c3c1cf";
 
-// Define an extended Request interface
+// Define extended Request interface for token
 interface ExtendedRequest extends Request {
   token?: string;
+  payload?: any;
 }
 
 // Hash password before storing it in the database
@@ -35,10 +36,9 @@ const hashPassword = async (
     delete req.body.password;
     req.body.hashed_password = hashedPassword;
 
-    // Move to the next middleware
     next();
+    // Handle errors that occured during hashing
   } catch (error) {
-    // Handle errors that occurred during hashing
     console.error("Error hashing password:", error);
     res.status(500).json({ error: "Internal server error" });
   }
@@ -55,7 +55,7 @@ const verifyPassword = async (
 
     const [dataUser] = await findByEmail(mail);
 
-    // Check if user w/ email address exists in database
+    // Check if user w/ email address exists
     if (dataUser) {
       // User exists: Compare provided password with hashed password
       const passwordMatch = await bcrypt.compare(
@@ -94,4 +94,37 @@ const verifyPassword = async (
   }
 };
 
-export { hashPassword, verifyPassword };
+// Protect routes
+const protectRoutes = (
+  req: ExtendedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    // Retrieve token
+    const authorizationHeader = req.get("Authorization");
+
+    // If token cannot be retrieved, return error response
+    if (authorizationHeader == null) {
+      throw new Error("Authorization header is missing");
+    }
+
+    // If token retrieved, split into authentification type & token
+    const [type, token] = authorizationHeader.split(" ");
+
+    // If token is not of type Bearer, return error
+    if (type !== "Bearer") {
+      throw new Error("Authorization header has not the 'Bearer' type");
+    }
+
+    // If token is of type Bearer, verify token
+    req.payload = jwt.verify(token, JWT_SECRET);
+
+    next();
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(401);
+  }
+};
+
+export { hashPassword, verifyPassword, protectRoutes };
