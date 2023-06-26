@@ -3,7 +3,7 @@ import { UserIcon } from "@heroicons/react/24/solid";
 import { PlusIcon, KeyIcon } from "@heroicons/react/24/outline";
 import CounterCard from "../../components/admin/CounterCard";
 import ActionButton from "../../components/admin/ActionButton";
-import apiUsers from "../../services/api.users";
+import apiAdminUsers from "../../services/api.admin.users";
 import TableOfUsers from "../../components/admin/adminUsers/TableOfUsers";
 
 function AdminUsers() {
@@ -18,7 +18,7 @@ function AdminUsers() {
   };
 
   useEffect(() => {
-    apiUsers()
+    apiAdminUsers()
       .then((data) => setUserlist(data))
       .catch((error) =>
         console.error("error from amin users getting the list of users", error)

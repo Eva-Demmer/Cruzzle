@@ -49,7 +49,7 @@ export default function FilterbarCategory({ isDisable }) {
           );
         }}
       >
-        {categoryList.map((cat) => (
+        {categoryList?.map((cat) => (
           <MenuItem key={cat.id} value={cat.id}>
             {cat.label}
           </MenuItem>
