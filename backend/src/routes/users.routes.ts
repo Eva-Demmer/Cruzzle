@@ -1,14 +1,15 @@
 import express, { Request, Response, NextFunction } from "express";
 import {
+  createUser,
+  login,
   getUsers,
   getUserById,
-  getUserByEmail,
-  createUser,
+  // getUserByEmail,
   updateUser,
   deactivateUser,
   reactivateUser,
 } from "../controllers/users.controllers";
-import hashPassword from "../middlewares/auth.middlewares";
+import { hashPassword, verifyPassword } from "../middlewares/auth.middlewares";
 
 const router = express.Router();
 
@@ -18,9 +19,8 @@ const timeLog = (req: Request, res: Response, next: NextFunction) => {
 };
 router.use(timeLog);
 
-router.get("/email", getUserByEmail);
-
 router.post("/", hashPassword, createUser);
+router.post("/login", verifyPassword, login);
 router.get("/", getUsers);
 router.get("/:id", getUserById);
 

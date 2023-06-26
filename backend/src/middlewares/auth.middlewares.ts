@@ -1,9 +1,23 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
+import dotenv from "dotenv";
+import { findByEmail } from "../models/user.model";
 
-// Hash password before storing it in database
+dotenv.config();
+
+// TODO: Change secret key
+const JWT_SECRET =
+  "eb7e49b3511f9638e9478224a105556a4edab4afbc70e6f364b13907f2c3c1cf";
+
+// Define an extended Request interface
+interface ExtendedRequest extends Request {
+  token?: string;
+}
+
+// Hash password before storing it in the database
 const hashPassword = async (
-  req: Request,
+  req: ExtendedRequest,
   res: Response,
   next: NextFunction
 ) => {
@@ -21,7 +35,7 @@ const hashPassword = async (
     delete req.body.password;
     req.body.hashed_password = hashedPassword;
 
-    // Move to next middleware
+    // Move to the next middleware
     next();
   } catch (error) {
     // Handle errors that occurred during hashing
@@ -30,31 +44,50 @@ const hashPassword = async (
   }
 };
 
-// // Verify password
-// const verifyPassword = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     const { password } = req.body;
-//     const { hashedPassword } = req.user;
+// Verify password & generate JWT
+const verifyPassword = async (
+  req: ExtendedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { mail, password } = req.body;
 
-//     // Compare provided password with hashed password
-//     const passwordMatch = await bcrypt.compare(password, hashedPassword);
+    const [dataUser] = await findByEmail(mail);
 
-//     if (passwordMatch) {
-//       // Passwords match, move to next middleware
-//       next();
-//     } else {
-//       // Passwords do not match, return error response
-//       res.status(401).json({ error: "Invalid password" });
-//     }
-//   } catch (error) {
-//     // Handle errors that occurred during verification
-//     console.error("Error verifying passwords:", error);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// };
+    if (dataUser) {
+      // Compare provided password with hashed password
+      const passwordMatch = await bcrypt.compare(
+        password,
+        dataUser.hashed_password
+      );
 
-export default hashPassword;
+      // Passwords match, generate JWT token
+      if (passwordMatch) {
+        const payload = { sub: dataUser.id };
+
+        // Create JWT token with a secret key
+        const token = jwt.sign(payload, JWT_SECRET, {
+          expiresIn: "1h",
+        });
+
+        // Attach the token to the request object
+        req.token = token;
+
+        // Move to the next middleware
+        next();
+      }
+
+      // Passwords do not match, return error response
+    } else {
+      res.status(401).json({ error: "Invalid password" });
+    }
+
+    // Handle errors that occurred during verification
+  } catch (error) {
+    console.error("Error verifying passwords:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export { hashPassword, verifyPassword };

@@ -17,25 +17,25 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import OverlayLogin from "../overlays/OverlayLogin";
 
 function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState(false);
+  const [mail, setMail] = useState("");
+  const [mailError, setMailError] = useState(false);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const navigate = useNavigate();
 
-  const validateEmail = (emailInput) => {
-    // Regular expression for email validation
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailRegex.test(emailInput);
+  const validateMail = (mailInput) => {
+    // Regular expression for mail validation
+    const mailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return mailRegex.test(mailInput);
   };
 
-  const handleEmailChange = (e) => {
+  const handleMailChange = (e) => {
     const inputValue = e.target.value;
-    setEmail(inputValue);
-    // Check if email format is valid
-    setEmailError(!validateEmail(inputValue));
+    setMail(inputValue);
+    // Check if mail format is valid
+    setMailError(!validateMail(inputValue));
   };
 
   const handlePasswordChange = (e) => {
@@ -48,28 +48,67 @@ function LoginForm() {
   };
 
   // Call on backend
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   // Check if all fields are filled out
+  //   if (email === "" || password === "") {
+  //     setAlertMessage("Please fill out all the fields!");
+  //     setShowAlert(true);
+  //   } else {
+  //     try {
+  //       // Make the HTTP request to backend API
+  //       const response = await axios.post(
+  //         "http://localhost:6001/api/users/login",
+  //         { email, password },
+  //         {
+  //           headers: {
+  //             Authorization: localStorage.getItem("token"),
+  //           },
+  //         }
+  //       );
+  //       // Return a JWT token upon successful login & redirect to home page
+  //       if (response.status === 200) {
+  //         localStorage.setItem("token", `Bearer ${response.data}`);
+  //         navigate("/");
+  //       }
+  //     } catch (error) {
+  //       // Handle any errors that occur during the request
+  //       console.error("Login failed:", error);
+  //       setAlertMessage("Login failed. Please try again later.");
+  //       setShowAlert(true);
+  //     }
+  //   }
+  // };
+
+  //  Call on backend
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Check if all fields are filled out
-    if (email === "" || password === "") {
+    if (mail === "" || password === "") {
       setAlertMessage("Please fill out all the fields!");
       setShowAlert(true);
     } else {
       try {
         // Make the HTTP request to backend API
         const response = await axios.post(
-          "http://localhost:4242/user/login",
-          { email, password },
-          {
-            headers: {
-              Authorization: localStorage.getItem("token"),
-            },
-          }
+          "http://localhost:6001/api/users/login",
+          { mail, password }
         );
-        // Return a JWT token upon successful login & redirect to home page
+
+        // Check the response status
         if (response.status === 200) {
-          localStorage.setItem("token", `Bearer ${response.data}`);
+          // Extract the JWT token from the response data
+          const { token } = response.data;
+
+          // Store the token in localStorage
+          localStorage.setItem("token", token);
+
+          // Redirect to the home page
           navigate("/");
+        } else {
+          // Handle unsuccessful login (status code other than 200)
+          setAlertMessage("Login failed. Please try again later.");
+          setShowAlert(true);
         }
       } catch (error) {
         // Handle any errors that occur during the request
@@ -93,16 +132,16 @@ function LoginForm() {
         <h2 className="text-center">Login</h2>
         <p className="my-8 text-center">Please enter your login details.</p>
         <TextField
-          id="login-email"
-          type="email"
-          label="Email address"
-          name="email"
-          value={email}
-          autoComplete="email"
+          id="login-mail"
+          type="mail"
+          label="Mail address"
+          name="mail"
+          value={mail}
+          autoComplete="mail"
           autoFocus
-          onChange={handleEmailChange}
-          error={emailError}
-          helperText={emailError ? "Please enter a valid email address." : ""}
+          onChange={handleMailChange}
+          error={mailError}
+          helperText={mailError ? "Please enter a valid mail address." : ""}
           variant="outlined"
           required
           fullWidth
