@@ -76,6 +76,14 @@ const findByFilter = async (filterQuery: IdeaFilterQuery) => {
             },
           },
         },
+        favorit: {
+          select: {
+            user_id: true,
+          },
+          where: {
+            user_id: userId ? parseInt(userId, 10) : undefined,
+          },
+        },
         _count: {
           select: {
             idea_like: true,
