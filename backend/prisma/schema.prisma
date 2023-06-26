@@ -82,9 +82,12 @@ model idea {
   attachment    attachment[]
   comment       comment[]
   favorit       favorit[]
+  user          user            @relation(fields: [user_id], references: [id], onUpdate: Restrict, map: "idea_ibfk_1")
   idea_category idea_category[]
   idea_like     idea_like[]
   idea_teams    idea_teams[]
+
+  @@index([user_id], map: "user_id")
 }
 
 model idea_category {
@@ -99,11 +102,12 @@ model idea_category {
 }
 
 model idea_like {
-  id      Int   @id @default(autoincrement())
-  user_id Int
-  idea_id Int?
-  user    user  @relation(fields: [user_id], references: [id], onUpdate: Restrict, map: "idea_like_ibfk_1")
-  idea    idea? @relation(fields: [idea_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "idea_like_ibfk_2")
+  id       Int      @id @default(autoincrement())
+  user_id  Int
+  idea_id  Int?
+  liked_at DateTime @default(now()) @db.Timestamp(0)
+  user     user     @relation(fields: [user_id], references: [id], onUpdate: Restrict, map: "idea_like_ibfk_1")
+  idea     idea?    @relation(fields: [idea_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "idea_like_ibfk_2")
 
   @@index([idea_id], map: "idea_id")
   @@index([user_id], map: "user_id")
@@ -147,15 +151,13 @@ model user {
   share_phone     Boolean?       @default(false)
   biography       String?        @db.VarChar(255)
   agency_id       Int?
-  joined_at       String?        @db.VarChar(255)
+  joined_at       DateTime       @db.DateTime(0)
   position_id     Int?
-  score_comment   Int            @default(0)
-  score_idea      Int            @default(0)
-  score_like      Int            @default(0)
   created_at      DateTime       @default(now()) @db.Timestamp(0)
   is_active       Boolean?       @default(false)
   comment_like    comment_like[]
   favorit         favorit[]
+  idea            idea[]
   idea_like       idea_like[]
   idea_teams      idea_teams[]
   role            role           @relation(fields: [role_id], references: [id], onUpdate: Restrict, map: "user_ibfk_1")

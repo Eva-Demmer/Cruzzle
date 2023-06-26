@@ -55,18 +55,19 @@ const verifyPassword = async (
 
     const [dataUser] = await findByEmail(mail);
 
+    // Check if user w/ email address exists in database
     if (dataUser) {
-      // Compare provided password with hashed password
+      // User exists: Compare provided password with hashed password
       const passwordMatch = await bcrypt.compare(
         password,
         dataUser.hashed_password
       );
 
-      // Passwords match, generate JWT token
+      // Check if passwords match
       if (passwordMatch) {
         const payload = { sub: dataUser.id };
 
-        // Create JWT token with a secret key
+        // Passwords match: Create JWT token with a secret key
         const token = jwt.sign(payload, JWT_SECRET, {
           expiresIn: "1h",
         });
@@ -76,11 +77,14 @@ const verifyPassword = async (
 
         // Move to the next middleware
         next();
+        // Passwords do not match: Return error response
+      } else {
+        res.status(401).json({ error: "Wrong login credentials." });
       }
 
-      // Passwords do not match, return error response
+      // User does not exist: Return error response
     } else {
-      res.status(401).json({ error: "Invalid password" });
+      res.status(404).json({ error: "User not found" });
     }
 
     // Handle errors that occurred during verification

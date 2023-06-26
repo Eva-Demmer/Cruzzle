@@ -47,11 +47,11 @@ function LoginForm() {
     e.preventDefault();
   };
 
-  // Call on backend
+  // //  Call on backend
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
   //   // Check if all fields are filled out
-  //   if (email === "" || password === "") {
+  //   if (mail === "" || password === "") {
   //     setAlertMessage("Please fill out all the fields!");
   //     setShowAlert(true);
   //   } else {
@@ -59,17 +59,23 @@ function LoginForm() {
   //       // Make the HTTP request to backend API
   //       const response = await axios.post(
   //         "http://localhost:6001/api/users/login",
-  //         { email, password },
-  //         {
-  //           headers: {
-  //             Authorization: localStorage.getItem("token"),
-  //           },
-  //         }
+  //         { mail, password }
   //       );
-  //       // Return a JWT token upon successful login & redirect to home page
+
+  //       // Check the response status
   //       if (response.status === 200) {
-  //         localStorage.setItem("token", `Bearer ${response.data}`);
+  //         // Extract the JWT token from the response data
+  //         const { token } = response.data;
+
+  //         // Store the token in localStorage
+  //         localStorage.setItem("token", token);
+
+  //         // Redirect to the home page
   //         navigate("/");
+  //       } else {
+  //         // Handle unsuccessful login (status code other than 200)
+  //         setAlertMessage("Wrong email or password.");
+  //         setShowAlert(true);
   //       }
   //     } catch (error) {
   //       // Handle any errors that occur during the request
@@ -95,26 +101,39 @@ function LoginForm() {
           { mail, password }
         );
 
-        // Check the response status
-        if (response.status === 200) {
-          // Extract the JWT token from the response data
-          const { token } = response.data;
+        // Extract the JWT token from the response data
+        const { token } = response.data;
 
-          // Store the token in localStorage
-          localStorage.setItem("token", token);
+        // Store the token in localStorage
+        localStorage.setItem("token", token);
 
-          // Redirect to the home page
-          navigate("/");
+        // Redirect to the home page
+        navigate("/");
+        console.info("Login successful!");
+      } catch (error) {
+        // Handle error responses
+        if (error.response) {
+          const { status } = error.response;
+          if (status === 401) {
+            // Wrong login credentials
+            setAlertMessage("Wrong email or password.");
+            setShowAlert(true);
+          } else if (status === 404) {
+            // User not found
+            setAlertMessage(
+              "User not found. Please contact your administrator."
+            );
+            setShowAlert(true);
+          } else {
+            // Other errors
+            setAlertMessage("Internal server error. Please try again later.");
+            setShowAlert(true);
+          }
         } else {
-          // Handle unsuccessful login (status code other than 200)
-          setAlertMessage("Login failed. Please try again later.");
+          // Handle network errors
+          setAlertMessage("Network error. Please try again later.");
           setShowAlert(true);
         }
-      } catch (error) {
-        // Handle any errors that occur during the request
-        console.error("Login failed:", error);
-        setAlertMessage("Login failed. Please try again later.");
-        setShowAlert(true);
       }
     }
   };
