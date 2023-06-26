@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import HorizontalScroll from "../scroller/HorizontalScroll";
 import FilterBtnAdvanceSearch from "./FilterBtnAdvanceSearch";
 import FilterbarDate from "./FilterbarDate";
@@ -7,43 +7,9 @@ import FilterbarCategory from "./FilterbarCategory";
 import FilterbarTrending from "./FilterbarTrending";
 import FilterPanel from "./FilterPanel";
 import { FilterContext } from "../../contexts/FilterContext";
-import { fetcher } from "../../services/api.services";
 
 function Filterbar() {
-  const {
-    filterPanelIsOpen,
-    publicationDateStart,
-    publicationDateEnd,
-    autorSelectionTag,
-    selectedCategories,
-    trendingTag,
-    titleContains,
-    hasAttachment,
-    hasNoComment,
-  } = useContext(FilterContext);
-
-  useEffect(() => {
-    const reqItems = {
-      publicationDateStart,
-      publicationDateEnd,
-      autorSelectionTag,
-      selectedCategories,
-      trendingTag,
-      titleContains,
-      hasAttachment,
-      hasNoComment,
-    };
-    fetcher("/api/ideas/filter", reqItems);
-  }, [
-    publicationDateStart,
-    publicationDateEnd,
-    autorSelectionTag,
-    selectedCategories,
-    trendingTag,
-    titleContains,
-    hasAttachment,
-    hasNoComment,
-  ]);
+  const { filterPanelIsOpen } = useContext(FilterContext);
 
   return (
     <div className="filterbar w-full">

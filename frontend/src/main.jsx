@@ -25,6 +25,7 @@ import Profiles from "./pages/users/Profiles";
 
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminIdeas from "./pages/admin/AdminIdeas";
+import AdminCategories from "./pages/admin/AdminCategories";
 
 import Settings from "./pages/Settings";
 import Search from "./pages/Search";
@@ -33,6 +34,8 @@ import "./styles/main.scss";
 import IdeaProvider from "./contexts/IdeaContext";
 import LanguageProvider from "./contexts/LanguageContext";
 import MenuProvider from "./contexts/MenuContext";
+import FilterProvider from "./contexts/FilterContext";
+import ScrollProvider from "./contexts/ScrollContext";
 
 const router = createBrowserRouter([
   {
@@ -86,6 +89,10 @@ const router = createBrowserRouter([
         element: <AdminIdeas />,
       },
       {
+        path: "admin/categories/",
+        element: <AdminCategories />,
+      },
+      {
         path: "settings/",
         element: <Settings />,
       },
@@ -106,12 +113,16 @@ root.render(
           <IdeaProvider>
             <MenuProvider>
               <LanguageProvider>
-                <LocalizationProvider
-                  dateAdapter={AdapterDayjs}
-                  adapterLocale="fr"
-                >
-                  <RouterProvider router={router} />
-                </LocalizationProvider>
+                <FilterProvider>
+                  <ScrollProvider>
+                    <LocalizationProvider
+                      dateAdapter={AdapterDayjs}
+                      adapterLocale="fr"
+                    >
+                      <RouterProvider router={router} />
+                    </LocalizationProvider>
+                  </ScrollProvider>
+                </FilterProvider>
               </LanguageProvider>
             </MenuProvider>
           </IdeaProvider>
