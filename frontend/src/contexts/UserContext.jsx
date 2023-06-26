@@ -2,27 +2,26 @@ import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 const initialUser = {
-  id: 1,
-  firstname: "John",
-  lastname: "Doe",
-  birthdate: "01/01/2000",
-  imgUrl:
-    "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
-  imgBanner: "https://i.postimg.cc/XNgRKp70/Idea-banner.jpg",
-  phone: "+330000849",
-  mail: "john.doe@gmail.com",
-  city: "New York",
-  country: "USA",
-  aboutme:
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis veritatis alias consequuntur nam consectetur unde iusto maxime eum, itaque facere sit sequi? Exercitationem, excepturi! Officiis reprehenderit asperiores ullam magnam perferendis nostrum atque exercitationem quia necessitatibus, iste quibusdam natus esse sunt voluptatum non animi dolorem. Veritatis, aliquam numquam! Eius, consequuntur fugit.",
-  agency: "New agency",
-  position: "New position",
-  score: 750,
-  level: 16,
-  puzzlesFinished: 50,
-  totalIdeas: 30,
-  participations: 55,
-  joined: "20/06/2023",
+  id: 2,
+  mail: "super.admin@example.com",
+  role_id: 88,
+  avatar_url: "https://picsum.photos/200",
+  banner_url: "https://picsum.photos/1000/300",
+  firstname: "Sarah",
+  lastname: "Conor",
+  birthdate: "1972-11-12T12:33:11.000Z",
+  share_birthdate: false,
+  phone: "+33655758466",
+  share_phone: false,
+  biography: "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.",
+  agency_id: 2,
+  joined_at: "2017-06-13T12:33:11.000Z",
+  position_id: 1,
+  score_comment: 999,
+  score_idea: 999,
+  score_like: 999,
+  created_at: "2023-06-23T16:19:22.000Z",
+  is_active: true,
 };
 
 export const UserContext = createContext({});

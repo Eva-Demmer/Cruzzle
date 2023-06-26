@@ -5,7 +5,6 @@ import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
-import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/outline";
 import IdeaCardActions from "./IdeaCardActions";
 import { UserContext } from "../../contexts/UserContext";
 
@@ -17,7 +16,6 @@ export default function IdeaCard({ isMini, idea }) {
     context,
     userId,
     createdAt,
-    isPrivate,
     isFavorite,
     status,
     tags,
@@ -32,7 +30,7 @@ export default function IdeaCard({ isMini, idea }) {
         isMini
           ? "max-w-xl py-1 border-solid border-primary-50 border-4 border-t-0 border-b-0 border-r-0"
           : "max-w-6xl min-w-[250px]"
-      } flex shadow-lg bg-white hover:bg-slate-100 duration-100 rounded-xl group sm:flex-row relative`}
+      } flex shadow-lg bg-white hover:bg-primary-70 duration-100 rounded-xl group sm:flex-row relative`}
     >
       <Link
         className="flex flex-col no-underline w-full sm:flex-row "
@@ -49,16 +47,7 @@ export default function IdeaCard({ isMini, idea }) {
           }}
         />
         <div className={`${isMini ? "w-auto" : "max-w-4xl sm:w-3/4"} pl-6 p-4`}>
-          <div className="flex items-center gap-2 mb-3 justify-start">
-            {isPrivate ? (
-              <LockClosedIcon
-                className={`${isMini ? "hidden" : "h-6 w-6 text-gray-500"}`}
-              />
-            ) : (
-              <LockOpenIcon
-                className={`${isMini ? "hidden" : "h-6 w-6 text-gray-500"}`}
-              />
-            )}
+          <div className="flex items-center gap-2 justify-start mb-2 sm:mb-1">
             {tags.map((tag) => (
               <Chip
                 sx={{
@@ -74,7 +63,7 @@ export default function IdeaCard({ isMini, idea }) {
           <h2
             className={`${
               isMini ? "font-normal text-base text-gray-700" : "text-black"
-            } mr-8 text-lg font-medium no-underline max-w-xl`}
+            } mr-8 text-lg font-medium no-underline max-w-xl line-clamp-2 pb-0`}
           >
             {title}
           </h2>
@@ -87,7 +76,7 @@ export default function IdeaCard({ isMini, idea }) {
             {context}
           </p>
           {!isMini && (
-            <div className="flex items-center justify-between mt-6 text-gray-400">
+            <div className="flex items-center justify-between mt-6 sm:mt-4 text-gray-400">
               <div className="hidden text-sm sm:flex">
                 <span className="mr-1">Date : </span>
                 <span className="font-bold">{createdAt}</span>
@@ -154,7 +143,6 @@ IdeaCard.propTypes = {
     context: PropTypes.string.isRequired,
     userId: PropTypes.number.isRequired,
     createdAt: PropTypes.string.isRequired,
-    isPrivate: PropTypes.bool.isRequired,
     isFavorite: PropTypes.bool.isRequired,
     status: PropTypes.string.isRequired,
     tags: PropTypes.arrayOf(

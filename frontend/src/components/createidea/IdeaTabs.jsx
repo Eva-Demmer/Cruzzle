@@ -32,7 +32,7 @@ function IdeaTabs() {
     },
     {
       title: "Info",
-      label: "Benefits",
+      label: "Profits",
       content: (
         <ul>
           <li>

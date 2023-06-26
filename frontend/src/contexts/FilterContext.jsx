@@ -9,10 +9,10 @@ function FilterProvider({ children }) {
   const [filterPanelIsOpen, setFilterPanelIsOpen] = useState(false);
   const [dateDelta, setDateDelta] = useState(30);
   const [publicationDateStart, setPublicationDateStart] = useState(
-    dayjs().locale("fr").subtract(30, "day")
+    dayjs().locale("fr").subtract(30, "day").format("YYYY-MM-DD HH:mm:ss")
   );
   const [publicationDateEnd, setPublicationDateEnd] = useState(
-    dayjs().locale("fr")
+    dayjs().locale("fr").format("YYYY-MM-DD HH:mm:ss")
   );
   const [autorSelectionTag, setAutorSelectionTag] = useState("all");
   const [selectedCategories, setSelectedCategories] = useState([]);

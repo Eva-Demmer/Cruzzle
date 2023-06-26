@@ -28,8 +28,10 @@ function FilterPanel() {
 
   const handleClickReset = () => {
     setDateDelta(30);
-    setPublicationDateStart(dayjs().locale("fr").subtract(30, "day"));
-    setPublicationDateEnd(dayjs().locale("fr"));
+    setPublicationDateStart(
+      dayjs().locale("fr").subtract(30, "day").format("YYYY-MM-DD HH:mm:ss")
+    );
+    setPublicationDateEnd(dayjs().locale("fr").format("YYYY-MM-DD HH:mm:ss"));
     setAutorSelectionTag("all");
     setSelectedCategories([]);
     setTrendingTag("recent");
