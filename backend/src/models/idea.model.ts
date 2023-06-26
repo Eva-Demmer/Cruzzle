@@ -1,6 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 import dayjs from "dayjs";
-import { Idea, IdeaFilterQuery, PostIdea } from "../interfaces/ideas.interface";
+import {
+  Idea,
+  IdeaFilterQuery,
+  IdeaUpdate,
+  PostIdea,
+} from "../interfaces/ideas.interface";
 
 const prisma = new PrismaClient();
 
@@ -134,6 +139,24 @@ const archiveIdea = async (id: number) => {
   }
 };
 
+const updateIdea = async (
+  id: number,
+  updateData: IdeaUpdate
+): Promise<Idea | null> => {
+  try {
+    const updatedIdea = await prisma.idea.update({
+      where: { id },
+      data: updateData,
+    });
+
+    return updatedIdea;
+  } catch (error) {
+    throw new Error("Error at update idea");
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
 export {
   findAll,
   findById,
@@ -142,4 +165,5 @@ export {
   addPrimaryImgIdea,
   deleteIdea,
   archiveIdea,
+  updateIdea,
 };
