@@ -1,23 +1,35 @@
 interface Idea {
   id: number;
   title: string;
-  body: string;
+  context: string;
   user_id: number;
   created_at: Date;
-  modified_at: Date | null;
-  modified_user_id: number | null;
-  archived_at: Date | null;
-  archived_user_id: number | null;
-  deleted_at: Date | null;
-  deleted_user_id: number | null;
-  goal: string | null;
-  profits: string | null;
-  risks: string | null;
-  active: boolean;
-  private: boolean;
+  archived_at?: Date | null;
+  deleted_at?: Date | null;
+  goal?: string | null;
+  profits?: string | null;
+  risks?: string | null;
+  cloudshare?: string | null;
+  primary_img?: string | null;
+  views: number;
+  [key: string]: string | number | Date | null | undefined;
+}
+
+interface PostIdea {
+  title: string;
+  context: string;
+  user_id: number;
+  goal?: string | null;
+  profits?: string | null;
+  risks?: string | null;
+  cloudshare?: string | null;
+  primary_img?: string | null;
+  [key: string]: string | number | Date | null | undefined;
 }
 
 interface IdeaFilterQuery {
+  userId?: string;
+  userAgencyId?: string;
   publicationDateStart?: string;
   publicationDateEnd?: string;
   autorSelectionTag?: string;
@@ -28,4 +40,4 @@ interface IdeaFilterQuery {
   hasNoComment?: string;
 }
 
-export { Idea, IdeaFilterQuery };
+export { Idea, IdeaFilterQuery, PostIdea };

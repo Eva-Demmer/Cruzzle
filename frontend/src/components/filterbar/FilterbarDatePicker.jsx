@@ -30,7 +30,7 @@ function FilterbarDatePicker() {
         format="DD/MM/YYYY"
         formatDensity="spacious"
         value={dayjs(publicationDateStart)}
-        maxDate={dayjs(publicationDateEnd).subtract(1, "day")}
+        maxDate={dayjs(publicationDateEnd)}
         onChange={handleChangeStart}
       />
       <DatePicker
@@ -39,7 +39,7 @@ function FilterbarDatePicker() {
         format="DD/MM/YYYY"
         formatDensity="spacious"
         value={dayjs(publicationDateEnd)}
-        minDate={dayjs(publicationDateStart).add(1, "day")}
+        minDate={dayjs(publicationDateStart)}
         disableFuture
         onChange={handleChangeEnd}
       />

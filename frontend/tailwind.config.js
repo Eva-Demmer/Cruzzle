@@ -16,7 +16,9 @@ module.exports = {
       colors: {
         primary: {
           50: "#A73FB9", // text color
+          70: "#f5f0f7", // idea background hover
           100: "#D1B5E1", // Ring DoghnutAvatar
+          800: "#FAF4FB", // Bg TopBar
           900: "#9C27B0", // default
         },
         secondary: {

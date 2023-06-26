@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { useContext } from "react";
+import axios from "axios";
 import { IdeaFormContext } from "../../contexts/IdeaFormContext";
 
 function IdeaForm({ children }) {
@@ -7,30 +8,15 @@ function IdeaForm({ children }) {
     useContext(IdeaFormContext);
 
   const onSubmit = (data) => {
-    console.info(teamSelect);
     const formData = new FormData();
+    const { categories, primaryImg, ...dataWithoutCategories } = data;
 
-    teamSelect.forEach((collaborator, index) => {
-      const key = `team_${index}`;
-      formData.append(key, collaborator);
-    });
+    const formatedTeam = teamSelect.map((user) => ({
+      user_id: user.id,
+    }));
 
-    filesAttachment
-      .map((item, index) => ({
-        [`attachments_${index}`]: item.file,
-      }))
-      .forEach((attachment) => {
-        const key = Object.keys(attachment)[0];
-        const value = attachment[key];
-        formData.append(key, value);
-      });
-
-    const { categories, ...dataWithoutCategories } = data;
-
-    categories.forEach((category, index) => {
-      const key = `category_${index}`;
-      formData.append(key, category);
-    });
+    formData.append("team", JSON.stringify(formatedTeam));
+    formData.append("categories", JSON.stringify(categories));
 
     for (const key in dataWithoutCategories) {
       if (Object.prototype.hasOwnProperty.call(dataWithoutCategories, key)) {
@@ -41,12 +27,31 @@ function IdeaForm({ children }) {
       }
     }
 
-    // Valeur du formData pour le submit
-    for (const pair of formData.entries()) {
-      console.info(`${pair[0]},${pair[1]}`);
+    if (primaryImg) {
+      formData.append("primaryImg", primaryImg);
+    }
+
+    if (filesAttachment.length > 0) {
+      filesAttachment
+        .map((item) => ({
+          attachement: item.file,
+        }))
+        .forEach((attachement) => {
+          const key = Object.keys(attachement)[0];
+          const value = attachement[key];
+          formData.append(key, value);
+        });
     }
 
     // Request Axios to post
+    axios
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/ideas/`, formData)
+      .then((response) => {
+        console.info(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return <form onSubmit={handleSubmit(onSubmit)}>{children}</form>;
