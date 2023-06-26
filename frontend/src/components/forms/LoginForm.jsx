@@ -26,7 +26,6 @@ function LoginForm() {
   const navigate = useNavigate();
 
   const validateMail = (mailInput) => {
-    // Regular expression for mail validation
     const mailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return mailRegex.test(mailInput);
   };
@@ -34,7 +33,6 @@ function LoginForm() {
   const handleMailChange = (e) => {
     const inputValue = e.target.value;
     setMail(inputValue);
-    // Check if mail format is valid
     setMailError(!validateMail(inputValue));
   };
 
@@ -47,7 +45,6 @@ function LoginForm() {
     e.preventDefault();
   };
 
-  //  Call on backend
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Check if all fields are filled out
@@ -62,38 +59,29 @@ function LoginForm() {
           { mail, password }
         );
 
-        // Extract the JWT token from the response data
         const { token } = response.data;
 
-        // Store the token in localStorage
         localStorage.setItem("token", token);
 
-        // Add the token to the Authorization header
         axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
-        // Redirect to the home page
         navigate("/");
       } catch (error) {
-        // Handle error responses
         if (error.response) {
           const { status } = error.response;
           if (status === 401) {
-            // Wrong login credentials
             setAlertMessage("Wrong email or password.");
             setShowAlert(true);
           } else if (status === 404) {
-            // User not found
             setAlertMessage(
               "User not found. Please contact your administrator."
             );
             setShowAlert(true);
           } else {
-            // Other errors
             setAlertMessage("Internal server error. Please try again later.");
             setShowAlert(true);
           }
         } else {
-          // Network error
           setAlertMessage("Network error. Please try again later.");
           setShowAlert(true);
         }
