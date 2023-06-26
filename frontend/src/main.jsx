@@ -25,6 +25,7 @@ import Profiles from "./pages/users/Profiles";
 
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminIdeas from "./pages/admin/AdminIdeas";
+import AdminCategories from "./pages/admin/AdminCategories";
 
 import Settings from "./pages/Settings";
 import Search from "./pages/Search";
@@ -84,6 +85,10 @@ const router = createBrowserRouter([
       {
         path: "admin/ideas/",
         element: <AdminIdeas />,
+      },
+      {
+        path: "admin/categories/",
+        element: <AdminCategories />,
       },
       {
         path: "settings/",
