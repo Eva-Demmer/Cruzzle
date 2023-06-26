@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
 import { findByEmail } from "../models/user.model";
@@ -13,7 +13,7 @@ const JWT_SECRET =
 // Define extended Request interface for token
 interface ExtendedRequest extends Request {
   token?: string;
-  payload?: any;
+  payload?: string | JwtPayload;
 }
 
 // Hash password before storing it in the database

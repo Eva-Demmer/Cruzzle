@@ -73,7 +73,6 @@ function LoginForm() {
 
         // Redirect to the home page
         navigate("/");
-        console.info("Login successful!");
       } catch (error) {
         // Handle error responses
         if (error.response) {
