@@ -1,6 +1,7 @@
 /* eslint-disable radix */
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
+// eslint-disable-next-line import/no-unresolved
 import AvatarEditor from "react-avatar-editor";
 import { Slider } from "@mui/material";
 import RotateRightIcon from "@mui/icons-material/RotateRight";
@@ -14,6 +15,10 @@ function ModalEditImage({ isOpen, src, radius, onClose, height, width }) {
   const [slideRotateValue, setSlideRotateValue] = useState(0);
   const [newAvatar, setNewAvatar] = useState(src);
   const cropRef = useRef(null);
+
+  useEffect(() => {
+    console.info(`{from Modal source ic ${src}`);
+  }, []);
 
   const handleSave = async () => {
     if (cropRef) {

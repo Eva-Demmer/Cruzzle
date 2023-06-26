@@ -112,23 +112,29 @@ function TopSectionProfil() {
           </p>
         </div>
       </div>
-      <ModalEditImage
-        isOpen={isOpenAvatar}
-        src={imgUrl}
-        onClose={() => toggleModal(isOpenAvatar, setIsOpenAvatar)}
-        width="158"
-        height="158"
-        radius="150"
-      />
+      {imgUrl !== undefined ? (
+        <>
+          <ModalEditImage
+            isOpen={isOpenAvatar}
+            src={imgUrl}
+            onClose={() => toggleModal(isOpenAvatar, setIsOpenAvatar)}
+            width="158"
+            height="158"
+            radius="150"
+          />
 
-      <ModalEditImage
-        isOpen={isOpenBanner}
-        src={imgBanner}
-        onClose={() => toggleModal(isOpenBanner, setIsOpenBanner)}
-        width="1136"
-        height="256"
-        radius="0"
-      />
+          <ModalEditImage
+            isOpen={isOpenBanner}
+            src={imgBanner}
+            onClose={() => toggleModal(isOpenBanner, setIsOpenBanner)}
+            width="1136"
+            height="256"
+            radius="0"
+          />
+        </>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
