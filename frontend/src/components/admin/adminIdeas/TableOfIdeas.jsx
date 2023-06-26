@@ -71,8 +71,8 @@ TableOfIdeas.propTypes = {
       id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
       user_id: PropTypes.number.isRequired,
-      created_at: PropTypes.string.isRequired,
-      deleted_at: PropTypes.string.isRequired,
+      created_at: PropTypes.string,
+      deleted_at: PropTypes.string,
       views: PropTypes.number.isRequired,
     })
   ).isRequired,

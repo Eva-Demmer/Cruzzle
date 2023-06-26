@@ -1,73 +1,94 @@
+import { useState, useContext } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
 import "dayjs/locale/fr";
-import { useState } from "react";
+import { UserContext } from "../../../contexts/UserContext";
 import CheckboxUserIsActive from "./CheckboxUserIsActive";
-
-const columns = [
-  { field: "firstname", headerName: "First name", width: 90 },
-  { field: "lastname", headerName: "Last name", width: 90 },
-  { field: "mail", headerName: "Mail", width: 200 },
-  {
-    field: "created_at",
-    headerName: "Created at",
-    valueGetter: (params) => dayjs(params.row.created_at).format("DD-MM-YYYY"),
-    width: 130,
-  },
-  {
-    field: "joined_at",
-    headerName: "Joined at",
-    valueGetter: (params) => dayjs(params.row.joined_at).format("DD-MM-YYYY"),
-    width: 130,
-  },
-  {
-    field: "agency_id",
-    headerName: "Agency",
-    valueGetter: (params) => params.row.agency_id,
-    width: 130,
-  },
-  {
-    field: "position_id",
-    headerName: "Position",
-    valueGetter: (params) => params.row.position_id,
-    width: 130,
-  },
-  {
-    field: "role_id",
-    headerName: "Role",
-    valueGetter: (params) => {
-      switch (params.row.role_id) {
-        case 88:
-          return "super admin";
-        case 55:
-          return "admin";
-        default:
-          return "user";
-      }
-    },
-    width: 130,
-  },
-  {
-    field: "is_active",
-    headerName: "Active",
-    renderCell: (params) => {
-      const [isActiveUser, setIsActiveUser] = useState(params.row.is_active);
-      return (
-        <CheckboxUserIsActive
-          isActiveUser={isActiveUser}
-          setIsActiveUser={setIsActiveUser}
-          UserId={params.row.id}
-        />
-      );
-    },
-    width: 60,
-  },
-];
+import CheckboxUserIsAdmin from "./CheckboxUserIsAdmin";
+import ActionIcons from "./ActionIcons";
 
 export default function TableOfUsers({ userList }) {
-  console.info(userList);
+  const user = useContext(UserContext);
+  const { role_id: currentUserRole } = user;
+
   const rows = userList;
+  const columns = [
+    { field: "firstname", headerName: "First name", width: 90 },
+    { field: "lastname", headerName: "Last name", width: 90 },
+    { field: "mail", headerName: "Mail", width: 200 },
+    {
+      field: "created_at",
+      headerName: "Created at",
+      valueGetter: (params) =>
+        dayjs(params.row.created_at).format("DD-MM-YYYY"),
+      width: 110,
+    },
+    {
+      field: "joined_at",
+      headerName: "Joined at",
+      valueGetter: (params) => dayjs(params.row.joined_at).format("DD-MM-YYYY"),
+      width: 110,
+    },
+    {
+      field: "agency",
+      headerName: "Agency",
+      valueGetter: (params) =>
+        `${params.row.agency.name}, ${params.row.agency.city}`,
+      width: 180,
+    },
+    {
+      field: "position",
+      headerName: "Position",
+      valueGetter: (params) => params.row.position.name,
+      width: 180,
+    },
+    {
+      field: "role",
+      headerName: "Role",
+      renderCell: (params) => {
+        const [isAdminUser, setIsAdminUser] = useState(
+          params.row.role.name.toLowerCase() !== "user"
+        );
+        return (
+          <CheckboxUserIsAdmin
+            currentUserRole={currentUserRole}
+            isAdminUser={isAdminUser}
+            setIsAdminUser={setIsAdminUser}
+            userId={params.row.id}
+            userRole={params.row.role.name}
+          />
+        );
+      },
+      width: 100,
+      sortable: false,
+    },
+    {
+      field: "id",
+      headerName: "Profile",
+      renderCell: (params) => {
+        return <ActionIcons userId={params.row.id} />;
+      },
+      width: 50,
+      sortable: false,
+    },
+    {
+      field: "is_active",
+      headerName: "Active",
+      renderCell: (params) => {
+        const [isActiveUser, setIsActiveUser] = useState(params.row.is_active);
+        return (
+          <CheckboxUserIsActive
+            isActiveUser={isActiveUser}
+            setIsActiveUser={setIsActiveUser}
+            userId={params.row.id}
+          />
+        );
+      },
+      width: 100,
+      sortable: false,
+    },
+  ];
 
   return (
     <div style={{ width: "100%" }}>
@@ -76,10 +97,10 @@ export default function TableOfUsers({ userList }) {
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
+            paginationModel: { page: 0, pageSize: 10 },
           },
         }}
-        pageSizeOptions={[5, 10, 25, 50, 100]}
+        pageSizeOptions={[5, 10, 25, 50]}
         slots={{
           toolbar: GridToolbar,
         }}
@@ -93,22 +114,25 @@ TableOfUsers.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       mail: PropTypes.string.isRequired,
-      hashed_password: PropTypes.string.isRequired,
-      role_id: PropTypes.number.isRequired,
-      avatar_url: PropTypes.string.isRequired,
-      banner_url: PropTypes.string.isRequired,
+      role: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+      }).isRequired,
       firstname: PropTypes.string.isRequired,
       lastname: PropTypes.string.isRequired,
-      birthdate: PropTypes.string.isRequired,
-      share_birthdate: PropTypes.bool.isRequired,
-      phone: PropTypes.string.isRequired,
-      share_phone: PropTypes.bool.isRequired,
-      biography: PropTypes.string.isRequired,
-      agency_id: PropTypes.number.isRequired,
+      agency: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        city: PropTypes.string.isRequired,
+        country: PropTypes.string.isRequired,
+      }).isRequired,
       joined_at: PropTypes.string.isRequired,
-      position_id: PropTypes.number.isRequired,
       created_at: PropTypes.string.isRequired,
       is_active: PropTypes.bool.isRequired,
+      position: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+      }).isRequired,
     })
   ).isRequired,
 };
