@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 import React, { useContext } from "react";
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
@@ -9,9 +8,10 @@ import AvatarGroup from "@mui/material/AvatarGroup";
 import dayjs from "dayjs";
 import IdeaCardActions from "./IdeaCardActions";
 import { UserContext } from "../../contexts/UserContext";
+import { IdeaPropTypes } from "../propTypes/ideaPropTypes";
 
 export default function IdeaCard({ isMini, idea }) {
-  const { id: userNum } = useContext(UserContext);
+  const { id: userId } = useContext(UserContext);
   const {
     id,
     title,
@@ -20,7 +20,7 @@ export default function IdeaCard({ isMini, idea }) {
     created_at: createdAt,
     archived_at: archivedAt,
     deleted_at: deletedAt,
-    isFavorite,
+    favorit,
     idea_category: ideaCategory,
     _count: count,
     idea_teams: ideaTeams,
@@ -28,6 +28,8 @@ export default function IdeaCard({ isMini, idea }) {
   } = idea;
 
   const date = dayjs(createdAt).format("DD/MM/YYYY");
+
+  const isFavorite = favorit.some((item) => item.user_id === userId);
 
   return (
     <div
@@ -39,7 +41,7 @@ export default function IdeaCard({ isMini, idea }) {
     >
       <Link
         className="flex flex-col no-underline w-full sm:flex-row "
-        to={`/idea/${id}`}
+        to={`/ideas/${id}`}
       >
         <div
           className={`${
@@ -56,10 +58,10 @@ export default function IdeaCard({ isMini, idea }) {
             {ideaCategory.map((tag) => (
               <Chip
                 sx={{
-                  borderColor: tag.color,
+                  borderColor: tag.category.color,
                 }}
-                key={tag.label}
-                label={tag.label}
+                key={tag.id}
+                label={tag.category.label}
                 variant="outlined"
                 size="small"
               />
@@ -67,7 +69,7 @@ export default function IdeaCard({ isMini, idea }) {
           </div>
           <h2
             className={`${
-              isMini ? "font-normal text-base text-gray-700" : "text-black"
+              isMini ? "font-normal text-base" : "text-black"
             } mr-8 text-lg font-medium no-underline max-w-xl line-clamp-2 pb-0`}
           >
             {title}
@@ -113,11 +115,11 @@ export default function IdeaCard({ isMini, idea }) {
                     },
                   }}
                 >
-                  {ideaTeams.map((u) => (
+                  {ideaTeams.map((a) => (
                     <Avatar
-                      key={u.id}
-                      alt={`${u.firstname} ${u.lastname}`}
-                      src={u.avatar_url}
+                      key={a.user_id}
+                      alt={`${a.firstname} ${a.lastname}`}
+                      src={a.user.avatar_url}
                       sx={{ width: 32, height: 32 }}
                     />
                   ))}
@@ -130,7 +132,7 @@ export default function IdeaCard({ isMini, idea }) {
       {!isMini && (
         <IdeaCardActions
           userId={user.id}
-          user={userNum}
+          user={userId}
           id={id}
           isFavorite={isFavorite}
         />
@@ -139,36 +141,6 @@ export default function IdeaCard({ isMini, idea }) {
   );
 }
 
-// Changera avec les données réelles
 IdeaCard.propTypes = {
-  isMini: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
-  idea: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    context: PropTypes.string.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
-    user: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-    }),
-    created_at: PropTypes.string.isRequired,
-    archived_at: PropTypes.string,
-    deleted_at: PropTypes.string,
-    idea_category: PropTypes.arrayOf(
-      PropTypes.shape({
-        label: PropTypes.string.isRequired,
-        color: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    _count: PropTypes.shape({
-      idea_like: PropTypes.number.isRequired,
-      comment: PropTypes.number.isRequired,
-      attachment: PropTypes.number.isRequired,
-    }).isRequired,
-    idea_teams: PropTypes.arrayOf(
-      PropTypes.shape({
-        avatar_url: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-    primary_img: PropTypes.string.isRequired,
-  }).isRequired,
+  ...IdeaPropTypes,
 };
