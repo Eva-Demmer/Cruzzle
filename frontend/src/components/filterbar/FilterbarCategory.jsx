@@ -43,7 +43,7 @@ export default function FilterbarCategory({ isDisable }) {
               {selected.length === 0 ? (
                 <span>all categories</span>
               ) : (
-                selected.map((id) => categoryList[id].label).join(", ")
+                selected.map((id) => categoryList[id - 1].label).join(", ")
               )}
             </>
           );

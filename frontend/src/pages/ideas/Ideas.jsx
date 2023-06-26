@@ -21,8 +21,9 @@ function Ideas() {
     hasNoComment,
   } = useContext(FilterContext);
 
+  const { id: userId, agency_id: userAgencyId } = user;
+
   useEffect(() => {
-    const { id: userId, agency_id: userAgencyId } = user;
     const reqItems = {
       userId,
       userAgencyId,
@@ -45,6 +46,8 @@ function Ideas() {
         console.error("error from api.services.fetcherByQuery", error)
       );
   }, [
+    userId,
+    userAgencyId,
     publicationDateStart,
     publicationDateEnd,
     autorSelectionTag,
