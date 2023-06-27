@@ -11,6 +11,7 @@ import UserProvider from "./contexts/UserContext";
 import themeMui from "./themes/muiTheme";
 
 import Login from "./pages/Login";
+import Home from "./pages/Home";
 import ErrorPage from "./pages/ErrorPage";
 import Root from "./pages/Root";
 
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: "dashboard/",
+        element: <Home />,
+      },
       {
         path: "ideas/",
         element: <Ideas />,
