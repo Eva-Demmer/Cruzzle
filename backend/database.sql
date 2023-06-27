@@ -108,6 +108,7 @@ CREATE TABLE `user` (
   `banner_url` varchar(255) DEFAULT null,
   `firstname` varchar(255) NOT NULL,
   `lastname` varchar(255) NOT NULL,
+  `link` varchar(255) DEFAULT null,
   `birthdate` datetime DEFAULT null,
   `share_birthdate` boolean DEFAULT false,
   `phone` varchar(255) DEFAULT null,
