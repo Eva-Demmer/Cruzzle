@@ -60,7 +60,8 @@ export default function TableOfUsers({ userList }) {
           />
         );
       },
-      width: 100,
+      align: "center",
+      width: 80,
       sortable: false,
     },
     {
@@ -69,7 +70,8 @@ export default function TableOfUsers({ userList }) {
       renderCell: (params) => {
         return <ActionIcons userId={params.row.id} />;
       },
-      width: 50,
+      align: "center",
+      width: 80,
       sortable: false,
     },
     {
@@ -85,22 +87,18 @@ export default function TableOfUsers({ userList }) {
           />
         );
       },
-      width: 100,
+      align: "center",
+      width: 80,
       sortable: false,
     },
   ];
 
   return (
-    <div style={{ width: "100%" }}>
+    <div className="w-full h-full">
       <DataGrid
         rows={rows}
         columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 10 },
-          },
-        }}
-        pageSizeOptions={[5, 10, 25, 50]}
+        autoPageSize
         slots={{
           toolbar: GridToolbar,
         }}
