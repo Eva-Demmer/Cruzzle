@@ -1,12 +1,13 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { OutlinedInput, MenuItem, FormControl, Select } from "@mui/material";
 import { Square3Stack3DIcon } from "@heroicons/react/24/outline";
 import { IdeaContext } from "../../contexts/IdeaContext";
 import { FilterContext } from "../../contexts/FilterContext";
+import { fetchAll } from "../../services/api.services";
 
 export default function FilterbarCategory({ isDisable }) {
-  const { categoryList } = useContext(IdeaContext);
+  const { categoryList, setCategoryList } = useContext(IdeaContext);
   const { selectedCategories, setSelectedCategories } =
     useContext(FilterContext);
 
@@ -16,6 +17,14 @@ export default function FilterbarCategory({ isDisable }) {
     } = event;
     setSelectedCategories(typeof value === "string" ? value.split(",") : value);
   };
+
+  useEffect(() => {
+    fetchAll("/api/categories")
+      .then((data) => setCategoryList(data))
+      .catch((error) =>
+        console.error("error from api.services.fetcher", error)
+      );
+  }, []);
 
   return (
     <FormControl disabled={isDisable} className="w-full">
@@ -34,15 +43,15 @@ export default function FilterbarCategory({ isDisable }) {
               {selected.length === 0 ? (
                 <span>all categories</span>
               ) : (
-                selected.map((id) => categoryList[id].name).join(", ")
+                selected.map((id) => categoryList[id - 1].label).join(", ")
               )}
             </>
           );
         }}
       >
-        {categoryList.map((cat) => (
+        {categoryList?.map((cat) => (
           <MenuItem key={cat.id} value={cat.id}>
-            {cat.name}
+            {cat.label}
           </MenuItem>
         ))}
       </Select>

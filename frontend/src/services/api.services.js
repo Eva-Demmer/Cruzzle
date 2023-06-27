@@ -1,5 +1,5 @@
 import qs from "qs";
-// import axios from "axios";
+import axios from "axios";
 
 const url = import.meta.env.VITE_BACKEND_URL;
 
@@ -10,18 +10,22 @@ const serializer = (reqItems) => {
   return encodedParams;
 };
 
-const fetcher = (route, reqItems) => {
-  const serializedParams = serializer(reqItems);
-  console.info(`${url}${route}?${serializedParams}`);
-
-  //   axios
-  //     .get(`${url}${route}?${serializedParams}`)
-  //     .then((response) => response.data)
-  //     .then(([data]) => {
-  //       console.info(data);
-  //       return data;
-  //     })
-  //     .catch((error) => console.error("error from api.services.fetcher", error));
+const fetchAll = async (route) => {
+  return axios
+    .get(`${url}${route}`)
+    .then((response) => response.data)
+    .catch((error) => console.error("error from api.services.fetcher", error));
 };
 
-export { serializer, fetcher };
+const fetchByQuery = async (route, reqItems) => {
+  const serializedParams = serializer(reqItems);
+
+  return axios
+    .get(`${url}${route}?${serializedParams}`)
+    .then((response) => response.data)
+    .catch((error) =>
+      console.error("error from api.services.fetcherWithQuery", error)
+    );
+};
+
+export { fetchAll, fetchByQuery };
