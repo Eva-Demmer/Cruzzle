@@ -37,64 +37,40 @@ const userPropTypes = PropTypes.shape({
   agency: agencyPropTypes,
 });
 
+const ideaPropTypes = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  context: PropTypes.string.isRequired,
+  user: userPropTypes,
+  created_at: PropTypes.string.isRequired,
+  archived_at: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  deleted_at: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  favorite: FavoritPropTypes,
+  goal: PropTypes.string.isRequired,
+  profits: PropTypes.string.isRequired,
+  risks: PropTypes.string.isRequired,
+  cloudshare: PropTypes.string,
+  primary_img: PropTypes.string.isRequired,
+  views: PropTypes.number.isRequired,
+  idea_category: PropTypes.arrayOf(categoryPropTypes).isRequired,
+  attachment: PropTypes.arrayOf(attachmentsPropTypes).isRequired,
+  idea_teams: PropTypes.arrayOf(userPropTypes),
+  _count: PropTypes.shape({
+    idea_like: PropTypes.number.isRequired,
+    comment: PropTypes.number.isRequired,
+    attachment: PropTypes.number.isRequired,
+    idea_teams: PropTypes.number.isRequired,
+  }).isRequired,
+});
+
 const IdeasPropTypes = {
   isMini: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
-  ideas: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      context: PropTypes.string.isRequired,
-      user: userPropTypes,
-      created_at: PropTypes.string.isRequired,
-      archived_at: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-      deleted_at: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-      favorit: FavoritPropTypes,
-      goal: PropTypes.string.isRequired,
-      profits: PropTypes.string.isRequired,
-      risks: PropTypes.string.isRequired,
-      cloudshare: PropTypes.string,
-      primary_img: PropTypes.string.isRequired,
-      views: PropTypes.number.isRequired,
-      idea_category: PropTypes.arrayOf(categoryPropTypes).isRequired,
-      attachment: PropTypes.arrayOf(attachmentsPropTypes).isRequired,
-      idea_teams: PropTypes.arrayOf(userPropTypes),
-      _count: PropTypes.shape({
-        idea_like: PropTypes.number.isRequired,
-        comment: PropTypes.number.isRequired,
-        attachment: PropTypes.number.isRequired,
-        idea_teams: PropTypes.number.isRequired,
-      }).isRequired,
-    })
-  ).isRequired,
+  ideas: PropTypes.arrayOf(ideaPropTypes).isRequired,
 };
 
 const IdeaPropTypes = {
   isMini: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
-  idea: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    context: PropTypes.string.isRequired,
-    user: userPropTypes,
-    created_at: PropTypes.string.isRequired,
-    archived_at: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    deleted_at: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    favorit: FavoritPropTypes,
-    goal: PropTypes.string.isRequired,
-    profits: PropTypes.string.isRequired,
-    risks: PropTypes.string.isRequired,
-    cloudshare: PropTypes.string,
-    primary_img: PropTypes.string.isRequired,
-    views: PropTypes.number.isRequired,
-    idea_category: PropTypes.arrayOf(categoryPropTypes).isRequired,
-    attachment: PropTypes.arrayOf(attachmentsPropTypes).isRequired,
-    idea_teams: PropTypes.arrayOf(userPropTypes),
-    _count: PropTypes.shape({
-      idea_like: PropTypes.number.isRequired,
-      comment: PropTypes.number.isRequired,
-      attachment: PropTypes.number.isRequired,
-      idea_teams: PropTypes.number.isRequired,
-    }).isRequired,
-  }).isRequired,
+  idea: ideaPropTypes,
 };
 
 export { IdeasPropTypes, IdeaPropTypes };

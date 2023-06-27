@@ -13,6 +13,73 @@ const findAll = async () => {
   }
 };
 
+const findTrends = async () => {
+  const last3Months: string = dayjs(dayjs()).subtract(90, "day").toISOString();
+
+  try {
+    const data = await prisma.idea.findMany({
+      select: {
+        id: true,
+        title: true,
+        context: true,
+        created_at: true,
+        archived_at: true,
+        deleted_at: true,
+        favorit: true,
+        goal: true,
+        profits: true,
+        risks: true,
+        primary_img: true,
+        views: true,
+        attachment: true,
+        idea_category: {
+          select: {
+            id: true,
+            category: {
+              select: {
+                label: true,
+                color: true,
+              },
+            },
+          },
+        },
+        _count: {
+          select: {
+            idea_like: true,
+            comment: true,
+            attachment: true,
+            idea_teams: true,
+          },
+        },
+      },
+      where: {
+        archived_at: null,
+        deleted_at: null,
+        created_at: {
+          gte: last3Months,
+        },
+      },
+
+      orderBy: [
+        {
+          comment: { _count: "desc" },
+        },
+        {
+          idea_like: { _count: "desc" },
+        },
+        {
+          views: "desc",
+        },
+      ],
+      take: 3,
+    });
+
+    return data;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
 const findById = async (id: number) => {
   try {
     const response = await prisma.idea.findUnique({
@@ -136,6 +203,7 @@ const archiveIdea = async (id: number) => {
 
 export {
   findAll,
+  findTrends,
   findById,
   findByFilter,
   createIdea,

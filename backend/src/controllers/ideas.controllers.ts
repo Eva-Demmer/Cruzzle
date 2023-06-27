@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 
 import {
   findAll,
+  findTrends,
   findById,
   createIdea,
   addPrimaryImgIdea,
@@ -24,6 +25,15 @@ const getIdeas = async (req: Request, res: Response) => {
     res.status(200).json(data);
   } catch (error) {
     res.status(500).send(error);
+  }
+};
+
+const getIdeasTrends = async (req: Request, res: Response) => {
+  try {
+    const data = await findTrends();
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).send(" error from controller");
   }
 };
 
@@ -142,6 +152,7 @@ const archivedIdeaById = async (req: Request, res: Response) => {
 
 export {
   getIdeas,
+  getIdeasTrends,
   getIdeaById,
   getIdeaByFilter,
   postIdea,

@@ -28,11 +28,11 @@ export default function IdeaCardActions({ userId, user, id, isFavorite }) {
         ) : (
           <StarIconOutline className="h-6 w-6 text-gray-900 hover:text-primary-900" />
         )}
-        <Link className="no-underline w-auto" to={`/idea/${id}`}>
+        <Link className="no-underline w-auto" to={`/ideas/${id}`}>
           <ChatBubbleOvalLeftEllipsisIcon className="h-6 w-6 text-gray-900 hover:text-primary-900" />
         </Link>
         <HandThumbUpIcon className="h-6 w-6 text-gray-900 hover:text-primary-900" />
-        <Link className="no-underline w-auto" to={`/idea/${id}`}>
+        <Link className="no-underline w-auto" to={`/ideas/${id}`}>
           {userId === user && (
             <PencilIcon className="h-6 w-6 text-gray-900 hover:text-primary-900" />
           )}

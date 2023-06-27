@@ -28,8 +28,8 @@ export default function IdeaCard({ isMini, idea }) {
   } = idea;
 
   const date = dayjs(createdAt).format("DD/MM/YYYY");
-
   const isFavorite = favorit.some((item) => item.user_id === userId);
+  const isDisabled = archivedAt !== null || deletedAt !== null;
 
   return (
     <div
@@ -37,18 +37,24 @@ export default function IdeaCard({ isMini, idea }) {
         isMini
           ? "max-w-xl py-1 border-solid border-primary-50 border-4 border-t-0 border-b-0 border-r-0"
           : "max-w-6xl min-w-[250px]"
-      } flex shadow-lg bg-white hover:bg-primary-70 duration-100 rounded-xl group sm:flex-row relative`}
+      }
+      ${isDisabled ? "opacity-50" : "hover:bg-primary-70"}
+       flex shadow-lg bg-white duration-100 rounded-xl group sm:flex-row relative`}
     >
       <Link
-        className="flex flex-col no-underline w-full sm:flex-row "
+        className={`${
+          isDisabled ? "pointer-events-none" : ""
+        } flex flex-col no-underline w-full sm:flex-row`}
         to={`/ideas/${id}`}
       >
         <div
           className={`${
             isMini
               ? "hidden"
-              : "w-full h-32 bg-cover bg-center opacity-100 group-hover:opacity-90 duration-100 rounded-t-xl sm:h-auto sm:w-1/4 sm:rounded-l-xl sm:rounded-r-none"
-          }`}
+              : "w-full h-32 bg-cover bg-center opacity-100  duration-100 rounded-t-xl sm:h-auto sm:w-1/4 sm:rounded-l-xl sm:rounded-r-none"
+          }
+          ${isDisabled ? "" : "group-hover:opacity-90"}
+          `}
           style={{
             backgroundImage: `url(${primaryImg})`,
           }}
@@ -68,17 +74,17 @@ export default function IdeaCard({ isMini, idea }) {
             ))}
           </div>
           <h2
-            className={`${
-              isMini ? "font-normal text-base" : "text-black"
-            } mr-8 text-lg font-medium no-underline max-w-xl line-clamp-2 pb-0`}
+            className={`${isMini ? "font-normal text-base" : "text-black"}
+              mr-8 text-lg font-medium no-underline max-w-xl line-clamp-2 pb-0
+             `}
           >
             {title}
           </h2>
 
           <p
-            className={`${
-              isMini ? "text-gray-400" : "text-gray-600"
-            } mr-8 mt-2 `}
+            className={`${isMini ? "text-gray-400" : "text-gray-600"}
+              mr-8 mt-2 
+            `}
           >
             {context}
           </p>
@@ -95,7 +101,7 @@ export default function IdeaCard({ isMini, idea }) {
                   size="small"
                   variant="filled"
                   className={
-                    archivedAt || deletedAt ? "bg-slate-200" : "bg-green-300"
+                    archivedAt || deletedAt ? "bg-slate-200" : "bg-green-200"
                   }
                 />
               </Stack>
@@ -129,7 +135,7 @@ export default function IdeaCard({ isMini, idea }) {
           )}
         </div>
       </Link>
-      {!isMini && (
+      {!isMini && !isDisabled && (
         <IdeaCardActions
           userId={user.id}
           user={userId}
