@@ -1,21 +1,17 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { LightBulbIcon } from "@heroicons/react/24/solid";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import CounterCard from "../../components/admin/CounterCard";
 import ActionButton from "../../components/admin/ActionButton";
-import apiIdeas from "../../services/api.ideas";
 import TableOfIdeas from "../../components/admin/adminIdeas/TableOfIdeas";
-// import TableOfUsers from "../../components/admin/adminUsers/TableOfUsers";
+import apiAdminUsers from "../../services/api.admin.ideas";
 
 function AdminIdeas() {
   const [ideaList, setIdealist] = useState([]);
 
-  const handleAddIdea = () => {
-    console.info("add Ideas");
-  };
-
   useEffect(() => {
-    apiIdeas()
+    apiAdminUsers()
       .then((data) => setIdealist(data))
       .catch((error) =>
         console.error("error from admin_ideas getting the list of Ideas", error)
@@ -23,16 +19,14 @@ function AdminIdeas() {
   }, []);
 
   return (
-    <div className="admin-users w-full py-4 lg:pr-6 px-4">
-      <header className="w-full h-44 flex items-center">
+    <div className="admin-users w-full h-full pt-4 lg:pr-6 px-4 flex flex-col">
+      <header className="w-full lg:h-44 flex items-center">
         <div className="header-left-container h-full min-w-[420px] grow self-start flex flex-col justify-between">
           <h2>Ideas</h2>
           <div className="my-4">
-            <ActionButton
-              icon={<PlusIcon />}
-              text="Add idea"
-              onClick={handleAddIdea}
-            />
+            <Link to="../../ideas/new" relative="path">
+              <ActionButton icon={<PlusIcon />} text="Add idea" />
+            </Link>
           </div>
         </div>
         <div className="self-center hidden lg:block">
@@ -43,7 +37,7 @@ function AdminIdeas() {
           />
         </div>
       </header>
-      <main className="admin-user-board my-4">
+      <main className="admin-user-board my-4 grow">
         <TableOfIdeas ideaList={ideaList} />
       </main>
     </div>
