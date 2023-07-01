@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import {
   findAll,
   findById,
+  findByUserIdAndDate,
   createIdea,
   addPrimaryImgIdea,
   deleteIdea,
@@ -50,6 +51,33 @@ const getIdeaByFilter = async (req: Request, res: Response) => {
     res.status(500).send(error);
   }
 };
+
+const getIdeasCreatedToday = async (req: Request, res: Response) => {
+  const userId: number = parseInt(req.params.userId, 10);
+  try {
+    const today = new Date();
+    const count = await findByUserIdAndDate(userId, today);
+    res.status(200).json({ count });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+// const getIdeasCreatedToday = async (req: Request, res: Response) => {
+//   const userIdString: string = req.params.userId;
+//   if (Number.isNaN(Number(userIdString))) {
+//     res.status(400).json({ error: "Invalid userId" });
+//     return;
+//   }
+//   const userId: number = parseInt(userIdString, 10);
+//   try {
+//     const today = new Date();
+//     const count = await findByUserIdAndDate(userId, today);
+//     res.status(200).json({ count });
+//   } catch (error) {
+//     res.status(500).send(error);
+//   }
+// };
 
 const postIdea = async (req: Request, res: Response) => {
   try {
@@ -144,6 +172,7 @@ export {
   getIdeas,
   getIdeaById,
   getIdeaByFilter,
+  getIdeasCreatedToday,
   postIdea,
   deleteIdeaById,
   archivedIdeaById,

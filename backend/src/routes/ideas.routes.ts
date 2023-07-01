@@ -3,6 +3,7 @@ import {
   getIdeas,
   getIdeaById,
   getIdeaByFilter,
+  getIdeasCreatedToday,
   postIdea,
   deleteIdeaById,
   archivedIdeaById,
@@ -19,6 +20,7 @@ router.use(timeLog);
 
 router.get("/", getIdeas);
 router.get("/filter", getIdeaByFilter);
+router.get("/:userId/count", getIdeasCreatedToday);
 
 router.get("/:id", getIdeaById);
 

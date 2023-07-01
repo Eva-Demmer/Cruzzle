@@ -158,8 +158,8 @@ CREATE TABLE `idea` (
 );
 INSERT INTO `idea` (`title`, `context`, `user_id`, `created_at`, `archived_at`, `deleted_at`, `goal`, `profits`, `risks`, `cloudshare`, `primary_img`, `views`)
 VALUES
-  ('Idea 1', 'Lorem ipsum dolor sit amet. Consectetur adipiscing elit.', 1, '2022-11-23 12:33:11', NULL, NULL, 'Achieve a sustainable future.', 'Increase revenue and market share.', 'Mitigate potential risks.', NULL, 'https://picsum.photos/500/500', 200),
-  ('Idea 2', 'Consectetur adipiscing elit. Lorem ipsum dolor sit amet. ', 2, '2023-05-20 12:33:11', NULL, NULL, 'Improve user experience.', 'Expand into new markets.', 'Manage competitive challenges.', NULL, 'https://picsum.photos/500/500', 50),
+  ('Idea 1', 'Lorem ipsum dolor sit amet. Consectetur adipiscing elit.', 1, '2023-06-28 00:00:01', NULL, NULL, 'Achieve a sustainable future.', 'Increase revenue and market share.', 'Mitigate potential risks.', NULL, 'https://picsum.photos/500/500', 200),
+  ('Idea 2', 'Consectetur adipiscing elit. Lorem ipsum dolor sit amet. ', 2, '2023-07-01 12:37:16', NULL, NULL, 'Improve user experience.', 'Expand into new markets.', 'Manage competitive challenges.', NULL, 'https://picsum.photos/500/500', 50),
   ('Idea 3', 'Consectetur adipiscing elit. Lorem ipsum dolor sit amet. ', 2, '2023-06-23 12:33:11', NULL, NULL, 'Improve user experience.', 'Expand into new markets.', 'Manage competitive challenges.', NULL, 'https://picsum.photos/500/500', 50),
   ('Idea 4', 'Lorem ipsum dolor sit amet. Consectetur adipiscing elit.', 3, '2023-06-15 12:33:11', NULL, NULL, 'Increase operational efficiency.', 'Optimize cost and resource utilization.', 'Address scalability challenges.', NULL, 'https://picsum.photos/500/500', 100),
   ('Idea 5', 'Consectetur adipiscing elit. Lorem ipsum dolor sit amet.', 4, '2023-06-20 12:33:11', NULL, NULL, 'Enhance product quality.', 'Differentiate from competitors.', 'Maintain customer satisfaction.', NULL, 'https://picsum.photos/500/500', 75),

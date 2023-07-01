@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
-import { useContext } from "react";
+import { useState, useEffect, useContext } from "react";
+import axios from "axios";
 import {
   LightBulbIcon,
   PencilIcon,
@@ -10,12 +11,30 @@ import { UserContext } from "../contexts/UserContext";
 import OverviewCards from "../components/OverviewCards";
 
 function Home() {
-  const { score_comment, score_idea, score_like } = useContext(UserContext);
+  const { id, score_comment, score_idea, score_like } = useContext(UserContext);
+  const [ideasCreatedToday, setIdeasCreatedToday] = useState("N/A");
+
+  useEffect(() => {
+    const fetchIdeasCreatedToday = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:6001/api/ideas/${id}/count`
+        );
+        const { count } = response.data;
+        setIdeasCreatedToday(count);
+      } catch (error) {
+        console.error("Error fetching ideas created today:", error);
+        setIdeasCreatedToday("Coucou");
+      }
+    };
+
+    fetchIdeasCreatedToday();
+  }, [id]);
+
   return (
     <div className="h-screen p-5 lg:w-3/5 xl:w-2/5">
       <h3 className="text-black mb-5">Overview</h3>
       <div className="p-2">
-        {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12"> */}
         <div className="grid grid-cols-2 gap-x-8 gap-y-12 md:gap-y-8 lg:gap-x-16">
           <OverviewCards
             icon={TrophyIcon}
@@ -38,8 +57,9 @@ function Home() {
               <h3 className="text-black text-lg md:text-xl px-5 pt-5">
                 Ideas created today
               </h3>
-              <h2 className="text-black text-2xl md:text-3xl px-5 pb-5">?</h2>
-              {/* TODO: Replace with real value --> axios call */}
+              <h2 className="text-black text-2xl md:text-3xl px-5 pb-5">
+                {ideasCreatedToday}
+              </h2>
             </div>
           </div>
         </div>
