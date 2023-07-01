@@ -61,7 +61,7 @@ function Ideas() {
   useEffect(() => {
     fetchAll("/api/ideas/trends")
       .then((data) => {
-        console.info("Ideas trends : ", data);
+        console.info("Ideas trends data : ", data);
         setTrendIdeas(data);
       })
       .catch((error) =>
@@ -70,7 +70,7 @@ function Ideas() {
   }, []);
 
   useEffect(() => {
-    console.info("filteredIdeas", filteredIdeas);
+    console.info("filteredIdeas state", filteredIdeas);
   }, [filteredIdeas]);
 
   return (
