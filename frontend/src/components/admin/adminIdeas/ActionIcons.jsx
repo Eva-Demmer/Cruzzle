@@ -1,4 +1,4 @@
-import { IconButton } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import {
   EyeIcon,
   PencilSquareIcon,
@@ -6,13 +6,10 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/solid";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 export default function ActionIcons(props) {
   const { ideaId } = props;
-
-  const handleView = () => {
-    console.info(`Go to see Idea ${ideaId}`);
-  };
 
   const handleEdit = () => {
     console.info(`Edit Idea ${ideaId}`);
@@ -28,18 +25,33 @@ export default function ActionIcons(props) {
 
   return (
     <>
-      <IconButton onClick={handleView}>
-        <EyeIcon className="w-4 text-green-600" />
-      </IconButton>
-      <IconButton onClick={handleEdit}>
-        <PencilSquareIcon className="w-4 text-yellow-600" />
-      </IconButton>
-      <IconButton onClick={handleArchive}>
-        <ArchiveBoxArrowDownIcon className="w-4 text-sky-600" />
-      </IconButton>
-      <IconButton onClick={handleDelete}>
-        <TrashIcon className="w-4 text-red-600" />
-      </IconButton>
+      <Link to={`/ideas/${ideaId}`}>
+        <Tooltip title="Visit idea page" arrow>
+          <IconButton>
+            <EyeIcon className="w-4 text-green-600" />
+          </IconButton>
+        </Tooltip>
+      </Link>
+
+      <Link to={`/ideas/${ideaId}/edit`}>
+        <Tooltip title="Edit idea" arrow>
+          <IconButton onClick={handleEdit}>
+            <PencilSquareIcon className="w-4 text-yellow-600" />
+          </IconButton>
+        </Tooltip>
+      </Link>
+
+      <Tooltip title="Archive idea" arrow>
+        <IconButton onClick={handleArchive}>
+          <ArchiveBoxArrowDownIcon className="w-4 text-sky-600" />
+        </IconButton>
+      </Tooltip>
+
+      <Tooltip title="Delete idea" arrow>
+        <IconButton onClick={handleDelete}>
+          <TrashIcon className="w-4 text-red-600" />
+        </IconButton>
+      </Tooltip>
     </>
   );
 }
