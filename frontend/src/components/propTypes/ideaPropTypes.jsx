@@ -25,6 +25,7 @@ const agencyPropTypes = PropTypes.shape({
 const FavoritPropTypes = PropTypes.arrayOf(
   PropTypes.shape({
     user_id: PropTypes.number.isRequired,
+    idea_id: PropTypes.number.isRequired,
   })
 );
 
