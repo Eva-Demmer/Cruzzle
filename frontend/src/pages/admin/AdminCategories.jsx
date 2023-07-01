@@ -4,7 +4,7 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import CounterCard from "../../components/admin/CounterCard";
 import ActionButton from "../../components/admin/ActionButton";
 import TableOfCategories from "../../components/admin/adminCategories/TableOfCategories";
-import apiCategories from "../../services/api.categories";
+import apiAdminCategories from "../../services/api.admin.categories";
 
 function AdminCategories() {
   const [categoriesList, setCategorieslist] = useState([]);
@@ -14,7 +14,7 @@ function AdminCategories() {
   };
 
   useEffect(() => {
-    apiCategories()
+    apiAdminCategories()
       .then((data) => setCategorieslist(data))
       .catch((error) =>
         console.error(
@@ -25,8 +25,8 @@ function AdminCategories() {
   }, []);
 
   return (
-    <div className="admin-users w-full py-4 lg:pr-6 px-4">
-      <header className="w-full h-44 flex items-center">
+    <div className="admin-users w-full h-full pt-4 lg:pr-6 px-4 flex flex-col">
+      <header className="w-full lg:h-44 flex items-center">
         <div className="header-left-container h-full min-w-[420px] grow self-start flex flex-col justify-between">
           <h2>Categories</h2>
           <div className="my-4">
@@ -40,12 +40,12 @@ function AdminCategories() {
         <div className="self-center hidden lg:block">
           <CounterCard
             icon={<Square3Stack3DIcon />}
-            text="Total ideas"
+            text="Total categories"
             count={categoriesList.length}
           />
         </div>
       </header>
-      <main className="admin-user-board my-4">
+      <main className="admin-user-board my-4 grow">
         <TableOfCategories categoriesList={categoriesList} />
       </main>
     </div>

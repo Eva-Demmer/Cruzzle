@@ -50,7 +50,7 @@ function HeaderNav() {
 
   return (
     <>
-      <div className="flex flex-grow items-center justify-between py-2 px-4 shadow-2 md:px-6 2xl:px-11 bg-primary-800 sm:bg-white">
+      <div className="flex items-center justify-between py-2 px-4 shadow-2 md:px-6 2xl:px-11 bg-primary-800 sm:bg-white">
         {!openSearch && (
           <>
             {smallQuery && (

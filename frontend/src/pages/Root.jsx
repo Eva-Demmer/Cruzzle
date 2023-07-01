@@ -29,14 +29,12 @@ function Root() {
         ref={divRef}
         id="scrollbar"
       >
-        <div className="h-screen sm:h-auto sticky flex flex-col top-0 z-50 w-full">
+        <div className=" sticky flex flex-col top-0 z-50 w-full">
           <HeaderNav />
           {!smallQuery && activeMenu && <Sidebar />}
         </div>
-        <main>
-          <div className="mx-auto max-w-screen-2xl">
-            <Outlet />
-          </div>
+        <main className="grow h-full">
+          <Outlet />
         </main>
       </div>
     </div>

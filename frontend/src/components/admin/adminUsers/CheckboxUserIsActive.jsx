@@ -1,19 +1,23 @@
-import { Checkbox } from "@mui/material";
+import { Checkbox, Tooltip } from "@mui/material";
 import PropTypes from "prop-types";
 
 export default function CheckboxUserIsActive(props) {
-  const { isActiveUser, setIsActiveUser, UserId } = props;
+  const { isActiveUser, setIsActiveUser, userId } = props;
 
   const handleChange = () => {
-    console.info(`user ${UserId} is active : ${!isActiveUser}`);
+    console.info(`user ${userId} is active : ${!isActiveUser}`);
     setIsActiveUser(!isActiveUser);
   };
 
-  return <Checkbox checked={isActiveUser} onChange={handleChange} />;
+  return (
+    <Tooltip title="Acivate/Unactivate user" arrow>
+      <Checkbox checked={isActiveUser} onChange={handleChange} />
+    </Tooltip>
+  );
 }
 
 CheckboxUserIsActive.propTypes = {
   isActiveUser: PropTypes.bool.isRequired,
   setIsActiveUser: PropTypes.func.isRequired,
-  UserId: PropTypes.number.isRequired,
+  userId: PropTypes.number.isRequired,
 };
