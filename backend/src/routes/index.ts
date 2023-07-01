@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import usersRoutes from "./users.routes";
 import ideasRoutes from "./ideas.routes";
+import favoritsRoutes from "./favorits.routes";
 import categoriesRoutes from "./categories.routes";
 import adminRoutes from "./admin.routes";
 
@@ -13,6 +14,7 @@ app.get("/", welcome);
 
 app.use("/api/users", usersRoutes);
 app.use("/api/ideas", ideasRoutes);
+app.use("/api/favorits", favoritsRoutes);
 app.use("/api/categories", categoriesRoutes);
 
 app.use("/api/admin", adminRoutes);

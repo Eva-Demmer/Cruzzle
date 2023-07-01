@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
@@ -9,10 +9,23 @@ import {
 } from "@heroicons/react/24/outline";
 import { StarIcon as StarIconSolid } from "@heroicons/react/24/solid";
 import { useMediaQuery } from "react-responsive";
+import { postFavorit, deleteFavorit } from "../../services/api.favorits";
 import { sm } from "../../utils/mediaQueries";
 
 export default function IdeaCardActions({ userId, user, id, isFavorite }) {
+  const [favorite, setFavorite] = useState(isFavorite);
+
   const smallQuery = useMediaQuery(sm);
+
+  const handleFavoriteClick = () => {
+    if (!favorite) {
+      postFavorit(user, id, "favorits");
+      setFavorite(true);
+    } else {
+      deleteFavorit(user, id, "favorits");
+      setFavorite(false);
+    }
+  };
 
   return (
     <div className="hidden group-hover:flex duration-100">
@@ -23,10 +36,16 @@ export default function IdeaCardActions({ userId, user, id, isFavorite }) {
             : "left-1/2 transform -translate-x-1/2 -top-5"
         } flex justify-center items-center gap-3 h-10 absolute border-solid border border-gray-400 bg-slate-50 px-3 rounded-full lg:right-8`}
       >
-        {isFavorite ? (
-          <StarIconSolid className="h-6 w-6 text-gray-900 hover:text-primary-900" />
+        {favorite ? (
+          <StarIconSolid
+            className="h-6 w-6 text-gray-900 hover:text-primary-900"
+            onClick={handleFavoriteClick}
+          />
         ) : (
-          <StarIconOutline className="h-6 w-6 text-gray-900 hover:text-primary-900" />
+          <StarIconOutline
+            className="h-6 w-6 text-gray-900 hover:text-primary-900"
+            onClick={handleFavoriteClick}
+          />
         )}
         <Link className="no-underline w-auto" to={`/ideas/${id}`}>
           <ChatBubbleOvalLeftEllipsisIcon className="h-6 w-6 text-gray-900 hover:text-primary-900" />
