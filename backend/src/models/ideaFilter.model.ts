@@ -76,6 +76,14 @@ const findByFilter = async (filterQuery: IdeaFilterQuery) => {
             },
           },
         },
+        favorit: {
+          select: {
+            user_id: true,
+          },
+          where: {
+            user_id: userId ? parseInt(userId, 10) : undefined,
+          },
+        },
         _count: {
           select: {
             idea_like: true,
@@ -87,6 +95,7 @@ const findByFilter = async (filterQuery: IdeaFilterQuery) => {
       },
 
       where: {
+        deleted_at: null,
         created_at: {
           gte: dayjs(publicationDateStart).toISOString(),
           lte: dayjs(publicationDateEnd).add(1, "day").toISOString(),

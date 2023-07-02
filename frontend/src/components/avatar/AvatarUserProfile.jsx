@@ -3,7 +3,7 @@ import { Avatar, Paper } from "@mui/material";
 import { UserContext } from "../../contexts/UserContext";
 
 function AvatarUserProfile() {
-  const { imgUrl } = useContext(UserContext);
+  const { avatar_url: imgUrl } = useContext(UserContext);
 
   return (
     <div>

@@ -39,7 +39,11 @@ function ModalEditImage({ isOpen, src, radius, onClose, height, width }) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} onSave={handleSave}>
       <div className="flex flex-col items-center justify-center">
-        <UploadButton accept="image/*" onChange={handleImgChange}>
+        <UploadButton
+          accept="image/*"
+          onChange={handleImgChange}
+          id="Upload Avatar"
+        >
           New file
         </UploadButton>
         <AvatarEditor

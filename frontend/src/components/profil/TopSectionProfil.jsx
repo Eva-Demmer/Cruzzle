@@ -16,8 +16,8 @@ import ModalEditImage from "./ModalEditImage";
 
 function TopSectionProfil() {
   const {
-    imgUrl,
-    imgBanner,
+    avatar_url: imgUrl,
+    banner_url: imgBanner,
     firstname,
     lastname,
     agency,

@@ -23,7 +23,7 @@ function SideLinks() {
   const [open, setOpen] = useState(true);
   const location = useLocation();
   const { activeMenu, setActiveMenu } = useContext(MenuContext);
-  const isAdmin = false; // TODO: add to context
+  const isAdmin = true; // TODO: add to context
 
   const iconSize = (item) => {
     return `h-6 w-6 ${location.pathname === item.to ? "text-primary-50" : ""}`;
@@ -70,6 +70,10 @@ function SideLinks() {
         {
           to: "/admin/ideas",
           primary: "Ideas",
+        },
+        {
+          to: "/admin/categories",
+          primary: "Categories",
         },
       ],
     },
