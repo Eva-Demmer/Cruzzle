@@ -21,19 +21,23 @@ const hashPassword = async (
   res: Response,
   next: NextFunction
 ) => {
-  try {
-    const { password } = req.body;
-    const saltRounds = 11;
-    const salt = await bcrypt.genSalt(saltRounds);
-    const hashedPassword = await bcrypt.hash(password, salt);
+  const { password } = req.body;
+  if (password) {
+    try {
+      const saltRounds = 11;
+      const salt = await bcrypt.genSalt(saltRounds);
+      const hashedPassword = await bcrypt.hash(password, salt);
 
-    delete req.body.password;
-    req.body.hashed_password = hashedPassword;
+      delete req.body.password;
+      req.body.hashed_password = hashedPassword;
 
+      next();
+    } catch (error) {
+      console.error("Error hashing password:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  } else {
     next();
-  } catch (error) {
-    console.error("Error hashing password:", error);
-    res.status(500).json({ error: "Internal server error" });
   }
 };
 

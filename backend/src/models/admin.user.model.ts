@@ -1,4 +1,9 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { PrismaClient } from "@prisma/client";
+import {
+  CreateUser,
+  UserLoginUpdatedRequest,
+} from "../interfaces/users.interface";
 
 const prisma = new PrismaClient();
 
@@ -54,4 +59,20 @@ const findByIdByAdmin = async (id: number) => {
   }
 };
 
-export { findAllByAdmin, findByIdByAdmin };
+const updateByIdByAdmin = async (id: number, userUpdated: CreateUser) => {
+  try {
+    const data = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: userUpdated,
+    });
+    return data;
+  } catch (error) {
+    throw new Error("Error updating user.");
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+export { findAllByAdmin, findByIdByAdmin, updateByIdByAdmin };

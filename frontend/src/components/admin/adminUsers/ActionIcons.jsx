@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import DialogResetPassword from "./DialogResetPassword";
 
-export default function ActionIcons({ user }) {
+export default function ActionIcons({ user, setUpdateList }) {
   const [openDialogPassword, setOpenDialogPassword] = useState(false);
 
   return (
@@ -30,6 +30,7 @@ export default function ActionIcons({ user }) {
         openDialogPassword={openDialogPassword}
         setOpenDialogPassword={setOpenDialogPassword}
         user={user}
+        setUpdateList={setUpdateList}
       />
     </>
   );
@@ -59,4 +60,5 @@ ActionIcons.propTypes = {
       name: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  setUpdateList: PropTypes.func.isRequired,
 };

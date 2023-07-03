@@ -13,7 +13,13 @@ function AdminIdeas() {
 
   useEffect(() => {
     apiAdminIdeas()
-      .then((data) => setIdealist(data))
+      .then((res) => {
+        if (res.status === 200) {
+          setIdealist(res.data);
+        } else {
+          console.error("Cannot get the list of Ideas");
+        }
+      })
       .catch((error) =>
         console.error("error from admin_ideas getting the list of Ideas", error)
       );

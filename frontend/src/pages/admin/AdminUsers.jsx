@@ -16,9 +16,16 @@ function AdminUsers() {
 
   useEffect(() => {
     apiAdminUsers()
-      .then((data) => setUserlist(data))
+      .then((res) => {
+        if (res.status === 200) {
+          setUserlist(res.data);
+        } else {
+          console.error("Cannot get users from panel admin");
+        }
+      })
+      .finally(() => setUpdateList(false))
       .catch((error) =>
-        console.error("error from amin users getting the list of users", error)
+        console.error("Error getting users from panel admin", error)
       );
   }, [updateList]);
 

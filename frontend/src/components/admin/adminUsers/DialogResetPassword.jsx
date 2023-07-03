@@ -11,16 +11,18 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { apiAdminUpdateUserById } from "../../../services/api.admin.users";
 
 export default function DialogResetPassword({
   openDialogPassword,
   setOpenDialogPassword,
   user,
+  setUpdateList,
 }) {
   const [updateMail, setUpdateMail] = useState(user.mail);
   const [updatePassword, setUpdatePassword] = useState("");
-  const [passwordError, setPasswordError] = useState(false);
   const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -44,21 +46,24 @@ export default function DialogResetPassword({
 
   const handleSubmit = () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (emailPattern.test(updateMail) === false) {
-      setEmailError(true);
-    } else {
-      setEmailError(false);
-    }
+    const isEmailValid = emailPattern.test(updateMail);
+    const isPasswordValid = updatePassword.length >= 4;
 
-    if (updatePassword.length <= 3) {
-      setPasswordError(true);
-    } else {
-      setPasswordError(false);
-    }
+    setEmailError(!isEmailValid);
+    setPasswordError(!isPasswordValid);
 
-    if (passwordError === false && emailError === false) {
-      console.info("youpi");
-      // setOpenDialogPassword(false);
+    if (isEmailValid && isPasswordValid) {
+      const updatedLogin = { mail: updateMail, password: updatePassword };
+      apiAdminUpdateUserById(user.id, updatedLogin)
+        .then((res) => {
+          if (res.status === 200) {
+            setOpenDialogPassword(false);
+            setUpdateList(true);
+          } else {
+            console.error("Cannot update user login");
+          }
+        })
+        .catch((error) => console.error("Error updating user login", error));
     }
   };
 
@@ -154,4 +159,5 @@ DialogResetPassword.propTypes = {
       name: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  setUpdateList: PropTypes.func.isRequired,
 };

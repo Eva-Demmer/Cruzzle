@@ -34,4 +34,9 @@ interface CreateUser {
   is_active: boolean;
 }
 
-export { User, CreateUser };
+interface UserLoginUpdatedRequest {
+  mail: string;
+  hashed_password: string;
+}
+
+export { User, CreateUser, UserLoginUpdatedRequest };

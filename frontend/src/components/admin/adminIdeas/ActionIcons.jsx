@@ -27,6 +27,8 @@ export default function ActionIcons(props) {
       .then((res) => {
         if (res.status === 200) {
           setUpdateList(true);
+        } else {
+          console.error("Cannot archive idea");
         }
       })
       .finally(() => setIsConfirmedArchiveIdea(false))
@@ -40,6 +42,8 @@ export default function ActionIcons(props) {
       .then((res) => {
         if (res.status === 200) {
           setUpdateList(true);
+        } else {
+          console.error("Cannot delete idea");
         }
       })
       .finally(() => setIsConfirmedArchiveIdea(false))
