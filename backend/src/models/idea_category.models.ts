@@ -25,4 +25,15 @@ const getCategoryByIdeaId = async (id: number) => {
   }
 };
 
-export { createCategoryByIdea, getCategoryByIdeaId };
+const deleteCategoriesByIdeaId = async (id: number) => {
+  try {
+    const data = await prisma.idea_category.deleteMany({
+      where: { idea_id: id },
+    });
+    return data;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+export { createCategoryByIdea, getCategoryByIdeaId, deleteCategoriesByIdeaId };

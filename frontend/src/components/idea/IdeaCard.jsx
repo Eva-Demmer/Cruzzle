@@ -34,7 +34,7 @@ export default function IdeaCard({ isMini, idea }) {
     >
       <Link
         className="flex flex-col no-underline w-full sm:flex-row "
-        to={`/idea/${id}`}
+        to={`/ideas/${id}`}
       >
         <div
           className={`${

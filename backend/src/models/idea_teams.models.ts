@@ -25,4 +25,15 @@ const getTeamByIdeaId = async (id: number) => {
   }
 };
 
-export { createTeams, getTeamByIdeaId };
+const deleteTeamByIdeaId = async (id: number) => {
+  try {
+    const data = await prisma.idea_teams.deleteMany({
+      where: { idea_id: id },
+    });
+    return data;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+export { createTeams, getTeamByIdeaId, deleteTeamByIdeaId };

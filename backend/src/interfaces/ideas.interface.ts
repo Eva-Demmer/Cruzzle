@@ -27,6 +27,16 @@ interface PostIdea {
   [key: string]: string | number | Date | null | undefined;
 }
 
+interface IdeaUpdate {
+  title?: string;
+  context?: string;
+  goal?: string | null;
+  profits?: string | null;
+  risks?: string | null;
+  cloudshare?: string | null;
+  primary_img?: string | null;
+}
+
 interface IdeaFilterQuery {
   userId?: string;
   userAgencyId?: string;
@@ -40,4 +50,4 @@ interface IdeaFilterQuery {
   hasNoComment?: string;
 }
 
-export { Idea, IdeaFilterQuery, PostIdea };
+export { Idea, IdeaFilterQuery, PostIdea, IdeaUpdate };
