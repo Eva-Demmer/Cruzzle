@@ -6,6 +6,7 @@ import {
   uploadBytesResumable,
   deleteObject,
   listAll,
+  getMetadata,
 } from "firebase/storage";
 import dayjs from "dayjs";
 import config from "../config/firebase.config";
@@ -186,6 +187,19 @@ const deleteMultipleFilesInFirebase = async (
   }
 };
 
+const getFileSize = async (url: string): Promise<number> => {
+  const fileRef = ref(storage, url);
+
+  try {
+    const metadata = await getMetadata(fileRef);
+    const fileSize = metadata.size;
+    return fileSize;
+  } catch (error) {
+    console.error("Error getting metadata:", error);
+    throw error;
+  }
+};
+
 export {
   uploadToFirebase,
   uploadOneFileToFirebase,
@@ -194,4 +208,5 @@ export {
   deleteOneFileInFirebase,
   deleteMultipleFilesInFirebase,
   decodeUrlFirebase,
+  getFileSize,
 };

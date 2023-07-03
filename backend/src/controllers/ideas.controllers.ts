@@ -12,6 +12,7 @@ import {
 import {
   deleteFilesInFolder,
   deleteMultipleFilesInFirebase,
+  getFileSize,
   uploadOneFileToFirebase,
   uploadToFirebase,
 } from "../services/firebase";
@@ -319,6 +320,16 @@ const archivedIdeaById = async (req: Request, res: Response) => {
   }
 };
 
+const getSizeFileByUrl = async (req: Request, res: Response): Promise<void> => {
+  const { fileUrl } = req.query;
+  try {
+    const fileSize = await getFileSize(fileUrl as string);
+    res.status(200).json({ fileSize });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
 export {
   getIdeas,
   getIdeaById,
@@ -327,4 +338,5 @@ export {
   deleteIdeaById,
   archivedIdeaById,
   updateIdeaById,
+  getSizeFileByUrl,
 };

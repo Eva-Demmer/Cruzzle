@@ -6,6 +6,7 @@ import {
   IdeaUpdate,
   PostIdea,
 } from "../interfaces/ideas.interface";
+import { getFileSize } from "../services/firebase";
 
 const prisma = new PrismaClient();
 
@@ -21,10 +22,105 @@ const findAll = async () => {
 const findById = async (id: number) => {
   try {
     const response = await prisma.idea.findUnique({
+      select: {
+        id: true,
+        title: true,
+        context: true,
+        user: {
+          select: {
+            id: true,
+            firstname: true,
+            lastname: true,
+            position: true,
+            avatar_url: true,
+            agency: true,
+          },
+        },
+        comment: {
+          select: {
+            id: true,
+            user_id: true,
+            user: {
+              select: {
+                firstname: true,
+                lastname: true,
+                avatar_url: true,
+              },
+            },
+            body: true,
+            created_at: true,
+            comment_like: {
+              select: {
+                id: true,
+                comment_id: true,
+                user_id: true,
+              },
+            },
+          },
+        },
+        created_at: true,
+        archived_at: true,
+        deleted_at: true,
+        goal: true,
+        profits: true,
+        risks: true,
+        cloudshare: true,
+        primary_img: true,
+        views: true,
+        idea_category: {
+          select: {
+            id: true,
+            category: {
+              select: {
+                label: true,
+                color: true,
+              },
+            },
+          },
+        },
+        attachment: {
+          select: {
+            id: true,
+            content_url: true,
+          },
+        },
+        idea_teams: {
+          select: {
+            user_id: true,
+            user: {
+              select: {
+                firstname: true,
+                lastname: true,
+                position: true,
+                avatar_url: true,
+                agency: true,
+              },
+            },
+          },
+        },
+        _count: {
+          select: {
+            idea_like: true,
+            comment: true,
+            attachment: true,
+            idea_teams: true,
+          },
+        },
+      },
       where: {
         id,
       },
     });
+
+    if (response) {
+      response.attachment = await Promise.all(
+        response.attachment.map(async (attachment) => {
+          const size = await getFileSize(attachment.content_url);
+          return { ...attachment, size };
+        })
+      );
+    }
+
     return response;
   } finally {
     await prisma.$disconnect();
