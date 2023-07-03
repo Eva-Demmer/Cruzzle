@@ -25,4 +25,19 @@ const getAllAttachementsByIdeaId = async (id: number) => {
   }
 };
 
-export { createAttachements, getAllAttachementsByIdeaId };
+const deleteAllAttachmentsByIdea = async (id: number) => {
+  try {
+    const req = await prisma.attachment.deleteMany({
+      where: { idea_id: id },
+    });
+    return req;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+export {
+  createAttachements,
+  getAllAttachementsByIdeaId,
+  deleteAllAttachmentsByIdea,
+};
