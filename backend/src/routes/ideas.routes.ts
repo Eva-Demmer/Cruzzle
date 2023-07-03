@@ -6,6 +6,7 @@ import {
   postIdea,
   deleteIdeaById,
   archivedIdeaById,
+  updateIdeaById,
 } from "../controllers/ideas.controllers";
 import { uploadFilesIdea } from "../middlewares/multer.middlewares";
 
@@ -25,6 +26,7 @@ router.get("/:id", getIdeaById);
 router.post("/", uploadFilesIdea, postIdea);
 
 router.patch("/archive/:id", archivedIdeaById);
+router.put("/:id", uploadFilesIdea, updateIdeaById);
 router.delete("/:id", deleteIdeaById);
 
 export default router;
