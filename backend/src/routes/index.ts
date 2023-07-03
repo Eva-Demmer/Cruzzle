@@ -3,6 +3,7 @@ import usersRoutes from "./users.routes";
 import ideasRoutes from "./ideas.routes";
 import categoriesRoutes from "./categories.routes";
 import adminRoutes from "./admin.routes";
+import commentsRoutes from "./comments.routes";
 
 const app: Application = express();
 
@@ -14,6 +15,7 @@ app.get("/", welcome);
 app.use("/api/users", usersRoutes);
 app.use("/api/ideas", ideasRoutes);
 app.use("/api/categories", categoriesRoutes);
+app.use("/api/comments", commentsRoutes);
 
 app.use("/api/admin", adminRoutes);
 

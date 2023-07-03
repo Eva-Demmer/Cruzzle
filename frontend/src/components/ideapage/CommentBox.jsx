@@ -1,6 +1,6 @@
 import { Paper, Avatar, Button, ButtonGroup, Divider } from "@mui/material";
 import PropTypes from "prop-types";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import dayjs from "dayjs";
 import { HandThumbUpIcon as SolidHandThumbUpIcon } from "@heroicons/react/24/solid";
 import {
@@ -8,11 +8,13 @@ import {
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
 import { UserContext } from "../../contexts/UserContext";
+import EditComment from "./EditComment";
 
-function CommentBox({ comment, divider = false }) {
+function CommentBox({ comment, divider = false, tabComment = false }) {
   const user = useContext(UserContext);
   const { id: userId } = user;
-  // const [likes, setLikes] = useState(comment.comment_like.length);
+  const [modify, setModify] = useState(false);
+  const [content, setContent] = useState(comment.body);
 
   return (
     <div className="flex w-full">
@@ -47,9 +49,19 @@ function CommentBox({ comment, divider = false }) {
               className="relative p-6 w-full rounded-xl border border-[#dadada] border-solid"
             >
               <div className="flex flex-col">
-                <div>
-                  <p style={{ textAlign: "left" }}>{comment.body}</p>
-                </div>
+                {!modify && (
+                  <div>
+                    <p style={{ textAlign: "left" }}>{content}</p>
+                  </div>
+                )}
+                {modify && (
+                  <EditComment
+                    commentId={comment.id}
+                    setModify={setModify}
+                    content={content}
+                    setContent={setContent}
+                  />
+                )}
                 <Paper
                   elevation={0}
                   size="small"
@@ -83,12 +95,12 @@ function CommentBox({ comment, divider = false }) {
                 >
                   Like
                 </Button>
-                {comment.user_id === userId && (
+                {tabComment && comment.user_id === userId && (
                   <Button
                     variant="text"
                     startIcon={<PencilSquareIcon className="h-5 w-5" />}
                     className="flex  text-secondary-600"
-                    onClick={() => console.info("modify")}
+                    onClick={() => setModify(true)}
                     sx={{ margin: 1 }}
                   >
                     Modify
@@ -125,10 +137,12 @@ const commentShape = PropTypes.shape({
 CommentBox.propTypes = {
   comment: commentShape.isRequired,
   divider: PropTypes.bool,
+  tabComment: PropTypes.bool,
 };
 
 CommentBox.defaultProps = {
   divider: false,
+  tabComment: false,
 };
 
 export default CommentBox;

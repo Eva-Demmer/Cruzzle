@@ -5,11 +5,13 @@ import { ChevronUpIcon } from "@heroicons/react/24/outline";
 import TabPanel from "../../tabs/TabPanel";
 import { IdeaPageContext } from "../../../contexts/IdeaPageContext";
 import TopComments from "../TopComments";
+import CreateComment from "../CreateComment";
 
 function TabGeneral({ tabValue, setTabValue, index }) {
   const { idea } = useContext(IdeaPageContext);
   const [expanded, setExpanded] = useState(true);
   const { goal, risks, profits, comment } = idea;
+
   return (
     <div>
       <TabPanel value={tabValue} index={index} className="w-full">
@@ -55,7 +57,10 @@ function TabGeneral({ tabValue, setTabValue, index }) {
             </AccordionDetails>
           </Accordion>
         )}
-        {comment.length > 0 && <TopComments setTabValue={setTabValue} />}
+        {comment && comment.length > 0 && (
+          <TopComments setTabValue={setTabValue} />
+        )}
+        <CreateComment />
       </TabPanel>
     </div>
   );
