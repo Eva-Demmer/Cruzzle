@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const url = import.meta.env.VITE_BACKEND_URL;
-const userRoute = "/api/admin/users/";
+const userRoute = "/api/admin/ideas/";
 
 const apiAdminUsers = async (route = "") => {
   try {

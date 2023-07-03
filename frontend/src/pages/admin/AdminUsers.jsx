@@ -26,8 +26,8 @@ function AdminUsers() {
   }, []);
 
   return (
-    <div className="admin-users w-full py-4 lg:pr-6 px-4">
-      <header className="w-full h-44 flex items-center">
+    <div className="admin-users w-full h-full pt-4 lg:pr-6 px-4 flex flex-col">
+      <header className="w-full lg:h-44 flex items-center">
         <div className="header-left-container h-full min-w-[420px] grow self-start flex flex-col justify-between">
           <h2>Users</h2>
           <div className="my-4 flex flex-col gap-4 md:block">
@@ -51,7 +51,7 @@ function AdminUsers() {
           />
         </div>
       </header>
-      <main className="admin-user-board my-4">
+      <main className="admin-user-board my-4 grow">
         <TableOfUsers userList={userList} />
       </main>
     </div>

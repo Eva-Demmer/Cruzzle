@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const url = import.meta.env.VITE_BACKEND_URL;
-const userRoute = "/api/admin/users/";
+const userRoute = "/api/admin/categories/";
 
-const apiAdminUsers = async (route = "") => {
+const apiAdminCategories = async (route = "") => {
   try {
     const response = await axios.get(`${url}${userRoute}${route}`);
     if (response.status === 200) {
@@ -21,4 +21,4 @@ const apiAdminUsers = async (route = "") => {
   }
 };
 
-export default apiAdminUsers;
+export default apiAdminCategories;

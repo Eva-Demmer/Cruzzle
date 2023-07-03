@@ -24,5 +24,9 @@ export default function ActionButton({ icon, text, onClick }) {
 ActionButton.propTypes = {
   icon: PropTypes.element.isRequired,
   text: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
+};
+
+ActionButton.defaultProps = {
+  onClick: () => {},
 };
