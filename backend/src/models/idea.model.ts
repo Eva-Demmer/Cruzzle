@@ -1,11 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import dayjs from "dayjs";
-import {
-  Idea,
-  IdeaFilterQuery,
-  IdeaUpdate,
-  PostIdea,
-} from "../interfaces/ideas.interface";
+import { Idea, IdeaUpdate, PostIdea } from "../interfaces/ideas.interface";
 import { getFileSize } from "../services/firebase";
 
 const prisma = new PrismaClient();
