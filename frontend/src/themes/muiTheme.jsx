@@ -22,7 +22,7 @@ const themeMui = createTheme({
     secondary: {
       main: "#AFE2B1",
     },
-    succes: {
+    success: {
       main: "#2E7D32",
     },
     error: {

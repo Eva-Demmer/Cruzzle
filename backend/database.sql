@@ -252,7 +252,8 @@ CREATE TABLE `comment` (
   `user_id` integer NOT NULL,
   `body` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (`idea_id`) REFERENCES `idea` (`id`)
+  FOREIGN KEY (`idea_id`) REFERENCES `idea` (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 );
 INSERT INTO `comment` (`idea_id`, `user_id`, `body`, `created_at`)
 VALUES
@@ -266,7 +267,27 @@ VALUES
   (3, 9, 'I have some concerns regarding the implementation.', '2023-06-03 14:56:22'),
   (4, 10, 'Have you considered the potential risks involved?', '2023-06-04 09:37:15'),
   (6, 11, 'This idea aligns well with our company goals.', '2023-06-05 17:25:03'),
-  (4, 3, 'This idea has the potential to disrupt the market.', '2023-06-17 14:37:41');
+  (4, 3, 'This idea has the potential to disrupt the market.', '2023-06-17 14:37:41'),
+  (1, 2, 'This is a great idea!', '2023-07-01 10:00:00'),
+  (1, 3, 'I have some suggestions to improve it.', '2023-07-02 12:30:00'),
+  (1, 4, 'Im excited to see this idea come to life.', '2023-07-03 15:15:00'),
+  (1, 5, 'Have you considered the potential challenges?', '2023-07-04 09:45:00'),
+  (1, 6, 'I think this idea has a lot of potential.', '2023-07-05 14:00:00'),
+  (1, 7, 'This idea aligns well with our company goals.', '2023-07-06 17:45:00'),
+  (1, 8, 'I have some concerns regarding the implementation.', '2023-07-07 11:30:00'),
+  (1, 9, 'This idea needs further development.', '2023-07-08 13:00:00'),
+  (1, 10, 'Im impressed with the level of innovation.', '2023-07-09 16:20:00'),
+  (1, 2, 'What are the expected profits from this idea?', '2023-07-10 10:45:00'),
+  (1, 3, 'I believe this idea will have a positive impact.', '2023-07-11 12:15:00'),
+  (1, 4, 'Im excited to contribute to this idea.', '2023-07-12 15:30:00'),
+  (1, 5, 'This idea has the potential to disrupt the market.', '2023-07-13 09:00:00'),
+  (1, 6, 'I have some suggestions for the implementation.', '2023-07-14 14:45:00'),
+  (1, 7, 'Great job on explaining the benefits!', '2023-07-15 17:15:00'),
+  (1, 8, 'Im interested in collaborating on this idea.', '2023-07-16 11:00:00'),
+  (1, 9, 'This idea aligns with our company values.', '2023-07-17 13:30:00'),
+  (1, 10, 'I have some concerns about the market demand.', '2023-07-18 16:50:00'),
+  (1, 2, 'Lets discuss the potential risks involved.', '2023-07-19 10:15:00'),
+  (1, 3, 'Im excited to be part of this idea!', '2023-07-20 12:45:00');
 
 
 
