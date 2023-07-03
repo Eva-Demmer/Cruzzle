@@ -1,13 +1,15 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import IdeaDisplayer from "../../components/idea/IdeaDisplayer";
 import IdeasProvider from "../../contexts/IdeasContext";
 import Filterbar from "../../components/filterbar/Filterbar";
 import { UserContext } from "../../contexts/UserContext";
 import { FilterContext } from "../../contexts/FilterContext";
-import { fetchByQuery } from "../../services/api.services";
+import { fetchByQuery, fetchAll } from "../../services/api.services";
 
 function Ideas() {
+  const [filteredIdeas, setFilteredIdeas] = useState();
+  const [trendIdeas, setTrendIdeas] = useState();
   const user = useContext(UserContext);
   const {
     publicationDateStart,
@@ -36,7 +38,10 @@ function Ideas() {
       hasNoComment,
     };
     fetchByQuery("/api/ideas/filter", reqItems)
-      .then((data) => console.info("Ideas filtred : ", data))
+      .then((data) => {
+        console.info("Ideas filtred : ", data);
+        setFilteredIdeas(data);
+      })
       .catch((error) =>
         console.error("error from api.services.fetcherByQuery", error)
       );
@@ -53,6 +58,21 @@ function Ideas() {
     hasNoComment,
   ]);
 
+  useEffect(() => {
+    fetchAll("/api/ideas/trends")
+      .then((data) => {
+        console.info("Ideas trends data : ", data);
+        setTrendIdeas(data);
+      })
+      .catch((error) =>
+        console.error("error from api.services.fetcherByQuery", error)
+      );
+  }, []);
+
+  useEffect(() => {
+    console.info("filteredIdeas state", filteredIdeas);
+  }, [filteredIdeas]);
+
   return (
     <IdeasProvider>
       <div className="ideas-page w-full flex flex-col h-screen">
@@ -62,11 +82,19 @@ function Ideas() {
         </header>
         <div className="ideas-header flex flex-row ">
           <main className="ideas-main w-full min-[1439px]:w-8/12">
-            <IdeaDisplayer isMini={false} />
+            {filteredIdeas !== undefined ? (
+              <IdeaDisplayer ideas={filteredIdeas} isMini={false} />
+            ) : (
+              ""
+            )}
           </main>
           <aside className="ideas-aside-right w-4/12 hidden pl-4 pr-4 min-[1439px]:inline-block">
             <h3>Tendences</h3>
-            <IdeaDisplayer isMini="true" />
+            {trendIdeas !== undefined ? (
+              <IdeaDisplayer ideas={trendIdeas} isMini="true" />
+            ) : (
+              ""
+            )}
           </aside>
         </div>
       </div>
