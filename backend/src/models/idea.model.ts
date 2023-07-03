@@ -1,11 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import dayjs from "dayjs";
-import {
-  Idea,
-  IdeaFilterQuery,
-  IdeaUpdate,
-  PostIdea,
-} from "../interfaces/ideas.interface";
+import { Idea, IdeaUpdate, PostIdea } from "../interfaces/ideas.interface";
 import { getFileSize } from "../services/firebase";
 
 const prisma = new PrismaClient();
@@ -194,44 +188,6 @@ const findById = async (id: number) => {
   }
 };
 
-const findByFilter = async (filterQuery: IdeaFilterQuery) => {
-  const {
-    publicationDateStart,
-    publicationDateEnd,
-    autorSelectionTag,
-    selectedCategories = null,
-    trendingTag,
-    titleContains = null,
-    hasAttachment,
-    hasNoComment,
-  } = filterQuery;
-
-  console.info(publicationDateStart, dayjs(publicationDateStart).toISOString());
-  console.info(publicationDateEnd);
-  console.info(autorSelectionTag);
-  console.info(selectedCategories);
-  console.info(trendingTag);
-  console.info(titleContains);
-  console.info(hasAttachment);
-  console.info(hasNoComment);
-  try {
-    const data = await prisma.idea.findMany({
-      where: {
-        created_at: {
-          gte: dayjs(publicationDateStart).subtract(1, "day").toISOString(),
-          lte: dayjs(publicationDateEnd).toISOString(),
-        },
-      },
-      orderBy: {
-        created_at: "asc",
-      },
-    });
-    return data;
-  } finally {
-    await prisma.$disconnect();
-  }
-};
-
 const createIdea = async (dataIdea: Idea, userId: number): Promise<Idea> => {
   const { title, context, ...otherDataIdea } = dataIdea;
 
@@ -324,7 +280,6 @@ export {
   findAll,
   findTrends,
   findById,
-  findByFilter,
   createIdea,
   addPrimaryImgIdea,
   deleteIdea,

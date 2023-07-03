@@ -23,8 +23,6 @@ const findByFilter = async (filterQuery: IdeaFilterQuery) => {
     selectedCategories = [];
   }
 
-  console.info(filterQuery);
-
   try {
     const data = await prisma.idea.findMany({
       select: {
