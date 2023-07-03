@@ -17,6 +17,7 @@
     "@vitejs/plugin-react": "^3.0.1",
     "axios": "^1.4.0",
     "dayjs": "^1.11.8",
+    "file-saver": "^2.0.5",
     "hamburgers": "^1.2.1",
     "prop-types": "^15.8.1",
     "qs": "^6.11.2",
