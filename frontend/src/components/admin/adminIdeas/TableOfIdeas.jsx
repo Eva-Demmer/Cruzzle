@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/fr";
 import ActionIcons from "./ActionIcons";
 
-export default function TableOfIdeas({ ideaList }) {
+export default function TableOfIdeas({ ideaList, setUpdateList }) {
   const rows = ideaList;
   const columns = [
     { field: "title", headerName: "Title", width: 200 },
@@ -70,7 +70,7 @@ export default function TableOfIdeas({ ideaList }) {
       field: "actions",
       headerName: "Actions",
       renderCell: (params) => {
-        return <ActionIcons ideaId={params.row.id} />;
+        return <ActionIcons idea={params.row} setUpdateList={setUpdateList} />;
       },
       width: 150,
       align: "center",
@@ -122,4 +122,5 @@ TableOfIdeas.propTypes = {
       }).isRequired,
     })
   ).isRequired,
+  setUpdateList: PropTypes.func.isRequired,
 };

@@ -3,7 +3,7 @@ import { Fab } from "@mui/material";
 
 function ModifierButton() {
   return (
-    <Fab className="h-10 w-10 bg-primary-900 flex items-center justify-center relative">
+    <Fab className="h-10 w-10 bg-primary-900 flex items-center justify-center relative z-10">
       <div className="flex items-center justify-center">
         <PencilSquareIcon className="text-white h-6 w-6" />
       </div>

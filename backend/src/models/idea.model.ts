@@ -1,11 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import dayjs from "dayjs";
-import {
-  Idea,
-  IdeaFilterQuery,
-  IdeaUpdate,
-  PostIdea,
-} from "../interfaces/ideas.interface";
+import { Idea, IdeaUpdate, PostIdea } from "../interfaces/ideas.interface";
 import { getFileSize } from "../services/firebase";
 
 const prisma = new PrismaClient();
@@ -13,6 +7,73 @@ const prisma = new PrismaClient();
 const findAll = async () => {
   try {
     const data = await prisma.idea.findMany();
+    return data;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+const findTrends = async () => {
+  const last3Months: string = dayjs(dayjs()).subtract(90, "day").toISOString();
+
+  try {
+    const data = await prisma.idea.findMany({
+      select: {
+        id: true,
+        title: true,
+        context: true,
+        created_at: true,
+        archived_at: true,
+        deleted_at: true,
+        favorit: true,
+        goal: true,
+        profits: true,
+        risks: true,
+        primary_img: true,
+        views: true,
+        attachment: true,
+        idea_category: {
+          select: {
+            id: true,
+            category: {
+              select: {
+                label: true,
+                color: true,
+              },
+            },
+          },
+        },
+        _count: {
+          select: {
+            idea_like: true,
+            comment: true,
+            attachment: true,
+            idea_teams: true,
+          },
+        },
+      },
+      where: {
+        archived_at: null,
+        deleted_at: null,
+        created_at: {
+          gte: last3Months,
+        },
+      },
+
+      orderBy: [
+        {
+          comment: { _count: "desc" },
+        },
+        {
+          idea_like: { _count: "desc" },
+        },
+        {
+          views: "desc",
+        },
+      ],
+      take: 3,
+    });
+
     return data;
   } finally {
     await prisma.$disconnect();
@@ -127,44 +188,6 @@ const findById = async (id: number) => {
   }
 };
 
-const findByFilter = async (filterQuery: IdeaFilterQuery) => {
-  const {
-    publicationDateStart,
-    publicationDateEnd,
-    autorSelectionTag,
-    selectedCategories = null,
-    trendingTag,
-    titleContains = null,
-    hasAttachment,
-    hasNoComment,
-  } = filterQuery;
-
-  console.info(publicationDateStart, dayjs(publicationDateStart).toISOString());
-  console.info(publicationDateEnd);
-  console.info(autorSelectionTag);
-  console.info(selectedCategories);
-  console.info(trendingTag);
-  console.info(titleContains);
-  console.info(hasAttachment);
-  console.info(hasNoComment);
-  try {
-    const data = await prisma.idea.findMany({
-      where: {
-        created_at: {
-          gte: dayjs(publicationDateStart).subtract(1, "day").toISOString(),
-          lte: dayjs(publicationDateEnd).toISOString(),
-        },
-      },
-      orderBy: {
-        created_at: "asc",
-      },
-    });
-    return data;
-  } finally {
-    await prisma.$disconnect();
-  }
-};
-
 const createIdea = async (dataIdea: Idea, userId: number): Promise<Idea> => {
   const { title, context, ...otherDataIdea } = dataIdea;
 
@@ -255,8 +278,8 @@ const updateIdea = async (
 
 export {
   findAll,
+  findTrends,
   findById,
-  findByFilter,
   createIdea,
   addPrimaryImgIdea,
   deleteIdea,
