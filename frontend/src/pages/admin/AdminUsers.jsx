@@ -1,20 +1,17 @@
 import { useEffect, useState } from "react";
 import { UserIcon } from "@heroicons/react/24/solid";
-import { PlusIcon, KeyIcon } from "@heroicons/react/24/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import CounterCard from "../../components/admin/CounterCard";
 import ActionButton from "../../components/admin/ActionButton";
-import apiAdminUsers from "../../services/api.admin.users";
+import { apiAdminUsers } from "../../services/api.admin.users";
 import TableOfUsers from "../../components/admin/adminUsers/TableOfUsers";
 
 function AdminUsers() {
   const [userList, setUserlist] = useState([]);
+  const [updateList, setUpdateList] = useState(false);
 
   const handleAddUser = () => {
     console.info("add user");
-  };
-
-  const handleResetPassword = () => {
-    console.info("reset password");
   };
 
   useEffect(() => {
@@ -23,7 +20,7 @@ function AdminUsers() {
       .catch((error) =>
         console.error("error from amin users getting the list of users", error)
       );
-  }, []);
+  }, [updateList]);
 
   return (
     <div className="admin-users w-full h-full pt-4 lg:pr-6 px-4 flex flex-col">
@@ -36,11 +33,6 @@ function AdminUsers() {
               text="Add user"
               onClick={handleAddUser}
             />
-            <ActionButton
-              icon={<KeyIcon />}
-              text="Reset user password"
-              onClick={handleResetPassword}
-            />
           </div>
         </div>
         <div className="self-center hidden lg:block">
@@ -52,7 +44,7 @@ function AdminUsers() {
         </div>
       </header>
       <main className="admin-user-board my-4 grow">
-        <TableOfUsers userList={userList} />
+        <TableOfUsers userList={userList} setUpdateList={setUpdateList} />
       </main>
     </div>
   );

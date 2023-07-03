@@ -8,7 +8,7 @@ import CheckboxUserIsActive from "./CheckboxUserIsActive";
 import CheckboxUserIsAdmin from "./CheckboxUserIsAdmin";
 import ActionIcons from "./ActionIcons";
 
-export default function TableOfUsers({ userList }) {
+export default function TableOfUsers({ userList, setUpdateList }) {
   const user = useContext(UserContext);
   const { role_id: currentUserRole } = user;
 
@@ -41,7 +41,7 @@ export default function TableOfUsers({ userList }) {
       field: "position",
       headerName: "Position",
       valueGetter: (params) => params.row.position.name,
-      width: 180,
+      width: 160,
     },
     {
       field: "role",
@@ -65,16 +65,6 @@ export default function TableOfUsers({ userList }) {
       sortable: false,
     },
     {
-      field: "id",
-      headerName: "Profile",
-      renderCell: (params) => {
-        return <ActionIcons userId={params.row.id} />;
-      },
-      align: "center",
-      width: 80,
-      sortable: false,
-    },
-    {
       field: "is_active",
       headerName: "Active",
       renderCell: (params) => {
@@ -89,6 +79,16 @@ export default function TableOfUsers({ userList }) {
       },
       align: "center",
       width: 80,
+      sortable: false,
+    },
+    {
+      field: "id",
+      headerName: "Actions",
+      renderCell: (params) => {
+        return <ActionIcons user={params.row} setUpdateList={setUpdateList} />;
+      },
+      align: "center",
+      width: 120,
       sortable: false,
     },
   ];
@@ -134,4 +134,5 @@ TableOfUsers.propTypes = {
       }).isRequired,
     })
   ).isRequired,
+  setUpdateList: PropTypes.func.isRequired,
 };

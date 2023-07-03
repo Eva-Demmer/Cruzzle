@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const url = import.meta.env.VITE_BACKEND_URL;
-const userRoute = "/api/admin/ideas/";
+const route = "/api/admin/ideas/";
 
-const apiAdminUsers = async (route = "") => {
+const apiAdminUsers = async () => {
   try {
-    const response = await axios.get(`${url}${userRoute}${route}`);
+    const response = await axios.get(`${url}${route}`);
     if (response.status === 200) {
       return response.data;
     }

@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const url = import.meta.env.VITE_BACKEND_URL;
-const userRoute = "/api/admin/users/";
 
-const apiAdminUsers = async (route = "") => {
+const apiAdminUsers = async () => {
+  const route = "/api/admin/users/";
   try {
-    const response = await axios.get(`${url}${userRoute}${route}`);
+    const response = await axios.get(`${url}${route}`);
     if (response.status === 200) {
       return response.data;
     }
@@ -17,8 +17,26 @@ const apiAdminUsers = async (route = "") => {
       console.error("Fetch  error:", error);
     }
     throw error;
-    // Ajouter la redirection (voir pour une fonction dans service qui prend un param "error" afin d'afficher la page erreur)
   }
 };
 
-export default apiAdminUsers;
+const apiAdminActiveUser = async (id) => {
+  const route = "/api/admin/users/active/";
+
+  try {
+    const response = await axios.put(`${url}${route}${id}`);
+    if (response.status === 200) {
+      return response;
+    }
+    throw new Error(`Unexpected response status: ${response.status}`);
+  } catch (error) {
+    if (error.response && error.response.status === 500) {
+      console.error("Internal server error:", error);
+    } else {
+      console.error("Update  error:", error);
+    }
+    throw error;
+  }
+};
+
+export { apiAdminUsers, apiAdminActiveUser };
