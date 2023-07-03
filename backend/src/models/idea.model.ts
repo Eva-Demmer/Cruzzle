@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import dayjs from "dayjs";
-import { Idea, IdeaFilterQuery, PostIdea } from "../interfaces/ideas.interface";
+import { Idea, IdeaUpdate, PostIdea } from "../interfaces/ideas.interface";
+import { getFileSize } from "../services/firebase";
 
 const prisma = new PrismaClient();
 
@@ -13,52 +14,176 @@ const findAll = async () => {
   }
 };
 
-const findById = async (id: number) => {
+const findTrends = async () => {
+  const last3Months: string = dayjs(dayjs()).subtract(90, "day").toISOString();
+
   try {
-    const response = await prisma.idea.findUnique({
-      where: {
-        id,
+    const data = await prisma.idea.findMany({
+      select: {
+        id: true,
+        title: true,
+        context: true,
+        created_at: true,
+        archived_at: true,
+        deleted_at: true,
+        favorit: true,
+        goal: true,
+        profits: true,
+        risks: true,
+        primary_img: true,
+        views: true,
+        attachment: true,
+        idea_category: {
+          select: {
+            id: true,
+            category: {
+              select: {
+                label: true,
+                color: true,
+              },
+            },
+          },
+        },
+        _count: {
+          select: {
+            idea_like: true,
+            comment: true,
+            attachment: true,
+            idea_teams: true,
+          },
+        },
       },
+      where: {
+        archived_at: null,
+        deleted_at: null,
+        created_at: {
+          gte: last3Months,
+        },
+      },
+
+      orderBy: [
+        {
+          comment: { _count: "desc" },
+        },
+        {
+          idea_like: { _count: "desc" },
+        },
+        {
+          views: "desc",
+        },
+      ],
+      take: 3,
     });
-    return response;
+
+    return data;
   } finally {
     await prisma.$disconnect();
   }
 };
 
-const findByFilter = async (filterQuery: IdeaFilterQuery) => {
-  const {
-    publicationDateStart,
-    publicationDateEnd,
-    autorSelectionTag,
-    selectedCategories = null,
-    trendingTag,
-    titleContains = null,
-    hasAttachment,
-    hasNoComment,
-  } = filterQuery;
-
-  console.info(publicationDateStart, dayjs(publicationDateStart).toISOString());
-  console.info(publicationDateEnd);
-  console.info(autorSelectionTag);
-  console.info(selectedCategories);
-  console.info(trendingTag);
-  console.info(titleContains);
-  console.info(hasAttachment);
-  console.info(hasNoComment);
+const findById = async (id: number) => {
   try {
-    const data = await prisma.idea.findMany({
-      where: {
-        created_at: {
-          gte: dayjs(publicationDateStart).subtract(1, "day").toISOString(),
-          lte: dayjs(publicationDateEnd).toISOString(),
+    const response = await prisma.idea.findUnique({
+      select: {
+        id: true,
+        title: true,
+        context: true,
+        user: {
+          select: {
+            id: true,
+            firstname: true,
+            lastname: true,
+            position: true,
+            avatar_url: true,
+            agency: true,
+          },
+        },
+        comment: {
+          select: {
+            id: true,
+            user_id: true,
+            user: {
+              select: {
+                firstname: true,
+                lastname: true,
+                avatar_url: true,
+              },
+            },
+            body: true,
+            created_at: true,
+            comment_like: {
+              select: {
+                id: true,
+                comment_id: true,
+                user_id: true,
+              },
+            },
+          },
+        },
+        created_at: true,
+        archived_at: true,
+        deleted_at: true,
+        goal: true,
+        profits: true,
+        risks: true,
+        cloudshare: true,
+        primary_img: true,
+        views: true,
+        idea_category: {
+          select: {
+            id: true,
+            category: {
+              select: {
+                label: true,
+                color: true,
+              },
+            },
+          },
+        },
+        attachment: {
+          select: {
+            id: true,
+            content_url: true,
+          },
+        },
+        idea_teams: {
+          select: {
+            user_id: true,
+            user: {
+              select: {
+                firstname: true,
+                lastname: true,
+                position: true,
+                avatar_url: true,
+                agency: true,
+              },
+            },
+          },
+        },
+        _count: {
+          select: {
+            idea_like: true,
+            comment: true,
+            attachment: true,
+            idea_teams: true,
+          },
         },
       },
-      orderBy: {
-        created_at: "asc",
+      where: {
+        id,
       },
     });
-    return data;
+
+    if (response) {
+      response.attachment = await Promise.all(
+        response.attachment.map(async (attachment) => {
+          const size = await getFileSize(attachment.content_url);
+          return { ...attachment, size };
+        })
+      );
+    }
+
+    return response;
   } finally {
     await prisma.$disconnect();
   }
@@ -134,12 +259,31 @@ const archiveIdea = async (id: number) => {
   }
 };
 
+const updateIdea = async (
+  id: number,
+  updateData: IdeaUpdate
+): Promise<Idea | null> => {
+  try {
+    const updatedIdea = await prisma.idea.update({
+      where: { id },
+      data: updateData,
+    });
+
+    return updatedIdea;
+  } catch (error) {
+    throw new Error("Error at update idea");
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
 export {
   findAll,
+  findTrends,
   findById,
-  findByFilter,
   createIdea,
   addPrimaryImgIdea,
   deleteIdea,
   archiveIdea,
+  updateIdea,
 };

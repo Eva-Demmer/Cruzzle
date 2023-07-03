@@ -1,11 +1,10 @@
 import { createContext, useState, useMemo } from "react";
 import PropTypes from "prop-types";
-import ideasData from "../data/ideasData";
 
 export const IdeasContext = createContext({});
 
 function IdeasProvider({ children }) {
-  const [ideas, setIdeas] = useState(ideasData);
+  const [ideas, setIdeas] = useState();
 
   const contextValue = useMemo(() => {
     return {

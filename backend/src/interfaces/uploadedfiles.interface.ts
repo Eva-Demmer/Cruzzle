@@ -1,6 +1,7 @@
 interface UploadedFiles {
   url: string;
-  type: "attachement" | "primaryImg";
+  type: "attachment" | "primaryImg";
+  size?: number;
 }
 
 interface UploadedImg {

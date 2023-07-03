@@ -9,6 +9,7 @@ const initialUser = {
   banner_url: "https://picsum.photos/1000/300",
   firstname: "Sarah",
   lastname: "Conor",
+  link: "sarahconor.com",
   birthdate: "1972-11-12T12:33:11.000Z",
   share_birthdate: false,
   phone: "+33655758466",
