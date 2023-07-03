@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   HandThumbUpIcon,
   PencilIcon,
@@ -10,9 +10,26 @@ import {
 import { StarIcon as StarIconSolid } from "@heroicons/react/24/solid";
 import { useMediaQuery } from "react-responsive";
 import { sm } from "../../utils/mediaQueries";
+import apiIdeas from "../../services/api.ideas";
+import { IdeaPageContext } from "../../contexts/IdeaPageContext";
 
 export default function IdeaCardActions({ userId, user, id, isFavorite }) {
   const smallQuery = useMediaQuery(sm);
+  const { setIdea } = useContext(IdeaPageContext);
+  const navigate = useNavigate();
+
+  const fetchDataAsync = async (ideaId) => {
+    const result = await apiIdeas(ideaId);
+    if (result) {
+      setIdea(result);
+    }
+  };
+
+  const handleClick = async (ideaId, route) => {
+    await fetchDataAsync(ideaId);
+
+    navigate(route);
+  };
 
   return (
     <div className="hidden group-hover:flex duration-100">
@@ -28,11 +45,19 @@ export default function IdeaCardActions({ userId, user, id, isFavorite }) {
         ) : (
           <StarIconOutline className="h-6 w-6 text-gray-900 hover:text-primary-900" />
         )}
-        <Link className="no-underline w-auto" to={`/idea/${id}`}>
+        <Link
+          className="no-underline w-auto"
+          to={`/ideas/${id}`}
+          onClick={() => handleClick(id, `/ideas/${id}`)}
+        >
           <ChatBubbleOvalLeftEllipsisIcon className="h-6 w-6 text-gray-900 hover:text-primary-900" />
         </Link>
         <HandThumbUpIcon className="h-6 w-6 text-gray-900 hover:text-primary-900" />
-        <Link className="no-underline w-auto" to={`/idea/${id}`}>
+        <Link
+          className="no-underline w-auto"
+          to={`/ideas/${id}`}
+          onClick={() => handleClick(id, `/ideas/${id}`)}
+        >
           {userId === user && (
             <PencilIcon className="h-6 w-6 text-gray-900 hover:text-primary-900" />
           )}
