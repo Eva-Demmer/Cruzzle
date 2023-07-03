@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 import { useState, useEffect, useContext } from "react";
-import axios from "axios";
 import {
   LightBulbIcon,
   PencilIcon,
@@ -8,28 +7,36 @@ import {
   TrophyIcon,
 } from "@heroicons/react/24/solid";
 import { UserContext } from "../contexts/UserContext";
+import apiIdeas from "../services/api.ideas";
 import OverviewCards from "../components/OverviewCards";
 
 function Home() {
   const { id, score_comment, score_idea, score_like } = useContext(UserContext);
-  const [ideasCreatedToday, setIdeasCreatedToday] = useState("N/A");
+  const [ideasCreatedToday, setIdeasCreatedToday] = useState();
+  const route = `${id}/count`;
 
   useEffect(() => {
     const fetchIdeasCreatedToday = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:6001/api/ideas/${id}/count`
-        );
-        const { count } = response.data;
-        setIdeasCreatedToday(count);
+        const response = await apiIdeas(route);
+        setIdeasCreatedToday(response.count);
       } catch (error) {
+        setIdeasCreatedToday("N/A");
         console.error("Error fetching ideas created today:", error);
-        setIdeasCreatedToday("Coucou");
       }
     };
-
-    fetchIdeasCreatedToday();
+    if (id) {
+      fetchIdeasCreatedToday();
+    }
   }, [id]);
+
+  if (
+    score_comment === undefined ||
+    score_idea === undefined ||
+    score_like === undefined
+  ) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="h-screen p-5 lg:w-3/5 xl:w-2/5">

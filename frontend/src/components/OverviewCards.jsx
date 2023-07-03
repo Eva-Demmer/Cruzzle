@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-function OverviewCards({ icon: Icon, title, value }) {
+function OverviewCards({ icon: Icon, title, value = "N/A" }) {
   return (
     <div className="h-36 w-40 md:w-52 shadow-md rounded-2xl flex flex-col relative">
       {Icon && (

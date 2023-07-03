@@ -81,22 +81,6 @@ const getIdeasCreatedToday = async (req: Request, res: Response) => {
   }
 };
 
-// const getIdeasCreatedToday = async (req: Request, res: Response) => {
-//   const userIdString: string = req.params.userId;
-//   if (Number.isNaN(Number(userIdString))) {
-//     res.status(400).json({ error: "Invalid userId" });
-//     return;
-//   }
-//   const userId: number = parseInt(userIdString, 10);
-//   try {
-//     const today = new Date();
-//     const count = await findByUserIdAndDate(userId, today);
-//     res.status(200).json({ count });
-//   } catch (error) {
-//     res.status(500).send(error);
-//   }
-// };
-
 const postIdea = async (req: Request, res: Response) => {
   try {
     const { team, categories, ...idea } = req.body;
