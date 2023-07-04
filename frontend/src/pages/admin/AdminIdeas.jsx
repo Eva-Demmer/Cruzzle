@@ -5,18 +5,26 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import CounterCard from "../../components/admin/CounterCard";
 import ActionButton from "../../components/admin/ActionButton";
 import TableOfIdeas from "../../components/admin/adminIdeas/TableOfIdeas";
-import apiAdminUsers from "../../services/api.admin.ideas";
+import { apiAdminIdeas } from "../../services/api.admin.ideas";
 
 function AdminIdeas() {
   const [ideaList, setIdealist] = useState([]);
+  const [updateList, setUpdateList] = useState(false);
 
   useEffect(() => {
-    apiAdminUsers()
-      .then((data) => setIdealist(data))
+    apiAdminIdeas()
+      .then((res) => {
+        if (res.status === 200) {
+          setIdealist(res.data);
+        } else {
+          console.error("Cannot get the list of Ideas");
+        }
+      })
       .catch((error) =>
         console.error("error from admin_ideas getting the list of Ideas", error)
       );
-  }, []);
+    setUpdateList(false);
+  }, [updateList]);
 
   return (
     <div className="admin-users w-full h-full pt-4 lg:pr-6 px-4 flex flex-col">
@@ -38,7 +46,7 @@ function AdminIdeas() {
         </div>
       </header>
       <main className="admin-user-board my-4 grow">
-        <TableOfIdeas ideaList={ideaList} />
+        <TableOfIdeas ideaList={ideaList} setUpdateList={setUpdateList} />
       </main>
     </div>
   );

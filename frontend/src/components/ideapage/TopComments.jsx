@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { IconButton } from "@mui/material";
 import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
@@ -8,6 +8,14 @@ import CommentBox from "./CommentBox";
 function TopComments({ setTabValue }) {
   const { idea } = useContext(IdeaPageContext);
   const { comment } = idea;
+  const [sortComments, setSortComments] = useState(comment);
+
+  useEffect(() => {
+    const sortedComments = [...comment].sort(
+      (a, b) => b.comment_like.length - a.comment_like.length
+    );
+    setSortComments(sortedComments);
+  }, [idea]);
 
   return (
     <div className="w-full my-4" aria-label="top comment">
@@ -21,9 +29,8 @@ function TopComments({ setTabValue }) {
           <EllipsisHorizontalIcon className="h-6 w-6" />
         </IconButton>
       </div>
-      {comment
-        .sort((a, b) => b.comment_like.length - a.comment_like.length)
-        .map((item, index) =>
+      {sortComments &&
+        sortComments.map((item, index) =>
           index < 2 ? <CommentBox comment={item} key={item.id} /> : null
         )}
     </div>

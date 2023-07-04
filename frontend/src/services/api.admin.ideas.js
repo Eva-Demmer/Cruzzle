@@ -1,24 +1,23 @@
 import axios from "axios";
 
 const url = import.meta.env.VITE_BACKEND_URL;
-const userRoute = "/api/admin/ideas/";
 
-const apiAdminUsers = async (route = "") => {
-  try {
-    const response = await axios.get(`${url}${userRoute}${route}`);
-    if (response.status === 200) {
-      return response.data;
-    }
-    throw new Error(`Unexpected response status: ${response.status}`);
-  } catch (error) {
-    if (error.response && error.response.status === 500) {
-      console.error("Internal server error:", error);
-    } else {
-      console.error("Fetch  error:", error);
-    }
-    throw error;
-    // Ajouter la redirection (voir pour une fonction dans service qui prend un param "error" afin d'afficher la page erreur)
-  }
+const apiAdminIdeas = async () => {
+  const route = "/api/admin/ideas/";
+  const response = await axios.get(`${url}${route}`);
+  return response;
 };
 
-export default apiAdminUsers;
+const apiAdminArchiveIdea = async (id) => {
+  const route = "/api/admin/ideas/archive/";
+  const response = await axios.put(`${url}${route}${id}`);
+  return response;
+};
+
+const apiAdminDeleteIdea = async (id) => {
+  const route = "/api/admin/ideas/delete/";
+  const response = await axios.put(`${url}${route}${id}`);
+  return response;
+};
+
+export { apiAdminIdeas, apiAdminArchiveIdea, apiAdminDeleteIdea };
