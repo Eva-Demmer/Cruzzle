@@ -12,6 +12,7 @@ import { useContext, useState } from "react";
 import ProgressChip from "../styledComponents/ProgressChip";
 import CustomChip from "../styledComponents/CustomChip";
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
+import ButtonsIdea from "./ButtonsIdea";
 
 function HeaderIdeaPage() {
   const { idea } = useContext(IdeaPageContext);
@@ -28,39 +29,46 @@ function HeaderIdeaPage() {
   const open = Boolean(openTeam);
 
   return (
-    <div className="flex flex-col w-full px-6" aria-label="Header Idea Page">
+    <div
+      className="flex flex-col w-full px-4 md:px-2 lg:px-6"
+      aria-label="Header Idea Page"
+    >
       <div className="flex items-center" aria-label="Title">
         <ProgressChip
           isArchived={idea.archived_at}
           isDeleted={idea.deleted_at}
-          className="mx-2"
         />
-        <h1 className="text-3xl font-bold my-4 mx-2">{idea.title}</h1>
+        <h1 className="text-xl md:text-3xl font-bold md:mt-2 lg:my-4 mx-2">
+          {idea.title}
+        </h1>
       </div>
-      <div className="flex" aria-label="Context">
+      <ButtonsIdea />
+      <div className="flex flex-col w-full md:flex-row" aria-label="Context">
         <img
           src={idea.primary_img}
           alt="principal idea"
-          className="min-w-[442px] h-[308px] rounded bg-cover"
+          className="w-full h-[214px] object-cover rounded md:min-w-[230px] md:h-[160px] md:object-none lg:w-auto lg:min-w-[442px] lg:h-[308px]"
         />
-        <div className="flex flex-col content-between px-4 h-full ">
-          <div className="flex my-2" aria-label="Category">
-            {idea.idea_category.map((item) => (
-              <CustomChip
-                key={item.category.label}
-                label={item.category.label}
-                colorchoice={item.category.color}
-                className="mx-2"
-              />
-            ))}
-          </div>
-          <div className="flex px-4 my-2" aria-label="Published">
+        <div className="flex flex-col content-between lg:px-4 md:h-full">
+          {idea.idea_category.length > 0 && (
+            <div className="flex my-2" aria-label="Category">
+              {idea.idea_category.map((item) => (
+                <CustomChip
+                  key={item.category.label}
+                  label={item.category.label}
+                  colorchoice={item.category.color}
+                  className="mr-2 md:mx-2"
+                />
+              ))}
+            </div>
+          )}
+          <div className="flex md:px-4 my-2" aria-label="Published">
             <p>Published on</p>
             <p className="mx-2 font-semibold">
               {dayjs(idea.created_at).format("DD MMM, YYYY")}
             </p>
           </div>
-          <div className="flex px-4 my-2" aria-label="Author">
+          <div className="flex md:px-4 my-2" aria-label="Author">
             <p>By</p>
             <Link
               to={`/users/${idea.user.id}`}
@@ -69,8 +77,8 @@ function HeaderIdeaPage() {
               {`${idea.user.firstname} ${idea.user.lastname}`}
             </Link>
           </div>
-          {idea.idea_teams && (
-            <div className="flex items-center px-4 my-2" aria-label="Team">
+          {idea.idea_teams && idea.idea_teams.length > 0 && (
+            <div className="flex items-center md:px-4 my-2" aria-label="Team">
               <p>Team :</p>
               <AvatarGroup spacing={8} className="mx-2">
                 {idea.idea_teams.map((team, index) => {
@@ -172,8 +180,8 @@ function HeaderIdeaPage() {
               </Menu>
             </div>
           )}
-          <div className="px-4 w-auto" aria-label="Context">
-            <h2 className="text-xl ">Context</h2>
+          <div className="md:px-4 w-auto" aria-label="Context">
+            <h2 className="text-xl">Context</h2>
             <p className="leading-6 text-base">{idea.context}</p>
           </div>
         </div>
