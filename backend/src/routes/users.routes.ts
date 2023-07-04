@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
+import uploadAvatar from "../middlewares/profil.multer.middlewares";
 import {
   createUser,
   login,
@@ -23,6 +24,7 @@ const timeLog = (req: Request, res: Response, next: NextFunction) => {
 router.use(timeLog);
 
 // Public route
+router.post("/avatar", uploadAvatar);
 router.post("/login", verifyPassword, login);
 router.get("/", getUsers);
 router.get("/:id", getUserById);

@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 
-export function Modal({ isOpen, onClose, onSave, children }) {
+export function Modal({ saveButton, isOpen, onClose, onSave, children }) {
   if (!isOpen) return null;
 
   const globalOverlay = useRef();
@@ -29,14 +29,16 @@ export function Modal({ isOpen, onClose, onSave, children }) {
           {children}
         </div>
         <div className="flex gap-6 justify-center py-4 bg-white drop-shadow-top sticky bottom-0 z-[100] sm:py-6">
-          <Button
-            disableElevation
-            variant="contained"
-            sx={{ width: "125px" }}
-            onClick={onSave}
-          >
-            Save
-          </Button>
+          {saveButton && (
+            <Button
+              disableElevation
+              variant="contained"
+              sx={{ width: "125px" }}
+              onClick={onSave}
+            >
+              Save
+            </Button>
+          )}
           <Button
             ref={closeButton}
             disableElevation
@@ -53,10 +55,18 @@ export function Modal({ isOpen, onClose, onSave, children }) {
 }
 
 Modal.propTypes = {
+  saveButton: PropTypes.bool,
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
+  onSave: PropTypes.func,
   children: PropTypes.node.isRequired,
+};
+
+Modal.defaultProps = {
+  saveButton: true,
+  onSave: () => {
+    console.info("Save button clicked");
+  },
 };
 
 export default Modal;
