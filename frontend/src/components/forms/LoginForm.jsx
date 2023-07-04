@@ -14,6 +14,7 @@ import {
   Alert,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { apiUsersLogin } from "../../services/api.users";
 import OverlayLogin from "../overlays/OverlayLogin";
 
 function LoginForm() {
@@ -53,22 +54,14 @@ function LoginForm() {
       setShowAlert(true);
     } else {
       try {
-        // Make the HTTP request to backend API
-        const response = await axios.post(
-          "http://localhost:6001/api/users/login",
-          { mail, password }
-        );
+        const { token } = await apiUsersLogin(mail, password);
 
-        const { token } = response.data;
-        console.info(response);
+        console.info("front token:", token);
 
         localStorage.setItem("token", token);
-        console.info("front token :", token);
-
         axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
         navigate("/");
-        // TODO: redirect to login if token invalid
       } catch (error) {
         if (error.response) {
           const { status } = error.response;
