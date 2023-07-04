@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import jwt, { JwtPayload } from "jsonwebtoken";
+// import jwt, { JwtPayload } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
 import { findByEmail } from "../models/user.model";
@@ -10,14 +10,15 @@ dotenv.config();
 const JWT_SECRET =
   "eb7e49b3511f9638e9478224a105556a4edab4afbc70e6f364b13907f2c3c1cf";
 
-interface ExtendedRequest extends Request {
-  token?: string;
-  payload?: string | JwtPayload;
-}
+// interface ExtendedRequest extends Request {
+//   token?: string;
+//   payload?: string | JwtPayload;
+// }
 
 // Hash password before storing it in the database
 const hashPassword = async (
-  req: ExtendedRequest,
+  // req: ExtendedRequest,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
@@ -41,9 +42,10 @@ const hashPassword = async (
   }
 };
 
-// Verify password & generate JWT
+// Verify password
 const verifyPassword = async (
-  req: ExtendedRequest,
+  // req: ExtendedRequest,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
@@ -58,52 +60,45 @@ const verifyPassword = async (
       );
 
       if (passwordMatch) {
-        const payload = { sub: dataUser.id };
-        const token = jwt.sign(payload, JWT_SECRET, {
-          expiresIn: "1h",
-        });
-
-        req.token = token;
-
         next();
       } else {
-        res.status(401).json({ error: "Wrong login credentials." });
+        res.status(401).json({ error: "Wrong password." });
       }
     } else {
-      res.status(404).json({ error: "User not found" });
+      res.status(404).json({ error: "User not found." });
     }
   } catch (error) {
     console.error("Error verifying passwords:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "Internal server error." });
   }
 };
 
-// Protect routes
-const protectRoutes = (
-  req: ExtendedRequest,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const authorizationHeader = req.get("Authorization");
+// // Protect routes
+// const protectRoutes = (
+//   req: ExtendedRequest,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   try {
+//     const authorizationHeader = req.get("Authorization");
 
-    if (authorizationHeader == null) {
-      throw new Error("Authorization header is missing");
-    }
+//     if (authorizationHeader == null) {
+//       throw new Error("Authorization header is missing");
+//     }
 
-    const [type, token] = authorizationHeader.split(" ");
+//     const [type, token] = authorizationHeader.split(" ");
 
-    if (type !== "Bearer") {
-      throw new Error("Authorization header has not the 'Bearer' type");
-    }
+//     if (type !== "Bearer") {
+//       throw new Error("Authorization header has not the 'Bearer' type");
+//     }
 
-    req.payload = jwt.verify(token, JWT_SECRET);
+//     req.payload = jwt.verify(token, JWT_SECRET);
 
-    next();
-  } catch (err) {
-    console.error(err);
-    res.sendStatus(401);
-  }
-};
+//     next();
+//   } catch (err) {
+//     console.error(err);
+//     res.sendStatus(401);
+//   }
+// };
 
-export { hashPassword, verifyPassword, protectRoutes };
+export { hashPassword, verifyPassword };

@@ -60,12 +60,15 @@ function LoginForm() {
         );
 
         const { token } = response.data;
+        console.info(response);
 
         localStorage.setItem("token", token);
+        console.info("front token :", token);
 
         axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 
         navigate("/");
+        // TODO: redirect to login if token invalid
       } catch (error) {
         if (error.response) {
           const { status } = error.response;

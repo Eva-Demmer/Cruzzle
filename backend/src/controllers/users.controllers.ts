@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import jwt from "jsonwebtoken";
 import {
   findAll,
   findById,
@@ -35,17 +36,28 @@ const getUserById = async (req: Request, res: Response) => {
   }
 };
 
-// Login validation based on email & password verification
+// TODO: Change secret key
+const JWT_SECRET =
+  "eb7e49b3511f9638e9478224a105556a4edab4afbc70e6f364b13907f2c3c1cf";
+
+// Login validation based on email and password verification & generation of token
 const login = async (req: Request, res: Response) => {
   const { mail } = req.body;
   try {
-    // Find user based on their email address
     const data = await findByEmail(mail);
-    // If user exists, verify password input
     if (data) {
       await verifyPassword(req, res, () => {
-        // If passwords match, login successful
-        res.status(200).send("Login successful");
+        try {
+          const token = jwt.sign({ mail }, JWT_SECRET, {
+            algorithm: "HS256",
+            expiresIn: "1h",
+          });
+          console.info("token back:", token);
+          res.status(200).json({ token });
+        } catch (error) {
+          console.error("Error generating token:", error);
+          res.status(500).send("Error generating token");
+        }
       });
     } else {
       res.status(401).send("No match: Invalid email or password");
@@ -116,7 +128,6 @@ const reactivateUser = async (req: Request, res: Response) => {
 export {
   getUsers,
   getUserById,
-  // getUserByEmail,
   login,
   createUser,
   updateUser,
