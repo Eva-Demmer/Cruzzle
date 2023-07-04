@@ -188,7 +188,7 @@ export default function DialogCreateUser({
           type="text"
           fullWidth
           variant="standard"
-          placeholder="Enter an firstname"
+          placeholder="Enter a firstname"
           value={firstname}
           error={firstnameError}
           helperText={firstnameError ? "Incorrect entry" : null}
@@ -205,7 +205,7 @@ export default function DialogCreateUser({
           type="text"
           fullWidth
           variant="standard"
-          placeholder="Enter an lastname"
+          placeholder="Enter a lastname"
           value={lastname}
           error={lastnameError}
           helperText={lastnameError ? "Incorrect entry" : null}
