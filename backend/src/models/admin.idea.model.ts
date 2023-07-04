@@ -89,4 +89,45 @@ const findByIdByAdmin = async (id: number) => {
   }
 };
 
-export { findAllByAdmin, findByIdByAdmin };
+const ArchiveIdeaByAdmin = async (id: number) => {
+  try {
+    const data = await prisma.idea.update({
+      where: {
+        id,
+      },
+      data: {
+        archived_at: new Date(),
+      },
+    });
+    return data;
+  } catch (error) {
+    throw new Error("Error Archiving/Deleting Idea.");
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+const DeleteIdeaByAdmin = async (id: number) => {
+  try {
+    const data = await prisma.idea.update({
+      where: {
+        id,
+      },
+      data: {
+        deleted_at: new Date(),
+      },
+    });
+    return data;
+  } catch (error) {
+    throw new Error("Error Archiving/Deleting Idea.");
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+export {
+  findAllByAdmin,
+  findByIdByAdmin,
+  ArchiveIdeaByAdmin,
+  DeleteIdeaByAdmin,
+};

@@ -5,10 +5,10 @@ import dayjs from "dayjs";
 import "dayjs/locale/fr";
 import { UserContext } from "../../../contexts/UserContext";
 import CheckboxUserIsActive from "./CheckboxUserIsActive";
-import CheckboxUserIsAdmin from "./CheckboxUserIsAdmin";
+import SelectRole from "./SelectRole";
 import ActionIcons from "./ActionIcons";
 
-export default function TableOfUsers({ userList }) {
+export default function TableOfUsers({ userList, setUpdateList }) {
   const user = useContext(UserContext);
   const { role_id: currentUserRole } = user;
 
@@ -47,31 +47,13 @@ export default function TableOfUsers({ userList }) {
       field: "role",
       headerName: "Role",
       renderCell: (params) => {
-        const [isAdminUser, setIsAdminUser] = useState(
-          params.row.role.name.toLowerCase() !== "user"
-        );
-        return (
-          <CheckboxUserIsAdmin
-            currentUserRole={currentUserRole}
-            isAdminUser={isAdminUser}
-            setIsAdminUser={setIsAdminUser}
-            userId={params.row.id}
-            userRole={params.row.role.name}
-          />
+        return currentUserRole === 88 ? (
+          <SelectRole user={params.row} />
+        ) : (
+          params.row.role.name
         );
       },
-      align: "center",
-      width: 80,
-      sortable: false,
-    },
-    {
-      field: "id",
-      headerName: "Profile",
-      renderCell: (params) => {
-        return <ActionIcons userId={params.row.id} />;
-      },
-      align: "center",
-      width: 80,
+      width: 150,
       sortable: false,
     },
     {
@@ -89,6 +71,16 @@ export default function TableOfUsers({ userList }) {
       },
       align: "center",
       width: 80,
+      sortable: false,
+    },
+    {
+      field: "id",
+      headerName: "Actions",
+      renderCell: (params) => {
+        return <ActionIcons user={params.row} setUpdateList={setUpdateList} />;
+      },
+      align: "center",
+      width: 120,
       sortable: false,
     },
   ];
@@ -134,4 +126,5 @@ TableOfUsers.propTypes = {
       }).isRequired,
     })
   ).isRequired,
+  setUpdateList: PropTypes.func.isRequired,
 };

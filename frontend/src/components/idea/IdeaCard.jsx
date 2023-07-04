@@ -38,13 +38,11 @@ export default function IdeaCard({ isMini, idea }) {
           ? "max-w-xl py-1 border-solid border-primary-50 border-4 border-t-0 border-b-0 border-r-0"
           : "max-w-6xl min-w-[250px]"
       }
-      ${isDisabled ? "opacity-50" : "hover:bg-primary-70"}
-       flex shadow-lg bg-white duration-100 rounded-xl group sm:flex-row relative`}
+      ${isDisabled ? "opacity-50 hover:opacity-100" : ""}
+       flex shadow-lg bg-white duration-100 rounded-xl group hover:bg-primary-70 sm:flex-row relative`}
     >
       <Link
-        className={`${
-          isDisabled ? "pointer-events-none" : ""
-        } flex flex-col no-underline w-full sm:flex-row`}
+        className="flex flex-col no-underline w-full sm:flex-row"
         to={`/ideas/${id}`}
       >
         <div
@@ -97,7 +95,7 @@ export default function IdeaCard({ isMini, idea }) {
               <Stack direction="row" className="items-center">
                 <span className="text-sm mr-1">Status : </span>
                 <Chip
-                  label={archivedAt || deletedAt ? "Closed" : "Ongoing"}
+                  label={archivedAt || deletedAt ? "Closed" : "On progress"}
                   size="small"
                   variant="filled"
                   className={

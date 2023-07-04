@@ -38,9 +38,11 @@ model comment {
   body         String         @db.Text
   created_at   DateTime       @default(now()) @db.Timestamp(0)
   idea         idea           @relation(fields: [idea_id], references: [id], onUpdate: Restrict, map: "comment_ibfk_1")
+  user         user           @relation(fields: [user_id], references: [id], onUpdate: Restrict, map: "comment_ibfk_2")
   comment_like comment_like[]
 
   @@index([idea_id], map: "idea_id")
+  @@index([user_id], map: "user_id")
 }
 
 model comment_like {
@@ -145,6 +147,7 @@ model user {
   banner_url      String?        @db.VarChar(255)
   firstname       String         @db.VarChar(255)
   lastname        String         @db.VarChar(255)
+  link            String?        @db.VarChar(255)
   birthdate       DateTime?      @db.DateTime(0)
   share_birthdate Boolean?       @default(false)
   phone           String?        @db.VarChar(255)
@@ -155,6 +158,7 @@ model user {
   position_id     Int?
   created_at      DateTime       @default(now()) @db.Timestamp(0)
   is_active       Boolean?       @default(false)
+  comment         comment[]
   comment_like    comment_like[]
   favorit         favorit[]
   idea            idea[]
