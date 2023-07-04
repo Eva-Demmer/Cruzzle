@@ -52,7 +52,6 @@ const login = async (req: Request, res: Response) => {
             algorithm: "HS256",
             expiresIn: "1h",
           });
-          console.info("token back:", token);
           res.status(200).json({ token });
         } catch (error) {
           console.error("Error generating token:", error);
