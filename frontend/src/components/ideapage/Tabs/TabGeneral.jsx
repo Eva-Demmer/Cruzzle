@@ -60,7 +60,7 @@ function TabGeneral({ tabValue, setTabValue, index }) {
         {comment && comment.length > 0 && (
           <TopComments setTabValue={setTabValue} />
         )}
-        <CreateComment />
+        {idea.archived_at === null && <CreateComment />}
       </TabPanel>
     </div>
   );

@@ -61,7 +61,7 @@ function CommentBox({ comment, divider = false, tabComment = false }) {
   };
 
   return (
-    <div className="flex w-full">
+    <div className={`flex w-full ${idea.archived_at === null ? "" : "mb-8"}`}>
       <div className="flex flex-col w-full">
         <div className="flex">
           <Avatar
@@ -138,15 +138,18 @@ function CommentBox({ comment, divider = false, tabComment = false }) {
                 disableRipple
                 disableFocusRipple
               >
-                <Button
-                  variant="text"
-                  startIcon={<OutlineHandThumbUpIcon className="h-5 w-5" />}
-                  className="flex  text-secondary-600"
-                  onClick={() => handleClick()}
-                  sx={{ margin: 1 }}
-                >
-                  Like
-                </Button>
+                {idea.archived_at === null && (
+                  <Button
+                    variant="text"
+                    startIcon={<OutlineHandThumbUpIcon className="h-5 w-5" />}
+                    className="flex  text-secondary-600"
+                    onClick={() => handleClick()}
+                    sx={{ margin: 1 }}
+                  >
+                    Like
+                  </Button>
+                )}
+
                 {tabComment && comment.user_id === userId && (
                   <Button
                     variant="text"

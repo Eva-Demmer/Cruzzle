@@ -113,7 +113,6 @@ function CreateComment() {
             className="w-full"
             sx={{
               borderRadius: "0.75rem",
-              paddingBottom: "48px",
               "& .MuiOutlinedInput-root": {
                 borderRadius: "0.75rem",
                 paddingBottom: "48px",
@@ -125,7 +124,7 @@ function CreateComment() {
             aria-label="see more"
             size="small"
             color={`${isFocused ? "primary" : ""}`}
-            className="absolute right-2 bottom-[54px]"
+            className="absolute right-2 bottom-1"
             onClick={() => handleButtonClick()}
           >
             <PaperAirplaneIcon className="h-6 w-6" />
