@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/fr";
 import { UserContext } from "../../../contexts/UserContext";
 import CheckboxUserIsActive from "./CheckboxUserIsActive";
-import CheckboxUserIsAdmin from "./CheckboxUserIsAdmin";
+import SelectRole from "./SelectRole";
 import ActionIcons from "./ActionIcons";
 
 export default function TableOfUsers({ userList, setUpdateList }) {
@@ -41,27 +41,19 @@ export default function TableOfUsers({ userList, setUpdateList }) {
       field: "position",
       headerName: "Position",
       valueGetter: (params) => params.row.position.name,
-      width: 160,
+      width: 180,
     },
     {
       field: "role",
       headerName: "Role",
       renderCell: (params) => {
-        const [isAdminUser, setIsAdminUser] = useState(
-          params.row.role.name.toLowerCase() !== "user"
-        );
-        return (
-          <CheckboxUserIsAdmin
-            currentUserRole={currentUserRole}
-            isAdminUser={isAdminUser}
-            setIsAdminUser={setIsAdminUser}
-            userId={params.row.id}
-            userRole={params.row.role.name}
-          />
+        return currentUserRole === 88 ? (
+          <SelectRole user={params.row} />
+        ) : (
+          params.row.role.name
         );
       },
-      align: "center",
-      width: 80,
+      width: 150,
       sortable: false,
     },
     {

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { findAllByAdmin, updateByIdByAdmin } from "../models/admin.user.model";
+import { findAllByAdmin, updateByIdByAdmin } from "../models/admin.role.model";
 
-const getUsersByAdmin = async (req: Request, res: Response) => {
+const getRolesByAdmin = async (req: Request, res: Response) => {
   try {
     const data = await findAllByAdmin();
     res.status(200).json(data);
@@ -10,11 +10,11 @@ const getUsersByAdmin = async (req: Request, res: Response) => {
   }
 };
 
-const updateUserByIdByAdmin = async (req: Request, res: Response) => {
+const updateroleByIdByAdmin = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, 10);
-  const updatedUser = req.body;
+  const updatedRole = req.body;
   try {
-    const data = await updateByIdByAdmin(id, updatedUser);
+    const data = await updateByIdByAdmin(id, updatedRole);
     if (data) {
       res.sendStatus(200);
     } else {
@@ -25,4 +25,4 @@ const updateUserByIdByAdmin = async (req: Request, res: Response) => {
   }
 };
 
-export { getUsersByAdmin, updateUserByIdByAdmin };
+export { getRolesByAdmin, updateroleByIdByAdmin };

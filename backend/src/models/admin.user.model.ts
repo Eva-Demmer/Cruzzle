@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { PrismaClient } from "@prisma/client";
-import {
-  CreateUser,
-  UserLoginUpdatedRequest,
-} from "../interfaces/users.interface";
+import { CreateUser } from "../interfaces/users.interface";
 
 const prisma = new PrismaClient();
 

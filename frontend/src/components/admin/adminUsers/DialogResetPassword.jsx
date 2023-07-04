@@ -21,13 +21,24 @@ export default function DialogResetPassword({
 }) {
   const [updateMail, setUpdateMail] = useState(user.mail);
   const [updatePassword, setUpdatePassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [passwordConfirmationError, setPasswordConfirmationError] =
+    useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirmation, setShowPasswordConfirmation] =
+    useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  const handleClickShowPasswordConfirmation = () =>
+    setShowPasswordConfirmation((show) => !show);
+
+  const handleMouseDownPasswordConfirmation = (event) => {
     event.preventDefault();
   };
 
@@ -39,6 +50,10 @@ export default function DialogResetPassword({
     setUpdatePassword(event.target.value);
   };
 
+  const handleChangePasswordConfirmation = (event) => {
+    setPasswordConfirmation(event.target.value);
+  };
+
   const handleClose = () => {
     setOpenDialogPassword(false);
     setUpdatePassword("");
@@ -48,11 +63,13 @@ export default function DialogResetPassword({
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const isEmailValid = emailPattern.test(updateMail);
     const isPasswordValid = updatePassword.length >= 4;
+    const isPasswordConfirmed = updatePassword === passwordConfirmation;
 
     setEmailError(!isEmailValid);
     setPasswordError(!isPasswordValid);
+    setPasswordConfirmationError(!isPasswordConfirmed);
 
-    if (isEmailValid && isPasswordValid) {
+    if (isEmailValid && isPasswordValid && isPasswordConfirmed) {
       const updatedLogin = { mail: updateMail, password: updatePassword };
       apiAdminUpdateUserById(user.id, updatedLogin)
         .then((res) => {
@@ -87,25 +104,29 @@ export default function DialogResetPassword({
             type="email"
             fullWidth
             variant="standard"
+            placeholder="Please enter your email address"
             value={updateMail}
             error={emailError}
             helperText={emailError ? "Incorrect entry." : null}
             onChange={handleChangeMail}
+            InputLabelProps={{ shrink: true }}
             sx={{
-              marginBottom: 2,
+              marginBottom: 4,
             }}
           />
 
           <TextField
-            id="filled-password-input"
+            id="password-input"
             label="Password"
             fullWidth
             variant="standard"
+            placeholder="Enter your password"
             error={passwordError}
             helperText={passwordError ? "Incorrect entry." : null}
             value={updatePassword}
             onChange={handleChangePassword}
             type={showPassword ? "text" : "password"}
+            InputLabelProps={{ shrink: true }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -115,6 +136,42 @@ export default function DialogResetPassword({
                     onMouseDown={handleMouseDownPassword}
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            sx={{
+              marginBottom: 2,
+            }}
+          />
+
+          <TextField
+            id="password-confirmation-input"
+            fullWidth
+            variant="standard"
+            placeholder="Confirm your password"
+            error={passwordConfirmationError}
+            helperText={
+              passwordConfirmationError
+                ? "The passwords entered do not match."
+                : null
+            }
+            value={passwordConfirmation}
+            onChange={handleChangePasswordConfirmation}
+            type={showPasswordConfirmation ? "text" : "password"}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPasswordConfirmation}
+                    onMouseDown={handleMouseDownPasswordConfirmation}
+                  >
+                    {showPasswordConfirmation ? (
+                      <VisibilityOff />
+                    ) : (
+                      <Visibility />
+                    )}
                   </IconButton>
                 </InputAdornment>
               ),
