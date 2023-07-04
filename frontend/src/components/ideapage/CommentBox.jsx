@@ -9,12 +9,56 @@ import {
 } from "@heroicons/react/24/outline";
 import { UserContext } from "../../contexts/UserContext";
 import EditComment from "./EditComment";
+import {
+  apiCreateCommentLikes,
+  apiDeleteCommentsLikesById,
+  apiGetCommentsLikesByCommentId,
+} from "../../services/api.commentsLikes";
+import { IdeaPageContext } from "../../contexts/IdeaPageContext";
+import { apiGetCommentsByIdeaId } from "../../services/api.comments";
 
 function CommentBox({ comment, divider = false, tabComment = false }) {
   const user = useContext(UserContext);
   const { id: userId } = user;
+
+  const { idea, setIdea } = useContext(IdeaPageContext);
+
   const [modify, setModify] = useState(false);
   const [content, setContent] = useState(comment.body);
+
+  const isUserLikeComment = () => {
+    const commentUserLike = comment.comment_like.filter(
+      (item) => item.user_id === userId
+    );
+    return commentUserLike.length > 0;
+  };
+
+  const handleClick = async () => {
+    try {
+      const getCommentLikesByComment = await apiGetCommentsLikesByCommentId(
+        comment.id
+      );
+      if (getCommentLikesByComment) {
+        const searchLikeUser = getCommentLikesByComment.filter(
+          (item) => item.user_id === userId
+        );
+        if (searchLikeUser.length > 0) {
+          await apiDeleteCommentsLikesById(searchLikeUser[0].id);
+        } else {
+          await apiCreateCommentLikes(userId, comment.id);
+        }
+
+        const { comment: commentIdea, ...restOfIdea } = idea;
+        const getAllCommentByIdea = await apiGetCommentsByIdeaId(idea.id);
+
+        if (getAllCommentByIdea) {
+          setIdea({ ...restOfIdea, comment: getAllCommentByIdea });
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="flex w-full">
@@ -71,8 +115,16 @@ function CommentBox({ comment, divider = false, tabComment = false }) {
                     className="flex items-center justify-center w-full text-secondary-600"
                     aria-label="like"
                   >
-                    <SolidHandThumbUpIcon className="min-h-5 min-w-5 max-h-5 max-w-5 h-5 w-5 mx-1" />
-                    <div className="mx-1 font-semibold">
+                    <SolidHandThumbUpIcon
+                      className={`min-h-5 min-w-5 max-h-5 max-w-5 h-5 w-5 mx-1 ${
+                        isUserLikeComment() ? "text-primary-50" : ""
+                      }`}
+                    />
+                    <div
+                      className={`mx-1 font-semibold ${
+                        isUserLikeComment() ? "text-primary-50" : ""
+                      }`}
+                    >
                       {comment.comment_like.length}
                     </div>
                   </div>
@@ -90,7 +142,7 @@ function CommentBox({ comment, divider = false, tabComment = false }) {
                   variant="text"
                   startIcon={<OutlineHandThumbUpIcon className="h-5 w-5" />}
                   className="flex  text-secondary-600"
-                  onClick={() => console.info("add like")}
+                  onClick={() => handleClick()}
                   sx={{ margin: 1 }}
                 >
                   Like
