@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/fr";
 import { UserContext } from "../../../contexts/UserContext";
 import CheckboxUserIsActive from "./CheckboxUserIsActive";
-import SelectRole from "./SelectRole";
+import TableSelectRole from "./TableSelectRole";
 import ActionIcons from "./ActionIcons";
 
 export default function TableOfUsers({ userList, setUpdateList }) {
@@ -48,7 +48,7 @@ export default function TableOfUsers({ userList, setUpdateList }) {
       headerName: "Role",
       renderCell: (params) => {
         return currentUserRole === 88 ? (
-          <SelectRole user={params.row} />
+          <TableSelectRole user={params.row} />
         ) : (
           params.row.role.name
         );

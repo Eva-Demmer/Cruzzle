@@ -56,17 +56,6 @@ const login = async (req: Request, res: Response) => {
   }
 };
 
-// Create new user
-const createUser = async (req: Request, res: Response) => {
-  try {
-    const user = req.body;
-    const createdUser = await create(user); //
-    res.status(201).json(createdUser);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-};
-
 // Update user
 const updateUser = async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id, 10);
@@ -83,43 +72,4 @@ const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-// Set is_active to false
-const deactivateUser = async (req: Request, res: Response) => {
-  const id: number = parseInt(req.params.id, 10);
-  try {
-    const result = await deactivate(id);
-    if (result) {
-      res.status(200).json(result);
-    } else {
-      res.status(404).send("User not found");
-    }
-  } catch (error) {
-    res.status(500).send(error);
-  }
-};
-
-// Set is_active to true
-const reactivateUser = async (req: Request, res: Response) => {
-  const id: number = parseInt(req.params.id, 10);
-  try {
-    const result = await reactivate(id);
-    if (result) {
-      res.status(200).json(result);
-    } else {
-      res.status(404).send("User not found");
-    }
-  } catch (error) {
-    res.status(500).send(error);
-  }
-};
-
-export {
-  getUsers,
-  getUserById,
-  // getUserByEmail,
-  login,
-  createUser,
-  updateUser,
-  deactivateUser,
-  reactivateUser,
-};
+export { getUsers, getUserById, login, updateUser };

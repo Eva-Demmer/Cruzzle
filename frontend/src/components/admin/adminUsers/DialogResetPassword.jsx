@@ -55,8 +55,11 @@ export default function DialogResetPassword({
   };
 
   const handleClose = () => {
-    setOpenDialogPassword(false);
+    setEmailError(false);
+    setPasswordError(false);
+    setPasswordConfirmationError(false);
     setUpdatePassword("");
+    setOpenDialogPassword(false);
   };
 
   const handleSubmit = () => {

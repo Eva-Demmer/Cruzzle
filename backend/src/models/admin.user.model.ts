@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { PrismaClient } from "@prisma/client";
+import dayjs from "dayjs";
 import { CreateUser } from "../interfaces/users.interface";
 
 const prisma = new PrismaClient();
@@ -43,14 +43,52 @@ const findAllByAdmin = async () => {
   }
 };
 
-const findByIdByAdmin = async (id: number) => {
+const createByAdmin = async (newUser: CreateUser) => {
   try {
-    const response = await prisma.user.findUnique({
+    const existingUser = await prisma.user.findUnique({
       where: {
-        id,
+        mail: newUser.mail,
       },
     });
-    return response;
+
+    if (existingUser) {
+      return { status: "error", message: "Email not available" };
+    }
+
+    const createdUser = await prisma.user.create({
+      data: {
+        mail: newUser.mail,
+        hashed_password: newUser.hashed_password,
+        role: {
+          connect: {
+            id: newUser.role_id,
+          },
+        },
+        firstname: newUser.firstname,
+        lastname: newUser.lastname,
+        agency: {
+          connect: {
+            id: newUser.agency_id,
+          },
+        },
+        joined_at: dayjs(newUser.joined_at).toISOString(),
+        position: {
+          connect: {
+            id: newUser.position_id,
+          },
+        },
+        is_active: true,
+      },
+    });
+
+    return {
+      status: "success",
+      message: "User created successfully.",
+      user: createdUser,
+    };
+  } catch (error) {
+    console.error("Error creating user:", error);
+    throw new Error("Error creating user.");
   } finally {
     await prisma.$disconnect();
   }
@@ -72,4 +110,4 @@ const updateByIdByAdmin = async (id: number, userUpdated: CreateUser) => {
   }
 };
 
-export { findAllByAdmin, findByIdByAdmin, updateByIdByAdmin };
+export { findAllByAdmin, createByAdmin, updateByIdByAdmin };

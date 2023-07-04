@@ -52,3 +52,7 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+.MuiAutocomplete-popper {
+    z-index: 999999 !important;
+}

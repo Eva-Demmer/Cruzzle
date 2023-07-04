@@ -1,10 +1,28 @@
 import { Request, Response } from "express";
-import { findAllByAdmin, updateByIdByAdmin } from "../models/admin.user.model";
+import {
+  findAllByAdmin,
+  createByAdmin,
+  updateByIdByAdmin,
+} from "../models/admin.user.model";
 
 const getUsersByAdmin = async (req: Request, res: Response) => {
   try {
     const data = await findAllByAdmin();
     res.status(200).json(data);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+const CreateUserByAdmin = async (req: Request, res: Response) => {
+  const newUser = req.body;
+  try {
+    const data = await createByAdmin(newUser);
+    if (data.status === "success") {
+      res.status(201).json(data.user);
+    } else {
+      res.status(202).json(data.message);
+    }
   } catch (error) {
     res.status(500).send(error);
   }
@@ -25,4 +43,4 @@ const updateUserByIdByAdmin = async (req: Request, res: Response) => {
   }
 };
 
-export { getUsersByAdmin, updateUserByIdByAdmin };
+export { getUsersByAdmin, CreateUserByAdmin, updateUserByIdByAdmin };
