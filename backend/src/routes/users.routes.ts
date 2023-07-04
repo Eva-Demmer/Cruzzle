@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
-import uploadAvatar from "../middlewares/profil.multer.middlewares";
+import uploadFile from "../middlewares/profil.multer.middlewares";
 import {
   createUser,
   login,
@@ -8,6 +8,7 @@ import {
   updateUser,
   deactivateUser,
   reactivateUser,
+  updateAvatar,
 } from "../controllers/users.controllers";
 import {
   hashPassword,
@@ -24,13 +25,13 @@ const timeLog = (req: Request, res: Response, next: NextFunction) => {
 router.use(timeLog);
 
 // Public route
-router.post("/avatar", uploadAvatar);
 router.post("/login", verifyPassword, login);
 router.get("/", getUsers);
 router.get("/:id", getUserById);
+router.post("/avatar/:id", uploadFile, updateAvatar);
 
 // Protected routes
-router.use(protectRoutes);
+// router.use(protectRoutes);
 router.post("/", hashPassword, createUser);
 router.put("/:id", updateUser);
 router.delete("/:id", deactivateUser);

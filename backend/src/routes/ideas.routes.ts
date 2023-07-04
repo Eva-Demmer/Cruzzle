@@ -6,6 +6,7 @@ import {
   postIdea,
   deleteIdeaById,
   archivedIdeaById,
+  getIdeasTrends,
   updateIdeaById,
 } from "../controllers/ideas.controllers";
 import { uploadFilesIdea } from "../middlewares/multer.middlewares";
@@ -20,6 +21,7 @@ router.use(timeLog);
 
 router.get("/", getIdeas);
 router.get("/filter", getIdeaByFilter);
+router.get("/trends", getIdeasTrends);
 
 router.get("/:id", getIdeaById);
 

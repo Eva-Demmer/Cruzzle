@@ -1,4 +1,5 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
+
 import {
   findAll,
   findById,
@@ -113,6 +114,10 @@ const reactivateUser = async (req: Request, res: Response) => {
   }
 };
 
+const updateAvatar = (req: Request, res: Response, next: NextFunction) => {
+  console.info(req.body);
+};
+
 export {
   getUsers,
   getUserById,
@@ -122,4 +127,5 @@ export {
   updateUser,
   deactivateUser,
   reactivateUser,
+  updateAvatar,
 };

@@ -7,12 +7,14 @@ import TabPanel from "../../tabs/TabPanel";
 import CommentBox from "../CommentBox";
 import FilterSvg from "../../../assets/Filter.svg";
 import { IdeaPageContext } from "../../../contexts/IdeaPageContext";
+import CreateComment from "../CreateComment";
 
 function TabComments({ tabValue, index }) {
   const { idea } = useContext(IdeaPageContext);
   const { comment } = idea;
   const [selectValue, setSelectValue] = useState(0);
   const [allComments, setAllComments] = useState([]);
+
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -29,7 +31,7 @@ function TabComments({ tabValue, index }) {
     }
 
     setAllComments(open ? sortedComments : sortedComments.slice(0, 3));
-  }, [selectValue, open]);
+  }, [selectValue, open, idea]);
 
   useEffect(() => {}, []);
 
@@ -40,6 +42,7 @@ function TabComments({ tabValue, index }) {
   return (
     <div>
       <TabPanel value={tabValue} index={index} className="w-full">
+        <CreateComment />
         <div className="flex justify-between items-center">
           <h3 className="text-xl mb-2">Comments</h3>
           {allComments.length > 0 && (
@@ -69,7 +72,7 @@ function TabComments({ tabValue, index }) {
             <div className="text-md mb-2">No comments</div>
           )}
           {allComments.map((item) => (
-            <CommentBox comment={item} key={item.id} />
+            <CommentBox comment={item} key={item.id} tabComment />
           ))}
           {allComments.length > 0 && (
             <div className="w-full flex justify-end">
