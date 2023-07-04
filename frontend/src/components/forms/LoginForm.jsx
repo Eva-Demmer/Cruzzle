@@ -55,12 +55,8 @@ function LoginForm() {
     } else {
       try {
         const { token } = await apiUsersLogin(mail, password);
-
-        console.info("front token:", token);
-
         localStorage.setItem("token", token);
         axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-
         navigate("/");
       } catch (error) {
         if (error.response) {
