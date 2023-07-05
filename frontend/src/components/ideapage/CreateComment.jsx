@@ -91,7 +91,7 @@ function CreateComment() {
 
   return (
     <>
-      <div className="flex w-full">
+      <div className="flex w-full mt-4">
         <Avatar
           alt="Remy Sharp"
           className="mx-4"

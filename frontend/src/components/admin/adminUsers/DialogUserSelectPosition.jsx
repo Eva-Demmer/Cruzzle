@@ -5,7 +5,8 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import apiAdminPositions from "../../../services/api.admin.positions";
 
-export default function DialogCreateUserSelectPosition({
+export default function DialogUserSelectPosition({
+  selectedPosition,
   setSelectedPosition,
   positionError,
 }) {
@@ -25,11 +26,12 @@ export default function DialogCreateUserSelectPosition({
 
   return (
     <Autocomplete
-      // value={selectedAgency}
+      value={selectedPosition}
       onChange={(event, newValue) => {
-        setSelectedPosition(newValue ? newValue.id : null);
+        setSelectedPosition(newValue);
       }}
       options={positionList}
+      isOptionEqualToValue={(option, value) => option.id === value.id}
       getOptionLabel={(position) => position.name}
       renderInput={(params) => (
         <TextField
@@ -50,7 +52,18 @@ export default function DialogCreateUserSelectPosition({
   );
 }
 
-DialogCreateUserSelectPosition.propTypes = {
+DialogUserSelectPosition.propTypes = {
+  selectedPosition: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+  }),
   setSelectedPosition: PropTypes.func.isRequired,
   positionError: PropTypes.bool.isRequired,
+};
+
+DialogUserSelectPosition.defaultProps = {
+  selectedPosition: PropTypes.shape({
+    id: 0,
+    name: "",
+  }),
 };

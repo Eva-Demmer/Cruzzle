@@ -13,6 +13,7 @@ import ProgressChip from "../styledComponents/ProgressChip";
 import CustomChip from "../styledComponents/CustomChip";
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
 import ButtonsIdea from "./ButtonsIdea";
+import LikesView from "./LikesView";
 
 function HeaderIdeaPage() {
   const { idea } = useContext(IdeaPageContext);
@@ -30,24 +31,33 @@ function HeaderIdeaPage() {
 
   return (
     <div
-      className="flex flex-col w-full px-4 md:px-2 lg:px-6"
+      className="flex flex-col w-full py-2 px-4 md:px-2 lg:px-6"
       aria-label="Header Idea Page"
     >
-      <div className="flex items-center" aria-label="Title">
-        <ProgressChip
-          isArchived={idea.archived_at}
-          isDeleted={idea.deleted_at}
-        />
-        <h1 className="text-xl md:text-3xl font-bold md:mt-2 lg:my-4 mx-2">
-          {idea.title}
-        </h1>
+      <div
+        className="flex flex-col lg:flex-row lg:items-center justify-between w-full"
+        aria-label="Title"
+      >
+        <div className="flex items-center">
+          <ProgressChip
+            isArchived={idea.archived_at}
+            isDeleted={idea.deleted_at}
+          />
+          <h1 className="text-xl md:text-3xl font-bold md:mt-2 lg:my-4 mx-2 p-0 w-auto">
+            {idea.title}
+          </h1>
+        </div>
+        <div className="flex justify-between">
+          <LikesView />
+          <ButtonsIdea />
+        </div>
       </div>
-      <ButtonsIdea />
+
       <div className="flex flex-col w-full md:flex-row" aria-label="Context">
         <img
           src={idea.primary_img}
           alt="principal idea"
-          className="w-full h-[214px] object-cover rounded md:min-w-[230px] md:h-[160px] md:object-none lg:w-auto lg:min-w-[442px] lg:h-[308px]"
+          className="w-full h-[214px] object-cover rounded md:w-[280px] md:h-[160px] lg:w-auto lg:min-w-[442px] lg:h-[308px]"
         />
         <div className="flex flex-col content-between lg:px-4 md:h-full">
           {idea.idea_category.length > 0 && (
