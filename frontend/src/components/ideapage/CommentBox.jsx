@@ -1,4 +1,4 @@
-import { Paper, Avatar, Button, ButtonGroup, Divider } from "@mui/material";
+import { Paper, Avatar, Button, ButtonGroup } from "@mui/material";
 import PropTypes from "prop-types";
 import { useContext, useState } from "react";
 import dayjs from "dayjs";
@@ -9,16 +9,60 @@ import {
 } from "@heroicons/react/24/outline";
 import { UserContext } from "../../contexts/UserContext";
 import EditComment from "./EditComment";
+import {
+  apiCreateCommentLikes,
+  apiDeleteCommentsLikesById,
+  apiGetCommentsLikesByCommentId,
+} from "../../services/api.commentsLikes";
+import { IdeaPageContext } from "../../contexts/IdeaPageContext";
+import { apiGetCommentsByIdeaId } from "../../services/api.comments";
 
-function CommentBox({ comment, divider = false, tabComment = false }) {
+function CommentBox({ comment, tabComment = false }) {
   const user = useContext(UserContext);
   const { id: userId } = user;
+
+  const { idea, setIdea } = useContext(IdeaPageContext);
+
   const [modify, setModify] = useState(false);
   const [content, setContent] = useState(comment.body);
 
+  const isUserLikeComment = () => {
+    const commentUserLike = comment.comment_like.filter(
+      (item) => item.user_id === userId
+    );
+    return commentUserLike.length > 0;
+  };
+
+  const handleClick = async () => {
+    try {
+      const getCommentLikesByComment = await apiGetCommentsLikesByCommentId(
+        comment.id
+      );
+      if (getCommentLikesByComment) {
+        const searchLikeUser = getCommentLikesByComment.filter(
+          (item) => item.user_id === userId
+        );
+        if (searchLikeUser.length > 0) {
+          await apiDeleteCommentsLikesById(searchLikeUser[0].id);
+        } else {
+          await apiCreateCommentLikes(userId, comment.id);
+        }
+
+        const { comment: commentIdea, ...restOfIdea } = idea;
+        const getAllCommentByIdea = await apiGetCommentsByIdeaId(idea.id);
+
+        if (getAllCommentByIdea) {
+          setIdea({ ...restOfIdea, comment: getAllCommentByIdea });
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <div className="flex w-full">
-      <div className="flex flex-col w-full">
+    <div className={`flex w-full ${idea.archived_at === null ? "" : "mb-8"}`}>
+      <div className="flex flex-col w-full mb-2">
         <div className="flex">
           <Avatar
             alt="Remy Sharp"
@@ -36,13 +80,7 @@ function CommentBox({ comment, divider = false, tabComment = false }) {
             </div>
           </div>
         </div>
-        <div className="flex w-full">
-          <div
-            className="h-full w-11 flex justify-center"
-            aria-label="left side"
-          >
-            {divider && <Divider orientation="vertical" className="mr-2" />}
-          </div>
+        <div className="flex w-full pl-11">
           <div className="w-full" aria-label="comment">
             <Paper
               elevation={0}
@@ -50,8 +88,8 @@ function CommentBox({ comment, divider = false, tabComment = false }) {
             >
               <div className="flex flex-col">
                 {!modify && (
-                  <div>
-                    <p style={{ textAlign: "left" }}>{content}</p>
+                  <div className="w-full whitespace-pre-line break-words">
+                    {content}
                   </div>
                 )}
                 {modify && (
@@ -71,8 +109,16 @@ function CommentBox({ comment, divider = false, tabComment = false }) {
                     className="flex items-center justify-center w-full text-secondary-600"
                     aria-label="like"
                   >
-                    <SolidHandThumbUpIcon className="min-h-5 min-w-5 max-h-5 max-w-5 h-5 w-5 mx-1" />
-                    <div className="mx-1 font-semibold">
+                    <SolidHandThumbUpIcon
+                      className={`min-h-5 min-w-5 max-h-5 max-w-5 h-5 w-5 mx-1 ${
+                        isUserLikeComment() ? "text-primary-50" : ""
+                      }`}
+                    />
+                    <div
+                      className={`mx-1 font-semibold ${
+                        isUserLikeComment() ? "text-primary-50" : ""
+                      }`}
+                    >
                       {comment.comment_like.length}
                     </div>
                   </div>
@@ -86,15 +132,18 @@ function CommentBox({ comment, divider = false, tabComment = false }) {
                 disableRipple
                 disableFocusRipple
               >
-                <Button
-                  variant="text"
-                  startIcon={<OutlineHandThumbUpIcon className="h-5 w-5" />}
-                  className="flex  text-secondary-600"
-                  onClick={() => console.info("add like")}
-                  sx={{ margin: 1 }}
-                >
-                  Like
-                </Button>
+                {idea.archived_at === null && (
+                  <Button
+                    variant="text"
+                    startIcon={<OutlineHandThumbUpIcon className="h-5 w-5" />}
+                    className="flex  text-secondary-600"
+                    onClick={() => handleClick()}
+                    sx={{ margin: 1 }}
+                  >
+                    Like
+                  </Button>
+                )}
+
                 {tabComment && comment.user_id === userId && (
                   <Button
                     variant="text"
@@ -136,12 +185,10 @@ const commentShape = PropTypes.shape({
 
 CommentBox.propTypes = {
   comment: commentShape.isRequired,
-  divider: PropTypes.bool,
   tabComment: PropTypes.bool,
 };
 
 CommentBox.defaultProps = {
-  divider: false,
   tabComment: false,
 };
 

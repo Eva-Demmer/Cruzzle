@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { IconButton, Tooltip } from "@mui/material";
-import { EyeIcon, KeyIcon } from "@heroicons/react/24/solid";
+import { EyeIcon, PencilSquareIcon, KeyIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import DialogResetPassword from "./DialogResetPassword";
+import DialogUpdateUser from "./DialogUpdateUser";
 
 export default function ActionIcons({ user, setUpdateList }) {
   const [openDialogPassword, setOpenDialogPassword] = useState(false);
+  const [openDialogUpdateUser, setOpenDialogUpdateUser] = useState(false);
 
   return (
     <>
@@ -18,14 +20,31 @@ export default function ActionIcons({ user, setUpdateList }) {
         </Tooltip>
       </Link>
 
-      <Tooltip title="Reset password" arrow>
+      <Tooltip title="Update user" arrow>
+        <IconButton
+          onClick={() => setOpenDialogUpdateUser(true)}
+          className="my-1"
+        >
+          <PencilSquareIcon className="w-4 text-yellow-600" />
+        </IconButton>
+      </Tooltip>
+
+      <Tooltip title="Update credentials" arrow>
         <IconButton
           onClick={() => setOpenDialogPassword(true)}
           className="my-1"
         >
-          <KeyIcon className="w-4 text-yellow-600" />
+          <KeyIcon className="w-4 text-sky-600" />
         </IconButton>
       </Tooltip>
+
+      <DialogUpdateUser
+        openDialogUpdateUser={openDialogUpdateUser}
+        setOpenDialogUpdateUser={setOpenDialogUpdateUser}
+        user={user}
+        setUpdateList={setUpdateList}
+      />
+
       <DialogResetPassword
         openDialogPassword={openDialogPassword}
         setOpenDialogPassword={setOpenDialogPassword}

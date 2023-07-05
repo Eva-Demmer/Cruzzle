@@ -52,7 +52,7 @@ const createByAdmin = async (newUser: CreateUser) => {
     });
 
     if (existingUser) {
-      return { status: "error", message: "Email not available" };
+      return { status: "conflict", message: "Email not available" };
     }
 
     const createdUser = await prisma.user.create({
@@ -95,19 +95,54 @@ const createByAdmin = async (newUser: CreateUser) => {
 };
 
 const updateByIdByAdmin = async (id: number, userUpdated: CreateUser) => {
+  console.info(userUpdated);
   try {
-    const data = await prisma.user.update({
+    if (userUpdated.mail) {
+      const existingUser = await prisma.user.findUnique({
+        where: {
+          mail: userUpdated.mail,
+        },
+      });
+
+      if (existingUser) {
+        return { status: "conflict", message: "Email not available" };
+      }
+    }
+
+    const createdUser = await prisma.user.update({
       where: {
         id,
       },
       data: userUpdated,
     });
-    return data;
+
+    return {
+      status: "success",
+      message: "User updated successfully.",
+      user: createdUser,
+    };
   } catch (error) {
+    console.error("Error updating user:", error);
     throw new Error("Error updating user.");
   } finally {
     await prisma.$disconnect();
   }
 };
+
+// const updateByIdByAdmin = async (id: number, userUpdated: CreateUser) => {
+//   try {
+//     const data = await prisma.user.update({
+//       where: {
+//         id,
+//       },
+//       data: userUpdated,
+//     });
+//     return data;
+//   } catch (error) {
+//     throw new Error("Error updating user.");
+//   } finally {
+//     await prisma.$disconnect();
+//   }
+// };
 
 export { findAllByAdmin, createByAdmin, updateByIdByAdmin };

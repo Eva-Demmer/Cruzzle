@@ -1,13 +1,5 @@
 import { Request, Response } from "express";
-import {
-  findAll,
-  findById,
-  findByEmail,
-  create,
-  update,
-  deactivate,
-  reactivate,
-} from "../models/user.model";
+import { findAll, findById, findByEmail, update } from "../models/user.model";
 import { verifyPassword } from "../middlewares/auth.middlewares";
 
 // Show all users
