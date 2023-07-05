@@ -36,8 +36,26 @@ const deleteAllAttachmentsByIdea = async (id: number) => {
   }
 };
 
+const deleteAttachmentsByContenUrl = async (url: string) => {
+  try {
+    const find = await prisma.attachment.findFirst({
+      where: { content_url: url },
+    });
+    if (find) {
+      const req = await prisma.attachment.delete({
+        where: { id: find.id },
+      });
+      return req;
+    }
+    return find;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
 export {
   createAttachements,
   getAllAttachementsByIdeaId,
   deleteAllAttachmentsByIdea,
+  deleteAttachmentsByContenUrl,
 };
