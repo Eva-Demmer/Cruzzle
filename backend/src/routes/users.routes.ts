@@ -25,7 +25,7 @@ router.post("/login", verifyPassword, login);
 router.get("/", getUsers);
 router.get("/:id", getUserById);
 
-// Protected routes
+// // Protected routes
 router.use(protectRoutes);
 router.put("/:id", hashPassword, updateUser);
 
