@@ -4,6 +4,7 @@ import {
   findAll,
   findTrends,
   findById,
+  findByUserIdAndDate,
   createIdea,
   addPrimaryImgIdea,
   deleteIdea,
@@ -74,6 +75,17 @@ const getIdeaByFilter = async (req: Request, res: Response) => {
   try {
     const data = await findByFilter(filterQuery);
     res.status(200).json(data);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+const getIdeasCreatedToday = async (req: Request, res: Response) => {
+  const userId: number = parseInt(req.params.userId, 10);
+  try {
+    const today = new Date();
+    const count = await findByUserIdAndDate(userId, today);
+    res.status(200).json({ count });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -357,6 +369,7 @@ export {
   getIdeasTrends,
   getIdeaById,
   getIdeaByFilter,
+  getIdeasCreatedToday,
   postIdea,
   deleteIdeaById,
   archivedIdeaById,
