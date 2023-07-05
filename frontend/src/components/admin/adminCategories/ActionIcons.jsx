@@ -2,15 +2,14 @@ import { IconButton, Tooltip } from "@mui/material";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import PropTypes from "prop-types";
 
-export default function ActionIcons(props) {
-  const { ideaId } = props;
-
+export default function ActionIcons({ category, setUpdateList }) {
   const handleEdit = () => {
-    console.info(`Edit Idea ${ideaId}`);
+    console.info(`Edit Idea ${category.id}`);
   };
+  console.info(typeof setUpdateList);
 
   const handleDelete = () => {
-    console.info(`Delete Idea ${ideaId}`);
+    console.info(`Delete Idea ${category.id}`);
   };
 
   return (
@@ -31,5 +30,13 @@ export default function ActionIcons(props) {
 }
 
 ActionIcons.propTypes = {
-  ideaId: PropTypes.number.isRequired,
+  category: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    label: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
+    _count: PropTypes.shape({
+      idea_category: PropTypes.number.isRequired,
+    }).isRequired,
+  }).isRequired,
+  setUpdateList: PropTypes.func.isRequired,
 };

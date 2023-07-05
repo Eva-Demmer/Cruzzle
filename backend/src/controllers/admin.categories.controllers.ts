@@ -10,9 +10,9 @@ const getCategoriesByAdmin = async (req: Request, res: Response) => {
   }
 };
 
-const getCategoryByIdByAdmin = async (req: Request, res: Response) => {
+const deleteCategoriesByIdByAdmin = async (req: Request, res: Response) => {
   console.info("getUserByIdByAdmin", req);
   res.status(500).send("error");
 };
 
-export { getCategoriesByAdmin, getCategoryByIdByAdmin };
+export { getCategoriesByAdmin, deleteCategoriesByIdByAdmin };

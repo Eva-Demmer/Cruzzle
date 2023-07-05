@@ -4,10 +4,11 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import CounterCard from "../../components/admin/CounterCard";
 import ActionButton from "../../components/admin/ActionButton";
 import TableOfCategories from "../../components/admin/adminCategories/TableOfCategories";
-import apiAdminCategories from "../../services/api.admin.categories";
+import { apiAdminCategories } from "../../services/api.admin.categories";
 
 function AdminCategories() {
   const [categoriesList, setCategorieslist] = useState([]);
+  const [updateList, setUpdateList] = useState(false);
 
   const handleAddCategory = () => {
     console.info("add category");
@@ -15,14 +16,18 @@ function AdminCategories() {
 
   useEffect(() => {
     apiAdminCategories()
-      .then((data) => setCategorieslist(data))
+      .then((res) => {
+        if (res.status === 200) {
+          setCategorieslist(res.data);
+        } else {
+          console.error("Cannot get the list of categories");
+        }
+      })
       .catch((error) =>
-        console.error(
-          "error from admin_categories getting the list of categories",
-          error
-        )
+        console.error("error getting the list of categories", error)
       );
-  }, []);
+    setUpdateList(false);
+  }, [updateList]);
 
   return (
     <div className="admin-users w-full h-full pt-4 lg:pr-6 px-4 flex flex-col">
@@ -41,12 +46,15 @@ function AdminCategories() {
           <CounterCard
             icon={<Square3Stack3DIcon />}
             text="Total categories"
-            count={categoriesList.length}
+            count={categoriesList ? categoriesList.length : 0}
           />
         </div>
       </header>
       <main className="admin-user-board my-4 grow">
-        <TableOfCategories categoriesList={categoriesList} />
+        <TableOfCategories
+          categoriesList={categoriesList}
+          setUpdateList={setUpdateList}
+        />
       </main>
     </div>
   );

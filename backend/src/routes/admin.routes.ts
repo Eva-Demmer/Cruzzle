@@ -12,7 +12,10 @@ import {
 import { getRolesByAdmin } from "../controllers/admin.roles.controllers";
 import { getAgenciesByAdmin } from "../controllers/admin.agencies.controllers";
 import { getPositionsByAdmin } from "../controllers/admin.positions.controllers";
-import { getCategoriesByAdmin } from "../controllers/admin.categories.controllers";
+import {
+  getCategoriesByAdmin,
+  deleteCategoriesByIdByAdmin,
+} from "../controllers/admin.categories.controllers";
 
 import { hashPassword } from "../middlewares/auth.middlewares";
 
@@ -39,5 +42,6 @@ router.get("/agencies", getAgenciesByAdmin);
 router.get("/positions", getPositionsByAdmin);
 
 router.get("/categories", getCategoriesByAdmin);
+router.delete("/categories/id", deleteCategoriesByIdByAdmin);
 
 export default router;
