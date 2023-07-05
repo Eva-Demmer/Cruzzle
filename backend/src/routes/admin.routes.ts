@@ -14,7 +14,9 @@ import { getAgenciesByAdmin } from "../controllers/admin.agencies.controllers";
 import { getPositionsByAdmin } from "../controllers/admin.positions.controllers";
 import {
   getCategoriesByAdmin,
-  deleteCategoriesByIdByAdmin,
+  createCategoryByAdmin,
+  updateCategoryByIdByAdmin,
+  deleteCategoryByIdByAdmin,
 } from "../controllers/admin.categories.controllers";
 
 import { hashPassword } from "../middlewares/auth.middlewares";
@@ -22,7 +24,7 @@ import { hashPassword } from "../middlewares/auth.middlewares";
 const router = express.Router();
 
 const timeLog = (req: Request, res: Response, next: NextFunction) => {
-  console.info("use /api/admin/users/ at time: ", Date.now());
+  console.info("use /api/admin/ at time: ", Date.now());
   next();
 };
 router.use(timeLog);
@@ -42,6 +44,8 @@ router.get("/agencies", getAgenciesByAdmin);
 router.get("/positions", getPositionsByAdmin);
 
 router.get("/categories", getCategoriesByAdmin);
-router.delete("/categories/id", deleteCategoriesByIdByAdmin);
+router.post("/categories", createCategoryByAdmin);
+router.put("/categories/:id", updateCategoryByIdByAdmin);
+router.delete("/categories/:id", deleteCategoryByIdByAdmin);
 
 export default router;

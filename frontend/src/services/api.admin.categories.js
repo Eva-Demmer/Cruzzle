@@ -8,10 +8,27 @@ const apiAdminCategories = async () => {
   return response;
 };
 
+const apiAdminCreateCategory = async (category) => {
+  const route = "/api/admin/categories/";
+  const response = await axios.post(`${url}${route}`, category);
+  return response;
+};
+
+const apiAdminUpdateCategoryById = async (id, updatedCategory) => {
+  const route = "/api/admin/categories/";
+  const response = await axios.put(`${url}${route}${id}`, updatedCategory);
+  return response;
+};
+
 const apiAdminDeleteCategory = async (id) => {
   const route = "/api/admin/categories/";
   const response = await axios.delete(`${url}${route}${id}`);
   return response;
 };
 
-export { apiAdminCategories, apiAdminDeleteCategory };
+export {
+  apiAdminCategories,
+  apiAdminCreateCategory,
+  apiAdminUpdateCategoryById,
+  apiAdminDeleteCategory,
+};

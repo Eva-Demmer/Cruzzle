@@ -1,17 +1,30 @@
 import { useEffect, useState } from "react";
 import { Square3Stack3DIcon } from "@heroicons/react/24/solid";
 import { PlusIcon } from "@heroicons/react/24/outline";
+import { Snackbar, Alert } from "@mui/material";
 import CounterCard from "../../components/admin/CounterCard";
 import ActionButton from "../../components/admin/ActionButton";
 import TableOfCategories from "../../components/admin/adminCategories/TableOfCategories";
 import { apiAdminCategories } from "../../services/api.admin.categories";
+import DialogCreateCategory from "../../components/admin/adminCategories/DialogCreateCategory";
 
 function AdminCategories() {
   const [categoriesList, setCategorieslist] = useState([]);
   const [updateList, setUpdateList] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("Success");
+
+  const handleCloseToast = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setAlertMessage("Success");
+    setOpenAlert(false);
+  };
 
   const handleAddCategory = () => {
-    console.info("add category");
+    setOpenDialog(true);
   };
 
   useEffect(() => {
@@ -54,8 +67,32 @@ function AdminCategories() {
         <TableOfCategories
           categoriesList={categoriesList}
           setUpdateList={setUpdateList}
+          setOpenAlert={setOpenAlert}
+          setAlertMessage={setAlertMessage}
         />
       </main>
+
+      <DialogCreateCategory
+        openDialog={openDialog}
+        setOpenDialog={setOpenDialog}
+        setUpdateList={setUpdateList}
+        setOpenAlert={setOpenAlert}
+        setAlertMessage={setAlertMessage}
+      />
+
+      <Snackbar
+        open={openAlert}
+        autoHideDuration={4000}
+        onClose={handleCloseToast}
+      >
+        <Alert
+          onClose={handleCloseToast}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
