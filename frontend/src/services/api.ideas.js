@@ -22,4 +22,22 @@ const apiIdeas = async (route = "") => {
   }
 };
 
-export default apiIdeas;
+const apiArchiveIdeas = async (id) => {
+  try {
+    const response = await axios.patch(`${url}${userRoute}/archive/${id}`);
+    if (response.status === 200) {
+      console.info(response.data);
+      return response.data;
+    }
+    throw new Error(`Unexpected response status: ${response.status}`);
+  } catch (error) {
+    if (error.response && error.response.status === 500) {
+      console.error("Internal server error:", error);
+    } else {
+      console.error("Fetch  error:", error);
+    }
+    throw error;
+  }
+};
+
+export { apiIdeas, apiArchiveIdeas };

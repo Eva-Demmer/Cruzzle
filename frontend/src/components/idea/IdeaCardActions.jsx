@@ -11,7 +11,7 @@ import { StarIcon as StarIconSolid } from "@heroicons/react/24/solid";
 import { useMediaQuery } from "react-responsive";
 import { postFavorit, deleteFavorit } from "../../services/api.favorits";
 import { sm } from "../../utils/mediaQueries";
-import apiIdeas from "../../services/api.ideas";
+import { apiIdeas } from "../../services/api.ideas";
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
 
 export default function IdeaCardActions({ userId, user, id, isFavorite }) {
