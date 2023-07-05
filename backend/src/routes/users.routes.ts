@@ -28,7 +28,7 @@ router.use(timeLog);
 router.post("/login", verifyPassword, login);
 router.get("/", getUsers);
 router.get("/:id", getUserById);
-router.post("/avatar/:id", uploadFile, updateAvatar);
+router.post("/image/:id", uploadFile, updateAvatar);
 
 // Protected routes
 // router.use(protectRoutes);

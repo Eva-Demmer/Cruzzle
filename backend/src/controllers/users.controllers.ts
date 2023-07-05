@@ -114,8 +114,8 @@ const reactivateUser = async (req: Request, res: Response) => {
   }
 };
 
-const updateAvatar = (req: Request, res: Response, next: NextFunction) => {
-  console.info(req.body);
+const updateAvatar = (req: Request, res: Response) => {
+  console.info("From back : ", req.body);
 };
 
 export {

@@ -17,45 +17,49 @@ import Modal from "../modal/Modal";
 function ModalEditImage({ isOpen, src, radius, onClose, height, width }) {
   const [slideScaleValue, setSlideScaleValue] = useState(10);
   const [slideRotateValue, setSlideRotateValue] = useState(0);
-  const [newAvatar, setNewAvatar] = useState(src);
+  const [newImage, setNewImage] = useState(src);
 
   const { id } = useParams();
   const cropRef = useRef(null);
 
   const url = import.meta.env.VITE_BACKEND_URL;
-  const route = "/api/users/avatar/";
+  const route = "/api/users/image/";
+  const typeValue = "avatar_url";
 
   const { handleSubmit, control, setValue } = useForm();
 
   useEffect(() => {
-    console.info(`{trigger useffect new avatar is now ${newAvatar}`);
-  }, [newAvatar]);
+    console.info(`trigger useffect new image is now ${newImage}`);
+  }, [newImage]);
 
   useEffect(() => {
-    setValue("avatar", newAvatar);
-  }, [newAvatar, setValue]);
+    setValue("image", newImage);
+  }, [newImage, setValue]);
 
+  // Crop la nouvelle image et reset les paramêtres de l'editor
   const handleSave = async () => {
     if (cropRef) {
       const dataUrl = cropRef.current.getImageScaledToCanvas().toDataURL();
       const result = await fetch(dataUrl);
       const blob = await result.blob();
-      setNewAvatar(URL.createObjectURL(blob));
+      setNewImage(URL.createObjectURL(blob));
       setSlideScaleValue(10);
       setSlideRotateValue(0);
     }
   };
 
+  // Pour afficher l'image uploadée dans l'aperçu
   const handleImgChange = (e) => {
     e.preventDefault();
-    setNewAvatar(URL.createObjectURL(e.target.files[0]));
+    setNewImage(URL.createObjectURL(e.target.files[0]));
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = () => {
     handleSave();
     const formData = new FormData();
-    formData.append("avatar", data.avatar);
-    console.info(data);
+    formData.append("image", newImage);
+    formData.append("typeValue", typeValue);
+    console.info("img:", newImage);
     console.info(`${url}${route}${id}`);
     axios
       .post(`${url}${route}${id}`, formData)
@@ -76,7 +80,7 @@ function ModalEditImage({ isOpen, src, radius, onClose, height, width }) {
         >
           <AvatarEditor
             ref={cropRef}
-            image={newAvatar}
+            image={newImage}
             width={parseInt(width)}
             height={parseInt(height)}
             border={50}
@@ -121,12 +125,12 @@ function ModalEditImage({ isOpen, src, radius, onClose, height, width }) {
           </div>
           <div className="flex w-full justify-center">
             <Controller
-              name="avatar"
+              name="image"
               control={control}
-              defaultValue={newAvatar}
+              defaultValue={newImage}
               render={({ field: { value } }) => (
                 <UploadButton
-                  id="avatar"
+                  id="image"
                   accept=".jpeg, .jpg, .png"
                   onChange={handleImgChange}
                   value={value}
@@ -137,8 +141,9 @@ function ModalEditImage({ isOpen, src, radius, onClose, height, width }) {
             />
             <Button
               type="submit"
-              variant="outlined"
               className="w-[110px] rounded-full mx-2 my-2 sm:w-[174px]"
+              variant="contained"
+              color="primary"
             >
               Save
             </Button>
