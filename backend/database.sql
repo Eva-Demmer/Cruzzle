@@ -33,8 +33,7 @@ VALUES
   ('EuroWeb', 'Copenhague', 'Danemark'),
   ('NordicTech', 'Oslo', 'Norvège'),
   ('MaxTech', 'Varsovie', 'Pologne'),
-  ('AlphaTech', 'Budapest', 'Hongrie'),
-  ('PrimeTech', 'Prague', 'République tchèque');
+  ('AlphaTech', 'Budapest', 'Hongrie');
 
 
 
@@ -101,7 +100,7 @@ VALUES
 
 CREATE TABLE `user` (
   `id` integer PRIMARY KEY AUTO_INCREMENT,
-  `mail` varchar(255) NOT NULL,
+  `mail` varchar(255) NOT NULL UNIQUE,
   `hashed_password` varchar(255) NOT NULL,
   `role_id` integer NOT NULL,
   `avatar_url` varchar(255) DEFAULT null,
@@ -114,9 +113,9 @@ CREATE TABLE `user` (
   `phone` varchar(255) DEFAULT null,
   `share_phone` boolean DEFAULT false,
   `biography` varchar(255) DEFAULT null,
-  `agency_id` integer,
+  `agency_id` integer not null,
   `joined_at` datetime not null,
-  `position_id` integer,
+  `position_id` integer not null,
   `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
   `is_active` boolean DEFAULT false,
   FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
@@ -135,7 +134,7 @@ VALUES
   ('user6@example.com', '$2b$11$E9jZ98axstDe.urm9vmJ0usT.PCufmwnQWmHSyJQ.gUKg6d2BL.rO', 0, 'https://picsum.photos/200', 'https://picsum.photos/1000/300', 'Ethan', 'Martin', '1998-02-14 12:33:11', true, '+33659862414', true, 'Lorem ipsum dolor sit amet.', 12, '2017-06-13 12:33:11', 5, true),
   ('user8@example.com', '$2b$11$E9jZ98axstDe.urm9vmJ0usT.PCufmwnQWmHSyJQ.gUKg6d2BL.rO', 0, 'https://picsum.photos/200', 'https://picsum.photos/1000/300', 'Olivia', 'Smith', '1990-06-03 12:33:11', true, '+33659862414', true, 'Lorem ipsum dolor sit amet.', 8, '2017-06-13 12:33:11', 6, true),
   ('user9@example.com', '$2b$11$E9jZ98axstDe.urm9vmJ0usT.PCufmwnQWmHSyJQ.gUKg6d2BL.rO', 0, 'https://picsum.photos/200', 'https://picsum.photos/1000/300', 'Liam', 'Johnson', '1987-09-17 12:33:11', true, '+33659862414', true, 'Lorem ipsum dolor sit amet.', 14, '2017-06-13 12:33:11', 7, true),
-  ('user10@example.com', '$2b$11$E9jZ98axstDe.urm9vmJ0usT.PCufmwnQWmHSyJQ.gUKg6d2BL.rO', 0, 'https://picsum.photos/200', 'https://picsum.photos/1000/300', 'Emma', 'Brown', '1993-11-21 12:33:11', true, '+33659862414', true, 'Lorem ipsum dolor sit amet.', 16, '2017-06-13 12:33:11', 8, true),
+  ('user10@example.com', '$2b$11$E9jZ98axstDe.urm9vmJ0usT.PCufmwnQWmHSyJQ.gUKg6d2BL.rO', 0, 'https://picsum.photos/200', 'https://picsum.photos/1000/300', 'Emma', 'Brown', '1993-11-21 12:33:11', true, '+33659862414', true, 'Lorem ipsum dolor sit amet.', 15, '2017-06-13 12:33:11', 8, true),
   ('user11@example.com', '$2b$11$E9jZ98axstDe.urm9vmJ0usT.PCufmwnQWmHSyJQ.gUKg6d2BL.rO', 0, 'https://picsum.photos/200', 'https://picsum.photos/1000/300', 'Noah', 'Taylor', '1996-04-27 12:33:11', true, '+33659862414', true, 'Lorem ipsum dolor sit amet.', 3, '2017-06-13 12:33:11', 9, true),
   ('cruzzle@mail.com', '$2b$11$E9jZ98axstDe.urm9vmJ0usT.PCufmwnQWmHSyJQ.gUKg6d2BL.rO', 0, 'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80', 'https://i.postimg.cc/XNgRKp70/Idea-banner.jpg', 'Matthias', 'Cruzzle', '1988-01-23 12:33:11', true, '+33659862414', true, 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', 3, '2017-06-13 12:33:11', 1, true);
 

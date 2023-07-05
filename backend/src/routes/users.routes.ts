@@ -1,13 +1,11 @@
 import express, { Request, Response, NextFunction } from "express";
 import {
-  createUser,
   login,
   getUsers,
   getUserById,
   updateUser,
-  deactivateUser,
-  reactivateUser,
 } from "../controllers/users.controllers";
+
 import {
   hashPassword,
   verifyPassword,
@@ -29,9 +27,6 @@ router.get("/:id", getUserById);
 
 // Protected routes
 router.use(protectRoutes);
-router.post("/", hashPassword, createUser);
-router.put("/:id", updateUser);
-router.delete("/:id", deactivateUser);
-router.put("/:id", reactivateUser);
+router.put("/:id", hashPassword, updateUser);
 
 export default router;
