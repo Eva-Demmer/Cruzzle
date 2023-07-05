@@ -6,9 +6,9 @@ import Select from "@mui/material/Select";
 import apiAdminRoles from "../../../services/api.admin.roles";
 import { apiAdminUpdateUserById } from "../../../services/api.admin.users";
 
-export default function SelectRole({ user }) {
-  const [roleList, setRoleList] = useState([]);
-  const [selectedUserRole, setSelectedUserRole] = useState(user.role.id);
+export default function TableSelectRole({ user }) {
+  const [roleList, setRoleList] = useState([{ id: 0, name: "loading" }]);
+  const [selectedUserRole, setSelectedUserRole] = useState(0);
 
   const handleChange = (event) => {
     const roleId = event.target.value;
@@ -30,6 +30,7 @@ export default function SelectRole({ user }) {
       .then((res) => {
         if (res.status === 200) {
           setRoleList(res.data);
+          setSelectedUserRole(user.role.id);
         } else {
           console.error("Cannot get roles");
         }
@@ -54,7 +55,7 @@ export default function SelectRole({ user }) {
   );
 }
 
-SelectRole.propTypes = {
+TableSelectRole.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.number.isRequired,
     mail: PropTypes.string.isRequired,

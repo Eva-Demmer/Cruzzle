@@ -5,14 +5,12 @@ import CounterCard from "../../components/admin/CounterCard";
 import ActionButton from "../../components/admin/ActionButton";
 import { apiAdminUsers } from "../../services/api.admin.users";
 import TableOfUsers from "../../components/admin/adminUsers/TableOfUsers";
+import DialogCreateUser from "../../components/admin/adminUsers/DialogCreateUser";
 
 function AdminUsers() {
   const [userList, setUserlist] = useState([]);
   const [updateList, setUpdateList] = useState(false);
-
-  const handleAddUser = () => {
-    console.info("add user");
-  };
+  const [openDialogAddUser, setOpenDialogAddUser] = useState(false);
 
   useEffect(() => {
     apiAdminUsers()
@@ -38,7 +36,7 @@ function AdminUsers() {
             <ActionButton
               icon={<PlusIcon />}
               text="Add user"
-              onClick={handleAddUser}
+              onClick={() => setOpenDialogAddUser(true)}
             />
           </div>
         </div>
@@ -53,6 +51,11 @@ function AdminUsers() {
       <main className="admin-user-board my-4 grow">
         <TableOfUsers userList={userList} setUpdateList={setUpdateList} />
       </main>
+
+      <DialogCreateUser
+        openDialogAddUser={openDialogAddUser}
+        setOpenDialogAddUser={setOpenDialogAddUser}
+      />
     </div>
   );
 }

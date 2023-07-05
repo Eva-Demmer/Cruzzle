@@ -28,7 +28,7 @@ function Idea() {
   }
 
   return (
-    <div>
+    <div className="relative">
       <HeaderIdeaPage />
       <TabsIdeaPage />
     </div>

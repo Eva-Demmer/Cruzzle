@@ -160,6 +160,13 @@ const findById = async (id: number) => {
             },
           },
         },
+        idea_like: {
+          select: {
+            id: true,
+            user_id: true,
+            idea_id: true,
+          },
+        },
         _count: {
           select: {
             idea_like: true,
