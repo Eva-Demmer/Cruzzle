@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import HeaderIdeaPage from "../../components/ideapage/HeaderIdeaPage";
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
-import apiIdeas from "../../services/api.ideas";
+import { apiIdeas } from "../../services/api.ideas";
 import TabsIdeaPage from "../../components/ideapage/TabsIdeaPage";
 
 function Idea() {

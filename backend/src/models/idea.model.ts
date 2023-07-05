@@ -196,6 +196,23 @@ const findById = async (id: number) => {
   }
 };
 
+const findByUserIdAndDate = async (userId: number, date: Date) => {
+  try {
+    const response = await prisma.idea.count({
+      where: {
+        user_id: userId,
+        created_at: {
+          gte: new Date(date.setHours(0, 0, 0, 0)),
+          lt: new Date(date.setHours(23, 59, 59, 999)),
+        },
+      },
+    });
+    return response;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
 const createIdea = async (dataIdea: Idea, userId: number): Promise<Idea> => {
   const { title, context, ...otherDataIdea } = dataIdea;
 
@@ -288,6 +305,7 @@ export {
   findAll,
   findTrends,
   findById,
+  findByUserIdAndDate,
   createIdea,
   addPrimaryImgIdea,
   deleteIdea,
