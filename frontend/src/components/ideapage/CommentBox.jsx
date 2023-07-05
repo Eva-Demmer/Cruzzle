@@ -1,4 +1,4 @@
-import { Paper, Avatar, Button, ButtonGroup, Divider } from "@mui/material";
+import { Paper, Avatar, Button, ButtonGroup } from "@mui/material";
 import PropTypes from "prop-types";
 import { useContext, useState } from "react";
 import dayjs from "dayjs";
@@ -17,7 +17,7 @@ import {
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
 import { apiGetCommentsByIdeaId } from "../../services/api.comments";
 
-function CommentBox({ comment, divider = false, tabComment = false }) {
+function CommentBox({ comment, tabComment = false }) {
   const user = useContext(UserContext);
   const { id: userId } = user;
 
@@ -62,7 +62,7 @@ function CommentBox({ comment, divider = false, tabComment = false }) {
 
   return (
     <div className={`flex w-full ${idea.archived_at === null ? "" : "mb-8"}`}>
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full mb-2">
         <div className="flex">
           <Avatar
             alt="Remy Sharp"
@@ -80,13 +80,7 @@ function CommentBox({ comment, divider = false, tabComment = false }) {
             </div>
           </div>
         </div>
-        <div className="flex w-full">
-          <div
-            className="h-full w-11 flex justify-center"
-            aria-label="left side"
-          >
-            {divider && <Divider orientation="vertical" className="mr-2" />}
-          </div>
+        <div className="flex w-full pl-11">
           <div className="w-full" aria-label="comment">
             <Paper
               elevation={0}
@@ -94,8 +88,8 @@ function CommentBox({ comment, divider = false, tabComment = false }) {
             >
               <div className="flex flex-col">
                 {!modify && (
-                  <div>
-                    <p style={{ textAlign: "left" }}>{content}</p>
+                  <div className="w-full whitespace-pre-line break-words">
+                    {content}
                   </div>
                 )}
                 {modify && (
@@ -191,12 +185,10 @@ const commentShape = PropTypes.shape({
 
 CommentBox.propTypes = {
   comment: commentShape.isRequired,
-  divider: PropTypes.bool,
   tabComment: PropTypes.bool,
 };
 
 CommentBox.defaultProps = {
-  divider: false,
   tabComment: false,
 };
 
