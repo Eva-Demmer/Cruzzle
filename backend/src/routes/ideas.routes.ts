@@ -8,6 +8,7 @@ import {
   archivedIdeaById,
   getIdeasTrends,
   updateIdeaById,
+  updateIdeaViewById,
 } from "../controllers/ideas.controllers";
 import { uploadFilesIdea } from "../middlewares/multer.middlewares";
 
@@ -29,6 +30,8 @@ router.post("/", uploadFilesIdea, postIdea);
 
 router.patch("/archive/:id", archivedIdeaById);
 router.put("/:id", uploadFilesIdea, updateIdeaById);
+router.patch("/views/:id", updateIdeaViewById);
+
 router.delete("/:id", deleteIdeaById);
 
 export default router;

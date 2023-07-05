@@ -320,6 +320,18 @@ const updateIdeaById = async (req: Request, res: Response) => {
   }
 };
 
+const updateIdeaViewById = async (req: Request, res: Response) => {
+  const id: number = parseInt(req.params.id, 10);
+  const data: object = req.body;
+
+  try {
+    const updatedViews = await updateIdea(id, data);
+    res.status(201).json({ "Idea views updated !": updatedViews });
+  } catch (error) {
+    res.status(500).json({ "Error when edit idea views:": error });
+  }
+};
+
 const archivedIdeaById = async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id, 10);
   try {
@@ -349,5 +361,6 @@ export {
   deleteIdeaById,
   archivedIdeaById,
   updateIdeaById,
+  updateIdeaViewById,
   getSizeFileByUrl,
 };

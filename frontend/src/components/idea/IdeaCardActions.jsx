@@ -11,7 +11,7 @@ import { StarIcon as StarIconSolid } from "@heroicons/react/24/solid";
 import { useMediaQuery } from "react-responsive";
 import { postFavorit, deleteFavorit } from "../../services/api.favorits";
 import { sm } from "../../utils/mediaQueries";
-import apiIdeas from "../../services/api.ideas";
+import { apiIdeas } from "../../services/api.ideas";
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
 
 export default function IdeaCardActions({ userId, user, id, isFavorite }) {
@@ -55,12 +55,12 @@ export default function IdeaCardActions({ userId, user, id, isFavorite }) {
       >
         {favorite ? (
           <StarIconSolid
-            className="h-6 w-6 text-gray-900 hover:text-primary-900"
+            className="h-6 w-6 text-gray-900 hover:text-primary-900 cursor-pointer"
             onClick={handleFavoriteClick}
           />
         ) : (
           <StarIconOutline
-            className="h-6 w-6 text-gray-900 hover:text-primary-900"
+            className="h-6 w-6 text-gray-900 hover:text-primary-900 cursor-pointer"
             onClick={handleFavoriteClick}
           />
         )}
@@ -71,7 +71,7 @@ export default function IdeaCardActions({ userId, user, id, isFavorite }) {
         >
           <ChatBubbleOvalLeftEllipsisIcon className="h-6 w-6 text-gray-900 hover:text-primary-900" />
         </Link>
-        <HandThumbUpIcon className="h-6 w-6 text-gray-900 hover:text-primary-900" />
+        <HandThumbUpIcon className="h-6 w-6 text-gray-900 hover:text-primary-900 cursor-pointer" />
         <Link
           className="no-underline w-auto"
           to={`/ideas/${id}`}
