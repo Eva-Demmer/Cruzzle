@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
-import { findByEmail } from "../models/user.model";
+import { findByMail } from "../models/user.model";
 
 dotenv.config();
 
@@ -44,7 +44,7 @@ const verifyPassword = async (
 ) => {
   try {
     const { mail, password } = req.body;
-    const [dataUser] = await findByEmail(mail);
+    const dataUser = await findByMail(mail);
 
     if (dataUser) {
       const passwordMatch = await bcrypt.compare(

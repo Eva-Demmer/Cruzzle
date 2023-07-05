@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { findAll, findById, findByEmail, update } from "../models/user.model";
+import { findAll, findById, findByMail, update } from "../models/user.model";
 import { verifyPassword } from "../middlewares/auth.middlewares";
 
 // Show all users
@@ -36,11 +36,16 @@ const JWT_SECRET =
 const login = async (req: Request, res: Response) => {
   const { mail } = req.body;
   try {
-    const data = await findByEmail(mail);
+    const data = await findByMail(mail);
     if (data) {
       await verifyPassword(req, res, () => {
         try {
-          const token = jwt.sign({ mail }, JWT_SECRET, {
+          const payload = {
+            mail,
+            role_id: data.role_id,
+          };
+
+          const token = jwt.sign(payload, JWT_SECRET, {
             algorithm: "HS256",
             expiresIn: "1h",
           });

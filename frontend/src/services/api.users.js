@@ -22,10 +22,10 @@ const apiUsers = async (route = "") => {
   }
 };
 
-const apiUsersLogin = async (email, password) => {
+const apiUsersLogin = async (mail, password) => {
   try {
     const response = await axios.post(`${url}${userRoute}login`, {
-      email,
+      mail,
       password,
     });
     if (response.status === 200) {
