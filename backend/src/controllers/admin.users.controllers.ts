@@ -21,7 +21,7 @@ const CreateUserByAdmin = async (req: Request, res: Response) => {
     if (data.status === "success") {
       res.status(201).json(data.user);
     } else {
-      res.status(202).json(data.message);
+      res.status(409).json(data.message);
     }
   } catch (error) {
     res.status(500).send(error);

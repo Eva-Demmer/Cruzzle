@@ -22,7 +22,7 @@ import { apiAdminCreateUser } from "../../../services/api.admin.users";
 export default function DialogCreateUser({
   openDialogAddUser,
   setOpenDialogAddUser,
-  // setUpdateList,
+  setUpdateList,
 }) {
   // Fields values
   const [firstname, setFirstname] = useState("");
@@ -108,7 +108,7 @@ export default function DialogCreateUser({
     setOpenDialogAddUser(false);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const isFirstnameValid = firstname.length >= 2;
     const isLastnameValid = lastname.length >= 2;
     const isJoinAtValid = dayjs(joinAt).isValid();
@@ -154,15 +154,20 @@ export default function DialogCreateUser({
       apiAdminCreateUser(newUser)
         .then((res) => {
           if (res.status === 201) {
+            setUpdateList(true);
             handleClose();
-          } else if (res.status === 202) {
+          } else {
+            console.error("Cannot create new user");
+          }
+        })
+        .catch((err) => {
+          if (err.response.status === 409) {
             setEmailError(true);
             setEmailErrorMessage("Email not available");
           } else {
-            console.error("Cannot create user");
+            console.error("error creating new user", err);
           }
-        })
-        .catch((error) => console.error("Error creating user", error));
+        });
     }
   };
 
@@ -172,7 +177,7 @@ export default function DialogCreateUser({
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
     >
-      <DialogTitle id="form-dialog-title">Add user</DialogTitle>
+      <DialogTitle id="form-dialog-title">Create new user</DialogTitle>
       <DialogContent>
         <DialogContentText
           sx={{
@@ -326,7 +331,7 @@ export default function DialogCreateUser({
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button onClick={handleSubmit}>Add user</Button>
       </DialogActions>
     </Dialog>
   );
@@ -335,5 +340,5 @@ export default function DialogCreateUser({
 DialogCreateUser.propTypes = {
   openDialogAddUser: PropTypes.bool.isRequired,
   setOpenDialogAddUser: PropTypes.func.isRequired,
-  // setUpdateList: PropTypes.func.isRequired,
+  setUpdateList: PropTypes.func.isRequired,
 };

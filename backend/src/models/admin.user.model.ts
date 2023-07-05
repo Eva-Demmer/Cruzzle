@@ -52,7 +52,7 @@ const createByAdmin = async (newUser: CreateUser) => {
     });
 
     if (existingUser) {
-      return { status: "error", message: "Email not available" };
+      return { status: "conflict", message: "Email not available" };
     }
 
     const createdUser = await prisma.user.create({
