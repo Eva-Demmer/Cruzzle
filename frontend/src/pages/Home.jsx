@@ -7,7 +7,7 @@ import {
   TrophyIcon,
 } from "@heroicons/react/24/solid";
 import { UserContext } from "../contexts/UserContext";
-import apiIdeas from "../services/api.ideas";
+import { apiIdeas } from "../services/api.ideas";
 import OverviewCards from "../components/OverviewCards";
 
 function Home() {
