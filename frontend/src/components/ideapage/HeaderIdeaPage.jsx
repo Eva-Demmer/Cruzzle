@@ -33,7 +33,6 @@ function HeaderIdeaPage() {
         <ProgressChip
           isArchived={idea.archived_at}
           isDeleted={idea.deleted_at}
-          className="mx-2"
         />
         <h1 className="text-3xl font-bold my-4 mx-2">{idea.title}</h1>
       </div>
@@ -69,7 +68,7 @@ function HeaderIdeaPage() {
               {`${idea.user.firstname} ${idea.user.lastname}`}
             </Link>
           </div>
-          {idea.idea_teams && (
+          {idea.idea_teams && idea.idea_teams.length > 0 && (
             <div className="flex items-center px-4 my-2" aria-label="Team">
               <p>Team :</p>
               <AvatarGroup spacing={8} className="mx-2">

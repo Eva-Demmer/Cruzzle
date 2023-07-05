@@ -4,7 +4,11 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { UserContext } from "../../contexts/UserContext";
-import { apiCreateComments } from "../../services/api.comments";
+import {
+  apiCreateComments,
+  apiGetCommentsByIdeaId,
+} from "../../services/api.comments";
+import { IdeaPageContext } from "../../contexts/IdeaPageContext";
 
 function CreateComment() {
   const user = useContext(UserContext);
@@ -12,7 +16,17 @@ function CreateComment() {
   const [open, setOpen] = useState(false);
   const [alert, setAlert] = useState();
   const { id: userId, avatar_url: avatar } = user;
+  const { setIdea, idea } = useContext(IdeaPageContext);
   const params = useParams();
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
 
   useEffect(() => {
     setOpen(true);
@@ -43,6 +57,14 @@ function CreateComment() {
             message: "Message created !",
             severity: "success",
           });
+          const { comment: commendIdea, ...rest } = idea;
+          const getComments = await apiGetCommentsByIdeaId(idea.id);
+          if (getComments) {
+            setIdea({
+              ...rest,
+              comment: getComments,
+            });
+          }
           setComment("");
         } else {
           setAlert({
@@ -80,6 +102,8 @@ function CreateComment() {
           <TextField
             id="commentUser"
             onChange={(e) => handleChange(e)}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             value={comment}
             multiline
             minRows={1}
@@ -100,7 +124,7 @@ function CreateComment() {
           <IconButton
             aria-label="see more"
             size="small"
-            color="primary"
+            color={`${isFocused ? "primary" : ""}`}
             className="absolute right-2 bottom-[54px]"
             onClick={() => handleButtonClick()}
           >
