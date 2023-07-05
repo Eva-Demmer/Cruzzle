@@ -55,6 +55,7 @@ function AdminUsers() {
       <DialogCreateUser
         openDialogAddUser={openDialogAddUser}
         setOpenDialogAddUser={setOpenDialogAddUser}
+        setUpdateList={setUpdateList}
       />
     </div>
   );
