@@ -19,17 +19,37 @@ export default function DialogResetPassword({
   user,
   setUpdateList,
 }) {
-  const [updateMail, setUpdateMail] = useState(user.mail);
-  const [updatePassword, setUpdatePassword] = useState("");
+  // Fields values
+  const [email, setEmail] = useState(user.mail);
+  const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+
+  // Fiels values validation
   const [emailError, setEmailError] = useState(false);
+  const [emailErroressage, setEmailErrorMessage] = useState("Incorrect entry");
   const [passwordError, setPasswordError] = useState(false);
   const [passwordConfirmationError, setPasswordConfirmationError] =
     useState(false);
+
+  // Handle values change
+  const handleChangeMail = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handleChangePassword = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleChangePasswordConfirmation = (event) => {
+    setPasswordConfirmation(event.target.value);
+  };
+
+  // Password visibility
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirmation, setShowPasswordConfirmation] =
     useState(false);
 
+  // Handle password visibility
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
@@ -42,60 +62,66 @@ export default function DialogResetPassword({
     event.preventDefault();
   };
 
-  const handleChangeMail = (event) => {
-    setUpdateMail(event.target.value);
-  };
-
-  const handleChangePassword = (event) => {
-    setUpdatePassword(event.target.value);
-  };
-
-  const handleChangePasswordConfirmation = (event) => {
-    setPasswordConfirmation(event.target.value);
-  };
-
   const handleClose = () => {
+    setEmail(user.mail);
+    setEmailError(false);
+    setPassword("");
+    setPasswordError(false);
+    setEmailErrorMessage("Incorrect entry");
+    setPasswordConfirmation("");
+    setPasswordConfirmationError(false);
     setOpenDialogPassword(false);
-    setUpdatePassword("");
   };
 
   const handleSubmit = () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const isEmailValid = emailPattern.test(updateMail);
-    const isPasswordValid = updatePassword.length >= 4;
-    const isPasswordConfirmed = updatePassword === passwordConfirmation;
+    const isEmailValid = emailPattern.test(email);
+    const isPasswordValid = password.length >= 4;
+    const isPasswordConfirmed =
+      password === passwordConfirmation && passwordConfirmation.length >= 4;
 
     setEmailError(!isEmailValid);
     setPasswordError(!isPasswordValid);
     setPasswordConfirmationError(!isPasswordConfirmed);
 
     if (isEmailValid && isPasswordValid && isPasswordConfirmed) {
-      const updatedLogin = { mail: updateMail, password: updatePassword };
+      const updatedLogin = { password };
+      if (email !== user.mail) {
+        updatedLogin.mail = email;
+      }
+
       apiAdminUpdateUserById(user.id, updatedLogin)
         .then((res) => {
           if (res.status === 200) {
-            setOpenDialogPassword(false);
             setUpdateList(true);
+            handleClose();
           } else {
             console.error("Cannot update user login");
           }
         })
-        .catch((error) => console.error("Error updating user login", error));
+        .catch((err) => {
+          if (err.response.status === 409) {
+            setEmailError(true);
+            setEmailErrorMessage("Email not available");
+          } else {
+            console.error("error updating user", err);
+          }
+        });
     }
   };
 
   return (
     <div>
       <Dialog open={openDialogPassword} onClose={handleClose}>
-        <DialogTitle>{`Reset credentials for ${user.firstname} ${user.lastname}`}</DialogTitle>
+        <DialogTitle>{`Update credentials for ${user.firstname} ${user.lastname}`}</DialogTitle>
         <DialogContent>
           <DialogContentText
             sx={{
               marginBottom: 3,
             }}
           >
-            Resetting the credentials will remove the user's current login
-            information and generate new credentials.
+            This action will remove the user's current login information and
+            generate new credentials.
           </DialogContentText>
 
           <TextField
@@ -105,9 +131,9 @@ export default function DialogResetPassword({
             fullWidth
             variant="standard"
             placeholder="Please enter your email address"
-            value={updateMail}
+            value={email}
             error={emailError}
-            helperText={emailError ? "Incorrect entry." : null}
+            helperText={emailError ? emailErroressage : null}
             onChange={handleChangeMail}
             InputLabelProps={{ shrink: true }}
             sx={{
@@ -123,7 +149,7 @@ export default function DialogResetPassword({
             placeholder="Enter your password"
             error={passwordError}
             helperText={passwordError ? "Incorrect entry." : null}
-            value={updatePassword}
+            value={password}
             onChange={handleChangePassword}
             type={showPassword ? "text" : "password"}
             InputLabelProps={{ shrink: true }}
@@ -183,7 +209,7 @@ export default function DialogResetPassword({
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSubmit}>Submit</Button>
+          <Button onClick={handleSubmit}>Update</Button>
         </DialogActions>
       </Dialog>
     </div>
