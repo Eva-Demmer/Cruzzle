@@ -9,20 +9,46 @@ import PropTypes from "prop-types";
 import { Controller, useForm } from "react-hook-form";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Modal from "../modal/Modal";
 import EditProfil1 from "../../assets/EditProfil1.svg";
 import EditProfil2 from "../../assets/EditProfil2.svg";
+import { UserContext } from "../../contexts/UserContext";
+import { apiUpdateUser, apiUserById } from "../../services/api.users";
 
 export default function ModalEditProfil({ open, close }) {
   const { handleSubmit, control } = useForm();
-  const [displayPhoneNumber, setDisplayPhoneNumber] = useState(false);
-  const [displayBirthday, setDisplayBirthday] = useState(false);
+  const { user, setUser } = useContext(UserContext);
+  const [sharePhone, setSharePhone] = useState(user.share_phone);
+  const [displayBirthday, setDisplayBirthday] = useState(user.share_birthdate);
   const [selectedDate, setSelectedDate] = useState(null);
-  const onSubmit = (data) => {
-    console.info(data);
-    close();
+
+  const onSubmit = async (data) => {
+    const updatedData = {
+      ...data,
+      share_phone: sharePhone,
+      share_birthdate: displayBirthday,
+    };
+    console.info(updatedData);
+
+    const response = await apiUpdateUser(user.id, updatedData);
+    if (response) {
+      try {
+        const result = await apiUserById(user.id);
+        if (result) {
+          setUser(result.data);
+        } else {
+          console.error("Failed to fetch user data");
+        }
+        close();
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    } else {
+      console.error("Failed to update user");
+    }
   };
+
   return (
     <Modal isOpen={open} onClose={close} onSave={handleSubmit(onSubmit)}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -37,21 +63,21 @@ export default function ModalEditProfil({ open, close }) {
               <div className="pl-4 flex flex-col gap-3">
                 <TextField
                   disabled
-                  defaultValue="John"
+                  defaultValue={user.firstname}
                   label="First name"
                   variant="outlined"
                   className="mb-4 bg-black bg-opacity-5"
                 />
                 <TextField
                   disabled
-                  defaultValue="Doe"
+                  defaultValue={user.lastname}
                   label="Last name"
                   variant="outlined"
                   className="mb-4  bg-black bg-opacity-5"
                 />
                 <TextField
                   disabled
-                  defaultValue="john.doe@email.com"
+                  defaultValue={user.mail}
                   label="Email"
                   variant="outlined"
                   className="mb-4  bg-black bg-opacity-5"
@@ -59,10 +85,10 @@ export default function ModalEditProfil({ open, close }) {
                 <Controller
                   name="phone"
                   control={control}
-                  defaultValue=""
+                  defaultValue={user.phone}
                   render={({ field: { onChange, value } }) => (
                     <TextField
-                      defaultValue={value}
+                      value={value}
                       placeholder="Phone"
                       InputLabelProps={{ shrink: true }}
                       label="Phone"
@@ -76,8 +102,8 @@ export default function ModalEditProfil({ open, close }) {
                   control={
                     <Switch
                       color="primary"
-                      checked={displayPhoneNumber}
-                      onChange={(e) => setDisplayPhoneNumber(e.target.checked)}
+                      checked={sharePhone}
+                      onChange={(e) => setSharePhone(e.target.checked)}
                     />
                   }
                   label="Display phone number"
@@ -85,19 +111,19 @@ export default function ModalEditProfil({ open, close }) {
                 />
                 <h4 className="text-secondary-600">Birthday</h4>
                 <Controller
-                  name="date"
+                  name="birthdate"
                   control={control}
                   render={({ field }) => (
                     <DatePicker
                       value={selectedDate}
                       label="Date"
-                      format="MM/DD/YYYY"
+                      format="YYYY-MM-DD"
                       clearable
                       disableFuture
                       InputLabelProps={{ shrink: true }}
                       onChange={(date) => {
                         setSelectedDate(
-                          dayjs(date).format("YYYY-MM-DD HH:mm:ss")
+                          dayjs(date).locale("fr").format("YYYY-MM-DD")
                         );
                         field.onChange(date);
                       }}
@@ -140,12 +166,12 @@ export default function ModalEditProfil({ open, close }) {
               <h2 className="text-secondary-600 mb-4 ">General</h2>
               <div className="pl-4 flex flex-col gap-3">
                 <Controller
-                  name="About me"
+                  name="biography"
                   control={control}
-                  defaultValue=""
+                  defaultValue={user.biography}
                   render={({ field: { onChange, value } }) => (
                     <TextField
-                      defaultValue={value}
+                      value={value}
                       onChange={onChange}
                       placeholder="Leave a few words..."
                       label="About me"
@@ -173,12 +199,12 @@ export default function ModalEditProfil({ open, close }) {
                   className="mb-4  bg-black bg-opacity-5"
                 />
                 <Controller
-                  name="Link"
+                  name="link"
                   control={control}
-                  defaultValue=""
+                  defaultValue={user.link}
                   render={({ field: { onChange, value } }) => (
                     <TextField
-                      defaultValue={value}
+                      value={value}
                       onChange={onChange}
                       placeholder="Link to share with collaborators"
                       InputLabelProps={{ shrink: true }}

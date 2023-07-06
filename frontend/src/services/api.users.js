@@ -22,4 +22,29 @@ const apiUsers = async (route = "") => {
   }
 };
 
-export default apiUsers;
+const apiUserById = async (id) => {
+  const route = "/api/users/";
+  const response = await axios.get(`${url}${route}${id}`);
+  return response;
+};
+
+const apiUpdateUser = async (id, data) => {
+  const route = "/api/users/";
+  try {
+    const response = await axios.put(`${url}${route}${id}`, data);
+    if (response.status === 200) {
+      console.info("back", response.data);
+      return response;
+    }
+    throw new Error(`Unexpected response status: ${response.status}`);
+  } catch (error) {
+    if (error.response && error.response.status === 500) {
+      console.error("Internal server error:", error);
+    } else {
+      console.error("Update  error:", error);
+    }
+    throw error;
+  }
+};
+
+export { apiUsers, apiUpdateUser, apiUserById };
