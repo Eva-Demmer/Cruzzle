@@ -20,8 +20,10 @@ const CreateUserByAdmin = async (req: Request, res: Response) => {
     const data = await createByAdmin(newUser);
     if (data.status === "success") {
       res.status(201).json(data.user);
-    } else {
+    } else if (data.status === "conflict") {
       res.status(409).json(data.message);
+    } else {
+      res.sendStatus(400);
     }
   } catch (error) {
     res.status(500).send(error);
@@ -33,10 +35,14 @@ const updateUserByIdByAdmin = async (req: Request, res: Response) => {
   const updatedUser = req.body;
   try {
     const data = await updateByIdByAdmin(id, updatedUser);
-    if (data) {
+    if (data.status === "success" && data.user) {
       res.sendStatus(200);
-    } else {
+    } else if (data.status === "success" && !data.user) {
       res.status(404).json({ message: "Not found, cannot update user" });
+    } else if (data.status === "conflict") {
+      res.status(409).json(data.message);
+    } else {
+      res.sendStatus(400);
     }
   } catch (error) {
     res.status(500).send(error);

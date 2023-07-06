@@ -35,13 +35,13 @@ export default function TableOfUsers({ userList, setUpdateList }) {
       headerName: "Agency",
       valueGetter: (params) =>
         `${params.row.agency.name}, ${params.row.agency.city}`,
-      width: 180,
+      width: 150,
     },
     {
       field: "position",
       headerName: "Position",
       valueGetter: (params) => params.row.position.name,
-      width: 180,
+      width: 150,
     },
     {
       field: "role",
@@ -53,7 +53,7 @@ export default function TableOfUsers({ userList, setUpdateList }) {
           params.row.role.name
         );
       },
-      width: 150,
+      width: 140,
       sortable: false,
     },
     {
@@ -70,7 +70,7 @@ export default function TableOfUsers({ userList, setUpdateList }) {
         );
       },
       align: "center",
-      width: 80,
+      width: 60,
       sortable: false,
     },
     {
