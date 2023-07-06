@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import TeamBuilder from "../idea/TeamBuilder";
 import { IdeaFormContext } from "../../contexts/IdeaFormContext";
-import apiUsers from "../../services/api.users";
+import { apiUsers } from "../../services/api.users";
 
 function IdeaTeam() {
   const { teamSelect, setTeamSelect } = useContext(IdeaFormContext);

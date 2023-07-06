@@ -22,4 +22,26 @@ const apiUsers = async (route = "") => {
   }
 };
 
-export default apiUsers;
+const apiUsersLogin = async (mail, password) => {
+  try {
+    const response = await axios.post(`${url}${userRoute}login`, {
+      mail,
+      password,
+    });
+    if (response.status === 200) {
+      console.info(response.data);
+      return response.data;
+    }
+    throw new Error(`Unexpected response status: ${response.status}`);
+  } catch (error) {
+    if (error.response && error.response.status === 500) {
+      console.error("Internal server error:", error);
+    } else {
+      console.error("Fetch  error:", error);
+    }
+    throw error;
+    // TODO
+  }
+};
+
+export { apiUsers, apiUsersLogin };
