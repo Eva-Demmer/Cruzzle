@@ -13,7 +13,8 @@ import CustomChip from "../styledComponents/CustomChip";
 import { apiUpdateIdeaView } from "../../services/api.ideas";
 
 export default function IdeaCard({ isMini, idea }) {
-  const { id: userId } = useContext(UserContext);
+  const { user: currentUser } = useContext(UserContext);
+  const { id: userId } = currentUser;
   const {
     id,
     title,

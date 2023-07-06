@@ -10,7 +10,7 @@ import { fetchByQuery, fetchAll } from "../../services/api.services";
 function Ideas() {
   const [filteredIdeas, setFilteredIdeas] = useState();
   const [trendIdeas, setTrendIdeas] = useState();
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const {
     publicationDateStart,
     publicationDateEnd,

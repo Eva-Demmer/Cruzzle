@@ -69,6 +69,7 @@ function AdminIdeas() {
         open={alertAdminOpen}
         autoHideDuration={4000}
         onClose={handleCloseToast}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       >
         <Alert
           onClose={handleCloseToast}
