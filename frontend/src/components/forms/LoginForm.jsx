@@ -57,7 +57,7 @@ function LoginForm() {
         const { token } = await apiUsersLogin(mail, password);
         localStorage.setItem("token", token);
         updateHeaders(token);
-        navigate("/");
+        navigate("/dashboard");
       } catch (error) {
         if (error.response) {
           const { status } = error.response;
