@@ -131,9 +131,9 @@ const findById = async (id: number) => {
         views: true,
         idea_category: {
           select: {
-            id: true,
             category: {
               select: {
+                id: true,
                 label: true,
                 color: true,
               },
@@ -151,6 +151,7 @@ const findById = async (id: number) => {
             user_id: true,
             user: {
               select: {
+                id: true,
                 firstname: true,
                 lastname: true,
                 position: true,

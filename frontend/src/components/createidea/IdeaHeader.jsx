@@ -12,59 +12,7 @@ import CustomChip from "../styledComponents/CustomChip";
 import UploadButton from "../styledComponents/UploadButton";
 
 import addPicture from "../../assets/idea/addpicture.svg";
-
-const ideaCategories = [
-  {
-    id: 1,
-    label: "Technology",
-    color: "rgba(0, 123, 255, 0.87)",
-  },
-  {
-    id: 2,
-    label: "Art and Design",
-    color: "rgba(255, 45, 85, 0.87)",
-  },
-  {
-    id: 3,
-    label: "Science",
-    color: "rgba(100, 210, 30, 0.87)",
-  },
-  {
-    id: 4,
-    label: "Health and Wellness",
-    color: "rgba(175, 82, 222, 0.87)",
-  },
-  {
-    id: 5,
-    label: "Education",
-    color: "rgba(255, 149, 0, 0.87)",
-  },
-  {
-    id: 6,
-    label: "Environment",
-    color: "rgba(0, 200, 83, 0.87)",
-  },
-  {
-    id: 7,
-    label: "Business and Finance",
-    color: "rgba(52, 199, 89, 0.87)",
-  },
-  {
-    id: 8,
-    label: "Entertainment",
-    color: "rgba(255, 59, 48, 0.87)",
-  },
-  {
-    id: 9,
-    label: "Social Impact",
-    color: "rgba(90, 200, 250, 0.87)",
-  },
-  {
-    id: 10,
-    label: "Sports and Recreation",
-    color: "rgba(88, 86, 214, 0.87)",
-  },
-];
+import apiCategories from "../../services/api.categories";
 
 function IdeaHeader() {
   const [categoriesApi, setCategoriesApi] = useState([]);
@@ -77,12 +25,26 @@ function IdeaHeader() {
     setErrorFiles,
     valueCategories,
     setValueCategories,
-    reset,
   } = useContext(IdeaFormContext);
 
   useEffect(() => {
-    // TODO: Call API for categories
-    setCategoriesApi(ideaCategories);
+    const getCategories = async () => {
+      try {
+        const fetchCategories = await apiCategories();
+        if (fetchCategories) {
+          const mappedCategories = fetchCategories.map((category) => ({
+            id: category.id,
+            label: category.label,
+            color: category.color,
+          }));
+          setCategoriesApi(mappedCategories);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getCategories();
   }, []);
 
   const handleChangePrimaryPicture = (event) => {
@@ -114,8 +76,15 @@ function IdeaHeader() {
     }
   };
 
-  const handleCategoryChange = (event, value) => {
-    setValueCategories(value.slice(0, 3));
+  function getImageSource(img) {
+    if (typeof img === "string") {
+      return img;
+    }
+    return URL.createObjectURL(img[0]);
+  }
+
+  const handleCategoryChange = (event, selectedOptions) => {
+    setValueCategories(selectedOptions);
   };
 
   return (
@@ -142,7 +111,7 @@ function IdeaHeader() {
 
       <div className="flex my-6">
         <img
-          src={primaryImg ? URL.createObjectURL(primaryImg[0]) : addPicture}
+          src={primaryImg ? getImageSource(primaryImg) : addPicture}
           alt="standard"
           className="w-[192px] h-[149px] sm:w-[212px] sm:h-[174px]"
         />
@@ -175,7 +144,6 @@ function IdeaHeader() {
             className="w-[110px] rounded-full mx-2 my-2 sm:w-[174px]"
             onClick={() => {
               setPrimaryImg(null);
-              reset({ primaryImg: null });
             }}
           >
             DELETE
@@ -202,52 +170,48 @@ function IdeaHeader() {
           />
         )}
       />
-      <Controller
-        name="categories"
-        control={control}
-        defaultValue={[]}
-        render={({ field: { onChange } }) => (
-          <Autocomplete
-            multiple
-            id="categories"
-            options={categoriesApi}
-            disableCloseOnSelect
-            getOptionLabel={(option) => option.label}
-            className="w-full sm:w-[720px] my-4"
-            disablePortal
-            onChange={(event, selectedOptions) => {
-              onChange(selectedOptions);
-              handleCategoryChange(event, selectedOptions);
-            }}
-            filterOptions={(options) =>
-              options.filter(
-                (option) =>
-                  valueCategories.length < 3 ||
-                  valueCategories.some((category) => category.id === option.id)
-              )
-            }
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                id="titleIdea"
-                required={valueCategories.length === 0}
-                label="Categories"
-                placeholder="Select category or categories"
-                InputLabelProps={{ shrink: true }}
+      {categoriesApi && (
+        <Autocomplete
+          multiple
+          id="categories"
+          value={valueCategories}
+          options={categoriesApi}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
+          disableCloseOnSelect
+          getOptionLabel={(option) => option.label}
+          className="w-full sm:w-[720px] my-4"
+          disablePortal
+          onChange={(event, selectedOptions) => {
+            handleCategoryChange(event, selectedOptions);
+          }}
+          filterOptions={(options) =>
+            options.filter(
+              (option) =>
+                valueCategories.length < 3 ||
+                valueCategories.some((category) => category.id === option.id)
+            )
+          }
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              id="titleIdea"
+              required={valueCategories.length === 0}
+              label="Categories"
+              placeholder="Select category or categories"
+              InputLabelProps={{ shrink: true }}
+            />
+          )}
+          renderTags={(tag, getTagProps) =>
+            tag.map((option, index) => (
+              <CustomChip
+                label={option.label}
+                colorchoice={option.color}
+                {...getTagProps({ index })}
               />
-            )}
-            renderTags={(tag, getTagProps) =>
-              tag.map((option, index) => (
-                <CustomChip
-                  label={option.label}
-                  colorchoice={option.color}
-                  {...getTagProps({ index })}
-                />
-              ))
-            }
-          />
-        )}
-      />
+            ))
+          }
+        />
+      )}
     </div>
   );
 }

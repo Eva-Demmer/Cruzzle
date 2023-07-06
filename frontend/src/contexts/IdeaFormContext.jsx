@@ -14,6 +14,7 @@ function IdeaFormProvider({ children }) {
   const [valueCategories, setValueCategories] = useState([]);
   const [teamSelect, setTeamSelect] = useState([]);
   const [dataform, setDataform] = useState(null);
+  const [categoriesInput, setCategoriesInput] = useState([]);
 
   const contextValue = useMemo(
     () => ({
@@ -34,6 +35,8 @@ function IdeaFormProvider({ children }) {
       setDataform,
       teamSelect,
       setTeamSelect,
+      categoriesInput,
+      setCategoriesInput,
     }),
     [
       open,
@@ -52,6 +55,8 @@ function IdeaFormProvider({ children }) {
       setDataform,
       teamSelect,
       setTeamSelect,
+      categoriesInput,
+      setCategoriesInput,
     ]
   );
 
