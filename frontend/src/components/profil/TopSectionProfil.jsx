@@ -14,11 +14,14 @@ import ModifierButton from "./ModifierButton";
 import AvatarUserProfile from "../avatar/AvatarUserProfile";
 import ModalEditProfil from "./ModalEditProfil";
 import { UserProfileContext } from "../../contexts/UserProfile";
+import { UserContext } from "../../contexts/UserContext";
 
 function TopSectionProfil() {
   const { user } = useContext(UserProfileContext);
+  const { user: currentUser } = useContext(UserContext);
   const { id } = useParams();
-  const isCurrentUserProfile = parseInt(id, 10) === parseInt(user.id, 10);
+  const isCurrentUserProfile =
+    parseInt(id, 10) === parseInt(currentUser.id, 10);
   const smallQuery = useMediaQuery(sm);
   const [openEdit, setOpenEdit] = useState(false);
   const {

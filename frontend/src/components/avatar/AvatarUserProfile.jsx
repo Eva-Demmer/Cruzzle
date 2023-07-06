@@ -1,10 +1,9 @@
-/* eslint-disable camelcase */
 import { useContext } from "react";
 import { Avatar, Paper } from "@mui/material";
 import { UserProfileContext } from "../../contexts/UserProfile";
 
 function AvatarUserProfile() {
-  const { avatar_url } = useContext(UserProfileContext);
+  const { user } = useContext(UserProfileContext);
 
   return (
     <div>
@@ -14,7 +13,7 @@ function AvatarUserProfile() {
       >
         <Avatar
           alt="profil-picture"
-          src={avatar_url}
+          src={user.avatar_url}
           className="w-24 h-24 z-10 shadow shadow-black border-solid border-black border sm:w-20 sm:h-20 lg:w-24 lg:h-24"
         />
       </Paper>
