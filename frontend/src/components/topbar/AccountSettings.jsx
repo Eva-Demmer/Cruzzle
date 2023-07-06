@@ -18,7 +18,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { Axios } from "../../config/axios.config";
 
 function AccountSettings() {
-  const { firstname, lastname, imgUrl, mail, id } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const open = Boolean(anchorEl);
@@ -89,15 +89,23 @@ function AccountSettings() {
       >
         <MenuItem className="pointer-events-none">
           <ListItemIcon>
-            <Avatar alt="profil-picture" src={imgUrl} className="w-6 h-6" />
+            <Avatar
+              alt="profil-picture"
+              src={user.avatar_url}
+              className="w-6 h-6"
+            />
           </ListItemIcon>
           <div>
-            <div>{`${firstname} ${lastname}`}</div>
-            <div className="text-sm">{mail}</div>
+            <div>{`${user.firstname} ${user.lastname}`}</div>
+            <div className="text-sm">{user.mail}</div>
           </div>
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose} component={Link} to={`users/${id}`}>
+        <MenuItem
+          onClick={handleClose}
+          component={Link}
+          to={`users/${user.id}`}
+        >
           <ListItemIcon>
             <UserIcon className="h-6 w-6" />
           </ListItemIcon>
