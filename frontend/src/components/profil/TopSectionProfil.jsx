@@ -84,12 +84,12 @@ function TopSectionProfil() {
       <div className="flex flex-col gap-2 ml-5 lg:flex-row lg:gap-12">
         <div className="flex gap-1 justify-start items-center">
           <BriefcaseIcon className="h-6 w-6 text-secondary-600" />
-          <p className="font-medium text-secondary-600">{user.position_id}</p>
+          <p className="font-medium text-secondary-600">{user.position.name}</p>
         </div>
         <div className="flex justify-start items-center">
           <MapPinIcon className="h-6 w-6 text-secondary-600" />
           <p className="ml-1 font-medium text-secondary-600">
-            {user.agency_id}
+            {user.agency.name}
           </p>
         </div>
         <div className="flex justify-start items-center">

@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useContext, useState } from "react";
@@ -20,11 +21,11 @@ export default function ProfilesTabs() {
   const userinfos = [
     {
       title: "Title",
-      content: user.position_id,
+      content: user.position.name,
     },
     {
       title: "Agency",
-      content: user.agency_id,
+      content: user.agency.name,
     },
     {
       title: "Email",
@@ -80,21 +81,21 @@ export default function ProfilesTabs() {
                   />
                   <h3 className="text-black ml-5 mt-2">Finished puzzles</h3>
                   <h2 className="text-black text-5xl ml-5 mb-5">
-                    {user.score_comment}
+                    {user._count.idea_teams}
                   </h2>
                 </div>
                 <div className="h-30 w-60 shadow-md rounded-2xl flex flex-col relative">
                   <LightBulbIcon className="h-10 w-10 absolute top-[-18px] left-[-18px] text-primary-900 fill-current transform rotate-45" />
                   <h3 className="text-black ml-5 mt-2">Total ideas</h3>
                   <h2 className="text-black text-5xl ml-5 mb-5">
-                    {user.score_idea}
+                    {user._count.idea}
                   </h2>
                 </div>
                 <div className="h-30 w-60 shadow-md rounded-2xl flex flex-col relative">
                   <SquaresPlusIcon className="h-10 w-10 absolute top-[-18px] left-[-18px] text-primary-900 fill-current" />
                   <h3 className="text-black ml-5 mt-2">Participations</h3>
                   <h2 className="text-black text-5xl ml-5 mb-5">
-                    {user.score_like}
+                    {user._count.comment}
                   </h2>
                 </div>
               </div>

@@ -186,14 +186,14 @@ export default function ModalEditProfil({ open, close }) {
                 />
                 <TextField
                   disabled
-                  defaultValue="City"
+                  defaultValue={user.agency.city}
                   label="City"
                   variant="outlined"
                   className="mb-4  bg-black bg-opacity-5"
                 />
                 <TextField
                   disabled
-                  defaultValue="Country"
+                  defaultValue={user.agency.country}
                   label="Country"
                   variant="outlined"
                   className="mb-4  bg-black bg-opacity-5"

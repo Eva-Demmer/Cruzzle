@@ -15,6 +15,7 @@ function Profile() {
     if (result) {
       setUser(result.data);
       setIsLoading(false);
+      console.info(result.data);
     }
   };
 
