@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const url = import.meta.env.VITE_BACKEND_URL;
-const userRoute = "/api/ideas/";
+const ideaRoute = "/api/ideas/";
 
 const apiIdeas = async (route = "") => {
   try {
-    const response = await axios.get(`${url}${userRoute}${route}`);
+    const response = await axios.get(`${url}${ideaRoute}${route}`);
     if (response.status === 200) {
       console.info(response.data);
       return response.data;
@@ -22,4 +22,42 @@ const apiIdeas = async (route = "") => {
   }
 };
 
-export default apiIdeas;
+const apiUpdateIdeaLike = async (id, data) => {
+  try {
+    const response = await axios.patch(`${url}${ideaRoute}views/${id}`, {
+      views: data,
+    });
+    if (response.status === 201) {
+      console.info(response.data);
+      return response.data;
+    }
+    throw new Error(`Unexpected response status: ${response.status}`);
+  } catch (error) {
+    if (error.response && error.response.status === 500) {
+      console.error("Internal server error from apiUpdateLike:", error);
+    } else {
+      console.error("Fetch  error:", error);
+    }
+    throw error;
+  }
+};
+
+const apiArchiveIdeas = async (id) => {
+  try {
+    const response = await axios.patch(`${url}${ideaRoute}/archive/${id}`);
+    if (response.status === 200) {
+      console.info(response.data);
+      return response.data;
+    }
+    throw new Error(`Unexpected response status: ${response.status}`);
+  } catch (error) {
+    if (error.response && error.response.status === 500) {
+      console.error("Internal server error:", error);
+    } else {
+      console.error("Fetch  error:", error);
+    }
+    throw error;
+  }
+};
+
+export { apiIdeas, apiArchiveIdeas, apiUpdateIdeaLike };

@@ -42,9 +42,9 @@ function TabComments({ tabValue, index }) {
   return (
     <div>
       <TabPanel value={tabValue} index={index} className="w-full">
-        <CreateComment />
-        <div className="flex justify-between items-center">
-          <h3 className="text-xl mb-2">Comments</h3>
+        {idea.archived_at === null && <CreateComment />}
+        <div className="flex justify-between items-center mt-4">
+          <h3 className="text-xl mb-2">{`Comments (${allComments.length})`}</h3>
           {allComments.length > 0 && (
             <FormControl>
               <Select

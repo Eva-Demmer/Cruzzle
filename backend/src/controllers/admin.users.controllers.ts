@@ -1,5 +1,9 @@
 import { Request, Response } from "express";
-import { findAllByAdmin, updateByIdByAdmin } from "../models/admin.user.model";
+import {
+  findAllByAdmin,
+  createByAdmin,
+  updateByIdByAdmin,
+} from "../models/admin.user.model";
 
 const getUsersByAdmin = async (req: Request, res: Response) => {
   try {
@@ -10,20 +14,39 @@ const getUsersByAdmin = async (req: Request, res: Response) => {
   }
 };
 
-const updateUserByIdByAdmin = async (req: Request, res: Response) => {
-  const id = parseInt(req.params.id, 10);
-  const updatedUser = req.body;
-  console.info(updatedUser);
+const CreateUserByAdmin = async (req: Request, res: Response) => {
+  const newUser = req.body;
   try {
-    const data = await updateByIdByAdmin(id, updatedUser);
-    if (data) {
-      res.sendStatus(200);
+    const data = await createByAdmin(newUser);
+    if (data.status === "success") {
+      res.status(201).json(data.user);
+    } else if (data.status === "conflict") {
+      res.status(409).json(data.message);
     } else {
-      res.status(404).json({ message: "Not found, cannot update user" });
+      res.sendStatus(400);
     }
   } catch (error) {
     res.status(500).send(error);
   }
 };
 
-export { getUsersByAdmin, updateUserByIdByAdmin };
+const updateUserByIdByAdmin = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id, 10);
+  const updatedUser = req.body;
+  try {
+    const data = await updateByIdByAdmin(id, updatedUser);
+    if (data.status === "success" && data.user) {
+      res.sendStatus(200);
+    } else if (data.status === "success" && !data.user) {
+      res.status(404).json({ message: "Not found, cannot update user" });
+    } else if (data.status === "conflict") {
+      res.status(409).json(data.message);
+    } else {
+      res.sendStatus(400);
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+export { getUsersByAdmin, CreateUserByAdmin, updateUserByIdByAdmin };

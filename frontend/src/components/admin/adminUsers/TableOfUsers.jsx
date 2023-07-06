@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/fr";
 import { UserContext } from "../../../contexts/UserContext";
 import CheckboxUserIsActive from "./CheckboxUserIsActive";
-import CheckboxUserIsAdmin from "./CheckboxUserIsAdmin";
+import TableSelectRole from "./TableSelectRole";
 import ActionIcons from "./ActionIcons";
 
 export default function TableOfUsers({ userList, setUpdateList }) {
@@ -35,33 +35,25 @@ export default function TableOfUsers({ userList, setUpdateList }) {
       headerName: "Agency",
       valueGetter: (params) =>
         `${params.row.agency.name}, ${params.row.agency.city}`,
-      width: 180,
+      width: 150,
     },
     {
       field: "position",
       headerName: "Position",
       valueGetter: (params) => params.row.position.name,
-      width: 160,
+      width: 150,
     },
     {
       field: "role",
       headerName: "Role",
       renderCell: (params) => {
-        const [isAdminUser, setIsAdminUser] = useState(
-          params.row.role.name.toLowerCase() !== "user"
-        );
-        return (
-          <CheckboxUserIsAdmin
-            currentUserRole={currentUserRole}
-            isAdminUser={isAdminUser}
-            setIsAdminUser={setIsAdminUser}
-            userId={params.row.id}
-            userRole={params.row.role.name}
-          />
+        return currentUserRole === 88 ? (
+          <TableSelectRole user={params.row} />
+        ) : (
+          params.row.role.name
         );
       },
-      align: "center",
-      width: 80,
+      width: 140,
       sortable: false,
     },
     {
@@ -78,7 +70,7 @@ export default function TableOfUsers({ userList, setUpdateList }) {
         );
       },
       align: "center",
-      width: 80,
+      width: 60,
       sortable: false,
     },
     {

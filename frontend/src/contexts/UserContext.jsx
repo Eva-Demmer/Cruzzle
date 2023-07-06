@@ -5,7 +5,7 @@ const initialUser = {
   id: 2,
   mail: "super.admin@example.com",
   role_id: 88,
-  avatar_url: "https://picsum.photos/200",
+  avatar_url: "https://picsum.photos/1000/300",
   banner_url: "https://picsum.photos/1000/300",
   firstname: "Sarah",
   lastname: "Conor",

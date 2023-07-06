@@ -1,13 +1,10 @@
-import { Request, Response, NextFunction } from "express";
-
+import { Request, Response } from "express";
 import {
   findAll,
   findById,
   findByEmail,
-  create,
   update,
-  deactivate,
-  reactivate,
+  updateImageById,
 } from "../models/user.model";
 import { verifyPassword } from "../middlewares/auth.middlewares";
 
@@ -57,17 +54,6 @@ const login = async (req: Request, res: Response) => {
   }
 };
 
-// Create new user
-const createUser = async (req: Request, res: Response) => {
-  try {
-    const user = req.body;
-    const createdUser = await create(user); //
-    res.status(201).json(createdUser);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-};
-
 // Update user
 const updateUser = async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id, 10);
@@ -84,48 +70,18 @@ const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-// Set is_active to false
-const deactivateUser = async (req: Request, res: Response) => {
+const updateImage = async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id, 10);
-  try {
-    const result = await deactivate(id);
-    if (result) {
-      res.status(200).json(result);
-    } else {
-      res.status(404).send("User not found");
-    }
-  } catch (error) {
-    res.status(500).send(error);
-  }
+  const data: object = req.body;
+  console.info(req.body);
+  console.info(id);
+
+  // try {
+  //   const updatedViews = await updateImageById(id, data);
+  //   res.status(201).json({ "Idea views updated !": updatedViews });
+  // } catch (error) {
+  //   res.status(500).json({ "Error when edit idea views:": error });
+  // }
 };
 
-// Set is_active to true
-const reactivateUser = async (req: Request, res: Response) => {
-  const id: number = parseInt(req.params.id, 10);
-  try {
-    const result = await reactivate(id);
-    if (result) {
-      res.status(200).json(result);
-    } else {
-      res.status(404).send("User not found");
-    }
-  } catch (error) {
-    res.status(500).send(error);
-  }
-};
-
-const updateAvatar = (req: Request, res: Response) => {
-  console.info("From back : ", req.body);
-};
-
-export {
-  getUsers,
-  getUserById,
-  // getUserByEmail,
-  login,
-  createUser,
-  updateUser,
-  deactivateUser,
-  reactivateUser,
-  updateAvatar,
-};
+export { getUsers, getUserById, login, updateUser, updateImage };

@@ -39,7 +39,7 @@ function SideLinks() {
 
   const navlinks = [
     {
-      to: "/",
+      to: "/dashboard",
       primary: "Home",
       icon: HomeIcon,
     },
