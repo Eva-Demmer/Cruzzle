@@ -71,14 +71,19 @@ const findById = async (id: number) => {
   }
 };
 
-// TODO: change to findUnique once Prisma changed
-const findByEmail = async (mail: string) => {
+const findByMail = async (mail: string) => {
   try {
-    const data = await prisma.user.findMany({
+    const data = await prisma.user.findUnique({
       where: {
         mail,
       },
+      select: {
+        mail: true,
+        hashed_password: true,
+        role_id: true,
+      },
     });
+    console.info("data", data);
     return data;
   } finally {
     await prisma.$disconnect();
@@ -101,4 +106,4 @@ const update = async (id: number, updatedUser: User) => {
   }
 };
 
-export { findAll, findById, findByEmail, update };
+export { findAll, findById, findByMail, update };

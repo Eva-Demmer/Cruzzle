@@ -10,7 +10,7 @@ import IdeaCardActions from "./IdeaCardActions";
 import { UserContext } from "../../contexts/UserContext";
 import { IdeaPropTypes } from "../propTypes/ideaPropTypes";
 import CustomChip from "../styledComponents/CustomChip";
-import { apiUpdateIdeaLike } from "../../services/api.ideas";
+import { apiUpdateIdeaView } from "../../services/api.ideas";
 
 export default function IdeaCard({ isMini, idea }) {
   const { id: userId } = useContext(UserContext);
@@ -37,7 +37,7 @@ export default function IdeaCard({ isMini, idea }) {
   const incViews = views + 1;
 
   const handleNavigate = () => {
-    apiUpdateIdeaLike(id, incViews);
+    apiUpdateIdeaView(id, incViews);
     navigate(`/ideas/${id}`);
   };
 

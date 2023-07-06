@@ -1,60 +1,91 @@
 import PropTypes from "prop-types";
-import { useContext } from "react";
-import axios from "axios";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { IdeaFormContext } from "../../contexts/IdeaFormContext";
+import { apiIdeasNew } from "../../services/api.ideas";
+import AlertOnSave from "./AlertOnSave";
 
 function IdeaForm({ children }) {
-  const { handleSubmit, filesAttachment, teamSelect } =
+  const { handleSubmit, filesAttachment, teamSelect, valueCategories } =
     useContext(IdeaFormContext);
 
-  const onSubmit = (data) => {
-    const formData = new FormData();
-    const { categories, primaryImg, ...dataWithoutCategories } = data;
+  const [alertMessage, setAlertMessage] = useState("message");
+  const [alertSeverity, setAlertSeverity] = useState("success");
+  const [alertTitle, setAlertTitle] = useState("title");
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [idIdea, setIdIdea] = useState();
 
-    const formatedTeam = teamSelect.map((user) => ({
-      user_id: user.id,
-    }));
+  const navigate = useNavigate();
 
-    formData.append("team", JSON.stringify(formatedTeam));
-    formData.append("categories", JSON.stringify(categories));
+  const onSubmit = async (data) => {
+    try {
+      const formData = new FormData();
+      const { primaryImg: primaryPicture, ...dataWithoutCategories } = data;
 
-    for (const key in dataWithoutCategories) {
-      if (Object.prototype.hasOwnProperty.call(dataWithoutCategories, key)) {
-        const value = dataWithoutCategories[key];
-        if (value) {
-          formData.append(key, value);
+      const formatedTeam = teamSelect.map((user) => ({
+        user_id: user.id,
+      }));
+
+      formData.append("team", JSON.stringify(formatedTeam));
+      formData.append("categories", JSON.stringify(valueCategories));
+
+      for (const key in dataWithoutCategories) {
+        if (Object.prototype.hasOwnProperty.call(dataWithoutCategories, key)) {
+          const value = dataWithoutCategories[key];
+          if (value) {
+            formData.append(key, value);
+          }
         }
       }
-    }
 
-    if (primaryImg) {
-      formData.append("primaryImg", primaryImg);
-    }
+      if (primaryPicture) {
+        formData.append("primaryImg", primaryPicture);
+      }
 
-    if (filesAttachment.length > 0) {
-      filesAttachment
-        .map((item) => ({
-          attachement: item.file,
-        }))
-        .forEach((attachement) => {
-          const key = Object.keys(attachement)[0];
-          const value = attachement[key];
-          formData.append(key, value);
-        });
-    }
+      if (filesAttachment.length > 0) {
+        filesAttachment
+          .map((item) => ({
+            attachement: item.file,
+          }))
+          .forEach((attachement) => {
+            const key = Object.keys(attachement)[0];
+            const value = attachement[key];
+            formData.append(key, value);
+          });
+      }
 
-    // Request Axios to post
-    axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/api/ideas/`, formData)
-      .then((response) => {
-        console.info(response);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      const newIdea = await apiIdeasNew(formData);
+
+      if (newIdea) {
+        setIdIdea(newIdea.id);
+        setAlertMessage("Idea updated successfully.");
+        setAlertTitle("Idea updated");
+        setAlertOpen(true);
+      } else {
+        setAlertMessage("Failed to create idea. Please try again.");
+        setAlertTitle("Error");
+        setAlertSeverity("error");
+        setAlertOpen(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  return <form onSubmit={handleSubmit(onSubmit)}>{children}</form>;
+  return (
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>{children}</form>
+      <AlertOnSave
+        open={alertOpen}
+        setOpen={setAlertOpen}
+        severity={alertSeverity}
+        message={alertMessage}
+        title={alertTitle}
+        onClose={() => navigate(`/ideas/${idIdea}`, { replace: true })}
+      />
+    </>
+  );
 }
 
 IdeaForm.propTypes = {

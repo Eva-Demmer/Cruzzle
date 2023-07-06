@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   ArrowRightOnRectangleIcon,
   ChevronDownIcon,
@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { useState, useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
+import { Axios } from "../../config/axios.config";
 
 function AccountSettings() {
   const { firstname, lastname, imgUrl, mail, id } = useContext(UserContext);
@@ -28,6 +29,15 @@ function AccountSettings() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    delete Axios.defaults.headers.common.Authorization;
+    navigate("/login");
+  };
+
   return (
     <>
       <Tooltip title="Account Settings" className="mx-1">
@@ -100,7 +110,7 @@ function AccountSettings() {
           Settings
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <ArrowRightOnRectangleIcon className="h-6 w-6" />
           </ListItemIcon>

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import {
   Paper,
   TextField,
@@ -14,6 +13,8 @@ import {
   Alert,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { updateHeaders } from "../../config/axios.config";
+import { apiUsersLogin } from "../../services/api.users";
 import OverlayLogin from "../overlays/OverlayLogin";
 
 function LoginForm() {
@@ -53,19 +54,10 @@ function LoginForm() {
       setShowAlert(true);
     } else {
       try {
-        // Make the HTTP request to backend API
-        const response = await axios.post(
-          "http://localhost:6001/api/users/login",
-          { mail, password }
-        );
-
-        const { token } = response.data;
-
+        const { token } = await apiUsersLogin(mail, password);
         localStorage.setItem("token", token);
-
-        axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-
-        navigate("/");
+        updateHeaders(token);
+        navigate("/dashboard");
       } catch (error) {
         if (error.response) {
           const { status } = error.response;

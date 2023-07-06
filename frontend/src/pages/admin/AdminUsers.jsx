@@ -1,16 +1,32 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { UserIcon } from "@heroicons/react/24/solid";
 import { PlusIcon } from "@heroicons/react/24/outline";
+import { Snackbar, Alert } from "@mui/material";
 import CounterCard from "../../components/admin/CounterCard";
 import ActionButton from "../../components/admin/ActionButton";
 import { apiAdminUsers } from "../../services/api.admin.users";
 import TableOfUsers from "../../components/admin/adminUsers/TableOfUsers";
 import DialogCreateUser from "../../components/admin/adminUsers/DialogCreateUser";
+import { AlertToastContext } from "../../contexts/AlertToastContext";
 
 function AdminUsers() {
+  const {
+    alertAdminOpen,
+    setAlertAdminOpen,
+    alertAdminMessage,
+    setAlertAdminMessage,
+  } = useContext(AlertToastContext);
   const [userList, setUserlist] = useState([]);
   const [updateList, setUpdateList] = useState(false);
   const [openDialogAddUser, setOpenDialogAddUser] = useState(false);
+
+  const handleCloseToast = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setAlertAdminMessage("Success");
+    setAlertAdminOpen(false);
+  };
 
   useEffect(() => {
     apiAdminUsers()
@@ -57,6 +73,20 @@ function AdminUsers() {
         setOpenDialogAddUser={setOpenDialogAddUser}
         setUpdateList={setUpdateList}
       />
+
+      <Snackbar
+        open={alertAdminOpen}
+        autoHideDuration={4000}
+        onClose={handleCloseToast}
+      >
+        <Alert
+          onClose={handleCloseToast}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          {alertAdminMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

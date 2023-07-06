@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import CustomChip from "../../styledComponents/CustomChip";
 import ActionIcons from "./ActionIcons";
 
-export default function TableOfCategories({ categoriesList }) {
+export default function TableOfCategories({ categoriesList, setUpdateList }) {
   const rows = categoriesList;
   const columns = [
     { field: "label", headerName: "Label", width: 200 },
@@ -30,7 +30,9 @@ export default function TableOfCategories({ categoriesList }) {
       field: "actions",
       headerName: "Actions",
       renderCell: (params) => {
-        return <ActionIcons ideaId={params.row.id} />;
+        return (
+          <ActionIcons category={params.row} setUpdateList={setUpdateList} />
+        );
       },
       width: 100,
       align: "center",
@@ -44,6 +46,7 @@ export default function TableOfCategories({ categoriesList }) {
         rows={rows}
         columns={columns}
         autoPageSize
+        disableRowSelectionOnClick
         slots={{
           toolbar: GridToolbar,
         }}
@@ -63,4 +66,5 @@ TableOfCategories.propTypes = {
       }).isRequired,
     })
   ).isRequired,
+  setUpdateList: PropTypes.func.isRequired,
 };
