@@ -13,7 +13,6 @@ import {
   Alert,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { updateHeaders } from "../../config/axios.config";
 import { apiUsersLogin } from "../../services/api.users";
 import OverlayLogin from "../overlays/OverlayLogin";
 
@@ -56,7 +55,6 @@ function LoginForm() {
       try {
         const { token } = await apiUsersLogin(mail, password);
         localStorage.setItem("token", token);
-        updateHeaders(token);
         navigate("/dashboard");
       } catch (error) {
         if (error.response) {
@@ -150,21 +148,16 @@ function LoginForm() {
           Login
         </Button>
       </Paper>
+
       <Snackbar
         open={showAlert}
         autoHideDuration={3000}
         onClose={handleCloseAlert}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        {showAlert && (
-          <Alert
-            variant="filled"
-            severity="error"
-            onClose={() => setShowAlert(false)}
-          >
-            {alertMessage}
-          </Alert>
-        )}
+        <Alert variant="filled" severity="error" onClose={handleCloseAlert}>
+          {alertMessage}
+        </Alert>
       </Snackbar>
     </div>
   );
