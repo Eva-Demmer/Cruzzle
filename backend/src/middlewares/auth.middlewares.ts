@@ -1,14 +1,11 @@
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import jwt, { Secret } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
 import { findByMail } from "../models/user.model";
 
 dotenv.config();
-
-// TODO: Change secret key
-const JWT_SECRET =
-  "eb7e49b3511f9638e9478224a105556a4edab4afbc70e6f364b13907f2c3c1cf";
+const { JWT_SECRET } = process.env;
 
 // Hash password before storing it in the database
 const hashPassword = async (
@@ -71,7 +68,7 @@ const protectRoutes = (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (token) {
     try {
-      const decodedToken = jwt.verify(token, JWT_SECRET);
+      const decodedToken = jwt.verify(token, JWT_SECRET as Secret);
       console.info(decodedToken);
       next();
     } catch (error) {

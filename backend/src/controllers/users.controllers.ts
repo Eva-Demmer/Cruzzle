@@ -1,7 +1,11 @@
 import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { Secret } from "jsonwebtoken";
+import dotenv from "dotenv";
 import { findAll, findById, findByMail, update } from "../models/user.model";
 import { verifyPassword } from "../middlewares/auth.middlewares";
+
+dotenv.config();
+const { JWT_SECRET } = process.env;
 
 // Show all users
 const getUsers = async (req: Request, res: Response) => {
@@ -28,10 +32,6 @@ const getUserById = async (req: Request, res: Response) => {
   }
 };
 
-// TODO: Change secret key
-const JWT_SECRET =
-  "eb7e49b3511f9638e9478224a105556a4edab4afbc70e6f364b13907f2c3c1cf";
-
 // Login validation based on email and password verification & generation of token
 const login = async (req: Request, res: Response) => {
   const { mail } = req.body;
@@ -45,7 +45,7 @@ const login = async (req: Request, res: Response) => {
             role_id: data.role_id,
           };
 
-          const token = jwt.sign(payload, JWT_SECRET, {
+          const token = jwt.sign(payload, JWT_SECRET as Secret, {
             algorithm: "HS256",
             expiresIn: "1h",
           });
