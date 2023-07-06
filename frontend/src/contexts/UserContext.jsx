@@ -5,7 +5,7 @@ const initialUser = {
   id: 1,
   mail: "super.admin@example.com",
   role: {
-    id: 88,
+    id: 0,
     name: "superAdmin",
   },
   avatar_url: "https://picsum.photos/200",
