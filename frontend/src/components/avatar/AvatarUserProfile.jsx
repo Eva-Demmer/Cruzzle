@@ -1,10 +1,10 @@
 /* eslint-disable camelcase */
 import { useContext } from "react";
 import { Avatar, Paper } from "@mui/material";
-import { UserContext } from "../../contexts/UserContext";
+import { UserProfileContext } from "../../contexts/UserProfile";
 
 function AvatarUserProfile() {
-  const { avatar_url } = useContext(UserContext);
+  const { avatar_url } = useContext(UserProfileContext);
 
   return (
     <div>

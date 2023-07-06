@@ -12,11 +12,11 @@ import { useMediaQuery } from "react-responsive";
 import { sm } from "../../utils/mediaQueries";
 import ModifierButton from "./ModifierButton";
 import AvatarUserProfile from "../avatar/AvatarUserProfile";
-import { UserContext } from "../../contexts/UserContext";
 import ModalEditProfil from "./ModalEditProfil";
+import { UserProfileContext } from "../../contexts/UserProfile";
 
 function TopSectionProfil() {
-  const { user } = useContext(UserContext);
+  const { user } = useContext(UserProfileContext);
   const { id } = useParams();
   const isCurrentUserProfile = parseInt(id, 10) === parseInt(user.id, 10);
   const smallQuery = useMediaQuery(sm);
