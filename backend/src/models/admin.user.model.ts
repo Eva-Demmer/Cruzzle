@@ -95,7 +95,6 @@ const createByAdmin = async (newUser: CreateUser) => {
 };
 
 const updateByIdByAdmin = async (id: number, userUpdated: CreateUser) => {
-  console.info(userUpdated);
   try {
     if (userUpdated.mail) {
       const existingUser = await prisma.user.findUnique({
@@ -109,11 +108,17 @@ const updateByIdByAdmin = async (id: number, userUpdated: CreateUser) => {
       }
     }
 
+    const updatedData: CreateUser = { ...userUpdated };
+
+    if (updatedData.joined_at) {
+      updatedData.joined_at = dayjs(updatedData.joined_at).toISOString();
+    }
+
     const createdUser = await prisma.user.update({
       where: {
         id,
       },
-      data: userUpdated,
+      data: updatedData,
     });
 
     return {
@@ -128,21 +133,5 @@ const updateByIdByAdmin = async (id: number, userUpdated: CreateUser) => {
     await prisma.$disconnect();
   }
 };
-
-// const updateByIdByAdmin = async (id: number, userUpdated: CreateUser) => {
-//   try {
-//     const data = await prisma.user.update({
-//       where: {
-//         id,
-//       },
-//       data: userUpdated,
-//     });
-//     return data;
-//   } catch (error) {
-//     throw new Error("Error updating user.");
-//   } finally {
-//     await prisma.$disconnect();
-//   }
-// };
 
 export { findAllByAdmin, createByAdmin, updateByIdByAdmin };

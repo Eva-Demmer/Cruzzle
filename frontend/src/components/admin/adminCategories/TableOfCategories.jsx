@@ -4,12 +4,7 @@ import PropTypes from "prop-types";
 import CustomChip from "../../styledComponents/CustomChip";
 import ActionIcons from "./ActionIcons";
 
-export default function TableOfCategories({
-  categoriesList,
-  setUpdateList,
-  setOpenAlert,
-  setAlertMessage,
-}) {
+export default function TableOfCategories({ categoriesList, setUpdateList }) {
   const rows = categoriesList;
   const columns = [
     { field: "label", headerName: "Label", width: 200 },
@@ -36,12 +31,7 @@ export default function TableOfCategories({
       headerName: "Actions",
       renderCell: (params) => {
         return (
-          <ActionIcons
-            category={params.row}
-            setUpdateList={setUpdateList}
-            setOpenAlert={setOpenAlert}
-            setAlertMessage={setAlertMessage}
-          />
+          <ActionIcons category={params.row} setUpdateList={setUpdateList} />
         );
       },
       width: 100,
@@ -77,6 +67,4 @@ TableOfCategories.propTypes = {
     })
   ).isRequired,
   setUpdateList: PropTypes.func.isRequired,
-  setOpenAlert: PropTypes.func.isRequired,
-  setAlertMessage: PropTypes.func.isRequired,
 };

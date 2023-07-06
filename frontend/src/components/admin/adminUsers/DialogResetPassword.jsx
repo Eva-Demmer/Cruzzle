@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -12,6 +12,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { apiAdminUpdateUserById } from "../../../services/api.admin.users";
+import { AlertToastContext } from "../../../contexts/AlertToastContext";
 
 export default function DialogResetPassword({
   openDialogPassword,
@@ -19,6 +20,9 @@ export default function DialogResetPassword({
   user,
   setUpdateList,
 }) {
+  const { setAlertAdminOpen, setAlertAdminMessage } =
+    useContext(AlertToastContext);
+
   // Fields values
   const [email, setEmail] = useState(user.mail);
   const [password, setPassword] = useState("");
@@ -94,6 +98,8 @@ export default function DialogResetPassword({
         .then((res) => {
           if (res.status === 200) {
             setUpdateList(true);
+            setAlertAdminMessage("User credentials updated successfully");
+            setAlertAdminOpen(true);
             handleClose();
           } else {
             console.error("Cannot update user login");

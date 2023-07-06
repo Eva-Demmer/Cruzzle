@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
 import "dayjs/locale/fr";
@@ -13,6 +13,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogUserSelectAgency from "./DialogUserSelectAgency";
 import DialogUserSelectPosition from "./DialogUserSelectPosition";
 import { apiAdminUpdateUserById } from "../../../services/api.admin.users";
+import { AlertToastContext } from "../../../contexts/AlertToastContext";
 
 export default function DialogUpdateUser({
   user,
@@ -20,6 +21,9 @@ export default function DialogUpdateUser({
   setOpenDialogUpdateUser,
   setUpdateList,
 }) {
+  const { setAlertAdminOpen, setAlertAdminMessage } =
+    useContext(AlertToastContext);
+
   // Fields values
   const [firstname, setFirstname] = useState(user.firstname);
   const [lastname, setLastname] = useState(user.lastname);
@@ -85,6 +89,8 @@ export default function DialogUpdateUser({
         .then((res) => {
           if (res.status === 200) {
             setUpdateList(true);
+            setAlertAdminMessage("User updated successfully");
+            setAlertAdminOpen(true);
             handleClose();
           } else {
             console.error("Cannot update user");

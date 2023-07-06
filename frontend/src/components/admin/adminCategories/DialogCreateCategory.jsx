@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -11,14 +11,15 @@ import { Box } from "@mui/material";
 import { SliderPicker } from "react-color";
 import CustomChip from "../../styledComponents/CustomChip";
 import { apiAdminCreateCategory } from "../../../services/api.admin.categories";
+import { AlertToastContext } from "../../../contexts/AlertToastContext";
 
 export default function DialogCreateCategory({
   openDialog,
   setOpenDialog,
   setUpdateList,
-  setOpenAlert,
-  setAlertMessage,
 }) {
+  const { setAlertAdminOpen, setAlertAdminMessage } =
+    useContext(AlertToastContext);
   const [label, setLabel] = useState("");
   const [labelError, setLabelError] = useState(false);
   const [color, setColor] = useState("rgba(64, 191, 191, 1)");
@@ -46,8 +47,8 @@ export default function DialogCreateCategory({
         .then((res) => {
           if (res.status === 201) {
             setUpdateList(true);
-            setAlertMessage("Category created successfully");
-            setOpenAlert(true);
+            setAlertAdminMessage("Category created successfully");
+            setAlertAdminOpen(true);
             handleClose();
           } else {
             console.error("Cannot create category");
@@ -122,6 +123,4 @@ DialogCreateCategory.propTypes = {
   openDialog: PropTypes.bool.isRequired,
   setOpenDialog: PropTypes.func.isRequired,
   setUpdateList: PropTypes.func.isRequired,
-  setOpenAlert: PropTypes.func.isRequired,
-  setAlertMessage: PropTypes.func.isRequired,
 };
