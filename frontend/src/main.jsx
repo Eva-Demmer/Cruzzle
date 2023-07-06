@@ -11,12 +11,13 @@ import UserProvider from "./contexts/UserContext";
 import themeMui from "./themes/muiTheme";
 
 import Login from "./pages/Login";
+import Home from "./pages/Home";
 import ErrorPage from "./pages/ErrorPage";
 import Root from "./pages/Root";
 
 import Ideas from "./pages/ideas/Ideas";
 import Idea from "./pages/ideas/Idea";
-import NewIdea from "./pages/ideas/IdeaNew";
+import IdeaNew from "./pages/ideas/IdeaNew";
 import Favorits from "./pages/ideas/Favorits";
 
 import Profile from "./pages/users/Profile";
@@ -31,12 +32,13 @@ import Settings from "./pages/Settings";
 import Search from "./pages/Search";
 
 import "./styles/main.scss";
-import IdeaProvider from "./contexts/IdeaContext";
+import AlertToastProvider from "./contexts/AlertToastContext";
 import LanguageProvider from "./contexts/LanguageContext";
 import MenuProvider from "./contexts/MenuContext";
 import FilterProvider from "./contexts/FilterContext";
 import ScrollProvider from "./contexts/ScrollContext";
 import IdeaPageProvider from "./contexts/IdeaPageContext";
+import IdeaEdit from "./pages/ideas/IdeaEdit";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +52,10 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
+        path: "dashboard/",
+        element: <Home />,
+      },
+      {
         path: "ideas/",
         element: <Ideas />,
       },
@@ -59,11 +65,11 @@ const router = createBrowserRouter([
       },
       {
         path: "ideas/:id/edit",
-        element: <NewIdea />,
+        element: <IdeaEdit />,
       },
       {
         path: "ideas/new",
-        element: <NewIdea />,
+        element: <IdeaNew />,
       },
       {
         path: "favorits/",
@@ -111,7 +117,7 @@ root.render(
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={themeMui}>
         <UserProvider>
-          <IdeaProvider>
+          <AlertToastProvider>
             <MenuProvider>
               <LanguageProvider>
                 <FilterProvider>
@@ -128,7 +134,7 @@ root.render(
                 </FilterProvider>
               </LanguageProvider>
             </MenuProvider>
-          </IdeaProvider>
+          </AlertToastProvider>
         </UserProvider>
       </ThemeProvider>
     </StyledEngineProvider>

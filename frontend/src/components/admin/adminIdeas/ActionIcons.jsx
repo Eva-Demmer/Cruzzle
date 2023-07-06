@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { IconButton, Tooltip } from "@mui/material";
 import {
   EyeIcon,
@@ -9,6 +9,7 @@ import {
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import DialogConfirm from "../DialogConfirm";
+import { AlertToastContext } from "../../../contexts/AlertToastContext";
 import {
   apiAdminArchiveIdea,
   apiAdminDeleteIdea,
@@ -16,6 +17,8 @@ import {
 
 export default function ActionIcons(props) {
   const { idea, setUpdateList } = props;
+  const { setAlertAdminOpen, setAlertAdminMessage } =
+    useContext(AlertToastContext);
   const [dialConfirmArchiveIsOpen, setDialConfirmArchiveIsOpen] =
     useState(false);
   const [isConfirmedArchiveIdea, setIsConfirmedArchiveIdea] = useState(false);
@@ -26,6 +29,8 @@ export default function ActionIcons(props) {
     apiAdminArchiveIdea(id)
       .then((res) => {
         if (res.status === 200) {
+          setAlertAdminMessage("Idea archived successfully");
+          setAlertAdminOpen(true);
           setUpdateList(true);
         } else {
           console.error("Cannot archive idea");
@@ -41,6 +46,8 @@ export default function ActionIcons(props) {
     apiAdminDeleteIdea(id)
       .then((res) => {
         if (res.status === 200) {
+          setAlertAdminMessage("Idea deleted successfully");
+          setAlertAdminOpen(true);
           setUpdateList(true);
         } else {
           console.error("Cannot delete idea");

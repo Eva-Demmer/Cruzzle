@@ -131,9 +131,9 @@ const findById = async (id: number) => {
         views: true,
         idea_category: {
           select: {
-            id: true,
             category: {
               select: {
+                id: true,
                 label: true,
                 color: true,
               },
@@ -151,6 +151,7 @@ const findById = async (id: number) => {
             user_id: true,
             user: {
               select: {
+                id: true,
                 firstname: true,
                 lastname: true,
                 position: true,
@@ -190,6 +191,23 @@ const findById = async (id: number) => {
       );
     }
 
+    return response;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+const findByUserIdAndDate = async (userId: number, date: Date) => {
+  try {
+    const response = await prisma.idea.count({
+      where: {
+        user_id: userId,
+        created_at: {
+          gte: new Date(date.setHours(0, 0, 0, 0)),
+          lt: new Date(date.setHours(23, 59, 59, 999)),
+        },
+      },
+    });
     return response;
   } finally {
     await prisma.$disconnect();
@@ -288,6 +306,7 @@ export {
   findAll,
   findTrends,
   findById,
+  findByUserIdAndDate,
   createIdea,
   addPrimaryImgIdea,
   deleteIdea,

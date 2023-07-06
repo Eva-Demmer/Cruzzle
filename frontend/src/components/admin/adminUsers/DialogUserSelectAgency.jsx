@@ -5,7 +5,8 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import apiAdminAgencies from "../../../services/api.admin.agencies";
 
-export default function DialogCreateUserSelectAgency({
+export default function DialogUserSelectAgency({
+  selectedAgency,
   setSelectedAgency,
   agencyError,
 }) {
@@ -25,10 +26,12 @@ export default function DialogCreateUserSelectAgency({
 
   return (
     <Autocomplete
+      value={selectedAgency}
       onChange={(event, newValue) => {
-        setSelectedAgency(newValue ? newValue.id : null);
+        setSelectedAgency(newValue);
       }}
       options={agencyList}
+      isOptionEqualToValue={(option, value) => option.id === value.id}
       getOptionLabel={(agency) =>
         `${agency.name} - ${agency.city} (${agency.country})`
       }
@@ -51,7 +54,22 @@ export default function DialogCreateUserSelectAgency({
   );
 }
 
-DialogCreateUserSelectAgency.propTypes = {
+DialogUserSelectAgency.propTypes = {
+  selectedAgency: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    city: PropTypes.string,
+    country: PropTypes.string,
+  }),
   setSelectedAgency: PropTypes.func.isRequired,
   agencyError: PropTypes.bool.isRequired,
+};
+
+DialogUserSelectAgency.defaultProps = {
+  selectedAgency: PropTypes.shape({
+    id: 0,
+    name: "",
+    city: "",
+    country: "",
+  }),
 };

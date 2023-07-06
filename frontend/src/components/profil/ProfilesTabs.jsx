@@ -1,55 +1,59 @@
-/* eslint-disable camelcase */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useContext, useState } from "react";
 import { Tabs, Tab, Box } from "@mui/material";
 import { LightBulbIcon, SquaresPlusIcon } from "@heroicons/react/24/solid";
+import dayjs from "dayjs";
 import TabPanel from "../tabs/TabPanel";
 import AllyProps from "../tabs/AllyProps";
-import { UserContext } from "../../contexts/UserContext";
 import PuzzleIcon from "../../assets/PuzzleIcon.svg";
+import "dayjs/locale/fr";
+import { UserProfileContext } from "../../contexts/UserProfile";
 
 export default function ProfilesTabs() {
-  const {
-    biography,
-    score_comment,
-    score_idea,
-    score_like,
-    position_id,
-    agency_id,
-    mail,
-    birthdate,
-    phone,
-    joined_at,
-  } = useContext(UserContext);
+  const { user } = useContext(UserProfileContext);
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const {
+    mail,
+    birthdate,
+    phone,
+    joined_at: joinedAt,
+    biography,
+    agency: { name: agencyName },
+    position: { name: positionName },
+    _count: { idea_teams: ideaTeams, idea, comment },
+  } = user;
 
   const userinfos = [
     {
       title: "Title",
-      content: position_id,
+      content: positionName,
     },
     {
       title: "Agency",
-      content: agency_id,
+      content: agencyName,
     },
     {
       title: "Email",
       content: mail,
     },
-    {
-      title: "Birthday",
-      content: birthdate,
-    },
-    {
-      title: "Phone",
-      content: phone,
-    },
+    user.share_birthdate
+      ? {
+          title: "Birthday",
+          content: dayjs(birthdate).locale("fr").format("YYYY-MM-DD"),
+        }
+      : null,
+    user.share_phone
+      ? {
+          title: "Phone",
+          content: phone,
+        }
+      : null,
     {
       title: "Joined Company",
-      content: joined_at,
+      content: dayjs(joinedAt).locale("fr").format("YYYY-MM-DD"),
     },
   ];
 
@@ -82,33 +86,31 @@ export default function ProfilesTabs() {
                     src={PuzzleIcon}
                   />
                   <h3 className="text-black ml-5 mt-2">Finished puzzles</h3>
-                  <h2 className="text-black text-5xl ml-5 mb-5">
-                    {score_comment}
-                  </h2>
+                  <h2 className="text-black text-5xl ml-5 mb-5">{ideaTeams}</h2>
                 </div>
                 <div className="h-30 w-60 shadow-md rounded-2xl flex flex-col relative">
                   <LightBulbIcon className="h-10 w-10 absolute top-[-18px] left-[-18px] text-primary-900 fill-current transform rotate-45" />
                   <h3 className="text-black ml-5 mt-2">Total ideas</h3>
-                  <h2 className="text-black text-5xl ml-5 mb-5">
-                    {score_idea}
-                  </h2>
+                  <h2 className="text-black text-5xl ml-5 mb-5">{idea}</h2>
                 </div>
                 <div className="h-30 w-60 shadow-md rounded-2xl flex flex-col relative">
                   <SquaresPlusIcon className="h-10 w-10 absolute top-[-18px] left-[-18px] text-primary-900 fill-current" />
                   <h3 className="text-black ml-5 mt-2">Participations</h3>
-                  <h2 className="text-black text-5xl ml-5 mb-5">
-                    {score_like}
-                  </h2>
+                  <h2 className="text-black text-5xl ml-5 mb-5">{comment}</h2>
                 </div>
               </div>
             </div>
             <div className="flex flex-col relative">
-              {userinfos.map((item) => (
-                <div key={item.title} className="flex flex-col">
-                  <h4 className="text-black text-base">{item.title}</h4>
-                  <p className="text-base text-secondary-600">{item.content}</p>
-                </div>
-              ))}
+              {userinfos
+                .filter((item) => item !== null)
+                .map((item) => (
+                  <div key={item.title} className="flex flex-col">
+                    <h4 className="text-black text-base">{item.title}</h4>
+                    <p className="text-base text-secondary-600">
+                      {item.content}
+                    </p>
+                  </div>
+                ))}
             </div>
           </div>
         </TabPanel>

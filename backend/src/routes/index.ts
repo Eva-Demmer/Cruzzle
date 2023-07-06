@@ -6,6 +6,7 @@ import categoriesRoutes from "./categories.routes";
 import adminRoutes from "./admin.routes";
 import commentsRoutes from "./comments.routes";
 import commmentLikesRoutes from "./comments_likes.routes";
+import ideaLikesRoutes from "./idea_likes.routes";
 
 const app: Application = express();
 
@@ -20,6 +21,7 @@ app.use("/api/favorits", favoritsRoutes);
 app.use("/api/categories", categoriesRoutes);
 app.use("/api/comments", commentsRoutes);
 app.use("/api/likes", commmentLikesRoutes);
+app.use("/api/ideas/likes", ideaLikesRoutes);
 
 app.use("/api/admin", adminRoutes);
 

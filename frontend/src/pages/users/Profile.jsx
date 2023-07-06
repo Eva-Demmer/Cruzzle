@@ -1,11 +1,12 @@
-import ProfilesTabs from "../../components/profil/ProfilesTabs";
-import TopSectionProfil from "../../components/profil/TopSectionProfil";
+import ProfileUser from "../../components/profil/ProfileUser";
+import UserProfileProvider from "../../contexts/UserProfile";
 
 function Profile() {
   return (
     <div className="w-full">
-      <TopSectionProfil />
-      <ProfilesTabs />
+      <UserProfileProvider>
+        <ProfileUser />
+      </UserProfileProvider>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import {
   findAll,
   findTrends,
   findById,
+  findByUserIdAndDate,
   createIdea,
   addPrimaryImgIdea,
   deleteIdea,
@@ -21,6 +22,7 @@ import { UploadedFiles } from "../interfaces/uploadedfiles.interface";
 import {
   createAttachements,
   deleteAllAttachmentsByIdea,
+  deleteAttachmentsByContenUrl,
   getAllAttachementsByIdeaId,
 } from "../models/attachments.models";
 import {
@@ -74,6 +76,17 @@ const getIdeaByFilter = async (req: Request, res: Response) => {
   try {
     const data = await findByFilter(filterQuery);
     res.status(200).json(data);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+const getIdeasCreatedToday = async (req: Request, res: Response) => {
+  const userId: number = parseInt(req.params.userId, 10);
+  try {
+    const today = new Date();
+    const count = await findByUserIdAndDate(userId, today);
+    res.status(200).json({ count });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -179,6 +192,7 @@ const updateIdeaById = async (req: Request, res: Response) => {
     }
 
     const actualIdea = await findById(id);
+
     const updatedIdea = await updateIdea(id, idea);
 
     // Bloc if : Check for primary_img on Idea
@@ -193,12 +207,14 @@ const updateIdeaById = async (req: Request, res: Response) => {
         const primaryImgFiles = req.files as {
           [fieldname: string]: Express.Multer.File[];
         };
+
         const primaryImgFile = primaryImgFiles.primaryImg[0];
 
         const uploadPrimaryImg = await uploadOneFileToFirebase(
           primaryImgFile,
           id
         );
+
         await addPrimaryImgIdea(id, uploadPrimaryImg.url);
       } else if (
         req.body.primaryImg === undefined &&
@@ -228,6 +244,12 @@ const updateIdeaById = async (req: Request, res: Response) => {
           extraAttachments,
           `ideas/${id}/attachment/`
         );
+
+        await Promise.all(
+          extraAttachments.map((attachment) =>
+            deleteAttachmentsByContenUrl(attachment)
+          )
+        );
       }
     } else if (req.body.attachement === undefined) {
       const attachementsByIdea = await getAllAttachementsByIdeaId(id);
@@ -245,7 +267,6 @@ const updateIdeaById = async (req: Request, res: Response) => {
           [fieldname: string]: Express.Multer.File[];
         };
         const allFiles: Express.Multer.File[] = [];
-
         for (const fieldName in files) {
           if (Object.prototype.hasOwnProperty.call(files, fieldName)) {
             const fieldFiles = files[fieldName];
@@ -312,9 +333,9 @@ const updateIdeaById = async (req: Request, res: Response) => {
       }
     }
 
-    const check = await findById(id);
+    const data = await findById(id);
 
-    res.status(201).json({ "Idea updated !": check });
+    res.status(201).json(data);
   } catch (error) {
     res.status(500).json({ "Error when edit idea :": error });
   }
@@ -357,6 +378,7 @@ export {
   getIdeasTrends,
   getIdeaById,
   getIdeaByFilter,
+  getIdeasCreatedToday,
   postIdea,
   deleteIdeaById,
   archivedIdeaById,

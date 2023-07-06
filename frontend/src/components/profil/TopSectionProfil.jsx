@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React, { useContext, useState } from "react";
 import {
   MapPinIcon,
@@ -13,20 +12,33 @@ import { useMediaQuery } from "react-responsive";
 import { sm } from "../../utils/mediaQueries";
 import ModifierButton from "./ModifierButton";
 import AvatarUserProfile from "../avatar/AvatarUserProfile";
-import { UserContext } from "../../contexts/UserContext";
 import ModalEditProfil from "./ModalEditProfil";
+import { UserProfileContext } from "../../contexts/UserProfile";
+import { UserContext } from "../../contexts/UserContext";
 
 function TopSectionProfil() {
-  const { banner_url, firstname, lastname, agency_id, position_id, id, link } =
-    useContext(UserContext);
-  const userId = useParams();
-  const isCurrentUserProfile = parseInt(userId.id, 10) === parseInt(id, 10);
+  const { user } = useContext(UserProfileContext);
+  const { user: currentUser } = useContext(UserContext);
+  const { id } = useParams();
+  const isCurrentUserProfile =
+    parseInt(id, 10) === parseInt(currentUser.id, 10);
   const smallQuery = useMediaQuery(sm);
   const [openEdit, setOpenEdit] = useState(false);
+  const {
+    firstname,
+    lastname,
+    banner_url: bannerUrl,
+    agency: { name: agencyName },
+    position: { name: positionName },
+    link,
+  } = user;
 
   const toggleModal = (state, setter) => {
     setter(!state);
   };
+
+  console.info(user);
+  console.info(isCurrentUserProfile, parseInt(id, 10), parseInt(user.id, 10));
 
   return (
     <div className="flex flex-col flex-start">
@@ -61,7 +73,7 @@ function TopSectionProfil() {
         <div
           className="w-full h-64 bg-cover bg-center"
           style={{
-            backgroundImage: `url(${banner_url})`,
+            backgroundImage: `url(${bannerUrl})`,
           }}
         />
       </div>
@@ -85,11 +97,11 @@ function TopSectionProfil() {
       <div className="flex flex-col gap-2 ml-5 lg:flex-row lg:gap-12">
         <div className="flex gap-1 justify-start items-center">
           <BriefcaseIcon className="h-6 w-6 text-secondary-600" />
-          <p className="font-medium text-secondary-600">{position_id}</p>
+          <p className="font-medium text-secondary-600">{positionName}</p>
         </div>
         <div className="flex justify-start items-center">
           <MapPinIcon className="h-6 w-6 text-secondary-600" />
-          <p className="ml-1 font-medium text-secondary-600">{agency_id}</p>
+          <p className="ml-1 font-medium text-secondary-600">{agencyName}</p>
         </div>
         <div className="flex justify-start items-center">
           <LinkIcon className="h-6 w-6 text-secondary-600" />

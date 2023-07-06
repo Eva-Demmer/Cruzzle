@@ -96,14 +96,38 @@ const createByAdmin = async (newUser: CreateUser) => {
 
 const updateByIdByAdmin = async (id: number, userUpdated: CreateUser) => {
   try {
-    const data = await prisma.user.update({
+    if (userUpdated.mail) {
+      const existingUser = await prisma.user.findUnique({
+        where: {
+          mail: userUpdated.mail,
+        },
+      });
+
+      if (existingUser) {
+        return { status: "conflict", message: "Email not available" };
+      }
+    }
+
+    const updatedData: CreateUser = { ...userUpdated };
+
+    if (updatedData.joined_at) {
+      updatedData.joined_at = dayjs(updatedData.joined_at).toISOString();
+    }
+
+    const createdUser = await prisma.user.update({
       where: {
         id,
       },
-      data: userUpdated,
+      data: updatedData,
     });
-    return data;
+
+    return {
+      status: "success",
+      message: "User updated successfully.",
+      user: createdUser,
+    };
   } catch (error) {
+    console.error("Error updating user:", error);
     throw new Error("Error updating user.");
   } finally {
     await prisma.$disconnect();

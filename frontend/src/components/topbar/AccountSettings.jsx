@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   ArrowRightOnRectangleIcon,
   ChevronDownIcon,
@@ -15,9 +15,10 @@ import {
 } from "@mui/material";
 import { useState, useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
+import { Axios } from "../../config/axios.config";
 
 function AccountSettings() {
-  const { firstname, lastname, imgUrl, mail, id } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const open = Boolean(anchorEl);
@@ -28,6 +29,15 @@ function AccountSettings() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    delete Axios.defaults.headers.common.Authorization;
+    navigate("/login");
+  };
+
   return (
     <>
       <Tooltip title="Account Settings" className="mx-1">
@@ -79,15 +89,23 @@ function AccountSettings() {
       >
         <MenuItem className="pointer-events-none">
           <ListItemIcon>
-            <Avatar alt="profil-picture" src={imgUrl} className="w-6 h-6" />
+            <Avatar
+              alt="profil-picture"
+              src={user.avatar_url}
+              className="w-6 h-6"
+            />
           </ListItemIcon>
           <div>
-            <div>{`${firstname} ${lastname}`}</div>
-            <div className="text-sm">{mail}</div>
+            <div>{`${user.firstname} ${user.lastname}`}</div>
+            <div className="text-sm">{user.mail}</div>
           </div>
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose} component={Link} to={`users/${id}`}>
+        <MenuItem
+          onClick={handleClose}
+          component={Link}
+          to={`users/${user.id}`}
+        >
           <ListItemIcon>
             <UserIcon className="h-6 w-6" />
           </ListItemIcon>
@@ -100,7 +118,7 @@ function AccountSettings() {
           Settings
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <ArrowRightOnRectangleIcon className="h-6 w-6" />
           </ListItemIcon>

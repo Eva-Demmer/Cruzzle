@@ -4,7 +4,7 @@ import { UserContext } from "../../contexts/UserContext";
 import AvatarDoghnut from "./AvatarDoghnut";
 
 function AvatarProfile() {
-  const { firstname, lastname, imgUrl, level } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   return (
     <div className="flex flex-col items-center mt-6 -mx-2">
@@ -14,7 +14,7 @@ function AvatarProfile() {
       >
         <Avatar
           alt="profil-picture"
-          src={imgUrl}
+          src={user.avatar_url}
           className="w-28 h-28 z-10 shadow shadow-black border-solid border-black border sm:w-36 sm:h-36 lg:w-40 lg:h-40"
         />
         <AvatarDoghnut />
@@ -23,13 +23,13 @@ function AvatarProfile() {
           className="rounded-full absolute bottom-[-16px] w-14 h-14 bg-primary-900 z-20"
         >
           <Avatar alt="score" className="bg-transparent h-full w-full">
-            {level}
+            {10}
           </Avatar>
         </Paper>
       </Paper>
 
       <h4 className="mx-2 mt-8 font-medium text-xl">
-        {`${firstname} ${lastname}`}
+        {`${user.firstname} ${user.lastname}`}
       </h4>
     </div>
   );

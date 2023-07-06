@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
 import "dayjs/locale/fr";
@@ -14,16 +14,19 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import DialogCreateUserSelectAgency from "./DialogCreateUserSelectAgency";
-import DialogCreateUserSelectPosition from "./DialogCreateUserSelectPosition";
+import DialogUserSelectAgency from "./DialogUserSelectAgency";
+import DialogUserSelectPosition from "./DialogUserSelectPosition";
 import { apiAdminCreateUser } from "../../../services/api.admin.users";
-// import { apiAdminUpdateUserById } from "../../../services/api.admin.users";
+import { AlertToastContext } from "../../../contexts/AlertToastContext";
 
 export default function DialogCreateUser({
   openDialogAddUser,
   setOpenDialogAddUser,
   setUpdateList,
 }) {
+  const { setAlertAdminOpen, setAlertAdminMessage } =
+    useContext(AlertToastContext);
+
   // Fields values
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -112,8 +115,8 @@ export default function DialogCreateUser({
     const isFirstnameValid = firstname.length >= 2;
     const isLastnameValid = lastname.length >= 2;
     const isJoinAtValid = dayjs(joinAt).isValid();
-    const isAgencyValid = typeof agency === "number";
-    const isPositionValid = typeof position === "number";
+    const isAgencyValid = typeof agency.id === "number";
+    const isPositionValid = typeof position.id === "number";
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const isEmailValid = emailPattern.test(email);
     const isPasswordValid = password.length >= 4;
@@ -145,9 +148,9 @@ export default function DialogCreateUser({
         role_id: 0,
         firstname,
         lastname,
-        agency_id: agency,
+        agency_id: agency.id,
         joined_at: joinAt,
-        position_id: position,
+        position_id: position.id,
         is_active: true,
       };
 
@@ -155,6 +158,8 @@ export default function DialogCreateUser({
         .then((res) => {
           if (res.status === 201) {
             setUpdateList(true);
+            setAlertAdminMessage("User created successfully");
+            setAlertAdminOpen(true);
             handleClose();
           } else {
             console.error("Cannot create new user");
@@ -236,12 +241,14 @@ export default function DialogCreateUser({
           }}
         />
 
-        <DialogCreateUserSelectAgency
+        <DialogUserSelectAgency
+          selectedAgency={agency}
           setSelectedAgency={setAgency}
           agencyError={agencyError}
         />
 
-        <DialogCreateUserSelectPosition
+        <DialogUserSelectPosition
+          selectedPosition={position}
           setSelectedPosition={setPosition}
           positionError={positionError}
         />

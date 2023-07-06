@@ -89,7 +89,7 @@ function IdeaUpload() {
               <h2 className="hidden sm:flex text-xl font-normal">OR</h2>
               <UploadButton
                 id="uploadButton2"
-                accept="*"
+                accept=".doc, .docx, .pdf, .xls, .xlsx, .txt, .png, .jpeg, .jpg, .ogg, .mp3"
                 multiple
                 onChange={handleChangeFile}
               >
@@ -102,7 +102,7 @@ function IdeaUpload() {
                   {formatBytes(maxSizeInKB * 1024)} max and {maxFiles} files max
                 </p>
                 <p className="text-xs font-normal my-2">
-                  jpg, jpeg, docx, pdf...
+                  doc, docx, pdf, xls, xlsx, txt, png, jpeg, jpg, ogg, mp3
                 </p>
               </div>
             </div>
