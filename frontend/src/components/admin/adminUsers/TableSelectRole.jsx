@@ -1,12 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import apiAdminRoles from "../../../services/api.admin.roles";
 import { apiAdminUpdateUserById } from "../../../services/api.admin.users";
+import { AlertToastContext } from "../../../contexts/AlertToastContext";
 
 export default function TableSelectRole({ user }) {
+  const { setAlertAdminOpen, setAlertAdminMessage } =
+    useContext(AlertToastContext);
   const [roleList, setRoleList] = useState([{ id: 0, name: "loading" }]);
   const [selectedUserRole, setSelectedUserRole] = useState(0);
 
@@ -16,6 +19,8 @@ export default function TableSelectRole({ user }) {
       .then((res) => {
         if (res.status === 200) {
           setSelectedUserRole(event.target.value);
+          setAlertAdminMessage("User role updated successfully");
+          setAlertAdminOpen(true);
         } else {
           console.error("Cannot update user role");
         }

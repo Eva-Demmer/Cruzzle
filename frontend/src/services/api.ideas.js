@@ -22,7 +22,26 @@ const apiIdeas = async (route = "") => {
   }
 };
 
-const apiUpdateIdeaLike = async (id, data) => {
+const apiIdeasNew = async (data) => {
+  try {
+    const response = await axios.post(`${url}${ideaRoute}`, data);
+    if (response.status === 201) {
+      console.info(response.data);
+      return response.data;
+    }
+    throw new Error(`Unexpected response status: ${response.status}`);
+  } catch (error) {
+    if (error.response && error.response.status === 500) {
+      console.error("Internal server error:", error);
+    } else {
+      console.error("Fetch  error:", error);
+    }
+    throw error;
+    // Ajouter la redirection (voir pour une fonction dans service qui prend un param "error" afin d'afficher la page erreur)
+  }
+};
+
+const apiUpdateIdeaView = async (id, data) => {
   try {
     const response = await axios.patch(`${url}${ideaRoute}views/${id}`, {
       views: data,
@@ -44,7 +63,7 @@ const apiUpdateIdeaLike = async (id, data) => {
 
 const apiArchiveIdeas = async (id) => {
   try {
-    const response = await axios.patch(`${url}${ideaRoute}/archive/${id}`);
+    const response = await axios.patch(`${url}${ideaRoute}archive/${id}`);
     if (response.status === 200) {
       console.info(response.data);
       return response.data;
@@ -60,4 +79,28 @@ const apiArchiveIdeas = async (id) => {
   }
 };
 
-export { apiIdeas, apiArchiveIdeas, apiUpdateIdeaLike };
+const apiUpdateIdeaById = async (id, data) => {
+  try {
+    const response = await axios.put(`${url}${ideaRoute}${id}`, data);
+    if (response.status === 201) {
+      console.info(response.data);
+      return response.data;
+    }
+    throw new Error(`Unexpected response status: ${response.status}`);
+  } catch (error) {
+    if (error.response && error.response.status === 500) {
+      console.error("Internal server error:", error);
+    } else {
+      console.error("Fetch  error:", error);
+    }
+    throw error;
+  }
+};
+
+export {
+  apiIdeas,
+  apiArchiveIdeas,
+  apiUpdateIdeaView,
+  apiUpdateIdeaById,
+  apiIdeasNew,
+};

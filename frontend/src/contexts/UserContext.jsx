@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useMemo } from "react";
 import PropTypes from "prop-types";
 
 const initialUser = {
@@ -25,16 +25,18 @@ const initialUser = {
   is_active: true,
 };
 
-export const UserContext = createContext({});
+export const UserContext = createContext(null);
 
 function UserProvider({ children }) {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
+
+  const value = useMemo(() => ({ user, setUser }), [user, setUser]);
 
   useEffect(() => {
     setUser(initialUser);
   }, []);
 
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
 
 UserProvider.propTypes = {

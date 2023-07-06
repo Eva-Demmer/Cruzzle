@@ -27,4 +27,8 @@ Axios.interceptors.request.use(
   }
 );
 
-export default Axios;
+const updateHeaders = (token) => {
+  Axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+};
+
+export { Axios, updateHeaders };

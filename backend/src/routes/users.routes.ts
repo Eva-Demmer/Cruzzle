@@ -11,7 +11,7 @@ import {
 import {
   hashPassword,
   verifyPassword,
-  protectRoutes,
+  // protectRoutes,
 } from "../middlewares/auth.middlewares";
 
 const router = express.Router();
@@ -28,7 +28,8 @@ router.get("/", getUsers);
 router.get("/:id", getUserById);
 router.post("/image/:id", uploadAvatar, updateImage);
 
-// Protected routes
+// // Protected routes
+// TODO: decomment line below when we want to protect routes
 // router.use(protectRoutes);
 router.put("/:id", hashPassword, updateUser);
 

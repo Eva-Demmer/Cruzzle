@@ -1,12 +1,17 @@
 import { Request, Response } from "express";
+import jwt, { Secret } from "jsonwebtoken";
+import dotenv from "dotenv";
 import {
   findAll,
   findById,
-  findByEmail,
+  findByMail,
   update,
   updateImageById,
 } from "../models/user.model";
 import { verifyPassword } from "../middlewares/auth.middlewares";
+
+dotenv.config();
+const { JWT_SECRET } = process.env;
 
 // Show all users
 const getUsers = async (req: Request, res: Response) => {
@@ -33,17 +38,28 @@ const getUserById = async (req: Request, res: Response) => {
   }
 };
 
-// Login validation based on email & password verification
+// Login validation based on email and password verification & generation of token
 const login = async (req: Request, res: Response) => {
   const { mail } = req.body;
   try {
-    // Find user based on their email address
-    const data = await findByEmail(mail);
-    // If user exists, verify password input
+    const data = await findByMail(mail);
     if (data) {
       await verifyPassword(req, res, () => {
-        // If passwords match, login successful
-        res.status(200).send("Login successful");
+        try {
+          const payload = {
+            mail,
+            role_id: data.role_id,
+          };
+
+          const token = jwt.sign(payload, JWT_SECRET as Secret, {
+            algorithm: "HS256",
+            expiresIn: "1h",
+          });
+          res.status(200).json({ token });
+        } catch (error) {
+          console.error("Error generating token:", error);
+          res.status(500).send("Error generating token");
+        }
       });
     } else {
       res.status(401).send("No match: Invalid email or password");

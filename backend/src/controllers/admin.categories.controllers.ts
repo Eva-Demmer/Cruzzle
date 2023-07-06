@@ -1,5 +1,10 @@
 import { Request, Response } from "express";
-import { findAllByAdmin } from "../models/admin.category.model";
+import {
+  findAllByAdmin,
+  createByAdmin,
+  updateByIdByAdmin,
+  deleteByIdByAdmin,
+} from "../models/admin.category.model";
 
 const getCategoriesByAdmin = async (req: Request, res: Response) => {
   try {
@@ -10,9 +15,40 @@ const getCategoriesByAdmin = async (req: Request, res: Response) => {
   }
 };
 
-const getCategoryByIdByAdmin = async (req: Request, res: Response) => {
-  console.info("getUserByIdByAdmin", req);
-  res.status(500).send("error");
+const createCategoryByAdmin = async (req: Request, res: Response) => {
+  const category = req.body;
+  try {
+    const data = await createByAdmin(category);
+    res.status(201).json(data);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 };
 
-export { getCategoriesByAdmin, getCategoryByIdByAdmin };
+const updateCategoryByIdByAdmin = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id, 10);
+  const updatedCategory = req.body;
+  try {
+    const data = await updateByIdByAdmin(id, updatedCategory);
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+const deleteCategoryByIdByAdmin = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id, 10);
+  try {
+    const data = await deleteByIdByAdmin(id);
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+export {
+  getCategoriesByAdmin,
+  createCategoryByAdmin,
+  updateCategoryByIdByAdmin,
+  deleteCategoryByIdByAdmin,
+};

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { IdeaFormContext } from "../../contexts/IdeaFormContext";
-import apiUsers from "../../services/api.users";
+import { apiUsers } from "../../services/api.users";
 import TeamBuilder from "./TeamBuilder";
 
 function IdeaTeam() {

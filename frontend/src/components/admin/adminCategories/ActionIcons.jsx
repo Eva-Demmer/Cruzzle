@@ -1,16 +1,27 @@
+import { useState } from "react";
 import { IconButton, Tooltip } from "@mui/material";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import PropTypes from "prop-types";
+import { apiAdminDeleteCategory } from "../../../services/api.admin.categories";
+import DialogUpdateCategory from "./DialogUpdateCategory";
 
-export default function ActionIcons(props) {
-  const { ideaId } = props;
+export default function ActionIcons({ category, setUpdateList }) {
+  const [openDialog, setOpenDialog] = useState(false);
 
   const handleEdit = () => {
-    console.info(`Edit Idea ${ideaId}`);
+    setOpenDialog(true);
   };
 
   const handleDelete = () => {
-    console.info(`Delete Idea ${ideaId}`);
+    apiAdminDeleteCategory(category.id)
+      .then((res) => {
+        if (res.status === 200) {
+          setUpdateList(true);
+        } else {
+          console.error("Cannot delete category");
+        }
+      })
+      .catch((err) => console.error("Error deleting category", err));
   };
 
   return (
@@ -26,10 +37,25 @@ export default function ActionIcons(props) {
           <TrashIcon className="w-4 text-red-600" />
         </IconButton>
       </Tooltip>
+
+      <DialogUpdateCategory
+        openDialog={openDialog}
+        setOpenDialog={setOpenDialog}
+        category={category}
+        setUpdateList={setUpdateList}
+      />
     </>
   );
 }
 
 ActionIcons.propTypes = {
-  ideaId: PropTypes.number.isRequired,
+  category: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    label: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
+    _count: PropTypes.shape({
+      idea_category: PropTypes.number.isRequired,
+    }).isRequired,
+  }).isRequired,
+  setUpdateList: PropTypes.func.isRequired,
 };
