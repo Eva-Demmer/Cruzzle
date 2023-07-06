@@ -32,7 +32,7 @@ import Settings from "./pages/Settings";
 import Search from "./pages/Search";
 
 import "./styles/main.scss";
-import IdeaProvider from "./contexts/IdeaContext";
+import AlertToastProvider from "./contexts/AlertToastContext";
 import LanguageProvider from "./contexts/LanguageContext";
 import MenuProvider from "./contexts/MenuContext";
 import FilterProvider from "./contexts/FilterContext";
@@ -116,7 +116,7 @@ root.render(
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={themeMui}>
         <UserProvider>
-          <IdeaProvider>
+          <AlertToastProvider>
             <MenuProvider>
               <LanguageProvider>
                 <FilterProvider>
@@ -133,7 +133,7 @@ root.render(
                 </FilterProvider>
               </LanguageProvider>
             </MenuProvider>
-          </IdeaProvider>
+          </AlertToastProvider>
         </UserProvider>
       </ThemeProvider>
     </StyledEngineProvider>

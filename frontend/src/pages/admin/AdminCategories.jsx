@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Square3Stack3DIcon } from "@heroicons/react/24/solid";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { Snackbar, Alert } from "@mui/material";
@@ -7,20 +7,25 @@ import ActionButton from "../../components/admin/ActionButton";
 import TableOfCategories from "../../components/admin/adminCategories/TableOfCategories";
 import { apiAdminCategories } from "../../services/api.admin.categories";
 import DialogCreateCategory from "../../components/admin/adminCategories/DialogCreateCategory";
+import { AlertToastContext } from "../../contexts/AlertToastContext";
 
 function AdminCategories() {
+  const {
+    alertAdminOpen,
+    setAlertAdminOpen,
+    alertAdminMessage,
+    setAlertAdminMessage,
+  } = useContext(AlertToastContext);
   const [categoriesList, setCategorieslist] = useState([]);
   const [updateList, setUpdateList] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
-  const [openAlert, setOpenAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("Success");
 
   const handleCloseToast = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
-    setAlertMessage("Success");
-    setOpenAlert(false);
+    setAlertAdminMessage("Success");
+    setAlertAdminOpen(false);
   };
 
   const handleAddCategory = () => {
@@ -67,8 +72,6 @@ function AdminCategories() {
         <TableOfCategories
           categoriesList={categoriesList}
           setUpdateList={setUpdateList}
-          setOpenAlert={setOpenAlert}
-          setAlertMessage={setAlertMessage}
         />
       </main>
 
@@ -76,12 +79,10 @@ function AdminCategories() {
         openDialog={openDialog}
         setOpenDialog={setOpenDialog}
         setUpdateList={setUpdateList}
-        setOpenAlert={setOpenAlert}
-        setAlertMessage={setAlertMessage}
       />
 
       <Snackbar
-        open={openAlert}
+        open={alertAdminOpen}
         autoHideDuration={4000}
         onClose={handleCloseToast}
       >
@@ -90,7 +91,7 @@ function AdminCategories() {
           severity="success"
           sx={{ width: "100%" }}
         >
-          {alertMessage}
+          {alertAdminMessage}
         </Alert>
       </Snackbar>
     </div>

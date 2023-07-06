@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
 import "dayjs/locale/fr";
@@ -17,12 +17,16 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import DialogUserSelectAgency from "./DialogUserSelectAgency";
 import DialogUserSelectPosition from "./DialogUserSelectPosition";
 import { apiAdminCreateUser } from "../../../services/api.admin.users";
+import { AlertToastContext } from "../../../contexts/AlertToastContext";
 
 export default function DialogCreateUser({
   openDialogAddUser,
   setOpenDialogAddUser,
   setUpdateList,
 }) {
+  const { setAlertAdminOpen, setAlertAdminMessage } =
+    useContext(AlertToastContext);
+
   // Fields values
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -154,6 +158,8 @@ export default function DialogCreateUser({
         .then((res) => {
           if (res.status === 201) {
             setUpdateList(true);
+            setAlertAdminMessage("User created successfully");
+            setAlertAdminOpen(true);
             handleClose();
           } else {
             console.error("Cannot create new user");

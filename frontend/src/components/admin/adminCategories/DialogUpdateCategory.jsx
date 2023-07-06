@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -11,15 +11,16 @@ import { SliderPicker } from "react-color";
 import { Box } from "@mui/material";
 import CustomChip from "../../styledComponents/CustomChip";
 import { apiAdminUpdateCategoryById } from "../../../services/api.admin.categories";
+import { AlertToastContext } from "../../../contexts/AlertToastContext";
 
 export default function DialogUpdateColor({
   openDialog,
   setOpenDialog,
   category,
   setUpdateList,
-  setOpenAlert,
-  setAlertMessage,
 }) {
+  const { setAlertAdminOpen, setAlertAdminMessage } =
+    useContext(AlertToastContext);
   const [label, setLabel] = useState(category.label);
   const [labelError, setLabelError] = useState(false);
   const [color, setColor] = useState(category.color);
@@ -47,8 +48,8 @@ export default function DialogUpdateColor({
         .then((res) => {
           if (res.status === 200) {
             setUpdateList(true);
-            setAlertMessage("Category updated successfully");
-            setOpenAlert(true);
+            setAlertAdminMessage("Category updated successfully");
+            setAlertAdminOpen(true);
             handleClose();
           } else {
             console.error("Cannot update category");
@@ -129,6 +130,4 @@ DialogUpdateColor.propTypes = {
     color: PropTypes.string.isRequired,
   }).isRequired,
   setUpdateList: PropTypes.func.isRequired,
-  setOpenAlert: PropTypes.func.isRequired,
-  setAlertMessage: PropTypes.func.isRequired,
 };

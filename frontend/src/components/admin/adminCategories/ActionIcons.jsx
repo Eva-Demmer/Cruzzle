@@ -5,12 +5,7 @@ import PropTypes from "prop-types";
 import { apiAdminDeleteCategory } from "../../../services/api.admin.categories";
 import DialogUpdateCategory from "./DialogUpdateCategory";
 
-export default function ActionIcons({
-  category,
-  setUpdateList,
-  setOpenAlert,
-  setAlertMessage,
-}) {
+export default function ActionIcons({ category, setUpdateList }) {
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleEdit = () => {
@@ -48,8 +43,6 @@ export default function ActionIcons({
         setOpenDialog={setOpenDialog}
         category={category}
         setUpdateList={setUpdateList}
-        setOpenAlert={setOpenAlert}
-        setAlertMessage={setAlertMessage}
       />
     </>
   );
@@ -65,6 +58,4 @@ ActionIcons.propTypes = {
     }).isRequired,
   }).isRequired,
   setUpdateList: PropTypes.func.isRequired,
-  setOpenAlert: PropTypes.func.isRequired,
-  setAlertMessage: PropTypes.func.isRequired,
 };

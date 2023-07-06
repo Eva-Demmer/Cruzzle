@@ -1,13 +1,12 @@
-import { useContext, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { OutlinedInput, MenuItem, FormControl, Select } from "@mui/material";
+import { MenuItem, FormControl, Select } from "@mui/material";
 import { Square3Stack3DIcon } from "@heroicons/react/24/outline";
-import { IdeaContext } from "../../contexts/IdeaContext";
 import { FilterContext } from "../../contexts/FilterContext";
 import { fetchAll } from "../../services/api.services";
 
 export default function FilterbarCategory({ isDisable }) {
-  const { categoryList, setCategoryList } = useContext(IdeaContext);
+  const [categoryList, setCategoryList] = useState([]);
   const { selectedCategories, setSelectedCategories } =
     useContext(FilterContext);
 
@@ -17,6 +16,10 @@ export default function FilterbarCategory({ isDisable }) {
     } = event;
     setSelectedCategories(typeof value === "string" ? value.split(",") : value);
   };
+
+  useEffect(() => {
+    console.info("selectedCategories", selectedCategories);
+  }, [selectedCategories]);
 
   useEffect(() => {
     fetchAll("/api/categories")
@@ -35,12 +38,11 @@ export default function FilterbarCategory({ isDisable }) {
         displayEmpty
         value={selectedCategories}
         onChange={handleChange}
-        input={<OutlinedInput />}
         renderValue={(selected) => {
           return (
             <>
               <Square3Stack3DIcon className="w-4 mr-2" />
-              {selected.length === 0 ? (
+              {categoryList.length === 0 || selected.length === 0 ? (
                 <span>all categories</span>
               ) : (
                 selected.map((id) => categoryList[id - 1].label).join(", ")
