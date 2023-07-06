@@ -25,7 +25,6 @@ function IdeaHeader() {
     setErrorFiles,
     valueCategories,
     setValueCategories,
-    reset,
   } = useContext(IdeaFormContext);
 
   useEffect(() => {
@@ -145,7 +144,6 @@ function IdeaHeader() {
             className="w-[110px] rounded-full mx-2 my-2 sm:w-[174px]"
             onClick={() => {
               setPrimaryImg(null);
-              reset({ primaryImg: null });
             }}
           >
             DELETE
