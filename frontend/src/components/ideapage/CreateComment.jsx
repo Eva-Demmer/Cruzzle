@@ -11,7 +11,7 @@ import {
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
 
 function CreateComment() {
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [comment, setComment] = useState();
   const [open, setOpen] = useState(false);
   const [alert, setAlert] = useState();

@@ -27,7 +27,7 @@ import DialogArchive from "./DialogArchive";
 import DialogModify from "./DialogModify";
 
 function ButtonsIdea() {
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const { id: userId } = user;
   const { idea, setIdea } = useContext(IdeaPageContext);
   const { user: userIdea } = idea;
