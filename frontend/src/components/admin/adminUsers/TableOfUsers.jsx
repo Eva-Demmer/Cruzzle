@@ -9,7 +9,7 @@ import TableSelectRole from "./TableSelectRole";
 import ActionIcons from "./ActionIcons";
 
 export default function TableOfUsers({ userList, setUpdateList }) {
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const { role_id: currentUserRole } = user;
 
   const rows = userList;
