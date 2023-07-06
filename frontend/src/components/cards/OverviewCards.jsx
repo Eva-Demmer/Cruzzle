@@ -1,29 +1,3 @@
-// import PropTypes from "prop-types";
-
-// function OverviewCards({ icon: Icon, title, value = "N/A" }) {
-//   return (
-//     <div className="h-36 w-40 md:w-52 shadow-md rounded-2xl flex flex-col relative">
-//       {Icon && (
-//         <div className="absolute top-[-10px] md:top-[-18px] left-[-10px] md:left-[-18px]">
-//           <Icon className="h-8 md:h-10 w-8 md:w-10 text-primary-900 fill-current" />
-//         </div>
-//       )}
-//       <div className="flex flex-col justify-between h-full">
-//         <h3 className="text-black text-lg md:text-xl px-5 pt-5">{title}</h3>
-//         <h2 className="text-black text-2xl md:text-3xl px-5 pb-5">{value}</h2>
-//       </div>
-//     </div>
-//   );
-// }
-
-// OverviewCards.propTypes = {
-//   icon: PropTypes.elementType.isRequired,
-//   title: PropTypes.string.isRequired,
-//   value: PropTypes.number.isRequired,
-// };
-
-// export default OverviewCards;
-
 import { useState, useEffect, useContext } from "react";
 import {
   LightBulbIcon,
@@ -66,7 +40,7 @@ function OverviewCards() {
       <div className="md:pl-5 lg:w-3/4 xl:w-1/3 grid grid-cols-2 gap-x-8 lg:gap-x-24 gap-y-12 ">
         <Paper
           elevation={3}
-          className="h-36 w-36 md:w-48 lg:w-64 rounded-2xl flex flex-col relative"
+          className="h-36 w-36 md:w-48 lg:w-64 xl:w-48 xl:h-40 rounded-2xl flex flex-col relative"
         >
           <LightBulbIcon className="h-8 md:h-10 w-8 md:w-10 absolute top-[-10px] md:top-[-18px] left-[-10px] md:left-[-18px] text-primary-900 fill-current transform rotate-45" />
           <div className="flex flex-col justify-between h-full">
@@ -80,7 +54,7 @@ function OverviewCards() {
         </Paper>
         <Paper
           elevation={3}
-          className="h-36 w-36 md:w-48 lg:w-64 rounded-2xl flex flex-col relative"
+          className="h-36 w-36 md:w-48 lg:w-64 xl:w-48 xl:h-40 rounded-2xl flex flex-col relative"
         >
           <PencilIcon className="h-8 md:h-10 w-8 md:w-10 absolute top-[-10px] md:top-[-18px] left-[-10px] md:left-[-18px] text-primary-900 fill-current" />
           <div className="flex flex-col justify-between h-full">
@@ -94,7 +68,7 @@ function OverviewCards() {
         </Paper>
         <Paper
           elevation={3}
-          className="h-36 w-36 md:w-48 lg:w-64 rounded-2xl flex flex-col relative"
+          className="h-36 w-36 md:w-48 lg:w-64 xl:w-48 xl:h-40 rounded-2xl flex flex-col relative"
         >
           <SquaresPlusIcon className="h-8 md:h-10 w-8 md:w-10 absolute top-[-10px] md:top-[-18px] left-[-10px] md:left-[-18px] text-primary-900 fill-current" />
           <div className="flex flex-col justify-between h-full">
@@ -108,7 +82,7 @@ function OverviewCards() {
         </Paper>
         <Paper
           elevation={3}
-          className="h-36 w-36 md:w-48 lg:w-64 rounded-2xl flex flex-col relative"
+          className="h-36 w-36 md:w-48 lg:w-64 xl:w-48 xl:h-40 rounded-2xl flex flex-col relative"
         >
           <img
             className="h-8 md:h-10 w-8 md:w-10 absolute top-[-10px] md:top-[-18px] left-[-10px] md:left-[-18px] text-primary-900 fill-current"
