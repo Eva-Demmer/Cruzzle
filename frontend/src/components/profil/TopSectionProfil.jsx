@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React, { useContext, useState } from "react";
 import {
   MapPinIcon,
@@ -22,6 +21,14 @@ function TopSectionProfil() {
   const isCurrentUserProfile = parseInt(id, 10) === parseInt(user.id, 10);
   const smallQuery = useMediaQuery(sm);
   const [openEdit, setOpenEdit] = useState(false);
+  const {
+    firstname,
+    lastname,
+    banner_url: bannerUrl,
+    agency: { name: agencyName },
+    position: { name: positionName },
+    link,
+  } = user;
 
   const toggleModal = (state, setter) => {
     setter(!state);
@@ -60,13 +67,13 @@ function TopSectionProfil() {
         <div
           className="w-full h-64 bg-cover bg-center"
           style={{
-            backgroundImage: `url(${user.banner_url})`,
+            backgroundImage: `url(${bannerUrl})`,
           }}
         />
       </div>
       <div className="flex w-full justify-between items-center mb-4 md:mb-1">
         <h2 className="ml-5 font-regular text-2xl text-black">
-          {user.firstname} {user.lastname}
+          {firstname} {lastname}
         </h2>
         {isCurrentUserProfile && !smallQuery && (
           <Button
@@ -84,24 +91,22 @@ function TopSectionProfil() {
       <div className="flex flex-col gap-2 ml-5 lg:flex-row lg:gap-12">
         <div className="flex gap-1 justify-start items-center">
           <BriefcaseIcon className="h-6 w-6 text-secondary-600" />
-          <p className="font-medium text-secondary-600">{user.position.name}</p>
+          <p className="font-medium text-secondary-600">{positionName}</p>
         </div>
         <div className="flex justify-start items-center">
           <MapPinIcon className="h-6 w-6 text-secondary-600" />
-          <p className="ml-1 font-medium text-secondary-600">
-            {user.agency.name}
-          </p>
+          <p className="ml-1 font-medium text-secondary-600">{agencyName}</p>
         </div>
         <div className="flex justify-start items-center">
           <LinkIcon className="h-6 w-6 text-secondary-600" />
           <p className="ml-1 font-medium">
             <a
-              href={user.link}
+              href={link}
               className="text-bg-primary-900"
               target="_blank"
               rel="noreferrer"
             >
-              {user.link}
+              {link}
             </a>
           </p>
         </div>

@@ -1,5 +1,3 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable camelcase */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useContext, useState } from "react";
 import { Tabs, Tab, Box } from "@mui/material";
@@ -17,35 +15,45 @@ export default function ProfilesTabs() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const {
+    mail,
+    birthdate,
+    phone,
+    joined_at: joinedAt,
+    biography,
+    agency: { name: agencyName },
+    position: { name: positionName },
+    _count: { idea_teams: ideaTeams, idea, comment },
+  } = user;
 
   const userinfos = [
     {
       title: "Title",
-      content: user.position.name,
+      content: positionName,
     },
     {
       title: "Agency",
-      content: user.agency.name,
+      content: agencyName,
     },
     {
       title: "Email",
-      content: user.mail,
+      content: mail,
     },
     user.share_birthdate
       ? {
           title: "Birthday",
-          content: dayjs(user.birthdate).locale("fr").format("YYYY-MM-DD"),
+          content: dayjs(birthdate).locale("fr").format("YYYY-MM-DD"),
         }
       : null,
     user.share_phone
       ? {
           title: "Phone",
-          content: user.phone,
+          content: phone,
         }
       : null,
     {
       title: "Joined Company",
-      content: dayjs(user.joined_at).locale("fr").format("YYYY-MM-DD"),
+      content: dayjs(joinedAt).locale("fr").format("YYYY-MM-DD"),
     },
   ];
 
@@ -68,9 +76,7 @@ export default function ProfilesTabs() {
           <div className="flex flex-col md:flex-row gap-5 relative">
             <div className="w-4/5 md:w-2/3">
               <h3 className="text-black">About me</h3>
-              <p className="text-base mb-5  text-secondary-600">
-                {user.biography}
-              </p>
+              <p className="text-base mb-5  text-secondary-600">{biography}</p>
               <h3 className="text-black mb-5">Overview</h3>
               <div className="flex flex-col lg:flex-row gap-7">
                 <div className="h-30 w-60 shadow-md rounded-2xl flex flex-col relative">
@@ -80,23 +86,17 @@ export default function ProfilesTabs() {
                     src={PuzzleIcon}
                   />
                   <h3 className="text-black ml-5 mt-2">Finished puzzles</h3>
-                  <h2 className="text-black text-5xl ml-5 mb-5">
-                    {user._count.idea_teams}
-                  </h2>
+                  <h2 className="text-black text-5xl ml-5 mb-5">{ideaTeams}</h2>
                 </div>
                 <div className="h-30 w-60 shadow-md rounded-2xl flex flex-col relative">
                   <LightBulbIcon className="h-10 w-10 absolute top-[-18px] left-[-18px] text-primary-900 fill-current transform rotate-45" />
                   <h3 className="text-black ml-5 mt-2">Total ideas</h3>
-                  <h2 className="text-black text-5xl ml-5 mb-5">
-                    {user._count.idea}
-                  </h2>
+                  <h2 className="text-black text-5xl ml-5 mb-5">{idea}</h2>
                 </div>
                 <div className="h-30 w-60 shadow-md rounded-2xl flex flex-col relative">
                   <SquaresPlusIcon className="h-10 w-10 absolute top-[-18px] left-[-18px] text-primary-900 fill-current" />
                   <h3 className="text-black ml-5 mt-2">Participations</h3>
-                  <h2 className="text-black text-5xl ml-5 mb-5">
-                    {user._count.comment}
-                  </h2>
+                  <h2 className="text-black text-5xl ml-5 mb-5">{comment}</h2>
                 </div>
               </div>
             </div>

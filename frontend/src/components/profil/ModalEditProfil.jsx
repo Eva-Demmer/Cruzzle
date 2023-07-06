@@ -22,7 +22,15 @@ export default function ModalEditProfil({ open, close }) {
   const [sharePhone, setSharePhone] = useState(user.share_phone);
   const [displayBirthday, setDisplayBirthday] = useState(user.share_birthdate);
   const [selectedDate, setSelectedDate] = useState(null);
-
+  const {
+    firstname,
+    lastname,
+    biography,
+    mail,
+    phone,
+    agency: { city, country },
+    link,
+  } = user;
   const onSubmit = async (data) => {
     const updatedData = {
       ...data,
@@ -63,21 +71,21 @@ export default function ModalEditProfil({ open, close }) {
               <div className="pl-4 flex flex-col gap-3">
                 <TextField
                   disabled
-                  defaultValue={user.firstname}
+                  defaultValue={firstname}
                   label="First name"
                   variant="outlined"
                   className="mb-4 bg-black bg-opacity-5"
                 />
                 <TextField
                   disabled
-                  defaultValue={user.lastname}
+                  defaultValue={lastname}
                   label="Last name"
                   variant="outlined"
                   className="mb-4  bg-black bg-opacity-5"
                 />
                 <TextField
                   disabled
-                  defaultValue={user.mail}
+                  defaultValue={mail}
                   label="Email"
                   variant="outlined"
                   className="mb-4  bg-black bg-opacity-5"
@@ -85,7 +93,7 @@ export default function ModalEditProfil({ open, close }) {
                 <Controller
                   name="phone"
                   control={control}
-                  defaultValue={user.phone}
+                  defaultValue={phone}
                   render={({ field: { onChange, value } }) => (
                     <TextField
                       value={value}
@@ -168,7 +176,7 @@ export default function ModalEditProfil({ open, close }) {
                 <Controller
                   name="biography"
                   control={control}
-                  defaultValue={user.biography}
+                  defaultValue={biography}
                   render={({ field: { onChange, value } }) => (
                     <TextField
                       value={value}
@@ -186,14 +194,14 @@ export default function ModalEditProfil({ open, close }) {
                 />
                 <TextField
                   disabled
-                  defaultValue={user.agency.city}
+                  defaultValue={city}
                   label="City"
                   variant="outlined"
                   className="mb-4  bg-black bg-opacity-5"
                 />
                 <TextField
                   disabled
-                  defaultValue={user.agency.country}
+                  defaultValue={country}
                   label="Country"
                   variant="outlined"
                   className="mb-4  bg-black bg-opacity-5"
@@ -201,7 +209,7 @@ export default function ModalEditProfil({ open, close }) {
                 <Controller
                   name="link"
                   control={control}
-                  defaultValue={user.link}
+                  defaultValue={link}
                   render={({ field: { onChange, value } }) => (
                     <TextField
                       value={value}
