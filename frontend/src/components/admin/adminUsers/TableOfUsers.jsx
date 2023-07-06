@@ -14,34 +14,38 @@ export default function TableOfUsers({ userList, setUpdateList }) {
 
   const rows = userList;
   const columns = [
-    { field: "firstname", headerName: "First name", width: 90 },
-    { field: "lastname", headerName: "Last name", width: 90 },
-    { field: "mail", headerName: "Mail", width: 200 },
+    { field: "firstname", headerName: "First name", minWidth: 90, flex: 1 },
+    { field: "lastname", headerName: "Last name", minWidth: 90, flex: 1 },
+    { field: "mail", headerName: "Mail", minWidth: 200, flex: 1 },
     {
       field: "created_at",
       headerName: "Created at",
       valueGetter: (params) =>
         dayjs(params.row.created_at).format("DD-MM-YYYY"),
-      width: 110,
+      minWidth: 110,
+      flex: 1,
     },
     {
       field: "joined_at",
       headerName: "Joined at",
       valueGetter: (params) => dayjs(params.row.joined_at).format("DD-MM-YYYY"),
-      width: 110,
+      minWidth: 110,
+      flex: 1,
     },
     {
       field: "agency",
       headerName: "Agency",
       valueGetter: (params) =>
         `${params.row.agency.name}, ${params.row.agency.city}`,
-      width: 150,
+      minWidth: 150,
+      flex: 1,
     },
     {
       field: "position",
       headerName: "Position",
       valueGetter: (params) => params.row.position.name,
-      width: 150,
+      minWidth: 150,
+      flex: 1,
     },
     {
       field: "role",
@@ -53,8 +57,9 @@ export default function TableOfUsers({ userList, setUpdateList }) {
           params.row.role.name
         );
       },
-      width: 140,
+      minWidth: 140,
       sortable: false,
+      flex: 1,
     },
     {
       field: "is_active",
@@ -70,7 +75,8 @@ export default function TableOfUsers({ userList, setUpdateList }) {
         );
       },
       align: "center",
-      width: 60,
+      minWidth: 60,
+      flex: 0.25,
       sortable: false,
     },
     {
@@ -80,7 +86,8 @@ export default function TableOfUsers({ userList, setUpdateList }) {
         return <ActionIcons user={params.row} setUpdateList={setUpdateList} />;
       },
       align: "center",
-      width: 120,
+      minWidth: 120,
+      flex: 0.5,
       sortable: false,
     },
   ];
