@@ -37,9 +37,6 @@ function TopSectionProfil() {
     setter(!state);
   };
 
-  console.info(user);
-  console.info(isCurrentUserProfile, parseInt(id, 10), parseInt(user.id, 10));
-
   return (
     <div className="flex flex-col flex-start">
       <div className="relative mb-16">

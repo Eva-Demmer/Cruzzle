@@ -1,9 +1,11 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Avatar, Paper } from "@mui/material";
 import { UserContext } from "../../contexts/UserContext";
 import AvatarDoghnut from "./AvatarDoghnut";
 
 function AvatarProfile() {
+  const navigate = useNavigate();
   const { user } = useContext(UserContext);
 
   return (
@@ -15,7 +17,8 @@ function AvatarProfile() {
         <Avatar
           alt="profil-picture"
           src={user.avatar_url}
-          className="w-28 h-28 z-10 shadow shadow-black border-solid border-black border sm:w-36 sm:h-36 lg:w-40 lg:h-40"
+          className="w-28 h-28 z-10 shadow shadow-black border-solid border-black border sm:w-36 sm:h-36 lg:w-40 lg:h-40 cursor-pointer"
+          onClick={() => navigate(`/users/${user.id}`)}
         />
         <AvatarDoghnut />
         <Paper

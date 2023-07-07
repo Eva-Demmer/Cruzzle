@@ -7,14 +7,15 @@ import ActionIcons from "./ActionIcons";
 export default function TableOfCategories({ categoriesList, setUpdateList }) {
   const rows = categoriesList;
   const columns = [
-    { field: "label", headerName: "Label", width: 200 },
+    { field: "label", headerName: "Label", minWidth: 200, flex: 1.75 },
     {
       field: "ideas",
       headerName: "Use",
       valueGetter: (params) => `${params.row._count.idea_category} ideas`,
-      width: 100,
+      minWidth: 100,
+      flex: 1,
     },
-    { field: "color", headerName: "Color", width: 250 },
+    { field: "color", headerName: "Color", minWidth: 250, flex: 1 },
     {
       field: "preview",
       headerName: "Preview",
@@ -23,7 +24,8 @@ export default function TableOfCategories({ categoriesList, setUpdateList }) {
           <CustomChip label={params.row.label} colorchoice={params.row.color} />
         );
       },
-      width: 250,
+      minWidth: 250,
+      flex: 1,
       sortable: false,
     },
     {
@@ -34,7 +36,8 @@ export default function TableOfCategories({ categoriesList, setUpdateList }) {
           <ActionIcons category={params.row} setUpdateList={setUpdateList} />
         );
       },
-      width: 100,
+      minWidth: 100,
+      flex: 0.25,
       align: "center",
       sortable: false,
     },

@@ -25,7 +25,7 @@ function SideLinks() {
   const [open, setOpen] = useState(true);
   const location = useLocation();
   const { activeMenu, setActiveMenu } = useContext(MenuContext);
-  const isAdmin = [55, 88].includes(user.role.id); // token logic to implement ----------------------------------------------------------------
+  const isAdmin = [55, 88].includes(user.role.id);
 
   const iconSize = (item) => {
     return `h-6 w-6 ${location.pathname === item.to ? "text-primary-50" : ""}`;
