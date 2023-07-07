@@ -5,7 +5,37 @@ const prisma = new PrismaClient();
 
 const findAll = async () => {
   try {
-    const data = await prisma.user.findMany();
+    const data = await prisma.user.findMany({
+      select: {
+        id: true,
+        avatar_url: true,
+        firstname: true,
+        lastname: true,
+        biography: true,
+        role: {
+          select: {
+            name: true,
+          },
+        },
+        agency: {
+          select: {
+            id: true,
+            name: true,
+            city: true,
+            country: true,
+          },
+        },
+        position: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+      orderBy: {
+        lastname: "asc",
+      },
+    });
     return data;
   } finally {
     await prisma.$disconnect();

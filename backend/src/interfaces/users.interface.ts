@@ -39,4 +39,15 @@ interface UserLoginUpdatedRequest {
   hashed_password: string;
 }
 
-export { User, CreateUser, UserLoginUpdatedRequest };
+interface UserFilterQuery {
+  lastnameContains?: string;
+  firstnameContains?: string;
+  agenciesValue?: string;
+  locationValue?: string;
+  roleValue?: string;
+  positionValue?: string;
+  publicationDateStart?: string;
+  publicationDateEnd?: string;
+}
+
+export { User, CreateUser, UserLoginUpdatedRequest, UserFilterQuery };
