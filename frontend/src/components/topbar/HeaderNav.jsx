@@ -136,8 +136,8 @@ function HeaderNav() {
                       badgeContent={language}
                       sx={{
                         "& .MuiBadge-badge": {
-                          color: "white",
-                          backgroundColor: "#717171",
+                          color: "#FFFFFF",
+                          backgroundColor: "#7C7C7C",
                         },
                       }}
                     >
