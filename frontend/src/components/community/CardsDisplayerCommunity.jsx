@@ -30,7 +30,6 @@ function CardsDisplayerCommunity() {
     };
     fetchByQuery("/api/users/filter", reqItems)
       .then((data) => {
-        console.info("Ideas filtred : ", data);
         setFilteredUsers(data);
       })
       .catch((error) =>
