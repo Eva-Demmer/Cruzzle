@@ -15,7 +15,7 @@ function Filterbar() {
     <div className="filterbar w-full">
       <HorizontalScroll>
         <div className="w-fit min-w-full flex flex-row-reverse items-center lg:block">
-          <div className="w-fit my-2 flex justify-end lg:w-full">
+          <div className="w-fit my-2 flex justify-end lg:w-full ml-2 lg:ml-0">
             <FilterbarDate isDisable={filterPanelIsOpen} />
           </div>
           <div className="w-full my-2 flex justify-start gap-2 lg:w-full lg:justify-between">
