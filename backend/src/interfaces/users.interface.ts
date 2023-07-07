@@ -22,6 +22,12 @@ interface User {
   is_active?: boolean | null;
 }
 
+interface UpdatePasswordUser {
+  id: number;
+  mail: string;
+  hashed_password: string;
+}
+
 interface CreateUser {
   mail: string;
   hashed_password: string;
@@ -39,4 +45,4 @@ interface UserLoginUpdatedRequest {
   hashed_password: string;
 }
 
-export { User, CreateUser, UserLoginUpdatedRequest };
+export { User, CreateUser, UserLoginUpdatedRequest, UpdatePasswordUser };

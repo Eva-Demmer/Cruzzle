@@ -2,7 +2,13 @@ import { Request, Response } from "express";
 import jwt, { Secret } from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
-import { findAll, findById, findByMail, update } from "../models/user.model";
+import {
+  findAll,
+  findById,
+  findByMail,
+  update,
+  updatePassword,
+} from "../models/user.model";
 import { verifyPassword } from "../middlewares/auth.middlewares";
 
 dotenv.config();
@@ -80,6 +86,20 @@ const updateUser = async (req: Request, res: Response) => {
     res.status(500).send(error);
   }
 };
+// Update Password user
+const updatePasswordUser = async (req: Request, res: Response) => {
+  const data = req.body;
+  try {
+    const result = await updatePassword(data);
+    if (result) {
+      res.sendStatus(200);
+    } else {
+      res.status(404).send("User not found");
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
 // Verify password
 const verifyPasswordUser = async (req: Request, res: Response) => {
@@ -112,4 +132,11 @@ const verifyPasswordUser = async (req: Request, res: Response) => {
   }
 };
 
-export { getUsers, getUserById, login, updateUser, verifyPasswordUser };
+export {
+  getUsers,
+  getUserById,
+  login,
+  updateUser,
+  verifyPasswordUser,
+  updatePasswordUser,
+};

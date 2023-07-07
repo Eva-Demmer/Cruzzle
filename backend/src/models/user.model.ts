@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { User } from "../interfaces/users.interface";
+import { UpdatePasswordUser, User } from "../interfaces/users.interface";
 
 const prisma = new PrismaClient();
 
@@ -107,4 +107,22 @@ const update = async (id: number, updatedUser: User) => {
   }
 };
 
-export { findAll, findById, findByMail, update };
+const updatePassword = async (updatedPassword: UpdatePasswordUser) => {
+  const { id, hashed_password: hashedPassword } = updatedPassword;
+  try {
+    const data = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: { hashed_password: hashedPassword },
+    });
+    const { id: userId, mail } = data;
+    return { id: userId, mail };
+  } catch (error) {
+    throw new Error("Error updating user.");
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+export { findAll, findById, findByMail, update, updatePassword };

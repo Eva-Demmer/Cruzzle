@@ -5,6 +5,7 @@ import {
   getUserById,
   updateUser,
   verifyPasswordUser,
+  updatePasswordUser,
 } from "../controllers/users.controllers";
 
 import {
@@ -30,6 +31,7 @@ router.post("/verifyPassword", verifyPasswordUser);
 // // Protected routes
 // TODO: decomment line below when we want to protect routes
 // router.use(protectRoutes);
+router.put("/updatePassword", hashPassword, updatePasswordUser);
 router.put("/:id", hashPassword, updateUser);
 
 export default router;
