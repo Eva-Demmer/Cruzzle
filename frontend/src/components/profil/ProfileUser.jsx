@@ -16,7 +16,6 @@ function ProfileUser() {
         const update = await apiUserById(id);
         if (update) {
           setUser(update.data);
-          console.info(update.data);
           setIsLoading(false);
         }
       } catch (error) {

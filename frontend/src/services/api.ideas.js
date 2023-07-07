@@ -7,7 +7,6 @@ const apiIdeas = async (route = "") => {
   try {
     const response = await axios.get(`${url}${ideaRoute}${route}`);
     if (response.status === 200) {
-      console.info(response.data);
       return response.data;
     }
     throw new Error(`Unexpected response status: ${response.status}`);
@@ -26,7 +25,6 @@ const apiIdeasNew = async (data) => {
   try {
     const response = await axios.post(`${url}${ideaRoute}`, data);
     if (response.status === 201) {
-      console.info(response.data);
       return response.data;
     }
     throw new Error(`Unexpected response status: ${response.status}`);
@@ -47,7 +45,6 @@ const apiUpdateIdeaView = async (id, data) => {
       views: data,
     });
     if (response.status === 201) {
-      console.info(response.data);
       return response.data;
     }
     throw new Error(`Unexpected response status: ${response.status}`);
@@ -65,7 +62,6 @@ const apiArchiveIdeas = async (id) => {
   try {
     const response = await axios.patch(`${url}${ideaRoute}archive/${id}`);
     if (response.status === 200) {
-      console.info(response.data);
       return response.data;
     }
     throw new Error(`Unexpected response status: ${response.status}`);
@@ -83,7 +79,6 @@ const apiUpdateIdeaById = async (id, data) => {
   try {
     const response = await axios.put(`${url}${ideaRoute}${id}`, data);
     if (response.status === 201) {
-      console.info(response.data);
       return response.data;
     }
     throw new Error(`Unexpected response status: ${response.status}`);

@@ -18,10 +18,6 @@ export default function FilterbarCategory({ isDisable }) {
   };
 
   useEffect(() => {
-    console.info("selectedCategories", selectedCategories);
-  }, [selectedCategories]);
-
-  useEffect(() => {
     fetchAll("/api/categories")
       .then((data) => setCategoryList(data))
       .catch((error) =>
