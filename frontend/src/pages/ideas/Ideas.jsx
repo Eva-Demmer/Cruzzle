@@ -61,17 +61,12 @@ function Ideas() {
   useEffect(() => {
     fetchAll("/api/ideas/trends")
       .then((data) => {
-        console.info("Ideas trends data : ", data);
         setTrendIdeas(data);
       })
       .catch((error) =>
         console.error("error from api.services.fetcherByQuery", error)
       );
   }, []);
-
-  useEffect(() => {
-    console.info("filteredIdeas state", filteredIdeas);
-  }, [filteredIdeas]);
 
   return (
     <IdeasProvider>
