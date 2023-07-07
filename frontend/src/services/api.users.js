@@ -21,6 +21,23 @@ const apiUsers = async (route = "") => {
   }
 };
 
+const apiUsersVerifyPasword = async (data) => {
+  const { mail, password } = data;
+  try {
+    const response = await axios.post(`${url}${userRoute}/verifyPassword`, {
+      mail,
+      password,
+    });
+
+    if (response.status === 200) {
+      return response;
+    }
+    throw new Error(response.status);
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 const apiUsersLogin = async (mail, password) => {
   try {
     const response = await axios.post(`${url}${userRoute}login`, {
@@ -67,4 +84,10 @@ const apiUpdateUser = async (id, data) => {
   }
 };
 
-export { apiUsers, apiUpdateUser, apiUserById, apiUsersLogin };
+export {
+  apiUsers,
+  apiUpdateUser,
+  apiUserById,
+  apiUsersLogin,
+  apiUsersVerifyPasword,
+};

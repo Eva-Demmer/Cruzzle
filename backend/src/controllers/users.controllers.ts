@@ -101,10 +101,10 @@ const verifyPasswordUser = async (req: Request, res: Response) => {
       if (passwordMatch) {
         res.status(200).json(data);
       } else {
-        res.status(401).json({ error: "Pair User/Password not found" });
+        res.sendStatus(401);
       }
     } else {
-      res.status(401).json({ error: "Pair User/Password not found" });
+      res.sendStatus(401);
     }
   } catch (error) {
     console.error("Error verifying passwords:", error);

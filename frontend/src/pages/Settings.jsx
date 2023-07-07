@@ -17,9 +17,10 @@ import { Controller, useForm } from "react-hook-form";
 import { UserContext } from "../contexts/UserContext";
 import { LanguageContext } from "../contexts/LanguageContext";
 import DialogPassword from "../components/settingspage/DialogPassword";
+import { apiUsersVerifyPasword } from "../services/api.users";
 
 function Settings() {
-  const { handleSubmit, control } = useForm();
+  const { handleSubmit, control, reset } = useForm();
   const { user } = useContext(UserContext);
   const { language, setLanguage } = useContext(LanguageContext);
   const [showPassword, setShowPassword] = useState(false);
@@ -27,9 +28,24 @@ function Settings() {
   const [openModifyPasswordDialog, setOpenModifyPasswordDialog] =
     useState(false);
 
-  const onSubmit = (data) => {
-    setPasswordError(true);
-    console.info(data);
+  const onSubmit = async (data) => {
+    const newData = {
+      mail: data.username,
+      password: data.password,
+    };
+
+    try {
+      const response = await apiUsersVerifyPasword(newData);
+      if (response.status === 200) {
+        setPasswordError(false);
+        reset();
+        setOpenModifyPasswordDialog(true);
+      } else {
+        setPasswordError(true);
+      }
+    } catch (error) {
+      setPasswordError(true);
+    }
   };
 
   const languages = [
@@ -152,7 +168,6 @@ function Settings() {
                 color="primary"
                 type="submit"
                 className="flex rounded-full mx-2 min-w-[122px] my-4 self-end"
-                onClick={() => setOpenModifyPasswordDialog(true)}
                 sx={{
                   boxShadow: 1,
                   "&:hover": { boxShadow: 2 },
