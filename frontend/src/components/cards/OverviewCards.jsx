@@ -11,18 +11,15 @@ import { UserContext } from "../../contexts/UserContext";
 
 function OverviewCards() {
   const { user } = useContext(UserContext);
-
   const {
     _count: { id, comment_like: commentLike, idea },
   } = user;
-
   const [ideasCreatedToday, setIdeasCreatedToday] = useState(0);
-  const route = `${id}/count`;
 
   useEffect(() => {
     const fetchIdeasCreatedToday = async () => {
       try {
-        const response = await apiIdeas(route);
+        const response = await apiIdeas(`${user.id}/count`);
         setIdeasCreatedToday(response.count);
       } catch (error) {
         setIdeasCreatedToday("N/A");
@@ -45,7 +42,7 @@ function OverviewCards() {
           <LightBulbIcon className="h-8 md:h-10 w-8 md:w-10 absolute top-[-10px] md:top-[-18px] left-[-10px] md:left-[-18px] text-primary-900 fill-current transform rotate-45" />
           <div className="flex flex-col justify-between h-full">
             <h3 className="text-black text-lg md:text-xl lg:text-2xl px-5 pt-5">
-              Total ideas
+              Your ideas
             </h3>
             <h2 className="text-black text-3xl md:text-4xl px-4 pb-4">
               {idea}
