@@ -36,6 +36,7 @@ function Root() {
     const token = localStorage.getItem("token");
     if (token) {
       setCurrentUserIntoUserContext(token);
+      navigate("/dashboard");
     } else {
       navigate("/login");
     }
