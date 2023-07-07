@@ -13,6 +13,7 @@ function UserCommunityCard({ user }) {
     position,
     agency,
     avatar_url: avatarUrl,
+    banner_url: bannerUrl,
   } = user;
 
   const navigate = useNavigate();
@@ -22,37 +23,39 @@ function UserCommunityCard({ user }) {
       aria-label="card"
       className="flex flex-col shadow-lg border-[1px] border-solid border-[#f7f7f7] bg-white duration-100 rounded-xl group"
     >
-      <div
-        aria-label="header"
-        className="flex h-full py-4 px-2 lg:py-6 lg:px-4"
-      >
+      <div className="w-full relative ">
+        <img
+          src={bannerUrl}
+          alt="banner profile"
+          className="w-full h-20 rounded-t-xl object-cover"
+        />
         <Avatar
           src={avatarUrl}
           onClick={() => navigate(`/users/${id}`)}
-          className="mx-2 lg:mx-4 w-12 h-12 lg:w-16 lg:h-16 border-[1px] border-solid border-[#f7f7f7] shadow-sm hover:cursor-pointer"
+          alt="pic profile"
+          className="mx-4 w-14 h-14 lg:w-16 lg:h-16 border-[1px] border-solid border-[#f7f7f7] shadow-sm hover:cursor-pointer absolute bottom-2"
         />
+        <div
+          aria-label="name"
+          className="my-1 font-bold text-lg sm:text-base lg:text-xl pl-20 lg:pl-24"
+        >
+          {firstname} {lastname}
+        </div>
+      </div>
+      <div
+        aria-label="header"
+        className="flex h-full w-full py-4 px-2 lg:py-2 lg:px-4"
+      >
         <div aria-label="content" className="flex flex-col px-2">
           <div
-            aria-label="name"
-            className="my-1 font-bold text-lg sm:text-base lg:text-xl"
-          >
-            {firstname} {lastname}
-          </div>
-          <div
             aria-label="position"
             className="my-1 text-sm sm:text-xs lg:text-base font-semibold text-secondary-600"
           >
-            {position.name}
-          </div>
-          <div
-            aria-label="position"
-            className="my-1 text-sm sm:text-xs lg:text-base font-semibold text-secondary-600"
-          >
-            {agency.name}
+            {position.name} - {agency.name}
           </div>
           <div
             aria-label="biography"
-            className="my-1 text-sm sm:text-xs lg:text-base italic text-ellipsis sm:line-clamp-1 lg:line-clamp-2 text-secondary-600"
+            className="my-1 text-sm sm:text-xs lg:text-base italic text-ellipsis text-secondary-600"
           >
             Joined at : {dayjs(joinedAt).locale("fr").format("YYYY-MM-DD")}
           </div>
@@ -82,6 +85,7 @@ UserCommunityCard.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.number.isRequired,
     avatar_url: PropTypes.string.isRequired,
+    banner_url: PropTypes.string.isRequired,
     firstname: PropTypes.string.isRequired,
     lastname: PropTypes.string.isRequired,
     joined_at: PropTypes.string.isRequired,
