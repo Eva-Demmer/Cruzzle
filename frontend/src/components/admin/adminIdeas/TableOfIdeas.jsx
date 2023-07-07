@@ -8,21 +8,22 @@ import ActionIcons from "./ActionIcons";
 export default function TableOfIdeas({ ideaList, setUpdateList }) {
   const rows = ideaList;
   const columns = [
-    { field: "title", headerName: "Title", width: 200 },
+    { field: "title", headerName: "Title", minWidth: 200, flex: 1 },
     {
       field: "user",
       headerName: "Autor",
       valueGetter: (params) =>
         `${params.row.user.firstname} ${params.row.user.lastname}`,
-      width: 160,
+      minWidth: 160,
+      flex: 0.75,
     },
     {
       field: "created_at",
       headerName: "Created at",
       valueGetter: (params) =>
         dayjs(params.row.created_at).format("DD-MM-YYYY"),
-      align: "center",
-      width: 130,
+      minWidth: 130,
+      flex: 0.75,
     },
     {
       field: "archived_at",
@@ -31,8 +32,8 @@ export default function TableOfIdeas({ ideaList, setUpdateList }) {
         params.row.archived_at
           ? dayjs(params.row.archived_at).format("DD-MM-YYYY")
           : "-",
-      align: "center",
-      width: 130,
+      minWidth: 130,
+      flex: 0.75,
     },
     {
       field: "deleted_at",
@@ -41,30 +42,30 @@ export default function TableOfIdeas({ ideaList, setUpdateList }) {
         params.row.deleted_at
           ? dayjs(params.row.deleted_at).format("DD-MM-YYYY")
           : "-",
-      align: "center",
-      width: 130,
+      minWidth: 130,
+      flex: 0.75,
     },
     {
       field: "files",
       headerName: "Files",
       valueGetter: (params) => params.row._count.attachment,
-      align: "center",
-      width: 60,
+      minWidth: 60,
+      flex: 0.5,
     },
-    { field: "views", headerName: "Views", width: 60 },
+    { field: "views", headerName: "Views", minWidth: 60, flex: 0.5 },
     {
       field: "likes",
       headerName: "Likes",
       valueGetter: (params) => params.row._count.idea_like,
-      align: "center",
-      width: 60,
+      minWidth: 60,
+      flex: 0.25,
     },
     {
       field: "favorite",
       headerName: "Favorite",
       valueGetter: (params) => params.row._count.favorit,
-      align: "center",
-      width: 100,
+      minWidth: 100,
+      flex: 0.25,
     },
     {
       field: "actions",
@@ -72,7 +73,8 @@ export default function TableOfIdeas({ ideaList, setUpdateList }) {
       renderCell: (params) => {
         return <ActionIcons idea={params.row} setUpdateList={setUpdateList} />;
       },
-      width: 150,
+      minWidth: 150,
+      flex: 0.5,
       align: "center",
       sortable: false,
     },

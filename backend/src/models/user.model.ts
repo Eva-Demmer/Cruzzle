@@ -108,6 +108,7 @@ const findByMail = async (mail: string) => {
         mail,
       },
       select: {
+        id: true,
         mail: true,
         hashed_password: true,
         role_id: true,

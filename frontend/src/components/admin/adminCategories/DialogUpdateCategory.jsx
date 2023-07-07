@@ -40,7 +40,7 @@ export default function DialogUpdateColor({
   };
 
   const handleSubmit = () => {
-    const isLabelValid = label.length >= 2;
+    const isLabelValid = label.length >= 2 && label.length <= 25;
     setLabelError(!isLabelValid);
 
     if (isLabelValid) {
@@ -93,7 +93,11 @@ export default function DialogUpdateColor({
               placeholder="Enter a label"
               value={label}
               error={labelError}
-              helperText={labelError ? "Incorrect entry" : null}
+              helperText={
+                labelError
+                  ? "Please enter a word between 2 and 25 letters."
+                  : null
+              }
               onChange={handleChangeLabel}
               InputLabelProps={{ shrink: true }}
               sx={{
@@ -102,7 +106,7 @@ export default function DialogUpdateColor({
                 padding: 0,
               }}
             />
-            <CustomChip colorchoice={color} label={label} />
+            {label && <CustomChip colorchoice={color} label={label} />}
           </Box>
           <Box
             sx={{

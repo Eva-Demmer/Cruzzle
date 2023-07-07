@@ -43,13 +43,13 @@ const login = async (req: Request, res: Response) => {
       await verifyPassword(req, res, () => {
         try {
           const payload = {
-            mail,
+            id: data.id,
             role_id: data.role_id,
           };
 
           const token = jwt.sign(payload, JWT_SECRET as Secret, {
             algorithm: "HS256",
-            expiresIn: "1h",
+            expiresIn: "12h",
           });
           res.status(200).json({ token });
         } catch (error) {

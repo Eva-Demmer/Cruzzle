@@ -39,7 +39,6 @@ function Ideas() {
     };
     fetchByQuery("/api/ideas/filter", reqItems)
       .then((data) => {
-        console.info("Ideas filtred : ", data);
         setFilteredIdeas(data);
       })
       .catch((error) =>
@@ -61,17 +60,12 @@ function Ideas() {
   useEffect(() => {
     fetchAll("/api/ideas/trends")
       .then((data) => {
-        console.info("Ideas trends data : ", data);
         setTrendIdeas(data);
       })
       .catch((error) =>
         console.error("error from api.services.fetcherByQuery", error)
       );
   }, []);
-
-  useEffect(() => {
-    console.info("filteredIdeas state", filteredIdeas);
-  }, [filteredIdeas]);
 
   return (
     <IdeasProvider>
