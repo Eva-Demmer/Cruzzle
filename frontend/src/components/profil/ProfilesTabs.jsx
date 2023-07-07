@@ -5,12 +5,12 @@ import { LightBulbIcon, SquaresPlusIcon } from "@heroicons/react/24/solid";
 import dayjs from "dayjs";
 import TabPanel from "../tabs/TabPanel";
 import AllyProps from "../tabs/AllyProps";
-import { UserContext } from "../../contexts/UserContext";
 import PuzzleIcon from "../../assets/PuzzleIcon.svg";
 import "dayjs/locale/fr";
+import { UserProfileContext } from "../../contexts/UserProfile";
 
 export default function ProfilesTabs() {
-  const { user } = useContext(UserContext);
+  const { user } = useContext(UserProfileContext);
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);

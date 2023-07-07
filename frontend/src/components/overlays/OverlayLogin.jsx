@@ -117,15 +117,9 @@ function OverlayLogin() {
         onClose={handleCloseAlert}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        {showAlert && (
-          <Alert
-            variant="filled"
-            severity="success"
-            onClose={() => setShowAlert(false)}
-          >
-            {alertMessage}
-          </Alert>
-        )}
+        <Alert variant="filled" severity="success" onClose={handleCloseAlert}>
+          {alertMessage}
+        </Alert>
       </Snackbar>
     </div>
   );

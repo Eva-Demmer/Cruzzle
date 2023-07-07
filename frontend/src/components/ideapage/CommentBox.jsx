@@ -18,7 +18,7 @@ import { IdeaPageContext } from "../../contexts/IdeaPageContext";
 import { apiGetCommentsByIdeaId } from "../../services/api.comments";
 
 function CommentBox({ comment, tabComment = false }) {
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const { id: userId } = user;
 
   const { idea, setIdea } = useContext(IdeaPageContext);

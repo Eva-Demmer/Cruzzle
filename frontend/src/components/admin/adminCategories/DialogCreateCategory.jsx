@@ -39,7 +39,7 @@ export default function DialogCreateCategory({
   };
 
   const handleSubmit = () => {
-    const isLabelValid = label.length >= 2;
+    const isLabelValid = label.length >= 2 && label.length <= 25;
     setLabelError(!isLabelValid);
 
     if (isLabelValid) {
@@ -91,7 +91,11 @@ export default function DialogCreateCategory({
               placeholder="Enter a label"
               value={label}
               error={labelError}
-              helperText={labelError ? "Incorrect entry" : null}
+              helperText={
+                labelError
+                  ? "Please enter a word between 2 and 25 letters."
+                  : null
+              }
               onChange={handleChangeLabel}
               InputLabelProps={{ shrink: true }}
               sx={{

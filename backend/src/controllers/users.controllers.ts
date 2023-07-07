@@ -89,7 +89,7 @@ const updateUser = async (req: Request, res: Response) => {
 const updateImage = async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id, 10);
   const data: object = req.body;
-  console.info(req.body);
+  console.info(req.files);
   console.info(id);
 
   // try {

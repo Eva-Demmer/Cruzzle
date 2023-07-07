@@ -30,7 +30,7 @@ function HeaderNav() {
   const { setActiveMenu, activeMenu } = useContext(MenuContext);
   const { language } = useContext(LanguageContext);
 
-  const { id } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const searchRef = useRef();
   const navigate = useNavigate();
@@ -160,7 +160,7 @@ function HeaderNav() {
               {!smallQuery && (
                 <IconButton
                   onClick={() => {
-                    navigate(`users/${id}`);
+                    navigate(`users/${user.id}`);
                     setActiveMenu(false);
                   }}
                 >

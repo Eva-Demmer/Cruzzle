@@ -13,12 +13,12 @@ import { useContext, useState } from "react";
 import Modal from "../modal/Modal";
 import EditProfil1 from "../../assets/EditProfil1.svg";
 import EditProfil2 from "../../assets/EditProfil2.svg";
-import { UserContext } from "../../contexts/UserContext";
 import { apiUpdateUser, apiUserById } from "../../services/api.users";
+import { UserProfileContext } from "../../contexts/UserProfile";
 
 export default function ModalEditProfil({ open, close }) {
   const { handleSubmit, control } = useForm();
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserProfileContext);
   const [sharePhone, setSharePhone] = useState(user.share_phone);
   const [displayBirthday, setDisplayBirthday] = useState(user.share_birthdate);
   const [selectedDate, setSelectedDate] = useState(null);

@@ -7,7 +7,6 @@ const apiUsers = async (route = "") => {
   try {
     const response = await axios.get(`${url}${userRoute}${route}`);
     if (response.status === 200) {
-      console.info(response.data);
       return response.data;
     }
     throw new Error(`Unexpected response status: ${response.status}`);
@@ -29,7 +28,6 @@ const apiUsersLogin = async (mail, password) => {
       password,
     });
     if (response.status === 200) {
-      console.info(response.data);
       return response.data;
     }
     throw new Error(`Unexpected response status: ${response.status}`);

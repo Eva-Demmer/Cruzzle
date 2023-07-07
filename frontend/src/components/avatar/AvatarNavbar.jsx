@@ -3,7 +3,8 @@ import { Avatar, Paper } from "@mui/material";
 import { UserContext } from "../../contexts/UserContext";
 
 function AvatarNavbar() {
-  const { imgUrl } = useContext(UserContext);
+  const { user } = useContext(UserContext);
+  const { avatar_url: imgUrl } = user;
 
   return (
     <Paper

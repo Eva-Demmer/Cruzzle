@@ -14,13 +14,16 @@ import { sm } from "../../utils/mediaQueries";
 import ModalEditImage from "./ModalEditImage";
 import ModifierButton from "./ModifierButton";
 import AvatarUserProfile from "../avatar/AvatarUserProfile";
-import { UserContext } from "../../contexts/UserContext";
 import ModalEditProfil from "./ModalEditProfil";
+import { UserProfileContext } from "../../contexts/UserProfile";
+import { UserContext } from "../../contexts/UserContext";
 
 function TopSectionProfil() {
-  const { user } = useContext(UserContext);
+  const { user } = useContext(UserProfileContext);
+  const { user: currentUser } = useContext(UserContext);
   const { id } = useParams();
-  const isCurrentUserProfile = parseInt(id, 10) === parseInt(user.id, 10);
+  const isCurrentUserProfile =
+    parseInt(id, 10) === parseInt(currentUser.id, 10);
   const smallQuery = useMediaQuery(sm);
   const [isOpenAvatar, setIsOpenAvatar] = useState(false);
   const [isOpenBanner, setIsOpenBanner] = useState(false);
@@ -38,6 +41,9 @@ function TopSectionProfil() {
   const toggleModal = (state, setter) => {
     setter(!state);
   };
+
+  console.info(user);
+  console.info(isCurrentUserProfile, parseInt(id, 10), parseInt(user.id, 10));
 
   return (
     <div className="flex flex-col flex-start">

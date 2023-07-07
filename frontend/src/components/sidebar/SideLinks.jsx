@@ -18,12 +18,14 @@ import {
 import Collapse from "@mui/material/Collapse";
 import LogoutLinks from "./LogoutLinks";
 import { MenuContext } from "../../contexts/MenuContext";
+import { UserContext } from "../../contexts/UserContext";
 
 function SideLinks() {
+  const { user } = useContext(UserContext);
   const [open, setOpen] = useState(true);
   const location = useLocation();
   const { activeMenu, setActiveMenu } = useContext(MenuContext);
-  const isAdmin = true; // TODO: add to context
+  const isAdmin = [55, 88].includes(user.role.id); // token logic to implement ----------------------------------------------------------------
 
   const iconSize = (item) => {
     return `h-6 w-6 ${location.pathname === item.to ? "text-primary-50" : ""}`;
