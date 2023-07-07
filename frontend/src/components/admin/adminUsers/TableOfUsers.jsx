@@ -10,7 +10,6 @@ import ActionIcons from "./ActionIcons";
 
 export default function TableOfUsers({ userList, setUpdateList }) {
   const { user } = useContext(UserContext);
-  const { role_id: currentUserRole } = user;
 
   const rows = userList;
   const columns = [
@@ -51,7 +50,7 @@ export default function TableOfUsers({ userList, setUpdateList }) {
       field: "role",
       headerName: "Role",
       renderCell: (params) => {
-        return currentUserRole === 88 ? (
+        return user.role.id === 88 ? (
           <TableSelectRole user={params.row} />
         ) : (
           params.row.role.name

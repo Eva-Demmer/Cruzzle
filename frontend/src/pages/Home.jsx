@@ -8,41 +8,11 @@ import {
 } from "@heroicons/react/24/solid";
 import { UserContext } from "../contexts/UserContext";
 import { apiIdeas } from "../services/api.ideas";
-import { apiUserById } from "../services/api.users";
 import OverviewCards from "../components/OverviewCards";
 
 function Home() {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [ideasCreatedToday, setIdeasCreatedToday] = useState();
-  const [payload, setPayload] = useState();
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      try {
-        const parts = token.split(".");
-        setPayload(JSON.parse(atob(parts[1])));
-      } catch (error) {
-        console.info("error token", error);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    if (payload) {
-      apiUserById(payload.id)
-        .then((res) => {
-          if (res.status === 200) {
-            setUser(res.data);
-          } else {
-            console.error("cannot get user by id");
-          }
-        })
-        .catch((err) => {
-          console.error("error get user by id", err);
-        });
-    }
-  }, [payload]);
 
   useEffect(() => {
     const fetchIdeasCreatedToday = async () => {

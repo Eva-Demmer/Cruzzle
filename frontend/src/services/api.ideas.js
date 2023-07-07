@@ -7,7 +7,6 @@ const apiIdeas = async (route = "") => {
   try {
     const response = await axios.get(`${url}${ideaRoute}${route}`);
     if (response.status === 200) {
-      console.info(response.data);
       return response.data;
     }
     throw new Error(`Unexpected response status: ${response.status}`);
@@ -26,7 +25,6 @@ const apiIdeasNew = async (data) => {
   try {
     const response = await axios.post(`${url}${ideaRoute}`, data);
     if (response.status === 201) {
-      console.info(response.data);
       return response.data;
     }
     throw new Error(`Unexpected response status: ${response.status}`);
