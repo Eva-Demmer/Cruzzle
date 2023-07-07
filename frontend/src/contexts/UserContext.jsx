@@ -17,7 +17,8 @@ const initialUser = {
   share_birthdate: false,
   phone: "+33655758466",
   share_phone: false,
-  biography: "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.",
+  biography:
+    "Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Deazeazeaze zae azeazeazeazeaze azeazeazeazeaze zaeazeazeazeaz zaeopzkaepoazepkzae azoekoakzepkezok zakeopakepokazeokazepokazeok zkaepokazpoekapkoe",
   agency: {
     id: 1,
     name: "Wildforge",
