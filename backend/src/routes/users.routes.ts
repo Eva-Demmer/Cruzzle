@@ -4,6 +4,7 @@ import {
   getUsers,
   getUserById,
   updateUser,
+  verifyPasswordUser,
 } from "../controllers/users.controllers";
 
 import {
@@ -24,6 +25,7 @@ router.use(timeLog);
 router.post("/login", verifyPassword, login);
 router.get("/", getUsers);
 router.get("/:id", getUserById);
+router.post("/verifyPassword", verifyPasswordUser);
 
 // // Protected routes
 // TODO: decomment line below when we want to protect routes

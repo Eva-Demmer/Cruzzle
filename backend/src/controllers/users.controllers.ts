@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import jwt, { Secret } from "jsonwebtoken";
+import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import { findAll, findById, findByMail, update } from "../models/user.model";
 import { verifyPassword } from "../middlewares/auth.middlewares";
@@ -80,4 +81,35 @@ const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-export { getUsers, getUserById, login, updateUser };
+// Verify password
+const verifyPasswordUser = async (req: Request, res: Response) => {
+  try {
+    const { mail, password } = req.body;
+    const dataUser = await findByMail(mail);
+
+    if (dataUser) {
+      const passwordMatch = await bcrypt.compare(
+        password,
+        dataUser.hashed_password
+      );
+
+      const data = {
+        id: dataUser.id,
+        mail: dataUser.mail,
+      };
+
+      if (passwordMatch) {
+        res.status(200).json(data);
+      } else {
+        res.status(401).json({ error: "Pair User/Password not found" });
+      }
+    } else {
+      res.status(401).json({ error: "Pair User/Password not found" });
+    }
+  } catch (error) {
+    console.error("Error verifying passwords:", error);
+    res.status(500).json({ error: "Internal server error." });
+  }
+};
+
+export { getUsers, getUserById, login, updateUser, verifyPasswordUser };
