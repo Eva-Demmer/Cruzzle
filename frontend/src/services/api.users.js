@@ -38,6 +38,19 @@ const apiUsersVerifyPasword = async (data) => {
   }
 };
 
+const apiUsersUpdatePasword = async (data) => {
+  try {
+    const response = await axios.put(`${url}${userRoute}/updatePassword`, data);
+
+    if (response.status === 200) {
+      return response;
+    }
+    throw new Error(response.status);
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 const apiUsersLogin = async (mail, password) => {
   try {
     const response = await axios.post(`${url}${userRoute}login`, {
@@ -90,4 +103,5 @@ export {
   apiUserById,
   apiUsersLogin,
   apiUsersVerifyPasword,
+  apiUsersUpdatePasword,
 };
