@@ -129,8 +129,9 @@ function TopSectionProfil() {
             isOpen={isOpenAvatar}
             src={avatarUrl}
             onClose={() => toggleModal(isOpenAvatar, setIsOpenAvatar)}
-            width="158"
-            height="158"
+            fieldName="avatar"
+            width="160"
+            height="160"
             radius="150"
           />
 
@@ -138,6 +139,7 @@ function TopSectionProfil() {
             isOpen={isOpenBanner}
             src={bannerUrl}
             onClose={() => toggleModal(isOpenBanner, setIsOpenBanner)}
+            fieldName="banner"
             width="1136"
             height="256"
             radius="0"

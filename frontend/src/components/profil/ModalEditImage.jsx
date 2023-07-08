@@ -1,6 +1,5 @@
 /* eslint-disable radix */
-import React, { useState, useRef, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 
@@ -12,26 +11,60 @@ import { Controller, useForm } from "react-hook-form";
 import { Button, Slider } from "@mui/material";
 import UploadButton from "../styledComponents/UploadButton";
 
+import getNameFileToFirebaseLink from "../../utils/getNameFileToFirebaseLink";
+import { apiUsers, apiUserPostImage } from "../../services/api.users";
+
+import { UserContext } from "../../contexts/UserContext";
 import Modal from "../modal/Modal";
 
-function ModalEditImage({ isOpen, src, radius, onClose, height, width }) {
+function ModalEditImage({
+  isOpen,
+  src,
+  radius,
+  onClose,
+  height,
+  width,
+  fieldName,
+}) {
   const [slideScaleValue, setSlideScaleValue] = useState(10);
   const [slideRotateValue, setSlideRotateValue] = useState(0);
+  const { user } = useContext(UserContext);
 
-  const [inputAvatarEditor, setInputAvatarEditor] = useState();
+  const [inputAvatarEditor, setInputAvatarEditor] = useState(src);
   const [image, setImage] = useState();
 
   const { id } = useParams();
   const cropRef = useRef(null);
 
-  const url = import.meta.env.VITE_BACKEND_URL;
-  const route = "/api/users/image/";
+  useEffect(() => {
+    const getImageHighRes = async () => {
+      const filename = fieldName;
+
+      // ESSAI pour url
+      console.info(
+        `/users/${user.id}/${filename}_img.${getNameFileToFirebaseLink(
+          `${user[`${filename}_url`]}`
+        )}`
+      );
+      //
+
+      try {
+        const getUrl = await apiUsers(`imageHighRes`, {
+          url: `/users/${user.id}/${
+            user[filename]
+          }_img.${getNameFileToFirebaseLink(user[filename])}`,
+        });
+        if (getUrl) {
+          setInputAvatarEditor(getUrl);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getImageHighRes();
+  }, []);
 
   const { handleSubmit, control } = useForm();
-
-  useEffect(() => {
-    setInputAvatarEditor(src);
-  }, [inputAvatarEditor]);
 
   const handleImgChange = (e) => {
     e.preventDefault();
@@ -45,39 +78,44 @@ function ModalEditImage({ isOpen, src, radius, onClose, height, width }) {
     const blob = await result.blob();
 
     const formData = new FormData();
-    formData.append("avatar", blob);
-    formData.append("image", image);
+    formData.append(fieldName, blob);
+    formData.append(`${fieldName}_img`, image);
 
     setSlideScaleValue(10);
     setSlideRotateValue(0);
 
-    axios
-      .post(`${url}${route}${id}`, formData)
-      .then((response) => {
-        console.info(response);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    try {
+      const postImage = apiUserPostImage(formData, `image/${id}`);
+      if (postImage) {
+        console.info(postImage);
+      } else {
+        console.info("gerer les erreurs");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <Modal saveButton={false} isOpen={isOpen} onClose={onClose}>
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center w-full">
         <form
           className="flex flex-col items-center w-full"
           onSubmit={handleSubmit(onSubmit)}
         >
           <AvatarEditor
+            className="object-contain"
             ref={cropRef}
             image={inputAvatarEditor}
             width={parseInt(width)}
             height={parseInt(height)}
             border={50}
             borderRadius={parseInt(radius)}
-            color={[255, 255, 255, 0.6]}
+            color={[255, 255, 255, 0.5]}
             scale={slideScaleValue / 10}
             rotate={slideRotateValue}
+            style={{ width: "100%" }}
+            crossOrigin="anonymous"
           />
           <div className="flex justify-center items-center gap-6 w-full px-2  sm:w-[70%]">
             <AspectRatioIcon fontSize="medium" color="grey" />
@@ -113,6 +151,7 @@ function ModalEditImage({ isOpen, src, radius, onClose, height, width }) {
               onChange={(e) => setSlideRotateValue(e.target.value)}
             />
           </div>
+
           <div className="flex w-full justify-center">
             <Controller
               name="image"
@@ -151,6 +190,7 @@ ModalEditImage.propTypes = {
   width: PropTypes.string.isRequired,
   height: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
+  fieldName: PropTypes.string.isRequired,
 };
 
 export default ModalEditImage;
