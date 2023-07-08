@@ -20,6 +20,7 @@ interface User {
   score_like?: number;
   created_at?: Date;
   is_active?: boolean | null;
+  language?: string;
 }
 
 interface UpdatePasswordUser {
