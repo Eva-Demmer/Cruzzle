@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Paper, Divider } from "@mui/material";
 import {
   HandThumbUpIcon,
@@ -10,63 +10,37 @@ import medalSilver from "../../assets/dashboard/Medal_silver.png";
 import medalBronze from "../../assets/dashboard/Medal_bronze.png";
 import AvatarDoghnut from "../avatar/AvatarDoghnut";
 import CountAnimation from "../animations/CounterAnimation";
+import { UserContext } from "../../contexts/UserContext";
 import { apiTotalIdeasCount } from "../../services/api.ideas";
 import { apiGetTotalLikesByUserId } from "../../services/api.ideaLikes";
 import { apiGetTotalCommentsReceivedByUserId } from "../../services/api.comments";
 
 function InspirationCards() {
+  const { user } = useContext(UserContext);
+  const { id } = user;
   const [totalLikes, setTotalLikes] = useState(0);
   const [totalComments, setTotalComments] = useState(0);
   const [totalIdeas, setTotalIdeas] = useState(0);
 
   useEffect(() => {
-    const fetchTotalLikes = async () => {
+    const fetchData = async () => {
       try {
-        const userId = 2; // Replace with the actual user ID
-        const response = await apiGetTotalLikesByUserId(userId);
-        setTotalLikes(response.data);
-      } catch (error) {
-        console.error(
-          "An error occurred while fetching total likes count:",
-          error
+        const totalLikesResponse = await apiGetTotalLikesByUserId(id);
+        setTotalLikes(totalLikesResponse.data);
+
+        const totalCommentsResponse = await apiGetTotalCommentsReceivedByUserId(
+          id
         );
+        setTotalComments(totalCommentsResponse.data);
+
+        const totalIdeasResponse = await apiTotalIdeasCount();
+        setTotalIdeas(totalIdeasResponse.data);
+      } catch (error) {
+        console.error("An error occurred while fetching data:", error);
       }
     };
 
-    fetchTotalLikes();
-  }, []);
-
-  useEffect(() => {
-    const fetchTotalComments = async () => {
-      try {
-        const userId = 2; // Replace with the actual user ID
-        const response = await apiGetTotalCommentsReceivedByUserId(userId);
-        setTotalComments(response.data);
-      } catch (error) {
-        console.error(
-          "An error occurred while fetching total comments count:",
-          error
-        );
-      }
-    };
-
-    fetchTotalComments();
-  }, []);
-
-  useEffect(() => {
-    const fetchTotalIdeasCount = async () => {
-      try {
-        const response = await apiTotalIdeasCount();
-        setTotalIdeas(response.data);
-      } catch (error) {
-        console.error(
-          "An error occurred while fetching total ideas count:",
-          error
-        );
-      }
-    };
-
-    fetchTotalIdeasCount();
+    fetchData();
   }, []);
 
   return (
@@ -107,16 +81,6 @@ function InspirationCards() {
           <span className="pl-3 pb-5 text-secondary-600">
             points until next level
           </span>
-          {/* <div className="my-5 flex flex-col items-center relative">
-            <HandThumbUpIcon className="w-10 text-primary-50 absolute top-[-14px] left-12 opacity-40" />
-            <span className="text-2xl">184</span>
-            <span className="pl-3 text-secondary-600">likes received</span>
-          </div> */}
-          {/* <div className="my-5 flex flex-col items-center relative">
-            <ChatBubbleBottomCenterTextIcon className="w-10 text-primary-50 absolute top-[-14px] right-10 opacity-40" />
-            <span className="text-2xl">375</span>
-            <span className="pl-3 text-secondary-600">comments received</span>
-          </div> */}
           <div className="mb-8 flex flex-col items-center relative">
             <HandThumbUpIcon className="w-24 text-primary-50 absolute top-[-18px] opacity-20" />
             <span className="text-4xl">{totalLikes}</span>
