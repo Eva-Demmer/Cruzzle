@@ -22,7 +22,7 @@ import { UserContext } from "../../contexts/UserContext";
 
 function SideLinks() {
   const { user } = useContext(UserContext);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const location = useLocation();
   const { activeMenu, setActiveMenu } = useContext(MenuContext);
   const isAdmin = [55, 88].includes(user.role.id);
@@ -87,7 +87,7 @@ function SideLinks() {
   ];
 
   return (
-    <div className="flex flex-col flex-1 mt-12 w-full">
+    <div className="flex flex-col flex-1 w-full">
       <List
         sx={{
           width: "100%",
