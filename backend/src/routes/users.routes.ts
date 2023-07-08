@@ -4,6 +4,7 @@ import {
   getUsers,
   getUserById,
   updateUser,
+  getUserByFilter,
   verifyPasswordUser,
   updatePasswordUser,
 } from "../controllers/users.controllers";
@@ -25,6 +26,7 @@ router.use(timeLog);
 // Public route
 router.post("/login", verifyPassword, login);
 router.get("/", getUsers);
+router.get("/filter", getUserByFilter);
 router.get("/:id", getUserById);
 router.post("/verifyPassword", verifyPasswordUser);
 

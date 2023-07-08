@@ -15,7 +15,7 @@ export default function FilterBtnPanelanceSearch() {
     <Button
       variant="outlined"
       color="primary"
-      className="h-10 font-normal text-base normal-case rounded-full"
+      className="h-10 font-normal text-base normal-case rounded-full min-w-[148px]"
       onClick={handleClick}
     >
       <FunnelIcon className="w-4 mr-2" />

@@ -10,6 +10,8 @@ import {
   updatePassword,
 } from "../models/user.model";
 import { verifyPassword } from "../middlewares/auth.middlewares";
+import findByFilter from "../models/userFilter.model";
+import { UserFilterQuery } from "../interfaces/users.interface";
 
 dotenv.config();
 const { JWT_SECRET } = process.env;
@@ -132,11 +134,23 @@ const verifyPasswordUser = async (req: Request, res: Response) => {
   }
 };
 
+const getUserByFilter = async (req: Request, res: Response) => {
+  const filterQuery: UserFilterQuery = req.query;
+
+  try {
+    const data = await findByFilter(filterQuery);
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
 export {
   getUsers,
   getUserById,
   login,
   updateUser,
+  getUserByFilter,
   verifyPasswordUser,
   updatePasswordUser,
 };
