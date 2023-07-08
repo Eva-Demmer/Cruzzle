@@ -21,6 +21,23 @@ const apiIdeas = async (route = "") => {
   }
 };
 
+const apiTotalIdeasCount = async () => {
+  try {
+    const response = await axios.get(`${url}${ideaRoute}total`);
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error(`Unexpected response status: ${response.status}`);
+  } catch (error) {
+    if (error.response && error.response.status === 500) {
+      console.error("Internal server error:", error);
+    } else {
+      console.error("Fetch error:", error);
+    }
+    throw error;
+  }
+};
+
 const apiIdeasNew = async (data) => {
   try {
     const response = await axios.post(`${url}${ideaRoute}`, data);
@@ -94,6 +111,7 @@ const apiUpdateIdeaById = async (id, data) => {
 
 export {
   apiIdeas,
+  apiTotalIdeasCount,
   apiArchiveIdeas,
   apiUpdateIdeaView,
   apiUpdateIdeaById,

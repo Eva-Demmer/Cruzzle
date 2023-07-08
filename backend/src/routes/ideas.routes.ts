@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import {
   getIdeas,
+  getTotalIdeasCount,
   getIdeaById,
   getIdeaByFilter,
   getIdeasCreatedToday,
@@ -22,6 +23,7 @@ const timeLog = (req: Request, res: Response, next: NextFunction) => {
 router.use(timeLog);
 
 router.get("/", getIdeas);
+router.get("/total", getTotalIdeasCount);
 router.get("/filter", getIdeaByFilter);
 router.get("/trends", getIdeasTrends);
 

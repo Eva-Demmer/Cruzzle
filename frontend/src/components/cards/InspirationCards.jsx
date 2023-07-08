@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Paper, Divider } from "@mui/material";
 import {
   HandThumbUpIcon,
@@ -9,8 +10,27 @@ import medalSilver from "../../assets/dashboard/Medal_silver.png";
 import medalBronze from "../../assets/dashboard/Medal_bronze.png";
 import AvatarDoghnut from "../avatar/AvatarDoghnut";
 import CountAnimation from "../animations/CounterAnimation";
+import { apiTotalIdeasCount } from "../../services/api.ideas";
 
 function InspirationCards() {
+  const [totalIdeas, setTotalIdeas] = useState(0);
+
+  useEffect(() => {
+    const fetchTotalIdeasCount = async () => {
+      try {
+        const response = await apiTotalIdeasCount();
+        setTotalIdeas(response.count);
+      } catch (error) {
+        console.error(
+          "An error occurred while fetching total ideas count:",
+          error
+        );
+      }
+    };
+
+    fetchTotalIdeasCount();
+  }, []);
+
   return (
     <div className="flex flex-col lg:flex-row gap-5 lg:gap-6">
       {/* Leaderboard card */}
@@ -82,7 +102,7 @@ function InspirationCards() {
               elevation={3}
               className="h-40 w-40 rounded-full flex items-center justify-center"
             >
-              <CountAnimation targetCount={10682} />
+              <CountAnimation targetCount={totalIdeas} />
             </Paper>
           </div>
           <span className=" text-secondary-600 flex items-center justify-center">

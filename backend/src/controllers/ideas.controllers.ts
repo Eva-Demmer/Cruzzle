@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import findByFilter from "../models/ideaFilter.model";
 import {
   findAll,
+  countAllIdeas,
   findTrends,
   findById,
   findByUserIdAndDate,
@@ -45,6 +46,17 @@ const getIdeas = async (req: Request, res: Response) => {
     res.status(200).json(data);
   } catch (error) {
     res.status(500).send(error);
+  }
+};
+
+const getTotalIdeasCount = async (req: Request, res: Response) => {
+  try {
+    const data = await countAllIdeas();
+    res.status(200).json({ count: data });
+  } catch (error) {
+    res
+      .status(500)
+      .send({ error: "Controller error generating total number of ideas." });
   }
 };
 
@@ -375,6 +387,7 @@ const getSizeFileByUrl = async (req: Request, res: Response): Promise<void> => {
 
 export {
   getIdeas,
+  getTotalIdeasCount,
   getIdeasTrends,
   getIdeaById,
   getIdeaByFilter,
