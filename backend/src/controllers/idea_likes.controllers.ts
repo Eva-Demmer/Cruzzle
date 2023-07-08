@@ -4,6 +4,7 @@ import {
   create,
   findAll,
   findById,
+  findTotalLikesByUserId,
   findByUserIdAndCommentId,
   remove,
 } from "../models/idea_likes.models";
@@ -26,6 +27,16 @@ const getIdeaLikesById = async (req: Request, res: Response) => {
     } else {
       res.status(404).send("Idea Likes not found");
     }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+const getTotalLikesByUserId = async (req: Request, res: Response) => {
+  const userId: number = parseInt(req.params.userId, 10);
+  try {
+    const totalLikes = await findTotalLikesByUserId(userId);
+    res.status(200).json({ totalLikes });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -65,4 +76,10 @@ const deleteIdeaLike = async (req: Request, res: Response) => {
   }
 };
 
-export { getIdeaLikes, getIdeaLikesById, createIdeaLike, deleteIdeaLike };
+export {
+  getIdeaLikes,
+  getIdeaLikesById,
+  getTotalLikesByUserId,
+  createIdeaLike,
+  deleteIdeaLike,
+};

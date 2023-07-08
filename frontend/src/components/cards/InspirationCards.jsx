@@ -11,9 +11,11 @@ import medalBronze from "../../assets/dashboard/Medal_bronze.png";
 import AvatarDoghnut from "../avatar/AvatarDoghnut";
 import CountAnimation from "../animations/CounterAnimation";
 import { apiTotalIdeasCount } from "../../services/api.ideas";
+import { apiGetTotalLikesByUserId } from "../../services/api.ideaLikes";
 
 function InspirationCards() {
   const [totalIdeas, setTotalIdeas] = useState(0);
+  const [totalLikes, setTotalLikes] = useState(0);
 
   useEffect(() => {
     const fetchTotalIdeasCount = async () => {
@@ -29,6 +31,23 @@ function InspirationCards() {
     };
 
     fetchTotalIdeasCount();
+  }, []);
+
+  useEffect(() => {
+    const fetchTotalLikes = async () => {
+      try {
+        const userId = 2; // Replace with the actual user ID
+        const response = await apiGetTotalLikesByUserId(userId);
+        setTotalLikes(response.totalLikes);
+      } catch (error) {
+        console.error(
+          "An error occurred while fetching total likes count:",
+          error
+        );
+      }
+    };
+
+    fetchTotalLikes();
   }, []);
 
   return (
@@ -81,7 +100,7 @@ function InspirationCards() {
           </div> */}
           <div className="mb-8 flex flex-col items-center relative">
             <HandThumbUpIcon className="w-24 text-primary-50 absolute top-[-18px] opacity-20" />
-            <span className="text-4xl">184</span>
+            <span className="text-4xl">{totalLikes}</span>
             <span className="pl-3 text-secondary-600">likes received</span>
           </div>
           <div className="flex flex-col items-center relative">
