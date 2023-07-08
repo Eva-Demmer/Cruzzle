@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 
 import {
   findByIdeaId,
+  findTotalCommentsReceivedByUserId,
   findAll,
   addComment,
   deleteCommentById,
@@ -26,6 +27,16 @@ const getCommentByIdeaId = async (req: Request, res: Response) => {
     } else {
       res.status(404).send("Idea not found");
     }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+const getCommentReceivedByUserId = async (req: Request, res: Response) => {
+  const userId: number = parseInt(req.params.userId, 10);
+  try {
+    const data = await findTotalCommentsReceivedByUserId(userId);
+    res.status(200).json({ data });
   } catch (error) {
     res.status(500).send(error);
   }
@@ -73,6 +84,7 @@ const deleteComment = async (req: Request, res: Response) => {
 export {
   getComments,
   getCommentByIdeaId,
+  getCommentReceivedByUserId,
   creatComment,
   deleteComment,
   updateComment,

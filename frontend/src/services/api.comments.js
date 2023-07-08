@@ -39,6 +39,24 @@ const apiGetCommentsByIdeaId = async (id) => {
   }
 };
 
+const apiGetTotalCommentsReceivedByUserId = async (userId) => {
+  try {
+    const response = await axios.get(`${url}${userRoute}user/${userId}`);
+    if (response.status === 200) {
+      console.info(response.data);
+      return response.data;
+    }
+    throw new Error(`Unexpected response status: ${response.status}`);
+  } catch (error) {
+    if (error.response && error.response.status === 500) {
+      console.error("Internal server error:", error);
+    } else {
+      console.error("Fetch error:", error);
+    }
+    throw error;
+  }
+};
+
 const apiUpdateComments = async (id, data) => {
   try {
     const response = await axios.put(`${url}${userRoute}/${id}`, data);
@@ -100,4 +118,5 @@ export {
   apiCreateComments,
   apiDeleteComments,
   apiGetCommentsByIdeaId,
+  apiGetTotalCommentsReceivedByUserId,
 };

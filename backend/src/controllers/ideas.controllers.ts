@@ -52,7 +52,7 @@ const getIdeas = async (req: Request, res: Response) => {
 const getTotalIdeasCount = async (req: Request, res: Response) => {
   try {
     const data = await countAllIdeas();
-    res.status(200).json({ count: data });
+    res.status(200).json({ data });
   } catch (error) {
     res
       .status(500)

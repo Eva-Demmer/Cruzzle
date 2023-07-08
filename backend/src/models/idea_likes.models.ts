@@ -25,14 +25,14 @@ const findById = async (id: number) => {
   }
 };
 
-const findTotalLikesByUserId = async (userId: number) => {
+const findTotalLikesReceivedByUserId = async (userId: number) => {
   try {
-    const totalLikes = await prisma.idea_like.count({
+    const data = await prisma.idea_like.count({
       where: {
         user_id: userId,
       },
     });
-    return totalLikes;
+    return data;
   } finally {
     await prisma.$disconnect();
   }
@@ -84,7 +84,7 @@ const remove = async (id: number) => {
 export {
   findAll,
   findById,
-  findTotalLikesByUserId,
+  findTotalLikesReceivedByUserId,
   create,
   remove,
   findByUserIdAndCommentId,
