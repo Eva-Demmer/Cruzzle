@@ -1,11 +1,12 @@
 import express, { Request, Response, NextFunction } from "express";
-import { uploadAvatar } from "../middlewares/multer.middlewares";
+import { uploadImage } from "../middlewares/multer.middlewares";
 import {
   login,
   getUsers,
   getUserById,
   updateUser,
   updateImage,
+  getImageHighRes,
 } from "../controllers/users.controllers";
 
 import {
@@ -23,10 +24,11 @@ const timeLog = (req: Request, res: Response, next: NextFunction) => {
 router.use(timeLog);
 
 // Public route
-// router.post("/login", verifyPassword, login);
+router.post("/login", verifyPassword, login);
 router.get("/", getUsers);
 router.get("/:id", getUserById);
-router.post("/image/:id", uploadAvatar, updateImage);
+router.post("/image/:id", uploadImage, updateImage);
+router.get("/imageHighRes", getImageHighRes);
 
 // // Protected routes
 // TODO: decomment line below when we want to protect routes

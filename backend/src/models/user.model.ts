@@ -107,8 +107,14 @@ const update = async (id: number, updatedUser: User) => {
   }
 };
 
-const updateImageById = async (id: number, imageData: object) => {
+interface UploadImage {
+  banner_url?: string;
+  avatar_url?: string;
+}
+
+const updateUserImage = async (imageData: UploadImage, id: number) => {
   try {
+    console.info(imageData);
     const data = await prisma.user.update({
       where: {
         id,
@@ -123,4 +129,4 @@ const updateImageById = async (id: number, imageData: object) => {
   }
 };
 
-export { findAll, findById, findByMail, update, updateImageById };
+export { findAll, findById, findByMail, update, updateUserImage };

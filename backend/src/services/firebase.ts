@@ -10,7 +10,10 @@ import {
 } from "firebase/storage";
 import dayjs from "dayjs";
 import config from "../config/firebase.config";
-import { UploadedFiles } from "../interfaces/uploadedfiles.interface";
+import {
+  UploadedFiles,
+  UploadedImg,
+} from "../interfaces/uploadedfiles.interface";
 
 // Initialize a firebase application
 initializeApp(config.firebaseConfig);
@@ -200,6 +203,68 @@ const getFileSize = async (url: string): Promise<number> => {
   }
 };
 
+const uploadImageToFirebase = async (
+  files: Express.Multer.File[],
+  id: number
+): Promise<{ fileName: string; url: string }[]> => {
+  const uploadPromises = files.map(async (file) => {
+    if (!Array.isArray(files)) {
+      throw new Error("Invalid files parameter. Expected an array of files.");
+    }
+    const storagePath = `users/${id}/`;
+    let fileType = "";
+
+    if (file.fieldname === "avatar") {
+      fileType = "avatar";
+    } else if (file.fieldname === "avatar_img") {
+      fileType = "avatar_img";
+    } else if (file.fieldname === "banner") {
+      fileType = "banner";
+    } else if (file.fieldname === "banner_img") {
+      fileType = "banner_img";
+    }
+
+    const ext = file.mimetype.split("/")[1];
+    const fileName = fileType;
+
+    const storageRef = ref(storage, `${storagePath}${fileName}.${ext}`);
+
+    const metadata = {
+      contentType: file.mimetype,
+    };
+
+    const snapshot = await uploadBytesResumable(
+      storageRef,
+      file.buffer,
+      metadata
+    );
+
+    const url = await getDownloadURL(snapshot.ref);
+
+    return { fileName, url };
+  });
+
+  const uploadedImages = await Promise.all(uploadPromises);
+
+  return uploadedImages;
+};
+
+const getUrlByNameAndRoute = async (route: string) => {
+  const filepath = route;
+  const fileRef = ref(storage, filepath);
+
+  try {
+    const url = await getDownloadURL(fileRef);
+    if (url) {
+      console.info(url);
+      return url;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  return null;
+};
+
 export {
   uploadToFirebase,
   uploadOneFileToFirebase,
@@ -209,4 +274,6 @@ export {
   deleteMultipleFilesInFirebase,
   decodeUrlFirebase,
   getFileSize,
+  uploadImageToFirebase,
+  getUrlByNameAndRoute,
 };

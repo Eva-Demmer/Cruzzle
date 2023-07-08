@@ -6,8 +6,13 @@ import {
   findById,
   findByMail,
   update,
-  updateImageById,
+  updateUserImage,
 } from "../models/user.model";
+
+import {
+  uploadImageToFirebase,
+  getUrlByNameAndRoute,
+} from "../services/firebase";
 import { verifyPassword } from "../middlewares/auth.middlewares";
 
 dotenv.config();
@@ -86,18 +91,73 @@ const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-const updateImage = async (req: Request, res: Response) => {
-  const id: number = parseInt(req.params.id, 10);
-  const data: object = req.body;
-  console.info(req.files);
-  console.info(id);
-
-  // try {
-  //   const updatedViews = await updateImageById(id, data);
-  //   res.status(201).json({ "Idea views updated !": updatedViews });
-  // } catch (error) {
-  //   res.status(500).json({ "Error when edit idea views:": error });
-  // }
+const getImageHighRes = async (req: Request, res: Response) => {
+  const { url } = req.body;
+  try {
+    const getUrl = await getUrlByNameAndRoute(url);
+    if (getUrl) {
+      res.status(200).json(getUrl);
+    }
+    res.status(404).send("File not found in firebase");
+  } catch (error) {
+    console.error(error);
+  }
 };
 
-export { getUsers, getUserById, login, updateUser, updateImage };
+const updateImage = async (req: Request, res: Response) => {
+  const id: number = parseInt(req.params.id, 10);
+  const files: Express.Multer.File[] = req.files as Express.Multer.File[];
+
+  try {
+    const isCropOnly = req.files?.length === 1;
+
+    if (files) {
+      if (!isCropOnly) {
+        const uploads = await uploadImageToFirebase(files, id);
+        if (uploads) {
+          const uploadBlob = uploads.filter(
+            (item) => !item.fileName.includes("_img")
+          );
+
+          const key = `${uploadBlob[0].fileName}_url`;
+          const updatedImage = { [key]: uploadBlob[0].url };
+
+          const updateImageUser = await updateUserImage(updatedImage, id);
+          if (updateImageUser) {
+            res.status(201).json(updateImageUser);
+          } else {
+            res.status(404).json({ message: "Not found user" });
+          }
+        }
+      } else {
+        const uploadABlob = files[0];
+        const upload = await uploadImageToFirebase([uploadABlob], id);
+        if (upload) {
+          const { fieldname } = uploadABlob;
+          const key = `${fieldname}_url`;
+          const updatedImage = { [key]: upload[0].url };
+
+          const updateImageUser = await updateUserImage(updatedImage, id);
+          if (updateImageUser) {
+            res.status(201).json(updateImageUser);
+          } else {
+            res.status(404).json({ message: "Not found user" });
+          }
+        } else {
+          res.status(500).json({ message: "Upload to firebase failed" });
+        }
+      }
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export {
+  getUsers,
+  getUserById,
+  login,
+  updateUser,
+  updateImage,
+  getImageHighRes,
+};

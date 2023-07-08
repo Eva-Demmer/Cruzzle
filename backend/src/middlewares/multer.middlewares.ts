@@ -60,31 +60,12 @@ const uploadFilesIdea = uploadIdea.fields([
   { name: "primaryImg", maxCount: 1 },
   { name: "attachement", maxCount: 10 },
 ]);
+
 // Avatar
-const avatarStorage = multer.diskStorage({
-  destination: "upload/",
-  filename: (req, file, cb) => {
-    const filename = `${file.fieldname}.${file.mimetype.split("/")[1]}`;
-    cb(null, filename);
-  },
-});
-const fileFilterAvatar = (
-  req: Request,
-  file: Express.Multer.File,
-  cb: FileFilterCallback
-) => {
-  if (
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpeg" ||
-    file.mimetype === "image/jpg"
-  ) {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
-const uploadAvatar = multer({
-  storage: avatarStorage,
-  fileFilter: fileFilterAvatar,
+
+const uploadImage = multer({
+  storage: multer.memoryStorage(),
+  fileFilter: imgFilter,
 }).any();
-export { upload, uploadFilesIdea, uploadAvatar };
+
+export { upload, uploadFilesIdea, uploadImage };

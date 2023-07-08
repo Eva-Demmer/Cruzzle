@@ -21,6 +21,18 @@ const apiUsers = async (route = "") => {
   }
 };
 
+const apiUserPostImage = async (data, route = "") => {
+  try {
+    const response = await axios.post(`${url}${userRoute}${route}`, data);
+    if (response) {
+      return response;
+    }
+  } catch (error) {
+    console.error("Internal server error:", error);
+  }
+  return null;
+};
+
 const apiUsersLogin = async (mail, password) => {
   try {
     const response = await axios.post(`${url}${userRoute}login`, {
@@ -67,4 +79,10 @@ const apiUpdateUser = async (id, data) => {
   }
 };
 
-export { apiUsers, apiUpdateUser, apiUserById, apiUsersLogin };
+export {
+  apiUsers,
+  apiUpdateUser,
+  apiUserById,
+  apiUsersLogin,
+  apiUserPostImage,
+};
