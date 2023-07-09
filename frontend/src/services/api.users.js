@@ -33,6 +33,27 @@ const apiUserPostImage = async (data, route = "") => {
   return null;
 };
 
+const apiUserImageByQuery = async (
+  query,
+  route = "",
+  config = {
+    responseType: "blob",
+  }
+) => {
+  try {
+    const response = await axios.get(
+      `${url}${userRoute}${route}?${query}`,
+      config
+    );
+    if (response) {
+      return response;
+    }
+  } catch (error) {
+    console.error("Error getImageByQuery:", error);
+  }
+  return null;
+};
+
 const apiUsersLogin = async (mail, password) => {
   try {
     const response = await axios.post(`${url}${userRoute}login`, {
@@ -85,4 +106,5 @@ export {
   apiUserById,
   apiUsersLogin,
   apiUserPostImage,
+  apiUserImageByQuery,
 };

@@ -1,5 +1,5 @@
 /* eslint-disable radix */
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 
@@ -12,9 +12,11 @@ import { Button, Slider } from "@mui/material";
 import UploadButton from "../styledComponents/UploadButton";
 
 import getNameFileToFirebaseLink from "../../utils/getNameFileToFirebaseLink";
-import { apiUsers, apiUserPostImage } from "../../services/api.users";
+import {
+  apiUserImageByQuery,
+  apiUserPostImage,
+} from "../../services/api.users";
 
-import { UserContext } from "../../contexts/UserContext";
 import Modal from "../modal/Modal";
 
 function ModalEditImage({
@@ -28,40 +30,38 @@ function ModalEditImage({
 }) {
   const [slideScaleValue, setSlideScaleValue] = useState(10);
   const [slideRotateValue, setSlideRotateValue] = useState(0);
-  const { user } = useContext(UserContext);
 
-  const [inputAvatarEditor, setInputAvatarEditor] = useState(src);
+  const [inputAvatarEditor, setInputAvatarEditor] = useState();
   const [image, setImage] = useState();
 
   const { id } = useParams();
   const cropRef = useRef(null);
 
-  useEffect(() => {
-    const getImageHighRes = async () => {
+  const fetchImage = async () => {
+    try {
       const filename = fieldName;
-
-      // ESSAI pour url
-      console.info(
-        `/users/${user.id}/${filename}_img.${getNameFileToFirebaseLink(
-          `${user[`${filename}_url`]}`
-        )}`
-      );
-      //
-
-      try {
-        const getUrl = await apiUsers(`imageHighRes`, {
-          url: `/users/${user.id}/${
-            user[filename]
-          }_img.${getNameFileToFirebaseLink(user[filename])}`,
-        });
-        if (getUrl) {
-          setInputAvatarEditor(getUrl);
+      const property = src;
+      const getExtensionNameHR = await getNameFileToFirebaseLink(
+        property
+      ).split(".")[1];
+      if (getExtensionNameHR) {
+        const url = `/users/${id}/${filename}_img.${getExtensionNameHR}`;
+        const response = await apiUserImageByQuery(`url=${url}`, "image");
+        if (response.data) {
+          const blob = new Blob([response.data], {
+            type: `image/${getExtensionNameHR}`,
+          });
+          const createdImg = URL.createObjectURL(blob);
+          setInputAvatarEditor(createdImg);
         }
-      } catch (error) {
-        console.error(error);
       }
-    };
-    getImageHighRes();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchImage();
   }, []);
 
   const { handleSubmit, control } = useForm();
