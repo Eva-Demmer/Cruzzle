@@ -52,7 +52,7 @@ function SideLinks() {
     },
     {
       to: "/favorits",
-      primary: "Favorits",
+      primary: "Favorites",
       icon: StarIcon,
     },
     {
