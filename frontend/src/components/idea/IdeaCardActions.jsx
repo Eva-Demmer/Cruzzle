@@ -86,11 +86,8 @@ export default function IdeaCardActions({ userId, user, id, isFavorite }) {
   );
 }
 
-IdeaCardActions.defaultProps = {
-  user: 0, // Temporaire, Evite l'erreur warning: Failed prop type: The prop `user` is marked as required in `IdeaCardActions`, but its value is `undefined`.
-};
-
 IdeaCardActions.propTypes = {
+  // eslint-disable-next-line react/require-default-props
   user: PropTypes.number,
   userId: PropTypes.number.isRequired,
   id: PropTypes.number.isRequired,

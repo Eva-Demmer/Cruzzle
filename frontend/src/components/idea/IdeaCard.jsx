@@ -67,7 +67,9 @@ export default function IdeaCard({ isMini, idea }) {
     }
   }, [smallQuery, mediumQuery, largeQuery]);
 
-  const isFavorite = favorit.some((item) => item.user_id === userId);
+  const isFavorite = favorit
+    ? favorit.some((item) => item.user_id === userId)
+    : "";
   const isDisabled = archivedAt !== null || deletedAt !== null;
   const incViews = views + 1;
 
