@@ -12,7 +12,7 @@ import AvatarDoghnut from "../avatar/AvatarDoghnut";
 import CountAnimation from "../animations/CounterAnimation";
 import { UserContext } from "../../contexts/UserContext";
 import { apiTotalIdeasCount } from "../../services/api.ideas";
-import { apiGetTotalLikesByUserId } from "../../services/api.ideaLikes";
+import { apiGetTotalLikesReceivedByUserId } from "../../services/api.ideaLikes";
 import { apiGetTotalCommentsReceivedByUserId } from "../../services/api.comments";
 
 function InspirationCards() {
@@ -22,21 +22,39 @@ function InspirationCards() {
   const [totalComments, setTotalComments] = useState(0);
   const [totalIdeas, setTotalIdeas] = useState(0);
 
+  // fetch number of total likes and comments received by specific user
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const totalLikesResponse = await apiGetTotalLikesByUserId(id);
+        const totalLikesResponse = await apiGetTotalLikesReceivedByUserId(id);
         setTotalLikes(totalLikesResponse.data);
 
         const totalCommentsResponse = await apiGetTotalCommentsReceivedByUserId(
           id
         );
         setTotalComments(totalCommentsResponse.data);
+      } catch (error) {
+        console.error(
+          "An error occurred while fetching total likes or comments data:",
+          error
+        );
+      }
+    };
 
+    fetchData();
+  }, []);
+
+  // fetch number of ideas created on platform
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
         const totalIdeasResponse = await apiTotalIdeasCount();
         setTotalIdeas(totalIdeasResponse.data);
       } catch (error) {
-        console.error("An error occurred while fetching data:", error);
+        console.error(
+          "An error occurred while fetching total ideas data:",
+          error
+        );
       }
     };
 

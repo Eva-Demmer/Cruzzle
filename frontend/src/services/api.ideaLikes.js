@@ -21,7 +21,7 @@ const apiGetIdeaLikesByIdeaId = async (id) => {
   }
 };
 
-const apiGetTotalLikesByUserId = async (userId) => {
+const apiGetTotalLikesReceivedByUserId = async (userId) => {
   try {
     const response = await axios.get(`${url}${userRoute}/users/${userId}`);
     if (response.status === 200) {
@@ -83,7 +83,7 @@ const apiCreateIdeaLikes = async (userId, ideaId) => {
 
 export {
   apiGetIdeaLikesByIdeaId,
-  apiGetTotalLikesByUserId,
+  apiGetTotalLikesReceivedByUserId,
   apiDeleteIdeaLikesById,
   apiCreateIdeaLikes,
 };
