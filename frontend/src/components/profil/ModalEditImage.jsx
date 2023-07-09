@@ -21,12 +21,15 @@ import Modal from "../modal/Modal";
 
 function ModalEditImage({
   isOpen,
+  setIsOpen,
   src,
   radius,
   onClose,
   height,
   width,
   fieldName,
+  blobImg,
+  setBlobImg,
 }) {
   const [slideScaleValue, setSlideScaleValue] = useState(10);
   const [slideRotateValue, setSlideRotateValue] = useState(0);
@@ -52,6 +55,7 @@ function ModalEditImage({
             type: `image/${getExtensionNameHR}`,
           });
           const createdImg = URL.createObjectURL(blob);
+          setBlobImg(createdImg);
           setInputAvatarEditor(createdImg);
         }
       }
@@ -61,8 +65,12 @@ function ModalEditImage({
   };
 
   useEffect(() => {
-    fetchImage();
-  }, []);
+    if (isOpen && !blobImg) {
+      fetchImage();
+    } else {
+      setInputAvatarEditor(blobImg);
+    }
+  }, [isOpen]);
 
   const { handleSubmit, control } = useForm();
 
@@ -87,7 +95,10 @@ function ModalEditImage({
     try {
       const postImage = apiUserPostImage(formData, `image/${id}`);
       if (postImage) {
+        // Ajouter une alert pour dire que l'image est modifié.
         console.info(postImage);
+        setBlobImg(null);
+        setIsOpen(false);
       } else {
         console.info("gerer les erreurs");
       }
@@ -185,12 +196,19 @@ function ModalEditImage({
 
 ModalEditImage.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  setIsOpen: PropTypes.func.isRequired,
+  blobImg: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])]),
+  setBlobImg: PropTypes.func.isRequired,
   src: PropTypes.string.isRequired,
   radius: PropTypes.string.isRequired,
   width: PropTypes.string.isRequired,
   height: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   fieldName: PropTypes.string.isRequired,
+};
+
+ModalEditImage.defaultProps = {
+  blobImg: null,
 };
 
 export default ModalEditImage;

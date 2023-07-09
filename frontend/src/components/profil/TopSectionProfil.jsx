@@ -28,6 +28,8 @@ function TopSectionProfil() {
   const [isOpenAvatar, setIsOpenAvatar] = useState(false);
   const [isOpenBanner, setIsOpenBanner] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const [blobAvatar, setBloblobAvatar] = useState(null);
+  const [blobBanner, setBloblobBanner] = useState(null);
   const {
     firstname,
     lastname,
@@ -126,8 +128,11 @@ function TopSectionProfil() {
       {isOpenAvatar && (
         <ModalEditImage
           isOpen={isOpenAvatar}
+          setIsOpen={setIsOpenAvatar}
           src={avatarUrl}
           onClose={() => toggleModal(isOpenAvatar, setIsOpenAvatar)}
+          blobImg={blobAvatar}
+          setBlobImg={setBloblobAvatar}
           fieldName="avatar"
           width="160"
           height="160"
@@ -137,8 +142,11 @@ function TopSectionProfil() {
       {isOpenBanner && (
         <ModalEditImage
           isOpen={isOpenBanner}
+          setIsOpen={setIsOpenBanner}
           src={bannerUrl}
           onClose={() => toggleModal(isOpenBanner, setIsOpenBanner)}
+          blobImg={blobBanner}
+          setBlobImg={setBloblobBanner}
           fieldName="banner"
           width="1136"
           height="256"
