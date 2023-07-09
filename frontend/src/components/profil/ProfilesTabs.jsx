@@ -8,6 +8,7 @@ import AllyProps from "../tabs/AllyProps";
 import PuzzleIcon from "../../assets/PuzzleIcon.svg";
 import "dayjs/locale/fr";
 import { UserProfileContext } from "../../contexts/UserProfile";
+import PuzzlesTab from "./puzzles/PuzzlesTab";
 
 export default function ProfilesTabs() {
   const { user } = useContext(UserProfileContext);
@@ -121,7 +122,7 @@ export default function ProfilesTabs() {
           à remplir
         </TabPanel>
         <TabPanel value={value} index={3} className="w-full">
-          à remplir
+          <PuzzlesTab />
         </TabPanel>
       </Box>
     </div>
