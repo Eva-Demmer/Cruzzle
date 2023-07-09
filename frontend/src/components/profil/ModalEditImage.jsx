@@ -8,7 +8,7 @@ import RotateRightIcon from "@mui/icons-material/RotateRight";
 import AspectRatioIcon from "@mui/icons-material/AspectRatio";
 
 import { Controller, useForm } from "react-hook-form";
-import { Button, Slider } from "@mui/material";
+import { Button, Slider, Alert } from "@mui/material";
 import UploadButton from "../styledComponents/UploadButton";
 
 import getNameFileToFirebaseLink from "../../utils/getNameFileToFirebaseLink";
@@ -28,6 +28,9 @@ function ModalEditImage({
 }) {
   const [slideScaleValue, setSlideScaleValue] = useState(10);
   const [slideRotateValue, setSlideRotateValue] = useState(0);
+
+  const [successAlert, setSuccessAlert] = useState(false);
+  const [warningAlert, setWarningAlert] = useState(false);
   const { user } = useContext(UserContext);
 
   const [inputAvatarEditor, setInputAvatarEditor] = useState(src);
@@ -42,18 +45,20 @@ function ModalEditImage({
 
       // ESSAI pour url
       console.info(
-        `/users/${user.id}/${filename}_img.${getNameFileToFirebaseLink(
-          `${user[`${filename}_url`]}`
-        )}`
+        "ma route",
+        `/users/${user.id}/${filename}_img.${
+          getNameFileToFirebaseLink(`${user[`${filename}_url`]}`).split(".")[1]
+        }`
       );
       //
 
       try {
         const getUrl = await apiUsers(`imageHighRes`, {
-          url: `/users/${user.id}/${
-            user[filename]
-          }_img.${getNameFileToFirebaseLink(user[filename])}`,
+          url: `/users/${user.id}/${user[filename]}_img.${
+            getNameFileToFirebaseLink(user[filename]).split(".")[1]
+          }`,
         });
+
         if (getUrl) {
           setInputAvatarEditor(getUrl);
         }
@@ -86,10 +91,10 @@ function ModalEditImage({
 
     try {
       const postImage = apiUserPostImage(formData, `image/${id}`);
-      if (postImage) {
-        console.info(postImage);
+      if ((await postImage).status === 201) {
+        setSuccessAlert(true);
       } else {
-        console.info("gerer les erreurs");
+        setWarningAlert(true);
       }
     } catch (error) {
       console.error(error);
@@ -98,6 +103,25 @@ function ModalEditImage({
 
   return (
     <Modal saveButton={false} isOpen={isOpen} onClose={onClose}>
+      {successAlert && (
+        <Alert
+          onClose={() => {
+            setSuccessAlert(false);
+          }}
+        >
+          Your {fieldName} is successfully changed!
+        </Alert>
+      )}{" "}
+      {warningAlert && (
+        <Alert
+          onClose={() => {
+            setWarningAlert(false);
+          }}
+          severity="warning"
+        >
+          Something wrong happened.
+        </Alert>
+      )}
       <div className="flex flex-col items-center justify-center w-full">
         <form
           className="flex flex-col items-center w-full"
