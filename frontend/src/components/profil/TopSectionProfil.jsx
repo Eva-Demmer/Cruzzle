@@ -154,10 +154,12 @@ function TopSectionProfil() {
         />
       )}
 
-      <ModalEditProfil
-        open={openEdit}
-        close={() => toggleModal(openEdit, setOpenEdit)}
-      />
+      {openEdit && (
+        <ModalEditProfil
+          open={openEdit}
+          close={() => toggleModal(openEdit, setOpenEdit)}
+        />
+      )}
     </div>
   );
 }
