@@ -51,12 +51,12 @@ function HeaderNav() {
   const languages = [
     {
       code: "GB",
-      value: "EN",
+      value: "en",
       language: "English",
     },
     {
       code: "FR",
-      value: "FR",
+      value: "fr",
       language: "Français",
     },
   ];
@@ -126,7 +126,7 @@ function HeaderNav() {
                   aria-expanded={open ? "true" : undefined}
                 >
                   <Badge
-                    badgeContent={language}
+                    badgeContent={language.toUpperCase()}
                     sx={{
                       "& .MuiBadge-badge": {
                         color: "#FFFFFF",

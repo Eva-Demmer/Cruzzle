@@ -54,12 +54,12 @@ function Settings() {
   const languages = [
     {
       code: "GB",
-      value: "EN",
+      value: "en",
       language: "English",
     },
     {
       code: "FR",
-      value: "FR",
+      value: "fr",
       language: "Français",
     },
   ];

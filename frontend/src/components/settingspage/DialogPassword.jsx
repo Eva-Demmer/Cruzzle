@@ -230,7 +230,7 @@ function DialogPassword({ open, onClose }) {
               onClick={handleClose}
               autoFocus
             >
-              {t("pages.settings.dialogPassword.button.cancel")}
+              {t("buttons.cancel")}
             </Button>
             <Button
               variant="contained"
@@ -242,7 +242,7 @@ function DialogPassword({ open, onClose }) {
                 "&:active, &.Mui-focusVisible": { boxShadow: 4 },
               }}
             >
-              {t("pages.settings.dialogPassword.button.confirm")}
+              {t("buttons.confirm")}
             </Button>
           </DialogActions>
         </form>
