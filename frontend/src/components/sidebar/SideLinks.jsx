@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -26,6 +26,7 @@ function SideLinks() {
   const location = useLocation();
   const { activeMenu, setActiveMenu } = useContext(MenuContext);
   const isAdmin = [55, 88].includes(user.role.id);
+  const navigate = useNavigate();
 
   const iconSize = (item) => {
     return `h-6 w-6 ${location.pathname === item.to ? "text-primary-50" : ""}`;
@@ -35,8 +36,9 @@ function SideLinks() {
     setOpen(!open);
   };
 
-  const handleGoTo = () => {
+  const handleGoTo = (link) => {
     setActiveMenu(!activeMenu);
+    navigate(link);
   };
 
   const navlinks = [
@@ -102,9 +104,7 @@ function SideLinks() {
                 (!item.subLink && item.admin && isAdmin)) && (
                 <ListItemButton
                   key={item.primary}
-                  component={Link}
-                  to={item.to}
-                  onClick={() => handleGoTo}
+                  onClick={() => handleGoTo(item.to)}
                   className={`w-full ${
                     location.pathname === item.to
                       ? "Mui-selected text-primary-50"
@@ -137,8 +137,7 @@ function SideLinks() {
                         <ListItemButton
                           sx={{ pl: 8 }}
                           key={`subitem ${subitem.to}`}
-                          component={Link}
-                          to={subitem.to || ""}
+                          onClick={() => handleGoTo(subitem.to || "")}
                           className={` ${
                             location.pathname === subitem.to
                               ? "Mui-selected text-primary-50"

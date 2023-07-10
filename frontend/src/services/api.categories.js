@@ -7,7 +7,6 @@ const apiCategories = async (route = "") => {
   try {
     const response = await axios.get(`${url}${userRoute}${route}`);
     if (response.status === 200) {
-      console.info(response.data);
       return response.data;
     }
     throw new Error(`Unexpected response status: ${response.status}`);

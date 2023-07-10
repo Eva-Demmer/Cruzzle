@@ -19,7 +19,7 @@ function IdeaCloud() {
             id="cloudshare"
             label="Cloud"
             placeholder="Dropbox, Google drive..."
-            className="w-full sm:w-[720px] my-2"
+            className="w-full lg:w-[720px] my-2"
             InputLabelProps={{ shrink: true }}
             defaultValue={value}
             onChange={onChange}

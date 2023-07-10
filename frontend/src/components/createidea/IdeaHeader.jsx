@@ -100,7 +100,7 @@ function IdeaHeader() {
             id="title"
             label="Title"
             placeholder="Title of idea"
-            className="w-full sm:w-[720px] my-2"
+            className="w-full lg:w-[720px] my-2"
             InputLabelProps={{ shrink: true }}
             inputProps={{ maxLength: 255 }}
             value={value}
@@ -113,9 +113,9 @@ function IdeaHeader() {
         <img
           src={primaryImg ? getImageSource(primaryImg) : addPicture}
           alt="standard"
-          className="w-[192px] h-[149px] sm:w-[212px] sm:h-[174px]"
+          className="w-[192px] h-[149px] lg:w-[212px] lg:h-[174px]"
         />
-        <div className="w-1/2 sm:w-auto mx-2 flex flex-col justify-center items-center sm:mx-6">
+        <div className="w-1/2 lg:w-auto mx-2 flex flex-col justify-center items-center lg:mx-6">
           <Controller
             name="primaryImg"
             control={control}
@@ -165,7 +165,7 @@ function IdeaHeader() {
             onChange={onChange}
             inputProps={{ maxLength: 255 }}
             placeholder="Leave a few words"
-            className="w-full sm:w-[720px] my-4"
+            className="w-full lg:w-[720px] my-4"
             InputLabelProps={{ shrink: true }}
           />
         )}
@@ -179,7 +179,7 @@ function IdeaHeader() {
           isOptionEqualToValue={(option, value) => option.id === value.id}
           disableCloseOnSelect
           getOptionLabel={(option) => option.label}
-          className="w-full sm:w-[720px] my-4"
+          className="w-full lg:w-[720px] my-4"
           disablePortal
           onChange={(event, selectedOptions) => {
             handleCategoryChange(event, selectedOptions);
