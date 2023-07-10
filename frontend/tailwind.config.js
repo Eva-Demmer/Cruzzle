@@ -11,7 +11,7 @@ module.exports = {
         2000: "2000ms",
       },
       dropShadow: {
-        top: "0px -8px 16px rgba(0, 0, 0, 0.10)",
+        top: "0px -8px 16px rgba(255, 255, 255, 0.90)",
       },
       colors: {
         primary: {

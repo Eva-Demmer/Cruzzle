@@ -25,17 +25,19 @@ function TopSectionProfil() {
   const isCurrentUserProfile =
     parseInt(id, 10) === parseInt(currentUser.id, 10);
   const smallQuery = useMediaQuery(sm);
+
   const [isOpenAvatar, setIsOpenAvatar] = useState(false);
   const [isOpenBanner, setIsOpenBanner] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [blobAvatar, setBloblobAvatar] = useState(null);
   const [blobBanner, setBloblobBanner] = useState(null);
+
   const [alert, setAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState(false);
-  const [alertSeverity, setAlertSeverity] = useState(false);
+  const [alertSeverity, setAlertSeverity] = useState(null);
 
-  const handleCloseAlert = () => {
-    setAlert(false);
+  const handleAlert = () => {
+    setAlert(!alert);
   };
 
   const {
@@ -137,6 +139,7 @@ function TopSectionProfil() {
       </div>
       {isOpenAvatar && (
         <ModalEditImage
+          handleAlert={handleAlert}
           setAlertSeverity={setAlertSeverity}
           setAlertMessage={setAlertMessage}
           isOpen={isOpenAvatar}
@@ -153,9 +156,9 @@ function TopSectionProfil() {
       )}
       {isOpenBanner && (
         <ModalEditImage
-          setAlert
-          setAlertSeverity
-          setAlertMessage
+          handleAlert={handleAlert}
+          setAlertSeverity={setAlertSeverity}
+          setAlertMessage={setAlertMessage}
           isOpen={isOpenBanner}
           setIsOpen={setIsOpenBanner}
           src={bannerUrl}
@@ -164,7 +167,7 @@ function TopSectionProfil() {
           setBlobImg={setBloblobBanner}
           fieldName="banner"
           width="1136"
-          height="256"
+          height="356"
           radius="0"
         />
       )}
@@ -177,14 +180,10 @@ function TopSectionProfil() {
       <Snackbar
         open={alert}
         autoHideDuration={3000}
-        onClose={handleCloseAlert}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        onClose={handleAlert}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       >
-        <Alert
-          variant="filled"
-          severity={alertSeverity}
-          onClose={handleCloseAlert}
-        >
+        <Alert variant="filled" severity={alertSeverity} onClose={handleAlert}>
           {alertMessage}
         </Alert>
       </Snackbar>

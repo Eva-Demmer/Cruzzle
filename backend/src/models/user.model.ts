@@ -150,6 +150,10 @@ const updateUserImage = async (imageData: UploadImage, id: number) => {
         id,
       },
       data: imageData,
+      select: {
+        avatar_url: true,
+        banner_url: true,
+      },
     });
     return data;
   } catch (error) {

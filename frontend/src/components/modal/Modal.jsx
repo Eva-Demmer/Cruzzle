@@ -34,7 +34,7 @@ export default function Modal({
         <div className="flex flex-col gap-4 px-2 pt-8 pb-8 sm:px-8 sm:pt-8 sm:pb-10">
           {children}
         </div>
-        <div className="flex gap-6 justify-center py-4 bg-white drop-shadow-top sticky bottom-0 z-[100] sm:py-6">
+        <div className="flex gap-6 justify-center py-4 bg-white border-1 border-solid border-gray-100 drop-shadow-top sticky bottom-0 z-[100] sm:py-6">
           {saveButton && (
             <Button
               className="rounded-3xl"

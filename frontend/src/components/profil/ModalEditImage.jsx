@@ -1,17 +1,22 @@
 /* eslint-disable radix */
-import React, { useState, useRef, useEffect } from "react";
-import PropTypes from "prop-types";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import AvatarEditor from "react-avatar-editor";
 import RotateRightIcon from "@mui/icons-material/RotateRight";
 import AspectRatioIcon from "@mui/icons-material/AspectRatio";
 
 import { Controller, useForm } from "react-hook-form";
-import { Button, Slider } from "@mui/material";
+import { Button, Slider, Skeleton, useMediaQuery } from "@mui/material";
 import UploadButton from "../styledComponents/UploadButton";
 
 import getNameFileToFirebaseLink from "../../utils/getNameFileToFirebaseLink";
+import { UserProfileContext } from "../../contexts/UserProfile";
+import { UserContext } from "../../contexts/UserContext";
+
+import { sm } from "../../utils/mediaQueries";
+
 import {
   apiUserImageByQuery,
   apiUserPostImage,
@@ -32,18 +37,33 @@ function ModalEditImage({
   setBlobImg,
   setAlertMessage,
   setAlertSeverity,
-  setAlert,
+  handleAlert,
 }) {
+  console.info(fieldName);
   const [slideScaleValue, setSlideScaleValue] = useState(10);
   const [slideRotateValue, setSlideRotateValue] = useState(0);
 
-  // const { user } = useContext(UserContext);
+  const { id } = useParams();
+  const { setUser: setCurrentUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserProfileContext);
 
   const [inputAvatarEditor, setInputAvatarEditor] = useState();
   const [image, setImage] = useState();
 
-  const { id } = useParams();
   const cropRef = useRef(null);
+
+  const smallQuery = useMediaQuery(sm.query);
+  const heightRes = () => {
+    let heightCalc = null;
+    if (fieldName === "avatar") {
+      heightCalc = parseInt(height);
+    } else if (fieldName === "banner" && !smallQuery) {
+      heightCalc = parseInt(height - 200);
+    } else if (fieldName === "banner" && smallQuery) {
+      heightCalc = parseInt(height);
+    }
+    return heightCalc;
+  };
 
   const fetchImage = async () => {
     try {
@@ -71,6 +91,7 @@ function ModalEditImage({
   };
 
   useEffect(() => {
+    console.info(id);
     if (isOpen && !blobImg) {
       fetchImage();
     } else {
@@ -83,7 +104,6 @@ function ModalEditImage({
   const handleImgChange = (e) => {
     e.preventDefault();
     setInputAvatarEditor(URL.createObjectURL(e.target.files[0]));
-    console.info(e.target.files[0]);
     setImage(e.target.files[0]);
   };
 
@@ -102,16 +122,21 @@ function ModalEditImage({
     setSlideRotateValue(0);
 
     try {
-      const postImage = apiUserPostImage(formData, `image/${id}`);
+      const postImage = await apiUserPostImage(formData, `image/${id}`);
       if (postImage) {
-        console.info(postImage);
         setBlobImg(null);
-        setIsOpen(false);
         setAlertMessage(`Your ${fieldName} is updated`);
         setAlertSeverity("success");
-        setAlert(true);
+        handleAlert(true);
+        const updatedUser = {
+          ...user,
+          [`${fieldName}_url`]: postImage.data[`${fieldName}_url`],
+        };
+        setUser(updatedUser);
+        setCurrentUser(updatedUser);
+        setIsOpen(false);
       } else {
-        setAlert(true);
+        handleAlert(true);
         setAlertMessage(`Something wrong happened`);
         setAlertSeverity("warning");
       }
@@ -127,24 +152,41 @@ function ModalEditImage({
           className="flex flex-col items-center w-full"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <AvatarEditor
-            className="object-contain"
-            ref={cropRef}
-            image={inputAvatarEditor}
-            width={parseInt(width)}
-            height={parseInt(height)}
-            border={50}
-            borderRadius={parseInt(radius)}
-            color={[255, 255, 255, 0.5]}
-            scale={slideScaleValue / 10}
-            rotate={slideRotateValue}
-            style={{ width: "100%" }}
-            crossOrigin="anonymous"
-          />
-          <div className="flex justify-center items-center gap-6 w-full px-2  sm:w-[70%]">
+          {!inputAvatarEditor && (
+            <Skeleton
+              animation="wave"
+              variant="rectangular"
+              width={fieldName === "avatar" ? 160 : "100%"}
+              height={fieldName === "avatar" ? 160 : 200}
+              style={{
+                marginRight: 16,
+                marginLeft: 16,
+              }}
+            />
+          )}
+          {inputAvatarEditor && (
+            <AvatarEditor
+              className="object-contain"
+              ref={cropRef}
+              image={inputAvatarEditor}
+              width={parseInt(width)}
+              height={parseInt(height)}
+              border={50}
+              borderRadius={parseInt(radius)}
+              color={[0o0, 0o0, 0o0, 0.3]}
+              backgroundColor="#ffffff"
+              scale={slideScaleValue / 10}
+              rotate={slideRotateValue}
+              style={{
+                width: "100%",
+                height: heightRes(),
+              }}
+              crossOrigin="anonymous"
+            />
+          )}
+          <div className="flex justify-center items-center gap-6 w-full px-2  pt-8 sm:w-[70%]">
             <AspectRatioIcon fontSize="medium" color="grey" />
             <Slider
-              className="pt-6"
               min={10}
               max={50}
               sx={{
@@ -210,7 +252,7 @@ function ModalEditImage({
 ModalEditImage.propTypes = {
   setAlertMessage: PropTypes.func.isRequired,
   setAlertSeverity: PropTypes.func.isRequired,
-  setAlert: PropTypes.func.isRequired,
+  handleAlert: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
   setIsOpen: PropTypes.func.isRequired,
   blobImg: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])]),
