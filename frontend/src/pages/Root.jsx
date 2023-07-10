@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useContext, useLayoutEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import Sidebar from "../components/sidebar/Sidebar";
@@ -15,6 +15,7 @@ function Root() {
   const { activeMenu, setActiveMenu } = useContext(MenuContext);
   const { divRef } = useContext(ScrollContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const setCurrentUserIntoUserContext = (token) => {
     const parts = token.split(".");
@@ -36,7 +37,9 @@ function Root() {
     const token = localStorage.getItem("token");
     if (token) {
       setCurrentUserIntoUserContext(token);
-      navigate("/dashboard");
+      if (location.pathname === "/") {
+        navigate("/dashboard");
+      }
     } else {
       navigate("/login");
     }
