@@ -366,3 +366,21 @@ VALUES
   (2, 1),
   (2, 2);
 
+
+
+CREATE TABLE `notification_idea` (
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `idea_id` integer NOT NULL,
+  `user_id` integer NOT NULL,
+  `type` varchar(255) NOT null,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `red_at` datetime DEFAULT null,
+  FOREIGN KEY (`idea_id`) REFERENCES `idea` (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+);
+INSERT INTO `notification_idea` (`idea_id`, `user_id`, `type`)
+VALUES
+  (1, 2, "like"),
+  (1, 2, "comment"),
+  (2, 3, "like"),
+  (2, 4, "like");
