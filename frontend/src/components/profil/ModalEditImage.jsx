@@ -62,6 +62,7 @@ function ModalEditImage({
           const createdImg = URL.createObjectURL(blob);
           setBlobImg(createdImg);
           setInputAvatarEditor(createdImg);
+          setImage(createdImg);
         }
       }
     } catch (error) {
@@ -82,11 +83,14 @@ function ModalEditImage({
   const handleImgChange = (e) => {
     e.preventDefault();
     setInputAvatarEditor(URL.createObjectURL(e.target.files[0]));
+    console.info(e.target.files[0]);
     setImage(e.target.files[0]);
   };
 
   const onSubmit = async () => {
-    const dataUrl = cropRef.current.getImageScaledToCanvas().toDataURL();
+    const dataUrl = cropRef.current
+      .getImageScaledToCanvas()
+      .toDataURL(image.type);
     const result = await fetch(dataUrl);
     const blob = await result.blob();
 
