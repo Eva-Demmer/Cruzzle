@@ -29,7 +29,6 @@ import AdminIdeas from "./pages/admin/AdminIdeas";
 import AdminCategories from "./pages/admin/AdminCategories";
 
 import Settings from "./pages/Settings";
-import Search from "./pages/Search";
 
 import "./styles/main.scss";
 import AlertToastProvider from "./contexts/AlertToastContext";
@@ -102,10 +101,6 @@ const router = createBrowserRouter([
       {
         path: "settings/",
         element: <Settings />,
-      },
-      {
-        path: "search/",
-        element: <Search />,
       },
     ],
   },

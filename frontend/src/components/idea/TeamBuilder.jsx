@@ -43,10 +43,10 @@ export default function TeamBuilder({ list, onChange, getOptions }) {
 
   return (
     <div
-      className="flex flex-col items-center w-full gap-4 sm:flex-row sm:justify-start sm:items-start sm:gap-8"
+      className="flex flex-col items-center w-full gap-4 lg:flex-row lg:justify-start lg:items-start lg:gap-8"
       aria-label="list-button"
     >
-      <div className="w-full sm:w-1/2 lg:max-w-[400px]">
+      <div className="w-full lg:w-1/2 lg:max-w-[400px]">
         <Autocomplete
           disableCloseOnSelect
           multiple

@@ -175,7 +175,7 @@ function Settings() {
                     color="primary"
                     type="submit"
                     size="large"
-                    className="flex rounded-full mx-2 min-w-[122px] my-2 self-end"
+                    className="flex rounded-full mx-2 min-w-[122px] my-2 self-center sm:self-end"
                     sx={{
                       boxShadow: 1,
                       "&:hover": { boxShadow: 2 },

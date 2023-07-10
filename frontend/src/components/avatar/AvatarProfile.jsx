@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { Avatar, Paper } from "@mui/material";
 import { UserContext } from "../../contexts/UserContext";
 import AvatarDoghnut from "./AvatarDoghnut";
+import { getUserLevelObject } from "../../utils/gamification";
 
 function AvatarProfile() {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
+  const userGamification = getUserLevelObject(user);
 
   return (
     <div className="flex flex-col items-center mt-6 -mx-2">
@@ -26,7 +28,7 @@ function AvatarProfile() {
           className="rounded-full absolute bottom-[-16px] w-14 h-14 bg-primary-900 z-20"
         >
           <Avatar alt="score" className="bg-transparent h-full w-full">
-            {10}
+            {userGamification.currentLevel}
           </Avatar>
         </Paper>
       </Paper>
