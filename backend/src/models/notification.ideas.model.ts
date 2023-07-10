@@ -76,8 +76,7 @@ const updateById = async (id: number, item: NotificationIdea) => {
         idea_id: item.idea_id,
         user_id: item.user_id,
         type: item.type,
-        created_at: item.created_at,
-        red_at: item.red_at,
+        red_at: item.red_at === null ? null : dayjs(item.red_at).toISOString(),
       },
     });
     return data;
