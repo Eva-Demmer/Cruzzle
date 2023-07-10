@@ -7,6 +7,9 @@ import adminRoutes from "./admin.routes";
 import commentsRoutes from "./comments.routes";
 import commmentLikesRoutes from "./comments_likes.routes";
 import ideaLikesRoutes from "./idea_likes.routes";
+import agenciesRoutes from "./agencies.routes";
+import positionsRoutes from "./positions.routes";
+import rolesRoutes from "./roles.routes";
 
 const app: Application = express();
 
@@ -22,6 +25,9 @@ app.use("/api/categories", categoriesRoutes);
 app.use("/api/comments", commentsRoutes);
 app.use("/api/likes", commmentLikesRoutes);
 app.use("/api/ideas/likes", ideaLikesRoutes);
+app.use("/api/agencies", agenciesRoutes);
+app.use("/api/positions", positionsRoutes);
+app.use("/api/roles", rolesRoutes);
 
 app.use("/api/admin", adminRoutes);
 

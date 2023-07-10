@@ -109,19 +109,21 @@ function TopSectionProfil() {
           <MapPinIcon className="h-6 w-6 text-secondary-600" />
           <p className="ml-1 font-medium text-secondary-600">{agencyName}</p>
         </div>
-        <div className="flex justify-start items-center">
-          <LinkIcon className="h-6 w-6 text-secondary-600" />
-          <p className="ml-1 font-medium">
-            <a
-              href={link}
-              className="text-bg-primary-900"
-              target="_blank"
-              rel="noreferrer"
-            >
-              {link}
-            </a>
-          </p>
-        </div>
+        {link && (
+          <div className="flex justify-start items-center">
+            <LinkIcon className="h-6 w-6 text-secondary-600" />
+            <p className="ml-1 font-medium">
+              <a
+                href={link}
+                className="text-bg-primary-900"
+                target="_blank"
+                rel="noreferrer"
+              >
+                {link}
+              </a>
+            </p>
+          </div>
+        )}
       </div>
       {avatarUrl !== undefined ? (
         <>

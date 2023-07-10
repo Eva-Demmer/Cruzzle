@@ -5,6 +5,7 @@ import {
   getUsers,
   getUserById,
   updateUser,
+  getUserByFilter,
   updateImage,
   getImageHighRes,
 } from "../controllers/users.controllers";
@@ -26,6 +27,7 @@ router.use(timeLog);
 // Public route
 router.post("/login", verifyPassword, login);
 router.get("/", getUsers);
+router.get("/filter", getUserByFilter);
 router.get("/:id", getUserById);
 router.post("/image/:id", uploadImage, updateImage);
 router.get("/imageHighRes", getImageHighRes);
