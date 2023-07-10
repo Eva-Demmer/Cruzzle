@@ -1,5 +1,5 @@
 /* eslint-disable radix */
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 
@@ -8,66 +8,74 @@ import RotateRightIcon from "@mui/icons-material/RotateRight";
 import AspectRatioIcon from "@mui/icons-material/AspectRatio";
 
 import { Controller, useForm } from "react-hook-form";
-import { Button, Slider, Alert } from "@mui/material";
+import { Button, Slider } from "@mui/material";
 import UploadButton from "../styledComponents/UploadButton";
 
 import getNameFileToFirebaseLink from "../../utils/getNameFileToFirebaseLink";
-import { apiUsers, apiUserPostImage } from "../../services/api.users";
+import {
+  apiUserImageByQuery,
+  apiUserPostImage,
+} from "../../services/api.users";
 
-import { UserContext } from "../../contexts/UserContext";
 import Modal from "../modal/Modal";
 
 function ModalEditImage({
   isOpen,
+  setIsOpen,
   src,
   radius,
   onClose,
   height,
   width,
   fieldName,
+  blobImg,
+  setBlobImg,
+  setAlertMessage,
+  setAlertSeverity,
+  setAlert,
 }) {
   const [slideScaleValue, setSlideScaleValue] = useState(10);
   const [slideRotateValue, setSlideRotateValue] = useState(0);
 
-  const [successAlert, setSuccessAlert] = useState(false);
-  const [warningAlert, setWarningAlert] = useState(false);
-  const { user } = useContext(UserContext);
+  // const { user } = useContext(UserContext);
 
-  const [inputAvatarEditor, setInputAvatarEditor] = useState(src);
+  const [inputAvatarEditor, setInputAvatarEditor] = useState();
   const [image, setImage] = useState();
 
   const { id } = useParams();
   const cropRef = useRef(null);
 
-  useEffect(() => {
-    const getImageHighRes = async () => {
+  const fetchImage = async () => {
+    try {
       const filename = fieldName;
-
-      // ESSAI pour url
-      console.info(
-        "ma route",
-        `/users/${user.id}/${filename}_img.${
-          getNameFileToFirebaseLink(`${user[`${filename}_url`]}`).split(".")[1]
-        }`
-      );
-      //
-
-      try {
-        const getUrl = await apiUsers(`imageHighRes`, {
-          url: `/users/${user.id}/${user[filename]}_img.${
-            getNameFileToFirebaseLink(user[filename]).split(".")[1]
-          }`,
-        });
-
-        if (getUrl) {
-          setInputAvatarEditor(getUrl);
+      const property = src;
+      const getExtensionNameHR = await getNameFileToFirebaseLink(
+        property
+      ).split(".")[1];
+      if (getExtensionNameHR) {
+        const url = `/users/${id}/${filename}_img.${getExtensionNameHR}`;
+        const response = await apiUserImageByQuery(`url=${url}`, "image");
+        if (response.data) {
+          const blob = new Blob([response.data], {
+            type: `image/${getExtensionNameHR}`,
+          });
+          const createdImg = URL.createObjectURL(blob);
+          setBlobImg(createdImg);
+          setInputAvatarEditor(createdImg);
         }
-      } catch (error) {
-        console.error(error);
       }
-    };
-    getImageHighRes();
-  }, []);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen && !blobImg) {
+      fetchImage();
+    } else {
+      setInputAvatarEditor(blobImg);
+    }
+  }, [isOpen]);
 
   const { handleSubmit, control } = useForm();
 
@@ -91,10 +99,17 @@ function ModalEditImage({
 
     try {
       const postImage = apiUserPostImage(formData, `image/${id}`);
-      if ((await postImage).status === 201) {
-        setSuccessAlert(true);
+      if (postImage) {
+        console.info(postImage);
+        setBlobImg(null);
+        setIsOpen(false);
+        setAlertMessage(`Your ${fieldName} is updated`);
+        setAlertSeverity("success");
+        setAlert(true);
       } else {
-        setWarningAlert(true);
+        setAlert(true);
+        setAlertMessage(`Something wrong happened`);
+        setAlertSeverity("warning");
       }
     } catch (error) {
       console.error(error);
@@ -103,25 +118,6 @@ function ModalEditImage({
 
   return (
     <Modal saveButton={false} isOpen={isOpen} onClose={onClose}>
-      {successAlert && (
-        <Alert
-          onClose={() => {
-            setSuccessAlert(false);
-          }}
-        >
-          Your {fieldName} is successfully changed!
-        </Alert>
-      )}{" "}
-      {warningAlert && (
-        <Alert
-          onClose={() => {
-            setWarningAlert(false);
-          }}
-          severity="warning"
-        >
-          Something wrong happened.
-        </Alert>
-      )}
       <div className="flex flex-col items-center justify-center w-full">
         <form
           className="flex flex-col items-center w-full"
@@ -208,13 +204,23 @@ function ModalEditImage({
 }
 
 ModalEditImage.propTypes = {
+  setAlertMessage: PropTypes.func.isRequired,
+  setAlertSeverity: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
+  setIsOpen: PropTypes.func.isRequired,
+  blobImg: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])]),
+  setBlobImg: PropTypes.func.isRequired,
   src: PropTypes.string.isRequired,
   radius: PropTypes.string.isRequired,
   width: PropTypes.string.isRequired,
   height: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   fieldName: PropTypes.string.isRequired,
+};
+
+ModalEditImage.defaultProps = {
+  blobImg: null,
 };
 
 export default ModalEditImage;

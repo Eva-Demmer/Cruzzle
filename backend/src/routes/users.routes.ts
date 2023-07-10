@@ -28,9 +28,9 @@ router.use(timeLog);
 router.post("/login", verifyPassword, login);
 router.get("/", getUsers);
 router.get("/filter", getUserByFilter);
+router.get("/image", getImageHighRes);
 router.get("/:id", getUserById);
 router.post("/image/:id", uploadImage, updateImage);
-router.get("/imageHighRes", getImageHighRes);
 
 // // Protected routes
 // TODO: decomment line below when we want to protect routes

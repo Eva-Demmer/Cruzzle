@@ -10,10 +10,7 @@ import {
 } from "firebase/storage";
 import dayjs from "dayjs";
 import config from "../config/firebase.config";
-import {
-  UploadedFiles,
-  UploadedImg,
-} from "../interfaces/uploadedfiles.interface";
+import { UploadedFiles } from "../interfaces/uploadedfiles.interface";
 
 // Initialize a firebase application
 initializeApp(config.firebaseConfig);
@@ -256,7 +253,6 @@ const getUrlByNameAndRoute = async (route: string) => {
   try {
     const url = await getDownloadURL(fileRef);
     if (url) {
-      console.info(url);
       return url;
     }
   } catch (error) {

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import jwt, { Secret } from "jsonwebtoken";
 import dotenv from "dotenv";
+import axios from "axios";
 import {
   findAll,
   findById,
@@ -105,15 +106,35 @@ const getUserByFilter = async (req: Request, res: Response) => {
 };
 
 const getImageHighRes = async (req: Request, res: Response) => {
-  const { url } = req.body;
-  try {
+  const { url } = req.query;
+  if (typeof url === "string") {
     const getUrl = await getUrlByNameAndRoute(url);
     if (getUrl) {
-      res.status(200).json(getUrl);
+      try {
+        const response = await axios.get(getUrl, {
+          responseType: "arraybuffer",
+        });
+
+        if (response.data) {
+          const buffer = Buffer.from(response.data, "binary");
+          const fileName = `${url.split("/")[url.split("/").length - 1]}`;
+          console.info(fileName);
+          const mimeType = `image/${fileName.split(".")[1]}`;
+
+          res.set({
+            "Content-Type": mimeType,
+            "Content-Disposition": `attachment; filename=${fileName}`,
+          });
+
+          res.send(buffer);
+        } else {
+          res.status(404).send("Image not found");
+        }
+      } catch (error) {
+        console.error(error);
+        res.status(500).send("Error downloading image");
+      }
     }
-    res.status(404).send("File not found in firebase");
-  } catch (error) {
-    console.error(error);
   }
 };
 
@@ -122,15 +143,15 @@ const updateImage = async (req: Request, res: Response) => {
   const files: Express.Multer.File[] = req.files as Express.Multer.File[];
 
   try {
-    const isCropOnly = req.files?.length === 1;
-
     if (files) {
+      const isCropOnly = files.length === 1;
       if (!isCropOnly) {
         const uploads = await uploadImageToFirebase(files, id);
         if (uploads) {
           const uploadBlob = uploads.filter(
             (item) => !item.fileName.includes("_img")
           );
+          console.info(files);
 
           const key = `${uploadBlob[0].fileName}_url`;
           const updatedImage = { [key]: uploadBlob[0].url };

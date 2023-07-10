@@ -5,7 +5,7 @@ import {
   PencilSquareIcon,
   BriefcaseIcon,
 } from "@heroicons/react/24/outline";
-import { Button } from "@mui/material";
+import { Button, Snackbar, Alert } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 
@@ -28,6 +28,16 @@ function TopSectionProfil() {
   const [isOpenAvatar, setIsOpenAvatar] = useState(false);
   const [isOpenBanner, setIsOpenBanner] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const [blobAvatar, setBloblobAvatar] = useState(null);
+  const [blobBanner, setBloblobBanner] = useState(null);
+  const [alert, setAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(false);
+  const [alertSeverity, setAlertSeverity] = useState(false);
+
+  const handleCloseAlert = () => {
+    setAlert(false);
+  };
+
   const {
     firstname,
     lastname,
@@ -125,35 +135,59 @@ function TopSectionProfil() {
           </div>
         )}
       </div>
-      {avatarUrl !== undefined ? (
-        <>
-          <ModalEditImage
-            isOpen={isOpenAvatar}
-            src={avatarUrl}
-            onClose={() => toggleModal(isOpenAvatar, setIsOpenAvatar)}
-            fieldName="avatar"
-            width="160"
-            height="160"
-            radius="150"
-          />
-
-          <ModalEditImage
-            isOpen={isOpenBanner}
-            src={bannerUrl}
-            onClose={() => toggleModal(isOpenBanner, setIsOpenBanner)}
-            fieldName="banner"
-            width="1136"
-            height="256"
-            radius="0"
-          />
-        </>
-      ) : (
-        ""
+      {isOpenAvatar && (
+        <ModalEditImage
+          setAlertSeverity={setAlertSeverity}
+          setAlertMessage={setAlertMessage}
+          isOpen={isOpenAvatar}
+          setIsOpen={setIsOpenAvatar}
+          src={avatarUrl}
+          onClose={() => toggleModal(isOpenAvatar, setIsOpenAvatar)}
+          blobImg={blobAvatar}
+          setBlobImg={setBloblobAvatar}
+          fieldName="avatar"
+          width="160"
+          height="160"
+          radius="150"
+        />
       )}
-      <ModalEditProfil
-        open={openEdit}
-        close={() => toggleModal(openEdit, setOpenEdit)}
-      />
+      {isOpenBanner && (
+        <ModalEditImage
+          setAlert
+          setAlertSeverity
+          setAlertMessage
+          isOpen={isOpenBanner}
+          setIsOpen={setIsOpenBanner}
+          src={bannerUrl}
+          onClose={() => toggleModal(isOpenBanner, setIsOpenBanner)}
+          blobImg={blobBanner}
+          setBlobImg={setBloblobBanner}
+          fieldName="banner"
+          width="1136"
+          height="256"
+          radius="0"
+        />
+      )}
+      {openEdit && (
+        <ModalEditProfil
+          open={openEdit}
+          close={() => toggleModal(openEdit, setOpenEdit)}
+        />
+      )}
+      <Snackbar
+        open={alert}
+        autoHideDuration={3000}
+        onClose={handleCloseAlert}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          variant="filled"
+          severity={alertSeverity}
+          onClose={handleCloseAlert}
+        >
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
