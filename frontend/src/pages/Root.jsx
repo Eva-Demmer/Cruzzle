@@ -66,7 +66,11 @@ function Root() {
         ref={divRef}
         id="scrollbar"
       >
-        <div className=" sticky flex flex-col top-0 z-50 w-full">
+        <div
+          className={`sticky flex flex-col top-0 z-50 w-full ${
+            !smallQuery && activeMenu ? "h-full" : ""
+          }`}
+        >
           <HeaderNav />
           {!smallQuery && activeMenu && <Sidebar />}
         </div>
