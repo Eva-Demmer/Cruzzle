@@ -19,7 +19,7 @@ export default function PuzzlesTab() {
             (Increase your number of likes to reveal the puzzle.)
           </span>
         </h3>
-        {userPuzzles.likesPuzzlePercentageAchievement && (
+        {userPuzzles.likesPuzzlePercentageAchievement !== undefined && (
           <Puzzle
             imageSrc="https://picsum.photos/700/500"
             progress={userPuzzles.likesPuzzlePercentageAchievement}
@@ -36,7 +36,7 @@ export default function PuzzlesTab() {
             (Increase your number of comments to reveal the puzzle.)
           </span>
         </h3>
-        {userPuzzles.commentsPuzzlePercentageAchievement && (
+        {userPuzzles.commentsPuzzlePercentageAchievement !== undefined && (
           <Puzzle
             imageSrc="https://picsum.photos/601/400"
             progress={userPuzzles.commentsPuzzlePercentageAchievement}
@@ -53,7 +53,7 @@ export default function PuzzlesTab() {
             (To unlock the puzzle, increase your number of ideas.)
           </span>
         </h3>
-        {userPuzzles.ideasPuzzlePercentageAchievement && (
+        {userPuzzles.ideasPuzzlePercentageAchievement !== undefined && (
           <Puzzle
             imageSrc="https://picsum.photos/602/400"
             progress={userPuzzles.ideasPuzzlePercentageAchievement}
@@ -71,7 +71,7 @@ export default function PuzzlesTab() {
             favorited.)
           </span>
         </h3>
-        {userPuzzles.favoritsPuzzlePercentageAchievement && (
+        {userPuzzles.favoritsPuzzlePercentageAchievement !== undefined && (
           <Puzzle
             imageSrc="https://picsum.photos/599/400"
             progress={userPuzzles.favoritsPuzzlePercentageAchievement}
@@ -89,7 +89,7 @@ export default function PuzzlesTab() {
             teams.)
           </span>
         </h3>
-        {userPuzzles.teamsPuzzlePercentageAchievement && (
+        {userPuzzles.teamsPuzzlePercentageAchievement !== undefined && (
           <Puzzle
             imageSrc="https://picsum.photos/600/359"
             progress={userPuzzles.teamsPuzzlePercentageAchievement}
