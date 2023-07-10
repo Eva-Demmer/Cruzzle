@@ -19,7 +19,6 @@
     "dayjs": "^1.11.8",
     "file-saver": "^2.0.5",
     "hamburgers": "^1.2.1",
-    "polished": "^4.2.2",
     "prop-types": "^15.8.1",
     "qs": "^6.11.2",
     "react": "^18.2.0",

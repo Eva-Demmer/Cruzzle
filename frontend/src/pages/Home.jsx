@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
-import CategoryCards from "../components/cards/CategoryCards";
+import CategoryCard from "../components/cards/CategoryCards";
 import OverviewCards from "../components/cards/OverviewCards";
 import InspirationCards from "../components/cards/InspirationCards";
 import { apiCategoriesOrder } from "../services/api.categories";
@@ -24,16 +24,16 @@ function Home() {
   const displayCategories = categories.slice(0, 5);
 
   return (
-    <div className="h-screen bg-primary-900 bg-opacity-5 flex justify-between">
-      <div className="p-10">
+    <div className="absolute top-0 h-screen bg-primary-900 bg-opacity-5 flex justify-between">
+      <div className="mt-5 p-10">
         {/* Welcome */}
         <div className="flex flex-col">
           <span className="text-5xl font-semibold">Good morning,</span>
-          <span className="text-5xl font-semibold">John</span>
-          <p className="my-8">
+          <span className="pt-4 text-5xl font-semibold">John</span>
+          <p className="mt-6 mb-8">
             Here you can track your activity and find ideas!
           </p>
-          <div className="flex gap-10">
+          <div className="flex gap-6">
             <Button variant="contained" className="rounded-full bg-black">
               See suggestions
             </Button>
@@ -45,13 +45,15 @@ function Home() {
         {/* Categories */}
         <h4 className="mt-12 pb-3 text-black">Categories</h4>
         <div className="flex flex-row gap-4">
-          {displayCategories.map((category) => (
-            <CategoryCards
-              key={category.id}
-              categoryName={category.label}
-              categoryColor={category.color}
-            />
-          ))}
+          {displayCategories.map((category) => {
+            return (
+              <CategoryCard
+                key={category.id}
+                categoryName={category.label}
+                categoryColor={category.color}
+              />
+            );
+          })}
         </div>
         {/* Overview */}
         <h4 className="mt-10 pb-5 text-black">Overview</h4>
