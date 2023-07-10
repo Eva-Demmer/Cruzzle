@@ -50,7 +50,7 @@ const getUserPuzzlePercentageAchievementObject = (user) => {
     { name: "likes", maxScore: 1000, score: likesScore }, // user has 100 likes
     { name: "comments", maxScore: 2500, score: commentsScore }, // user has 50 comments
     { name: "ideas", maxScore: 8000, score: ideasScore }, // user has 10 ideas
-    { name: "favorits", maxScore: 500, score: favoritsScore }, // user has 10 favorits
+    { name: "favorits", maxScore: 300, score: favoritsScore }, // user has 6 favorits
     { name: "teams", maxScore: 4000, score: teamsScore }, // user has 10 teams
   ];
 
