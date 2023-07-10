@@ -253,7 +253,6 @@ const getUrlByNameAndRoute = async (route: string) => {
   try {
     const url = await getDownloadURL(fileRef);
     if (url) {
-      console.info(url);
       return url;
     }
   } catch (error) {

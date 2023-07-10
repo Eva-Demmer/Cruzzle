@@ -105,6 +105,7 @@ const getImageHighRes = async (req: Request, res: Response) => {
         if (response.data) {
           const buffer = Buffer.from(response.data, "binary");
           const fileName = `${url.split("/")[url.split("/").length - 1]}`;
+          console.info(fileName);
           const mimeType = `image/${fileName.split(".")[1]}`;
 
           res.set({
@@ -129,15 +130,15 @@ const updateImage = async (req: Request, res: Response) => {
   const files: Express.Multer.File[] = req.files as Express.Multer.File[];
 
   try {
-    const isCropOnly = req.files?.length === 1;
-
     if (files) {
+      const isCropOnly = files.length === 1;
       if (!isCropOnly) {
         const uploads = await uploadImageToFirebase(files, id);
         if (uploads) {
           const uploadBlob = uploads.filter(
             (item) => !item.fileName.includes("_img")
           );
+          console.info(files);
 
           const key = `${uploadBlob[0].fileName}_url`;
           const updatedImage = { [key]: uploadBlob[0].url };
