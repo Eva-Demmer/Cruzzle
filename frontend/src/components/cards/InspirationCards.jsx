@@ -8,7 +8,7 @@ import Trophy from "../../assets/dashboard/Trophy.png";
 import medalGold from "../../assets/dashboard/Medal_gold.png";
 import medalSilver from "../../assets/dashboard/Medal_silver.png";
 import medalBronze from "../../assets/dashboard/Medal_bronze.png";
-import AvatarDoghnut from "../avatar/AvatarDoghnut";
+// import HalfAvatarDoghnut from "./HalfAvatarDoghnut";
 import CountAnimation from "../animations/CounterAnimation";
 import { UserContext } from "../../contexts/UserContext";
 import { apiTotalIdeasCount } from "../../services/api.ideas";
@@ -93,9 +93,7 @@ function InspirationCards() {
       {/* Next level card */}
       <Paper elevation={3} className="h-80 w-56 rounded-2xl">
         <div className="flex flex-col px-5 mt-5">
-          <div className="h-20">
-            <AvatarDoghnut />
-          </div>
+          <div className="h-20">{/* <HalfAvatarDoghnut /> */}</div>
           <span className="pl-3 pb-5 text-secondary-600">
             points until next level
           </span>

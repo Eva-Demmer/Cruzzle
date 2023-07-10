@@ -12,7 +12,7 @@ import CustomChip from "../styledComponents/CustomChip";
 import UploadButton from "../styledComponents/UploadButton";
 
 import addPicture from "../../assets/idea/addpicture.svg";
-import apiCategories from "../../services/api.categories";
+import { apiCategories } from "../../services/api.categories";
 
 function IdeaHeader() {
   const [categoriesApi, setCategoriesApi] = useState([]);

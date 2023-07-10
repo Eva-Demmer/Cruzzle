@@ -36,4 +36,34 @@ const deleteCategoriesByIdeaId = async (id: number) => {
   }
 };
 
-export { createCategoryByIdea, getCategoryByIdeaId, deleteCategoriesByIdeaId };
+const countCategoryUsage = async () => {
+  try {
+    const data = await prisma.category.findMany({
+      select: {
+        id: true,
+        label: true,
+        color: true,
+        _count: {
+          select: {
+            idea_category: true,
+          },
+        },
+      },
+      orderBy: {
+        idea_category: {
+          _count: "desc",
+        },
+      },
+    });
+    return data;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+export {
+  createCategoryByIdea,
+  getCategoryByIdeaId,
+  deleteCategoriesByIdeaId,
+  countCategoryUsage,
+};
