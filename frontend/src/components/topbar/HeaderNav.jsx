@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { Fab, IconButton, Tooltip, Badge, Button } from "@mui/material";
@@ -6,11 +6,9 @@ import {
   ArrowLeftIcon,
   BellIcon,
   GlobeAltIcon,
-  MagnifyingGlassIcon,
   PlusIcon,
 } from "@heroicons/react/24/outline";
 
-import SearchBar from "./SearchBar";
 import AvatarNavbar from "../avatar/AvatarNavbar";
 import HambugerMenu from "./HamburgerMenu";
 
@@ -25,45 +23,22 @@ import { MenuContext } from "../../contexts/MenuContext";
 import Progress from "../progressbar/Progress";
 
 function HeaderNav() {
-  const [search, setSearch] = useState("");
   const [openSearch, setOpenSearch] = useState(false);
   const { setActiveMenu, activeMenu } = useContext(MenuContext);
   const { language } = useContext(LanguageContext);
 
   const { user } = useContext(UserContext);
 
-  const searchRef = useRef();
   const navigate = useNavigate();
   const smallQuery = useMediaQuery(sm);
 
   const notificationCount = 15; // TODO: add context
-
-  const handleSearch = () => {
-    if (search !== "") {
-      if (!smallQuery) {
-        setOpenSearch(false);
-      }
-      setActiveMenu(false);
-      navigate("/search", { state: search });
-    }
-  };
 
   return (
     <>
       <div className="flex items-center justify-between py-2 px-4 shadow-2 md:px-6 2xl:px-11 bg-primary-800 sm:bg-white">
         {!openSearch && (
           <>
-            {smallQuery && (
-              <div>
-                <SearchBar
-                  onSearch={handleSearch}
-                  searchRef={searchRef}
-                  search={search}
-                  setSearch={setSearch}
-                />
-              </div>
-            )}
-
             <div className="mx-2">
               {!smallQuery && (
                 <IconButton
@@ -84,32 +59,23 @@ function HeaderNav() {
             </div>
             <div className="flex flex-1 items-center justify-around mx-2 sm:flex-none">
               {!smallQuery && (
-                <>
-                  <IconButton
-                    type="button"
-                    aria-label="search-icon"
-                    onClick={() => setOpenSearch(true)}
-                  >
-                    <MagnifyingGlassIcon className="h-7 w-7" />
-                  </IconButton>
-                  <Fab
-                    color="primary"
-                    aria-label="add"
-                    className="h-9 w-9"
-                    onClick={() => {
-                      navigate("/ideas/new");
-                      setActiveMenu(false);
-                    }}
-                    sx={{
-                      boxShadow: 1,
-                      "&:hover": { boxShadow: 2 },
-                      "&:active, &.Mui-focusVisible": { boxShadow: 4 },
-                      zIndex: 2,
-                    }}
-                  >
-                    <PlusIcon className="w-6 h-6" />
-                  </Fab>
-                </>
+                <Fab
+                  color="primary"
+                  aria-label="add"
+                  className="h-9 w-9"
+                  onClick={() => {
+                    navigate("/ideas/new");
+                    setActiveMenu(false);
+                  }}
+                  sx={{
+                    boxShadow: 1,
+                    "&:hover": { boxShadow: 2 },
+                    "&:active, &.Mui-focusVisible": { boxShadow: 4 },
+                    zIndex: 2,
+                  }}
+                >
+                  <PlusIcon className="w-6 h-6" />
+                </Fab>
               )}
 
               {smallQuery && (
@@ -178,23 +144,13 @@ function HeaderNav() {
         )}
 
         {!smallQuery && openSearch && (
-          <>
-            <IconButton
-              type="button"
-              aria-label="search-icon"
-              onClick={() => setOpenSearch(false)}
-            >
-              <ArrowLeftIcon className="h-6 w-6" />
-            </IconButton>
-            <div className="w-full flex justify-center">
-              <SearchBar
-                onSearch={handleSearch}
-                searchRef={searchRef}
-                search={search}
-                setSearch={setSearch}
-              />
-            </div>
-          </>
+          <IconButton
+            type="button"
+            aria-label="search-icon"
+            onClick={() => setOpenSearch(false)}
+          >
+            <ArrowLeftIcon className="h-6 w-6" />
+          </IconButton>
         )}
       </div>
 
