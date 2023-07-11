@@ -9,6 +9,7 @@ import {
   apiGetCommentsByIdeaId,
 } from "../../services/api.comments";
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
+import { createNotification } from "../../utils/notifications";
 
 function CreateComment() {
   const { user } = useContext(UserContext);
@@ -53,19 +54,25 @@ function CreateComment() {
       try {
         const req = await apiCreateComments(data);
         if (req) {
-          setAlert({
-            message: "Message created !",
-            severity: "success",
-          });
-          const { comment: commendIdea, ...rest } = idea;
-          const getComments = await apiGetCommentsByIdeaId(idea.id);
-          if (getComments) {
-            setIdea({
-              ...rest,
-              comment: getComments,
+          try {
+            createNotification(user.id, idea, "comment");
+          } catch (error) {
+            console.error(error);
+          } finally {
+            setAlert({
+              message: "Message created !",
+              severity: "success",
             });
+            const { comment: commendIdea, ...rest } = idea;
+            const getComments = await apiGetCommentsByIdeaId(idea.id);
+            if (getComments) {
+              setIdea({
+                ...rest,
+                comment: getComments,
+              });
+            }
+            setComment("");
           }
-          setComment("");
         } else {
           setAlert({
             message: "Message can't be created",
