@@ -118,6 +118,7 @@ CREATE TABLE `user` (
   `position_id` integer not null,
   `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
   `is_active` boolean DEFAULT false,
+  `language` varchar(2) DEFAULT 'EN',
   FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
   FOREIGN KEY (`agency_id`) REFERENCES `agency` (`id`),
   FOREIGN KEY (`position_id`) REFERENCES `position` (`id`)

@@ -103,7 +103,7 @@ function CommentBox({ comment, tabComment = false }) {
                 <Paper
                   elevation={0}
                   size="small"
-                  className="absolute flex items-center px-4 bottom-[-20px] right-6 w-24 h-8 border border-[#dadada] border-solid rounded-full"
+                  className="absolute flex items-center px-4 bottom-[-20px] right-6 sm:w-24 h-8 border border-[#dadada] border-solid rounded-full"
                 >
                   <div
                     className="flex items-center justify-center w-full text-secondary-600"

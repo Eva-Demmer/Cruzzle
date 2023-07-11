@@ -8,6 +8,8 @@ import {
   getUserByFilter,
   updateImage,
   getImageHighRes,
+  verifyPasswordUser,
+  updatePasswordUser,
 } from "../controllers/users.controllers";
 
 import {
@@ -31,10 +33,12 @@ router.get("/filter", getUserByFilter);
 router.get("/image", getImageHighRes);
 router.get("/:id", getUserById);
 router.post("/image/:id", uploadImage, updateImage);
+router.post("/verifyPassword", verifyPasswordUser);
 
 // // Protected routes
 // TODO: decomment line below when we want to protect routes
 // router.use(protectRoutes);
+router.put("/updatePassword", hashPassword, updatePasswordUser);
 router.put("/:id", hashPassword, updateUser);
 
 export default router;

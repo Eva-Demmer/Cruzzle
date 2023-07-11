@@ -21,7 +21,7 @@ function IdeaTeam() {
   return (
     <div className="my-8" aria-label="Team">
       <h2 className="text-xl sm:text-2xl font-bold my-4">Team</h2>
-      <div className="mx-6 my-6">
+      <div className="lg:mx-6 my-6">
         <TeamBuilder
           list={teamSelect}
           onChange={setTeamSelect}

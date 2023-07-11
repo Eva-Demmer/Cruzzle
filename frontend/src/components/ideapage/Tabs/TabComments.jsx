@@ -33,8 +33,6 @@ function TabComments({ tabValue, index }) {
     setAllComments(open ? sortedComments : sortedComments.slice(0, 3));
   }, [selectValue, open, idea]);
 
-  useEffect(() => {}, []);
-
   const handleChange = (event) => {
     setSelectValue(event.target.value);
   };
@@ -48,7 +46,7 @@ function TabComments({ tabValue, index }) {
           {allComments.length > 0 && (
             <FormControl>
               <Select
-                className="w-52 rounded-full"
+                className="w-44 sm:w-52 rounded-full"
                 size="small"
                 value={selectValue}
                 onChange={handleChange}

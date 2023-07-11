@@ -20,6 +20,13 @@ interface User {
   score_like?: number;
   created_at?: Date;
   is_active?: boolean | null;
+  language?: string;
+}
+
+interface UpdatePasswordUser {
+  id: number;
+  mail: string;
+  hashed_password: string;
 }
 
 interface CreateUser {
@@ -50,4 +57,10 @@ interface UserFilterQuery {
   publicationDateEnd?: string;
 }
 
-export { User, CreateUser, UserLoginUpdatedRequest, UserFilterQuery };
+export {
+  User,
+  CreateUser,
+  UserLoginUpdatedRequest,
+  UserFilterQuery,
+  UpdatePasswordUser,
+};

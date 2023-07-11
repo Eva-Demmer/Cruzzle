@@ -17,6 +17,7 @@ function AlertOnSave({
         onClose();
         setOpen(false);
       }}
+      anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
     >
       <Alert
         severity={severity}
