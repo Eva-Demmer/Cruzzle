@@ -20,9 +20,14 @@ import {
 import { UserContext } from "../../contexts/UserContext";
 import {
   apiGetCurrentUserNotificationsIdea,
-  apiUpdateNotificationsIdea,
-  apiDeleteOneNotificationIdea,
+  // apiUpdateNotificationsIdea,
+  // apiDeleteOneNotificationIdea,
 } from "../../services/api.notifications";
+import {
+  setNotificationAsRed,
+  setNotificationAsNotRed,
+  deleteOneNotification,
+} from "../../utils/notifications";
 
 export default function NotificationsMenu() {
   const navigate = useNavigate();
@@ -34,50 +39,50 @@ export default function NotificationsMenu() {
 
   const open = Boolean(anchorEl);
 
-  const setNotificationAsRed = async (id) => {
-    const item = {
-      red_at: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-    };
-    try {
-      const res = await apiUpdateNotificationsIdea(id, item);
-      if (res.status === 200) {
-        setRefresh(true);
-      } else {
-        console.error("Cannot set notification as read");
-      }
-    } catch (error) {
-      console.error("Error setting notification as read", error);
-    }
-  };
+  // const setNotificationAsRed = async (id) => {
+  //   const item = {
+  //     red_at: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+  //   };
+  //   try {
+  //     const res = await apiUpdateNotificationsIdea(id, item);
+  //     if (res.status === 200) {
+  //       setRefresh(true);
+  //     } else {
+  //       console.error("Cannot set notification as read");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error setting notification as read", error);
+  //   }
+  // };
 
-  const setNotificationAsNotRed = async (id) => {
-    const item = {
-      red_at: null,
-    };
-    try {
-      const res = await apiUpdateNotificationsIdea(id, item);
-      if (res.status === 200) {
-        setRefresh(true);
-      } else {
-        console.error("Cannot set notification as not read");
-      }
-    } catch (error) {
-      console.error("Error setting notification as not read", error);
-    }
-  };
+  // const setNotificationAsNotRed = async (id) => {
+  //   const item = {
+  //     red_at: null,
+  //   };
+  //   try {
+  //     const res = await apiUpdateNotificationsIdea(id, item);
+  //     if (res.status === 200) {
+  //       setRefresh(true);
+  //     } else {
+  //       console.error("Cannot set notification as not read");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error setting notification as not read", error);
+  //   }
+  // };
 
-  const deleteNotification = async (id) => {
-    try {
-      const res = await apiDeleteOneNotificationIdea(id);
-      if (res.status === 200) {
-        setRefresh(true);
-      } else {
-        console.error("Cannot delete notification");
-      }
-    } catch (error) {
-      console.error("Error deleting notification", error);
-    }
-  };
+  // const deleteNotification = async (id) => {
+  //   try {
+  //     const res = await apiDeleteOneNotificationIdea(id);
+  //     if (res.status === 200) {
+  //       setRefresh(true);
+  //     } else {
+  //       console.error("Cannot delete notification");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error deleting notification", error);
+  //   }
+  // };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -90,11 +95,15 @@ export default function NotificationsMenu() {
   const handleClickNotification = (id) => () => {
     const not = notificationList.find((item) => item.id === id);
     if (not.red_at === null) {
-      setNotificationAsRed(id)
-        .then(() => navigate(`/ideas/${id}`))
-        .catch((error) => console.error("Error clicking notification", error));
+      try {
+        setNotificationAsRed(not.id, setRefresh);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        navigate(`/ideas/${not.idea.id}`);
+      }
     } else {
-      navigate(`/ideas/${id}`);
+      navigate(`/ideas/${not.idea.id}`);
     }
   };
 
@@ -209,7 +218,7 @@ export default function NotificationsMenu() {
                     className="ml-4"
                     onClick={(event) => {
                       event.stopPropagation();
-                      setNotificationAsNotRed(not.id);
+                      setNotificationAsNotRed(not.id, setRefresh);
                     }}
                   >
                     <EyeSlashIcon className="w-4 h-4" />
@@ -219,7 +228,7 @@ export default function NotificationsMenu() {
                     className="ml-4"
                     onClick={(event) => {
                       event.stopPropagation();
-                      setNotificationAsRed(not.id);
+                      setNotificationAsRed(not.id, setRefresh);
                     }}
                   >
                     <EyeIcon className="w-4 h-4" />
@@ -229,7 +238,7 @@ export default function NotificationsMenu() {
                 <IconButton
                   onClick={(event) => {
                     event.stopPropagation();
-                    deleteNotification(not.id);
+                    deleteOneNotification(not.id, setRefresh);
                   }}
                 >
                   <TrashIcon className="w-4" />

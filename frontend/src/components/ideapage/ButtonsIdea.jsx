@@ -26,9 +26,9 @@ import { apiArchiveIdeas } from "../../services/api.ideas";
 import DialogArchive from "./DialogArchive";
 import DialogModify from "./DialogModify";
 import {
-  apiCreateNotificationsIdea,
-  apiDeleteManyNotificationIdea,
-} from "../../services/api.notifications";
+  createNotification,
+  deleteManyNotification,
+} from "../../utils/notifications";
 
 function ButtonsIdea() {
   const { user } = useContext(UserContext);
@@ -74,40 +74,6 @@ function ButtonsIdea() {
     }
   };
 
-  const createNotificationLike = async () => {
-    if (userId !== userIdea.id) {
-      const notification = {
-        idea_id: idea.id,
-        user_id: userId,
-        type: "like",
-      };
-      try {
-        const res = await apiCreateNotificationsIdea(notification);
-        if (res.status !== 201) {
-          console.error("Cannot create notification");
-        }
-      } catch (error) {
-        console.error("Error creating notification", error);
-      }
-    }
-  };
-
-  const deleteNotificationLike = async () => {
-    const notification = {
-      idea_id: idea.id,
-      user_id: userId,
-      type: "like",
-    };
-    try {
-      const res = await apiDeleteManyNotificationIdea(notification);
-      if (res.status !== 200) {
-        console.error("Cannot delete notification");
-      }
-    } catch (error) {
-      console.error("Error deleting notification", error);
-    }
-  };
-
   const handleClickLike = async () => {
     try {
       const getIdeaLikesByIdea = await apiGetIdeaLikesByIdeaId(idea.id);
@@ -118,10 +84,10 @@ function ButtonsIdea() {
         );
         if (searchLikeUser.length > 0) {
           await apiDeleteIdeaLikesById(searchLikeUser[0].id);
-          await deleteNotificationLike();
+          await deleteManyNotification(userId, idea, "like");
         } else {
           await apiCreateIdeaLikes(userId, idea.id);
-          await createNotificationLike();
+          await createNotification(userId, idea, "like");
         }
 
         const { idea_like: ideaLike, ...restOfIdea } = idea;
