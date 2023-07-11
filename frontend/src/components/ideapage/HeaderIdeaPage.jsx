@@ -17,7 +17,7 @@ import ButtonsIdea from "./ButtonsIdea";
 import LikesView from "./LikesView";
 
 function HeaderIdeaPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { idea } = useContext(IdeaPageContext);
   const [openTeam, setOpenTeam] = useState(false);
 
@@ -77,7 +77,9 @@ function HeaderIdeaPage() {
           <div className="flex md:px-4 my-2" aria-label="Published">
             <p>{t("pages.ideas.idea.headerIdea.published")}</p>
             <p className="mx-2 font-semibold">
-              {dayjs(idea.created_at).format("DD MMM, YYYY")}
+              {dayjs(idea.created_at)
+                .locale(i18n.language)
+                .format(t("pages.ideas.idea.headerIdea.dateFormats.long"))}
             </p>
           </div>
           <div className="flex md:px-4 my-2" aria-label="Author">

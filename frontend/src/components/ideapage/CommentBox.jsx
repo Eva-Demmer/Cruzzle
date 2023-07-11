@@ -19,7 +19,7 @@ import { IdeaPageContext } from "../../contexts/IdeaPageContext";
 import { apiGetCommentsByIdeaId } from "../../services/api.comments";
 
 function CommentBox({ comment, tabComment = false }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user } = useContext(UserContext);
   const { id: userId } = user;
 
@@ -77,7 +77,10 @@ function CommentBox({ comment, tabComment = false }) {
             </h4>
             <div className="flex items-center font-semibold">
               <p className="bloc text-secondary-600 text-sm">
-                - {dayjs(comment.created_at).format("DD MMM, YYYY HH:mm a")}
+                -{" "}
+                {dayjs(comment.created_at)
+                  .locale(i18n.language)
+                  .format(t("pages.ideas.idea.commentBox.dateFormats.long"))}
               </p>
             </div>
           </div>

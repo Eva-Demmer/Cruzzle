@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
@@ -29,6 +30,7 @@ import Progress from "../progressbar/Progress";
 function HeaderNav() {
   const { setActiveMenu, activeMenu } = useContext(MenuContext);
   const { language, setLanguage } = useContext(LanguageContext);
+  const { i18n } = useTranslation();
 
   const { user } = useContext(UserContext);
 
@@ -177,7 +179,10 @@ function HeaderNav() {
               >
                 {languages.map((item) => (
                   <MenuItem
-                    onClick={() => setLanguage(item.value)}
+                    onClick={() => {
+                      i18n.changeLanguage(item.value.toLowerCase());
+                      setLanguage(item.value);
+                    }}
                     key={item.value}
                   >
                     <ListItemIcon>

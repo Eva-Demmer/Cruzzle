@@ -34,14 +34,15 @@ function TabsIdeaPage() {
             onChange={handleChange}
             aria-label="basic tabs example"
           >
-            {tabsContent.map((tab, index) => (
-              <Tab
-                label={tab}
-                // eslint-disable-next-line react/jsx-props-no-spreading
-                {...AllyProps(index)}
-                key={`${tab}`}
-              />
-            ))}
+            {tabsContent &&
+              tabsContent.map((tab, index) => (
+                <Tab
+                  label={tab}
+                  // eslint-disable-next-line react/jsx-props-no-spreading
+                  {...AllyProps(index)}
+                  key={`${tab}`}
+                />
+              ))}
           </Tabs>
         </Box>
         {/* Insert CONTENT HERE */}
