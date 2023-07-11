@@ -21,6 +21,7 @@ import { UserContext } from "../../contexts/UserContext";
 import {
   apiGetCurrentUserNotificationsIdea,
   apiUpdateNotificationsIdea,
+  apiDeleteNotificationIdea,
 } from "../../services/api.notifications";
 
 export default function NotificationsMenu() {
@@ -62,6 +63,19 @@ export default function NotificationsMenu() {
       }
     } catch (error) {
       console.error("Error setting notification as not read", error);
+    }
+  };
+
+  const deleteNotification = async (id) => {
+    try {
+      const res = await apiDeleteNotificationIdea(id);
+      if (res.status === 200) {
+        setRefresh(true);
+      } else {
+        console.error("Cannot delete notification");
+      }
+    } catch (error) {
+      console.error("Error deleting notification", error);
     }
   };
 
@@ -169,35 +183,52 @@ export default function NotificationsMenu() {
             <MenuItem
               key={`noti${not.id}`}
               className={`${not.red_at ? "" : "bg-[#f0e4f5]"}`}
-              onClick={handleClickNotification(not.id)}
             >
-              {not.type === "like" ? (
-                <ChatBubbleBottomCenterIcon className="w-4 h-4 mr-2" />
-              ) : (
-                <HandThumbUpIcon className="w-4 h-4 mr-2" />
-              )}
-              {`from ${not.user.firstname} ${not.user.lastname} - ${not.idea.title}`}
-              <span className="text-xs text-gray-500 ml-2">{`(${dayjs(
-                not.created_at
-              ).format("MMM D, h:mm A")})`}</span>
+              <button
+                id="notificationBtn"
+                type="button"
+                className="border-none bg-transparent cursor-pointer"
+                onClick={handleClickNotification(not.id)}
+              >
+                {not.type === "like" ? (
+                  <ChatBubbleBottomCenterIcon className="w-4 h-4 mr-2" />
+                ) : (
+                  <HandThumbUpIcon className="w-4 h-4 mr-2" />
+                )}
+                {`from ${not.user.firstname} ${not.user.lastname} - ${not.idea.title}`}
+                <span className="text-xs text-gray-500 ml-2">{`(${dayjs(
+                  not.created_at
+                ).format("MMM D, h:mm A")})`}</span>
+              </button>
 
               {not.red_at ? (
                 <IconButton
                   className="ml-4"
-                  onClick={() => setNotificationAsNotRed(not.id)}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    setNotificationAsNotRed(not.id);
+                  }}
                 >
                   <EyeSlashIcon className="w-4 h-4" />
                 </IconButton>
               ) : (
                 <IconButton
                   className="ml-4"
-                  onClick={() => setNotificationAsRed(not.id)}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    setNotificationAsRed(not.id);
+                  }}
                 >
                   <EyeIcon className="w-4 h-4" />
                 </IconButton>
               )}
 
-              <IconButton>
+              <IconButton
+                onClick={(event) => {
+                  event.stopPropagation();
+                  deleteNotification(not.id);
+                }}
+              >
                 <TrashIcon className="w-4" />
               </IconButton>
             </MenuItem>

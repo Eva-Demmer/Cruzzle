@@ -14,4 +14,14 @@ const apiUpdateNotificationsIdea = async (id, item) => {
   return response;
 };
 
-export { apiGetCurrentUserNotificationsIdea, apiUpdateNotificationsIdea };
+const apiDeleteNotificationIdea = async (id) => {
+  const route = "/api/notifications/ideas/";
+  const response = await axios.delete(`${url}${route}${id}`);
+  return response;
+};
+
+export {
+  apiGetCurrentUserNotificationsIdea,
+  apiUpdateNotificationsIdea,
+  apiDeleteNotificationIdea,
+};
