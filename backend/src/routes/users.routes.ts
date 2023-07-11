@@ -5,6 +5,7 @@ import {
   getUserById,
   updateUser,
   getUserByFilter,
+  getActivitiesByUserId,
 } from "../controllers/users.controllers";
 
 import {
@@ -25,6 +26,7 @@ router.use(timeLog);
 router.post("/login", verifyPassword, login);
 router.get("/", getUsers);
 router.get("/filter", getUserByFilter);
+router.get("/activities/:id", getActivitiesByUserId); //
 router.get("/:id", getUserById);
 
 // // Protected routes

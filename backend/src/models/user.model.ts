@@ -42,6 +42,40 @@ const findAll = async () => {
   }
 };
 
+const findActivitiesById = async (id: number) => {
+  try {
+    const data = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        idea_like: {
+          select: {
+            liked_at: true,
+            idea: {
+              select: { title: true },
+            },
+          },
+        },
+        comment: {
+          select: {
+            created_at: true,
+            idea: {
+              select: {
+                title: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    return data;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
 const findById = async (id: number) => {
   try {
     const data = await prisma.user.findUnique({
@@ -137,4 +171,4 @@ const update = async (id: number, updatedUser: User) => {
   }
 };
 
-export { findAll, findById, findByMail, update };
+export { findAll, findById, findByMail, update, findActivitiesById };
