@@ -54,78 +54,88 @@ export default function ActivityTab() {
     }
     return 0;
   });
-  console.info("sortedList", sortedList);
 
-  const currentDate = new Date();
-  const yesterday = new Date(currentDate);
-  yesterday.setDate(currentDate.getDate() - 1);
-
-  const lastDate = userActivities && sortedList[0].liked_at_day;
-  let displayDate;
-  if (lastDate === currentDate.toISOString().slice(0, 10)) {
-    displayDate = "today";
-  } else if (lastDate === yesterday.toISOString().slice(0, 10)) {
-    displayDate = "yesterday";
-  } else {
-    displayDate = lastDate;
-  }
+  let lastDate = userActivities && sortedList[0].liked_at_day;
 
   return (
-    <List className="w-full">
-      <Divider>
-        <Chip
-          label={displayDate}
-          className="bg-white border border-gray-400 border-solid font-bold text-lg p-1"
-        />
-      </Divider>
+    <List className="w-full overflow-y-auto">
       {userActivities &&
-        sortedList.map((item, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <div key={`${item.id}_${index}`} className="flex flex-col">
-            <ListItem alignItems="flex-start" className="items-center">
-              <div className="flex flex-col">
-                <div className="flex align-items-center">
-                  <div className="flex flex-col">
-                    <ListItemAvatar>
-                      <Avatar alt="avatar user" src={user.avatar_url} />
-                    </ListItemAvatar>
-                    {index !== sortedList.length - 1 && (
-                      <Divider
-                        orientation="vertical"
-                        variant="middle"
-                        className="h-7 absolute left-9 top-14 z-10"
-                      />
-                    )}
-                  </div>
-                  <div className="flex items-center">
-                    <p className="text-base text-secondary-600">
-                      <b>
-                        {user.firstname} {user.lastname}
-                      </b>{" "}
-                      {item.type === "like" ? (
-                        <>
-                          liked &#128077; in <b>{item.title}</b> idea.
-                        </>
-                      ) : (
-                        <>
-                          added a comment in <b>{item.title}</b> idea.
-                        </>
+        sortedList.map((item, index) => {
+          const currentDate = item.liked_at_day;
+          let divider = null;
+          let displayDate = currentDate;
+          if (index === 0 || currentDate !== lastDate) {
+            if (dayjs(currentDate, "DD/MM/YYYY").isSame(dayjs(), "day")) {
+              displayDate = "Today";
+            } else if (
+              dayjs(currentDate, "DD/MM/YYYY").isSame(
+                dayjs().subtract(1, "day"),
+                "day"
+              )
+            ) {
+              displayDate = "Yesterday";
+            }
+            divider = (
+              <Divider>
+                <Chip
+                  label={displayDate}
+                  className="bg-white border border-gray-400 border-solid font-bold text-lg p-1"
+                />
+              </Divider>
+            );
+          }
+
+          lastDate = currentDate;
+
+          return (
+            // eslint-disable-next-line react/no-array-index-key
+            <div key={`${item.id}_${index}`} className="flex flex-col">
+              {divider}
+              <ListItem alignItems="flex-start" className="items-center">
+                <div className="flex flex-col">
+                  <div className="flex align-items-center">
+                    <div className="flex flex-col">
+                      <ListItemAvatar>
+                        <Avatar alt="avatar user" src={user.avatar_url} />
+                      </ListItemAvatar>
+                      {index !== sortedList.length - 1 && (
+                        <Divider
+                          orientation="vertical"
+                          variant="middle"
+                          className="h-7 absolute left-9 top-14 z-10"
+                        />
                       )}
-                    </p>
+                    </div>
+                    <div className="flex items-center">
+                      <p className="text-base text-secondary-600">
+                        <b>
+                          {user.firstname} {user.lastname}
+                        </b>{" "}
+                        {item.type === "like" ? (
+                          <>
+                            liked &#128077; in <b>{item.title}</b> idea.
+                          </>
+                        ) : (
+                          <>
+                            added a comment in <b>{item.title}</b> idea.
+                          </>
+                        )}
+                      </p>
+                    </div>
                   </div>
+                  <p className="text-sm text-secondary-600 pl-16 flex items-center">
+                    <img
+                      src={logoMobile}
+                      alt="Logo"
+                      className="inline-block mr-1 w-5"
+                    />{" "}
+                    {item.liked_at_time}
+                  </p>
                 </div>
-                <p className="text-sm text-secondary-600 pl-16 flex items-center">
-                  <img
-                    src={logoMobile}
-                    alt="Logo"
-                    className="inline-block mr-1 w-5"
-                  />{" "}
-                  {item.liked_at_time}
-                </p>
-              </div>
-            </ListItem>
-          </div>
-        ))}
+              </ListItem>
+            </div>
+          );
+        })}
     </List>
   );
 }
