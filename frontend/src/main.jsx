@@ -72,7 +72,7 @@ const router = createBrowserRouter([
         element: <IdeaNew />,
       },
       {
-        path: "favorits/",
+        path: "favorites/",
         element: <Favorits />,
       },
       {
