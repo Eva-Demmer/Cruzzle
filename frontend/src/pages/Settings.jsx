@@ -75,7 +75,6 @@ function Settings() {
         <div className="flex">
           <div className="w-full max-w-[600px]">
             <div className="flex flex-col" aria-label="language">
-              {/* <h3 className="py-6">Language</h3> */}
               <h3 className="py-6">
                 {t("pages.settings.part.language.title")}
               </h3>
@@ -146,7 +145,9 @@ function Settings() {
                           "pages.settings.part.password.textfield.mail.label"
                         )}
                         variant="outlined"
-                        placeholder="Enter your username"
+                        placeholder={t(
+                          "pages.settings.part.password.textfield.mail.placeholder"
+                        )}
                         value={value}
                         disabled
                         InputLabelProps={{ shrink: true }}
@@ -174,7 +175,13 @@ function Settings() {
                           "pages.settings.part.password.textfield.password.placeholder"
                         )}
                         error={passwordError}
-                        helperText={passwordError ? "Incorrect entry." : " "} // Ajoutez un espace vide pour maintenir l'espace réservé
+                        helperText={
+                          passwordError
+                            ? t(
+                                "pages.settings.part.password.textfield.password.helperText"
+                              )
+                            : " "
+                        }
                         value={value}
                         onChange={onChange}
                         type={showPassword ? "text" : "password"}
@@ -211,7 +218,7 @@ function Settings() {
                       "&:active, &.Mui-focusVisible": { boxShadow: 4 },
                     }}
                   >
-                    {t("pages.settings.part.password.button.password")}
+                    {t("buttons.confirm")}
                   </Button>
                 </form>
               </div>

@@ -197,7 +197,7 @@ function ButtonsIdea() {
           severity="success"
           sx={{ width: "100%" }}
         >
-          {t("pages.ideas.idea.button.alert")}
+          {t("pages.ideas.idea.alert")}
         </Alert>
       </Snackbar>
     </div>

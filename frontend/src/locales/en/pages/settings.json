@@ -13,15 +13,14 @@
       },
       "textfield": {
         "mail": {
-          "label": "Email"
+          "label": "Email",
+          "placeholder": "Enter your username"
         },
         "password": {
           "label": "Password",
-          "placeholder": "Please enter your password"
+          "placeholder": "Please enter your password",
+          "helperText": "Incorrect entry."
         }
-      },
-      "button": {
-        "password": "Confirm"
       }
     }
   },
@@ -47,10 +46,6 @@
         "label": "Confirm Password",
         "placeholder": "Confirm your password"
       }
-    },
-    "button": {
-      "confirm": "Confirm",
-      "cancel": "Cancel"
     }
   }
 }

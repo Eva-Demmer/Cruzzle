@@ -19,11 +19,11 @@ function DialogModify({ open, setOpen, handleAgree }) {
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-        {t("pages.ideas.idea.button.dialogModify.title")}
+        {t("pages.ideas.idea.dialogModify.title")}
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          {t("pages.ideas.idea.button.dialogModify.content")}
+          {t("pages.ideas.idea.dialogModify.content")}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
