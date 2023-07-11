@@ -2,7 +2,8 @@
   "title": "Create idea",
   "description": "Create idea, add files and pictures",
   "header": {
-    "title": "Header"
+    "title": "Header",
+    "fileserror": "<>The file <strong>{file.name}</strong> exceeds the maximum allowed size of {formatBytes(maxSizeInKB * 1024)}!</>"
   },
   "textfield": {
     "title": {
@@ -53,11 +54,13 @@
     "numberfiles_other": "Number of files : <strong>{{nbAttachements}}</strong>"
   },
   "cloud": {
+    "title": "Cloud share",
     "textfield": {
       "label": "Cloud"
     }
   },
   "team": {
+    "title": "Team",
     "label": "Collaborators",
     "placeholder": "Gather your team"
   },

@@ -4,6 +4,7 @@
   "agree": "Agree",
   "archive": "Archive",
   "cancel": "Cancel",
+  "close": "Close",
   "delete": "Delete",
   "download": "Download",
   "confirm": "Confirm",
@@ -11,5 +12,6 @@
   "like": "Like",
   "publish": "Publish",
   "unlike": "Unlike",
+  "reset": "Reset",
   "save": "Save"
 }
