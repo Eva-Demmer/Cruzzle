@@ -83,7 +83,7 @@ function Ideas() {
             )}
           </main>
           <aside className="ideas-aside-right w-4/12 hidden pl-4 pr-4 min-[1439px]:inline-block">
-            <h3>Tendences</h3>
+            <h3>Trending ideas</h3>
             {trendIdeas !== undefined ? (
               <IdeaDisplayer ideas={trendIdeas} isMini="true" />
             ) : (

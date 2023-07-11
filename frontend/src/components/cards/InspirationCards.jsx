@@ -8,7 +8,7 @@ import Trophy from "../../assets/dashboard/Trophy.png";
 import medalGold from "../../assets/dashboard/Medal_gold.png";
 import medalSilver from "../../assets/dashboard/Medal_silver.png";
 import medalBronze from "../../assets/dashboard/Medal_bronze.png";
-// import HalfAvatarDoghnut from "./HalfAvatarDoghnut";
+import { HalfCircleProgress, pointsNextLevel } from "./HalfCircleProgress";
 import CountAnimation from "../animations/CounterAnimation";
 import { UserContext } from "../../contexts/UserContext";
 import { apiTotalIdeasCount } from "../../services/api.ideas";
@@ -62,7 +62,7 @@ function InspirationCards() {
   }, []);
 
   return (
-    <div className="flex flex-col lg:flex-row gap-5 lg:gap-6">
+    <div className="pt-60 flex flex-col lg:flex-row gap-5 lg:gap-6">
       {/* Leaderboard card */}
       <Paper elevation={3} className="h-80 w-56 rounded-2xl relative">
         <img
@@ -93,7 +93,10 @@ function InspirationCards() {
       {/* Next level card */}
       <Paper elevation={3} className="h-80 w-56 rounded-2xl">
         <div className="flex flex-col px-5 mt-5">
-          <div className="h-20">{/* <HalfAvatarDoghnut /> */}</div>
+          <div className="h-20 flex justify-center">
+            <span className="text-3xl mt-6 pt-3">{pointsNextLevel}</span>
+            <HalfCircleProgress />
+          </div>
           <span className="pl-3 pb-5 text-secondary-600">
             points until next level
           </span>
