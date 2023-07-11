@@ -1,5 +1,6 @@
 import { Paper, Avatar, Button, ButtonGroup } from "@mui/material";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 import { useContext, useState } from "react";
 import dayjs from "dayjs";
 import { HandThumbUpIcon as SolidHandThumbUpIcon } from "@heroicons/react/24/solid";
@@ -18,6 +19,7 @@ import { IdeaPageContext } from "../../contexts/IdeaPageContext";
 import { apiGetCommentsByIdeaId } from "../../services/api.comments";
 
 function CommentBox({ comment, tabComment = false }) {
+  const { t } = useTranslation();
   const { user } = useContext(UserContext);
   const { id: userId } = user;
 
@@ -140,7 +142,9 @@ function CommentBox({ comment, tabComment = false }) {
                     onClick={() => handleClick()}
                     sx={{ margin: 1 }}
                   >
-                    Like
+                    {!isUserLikeComment()
+                      ? t("buttons.like")
+                      : t("buttons.unlike")}
                   </Button>
                 )}
 
@@ -152,7 +156,7 @@ function CommentBox({ comment, tabComment = false }) {
                     onClick={() => setModify(true)}
                     sx={{ margin: 1 }}
                   >
-                    Modify
+                    {t("buttons.modify")}
                   </Button>
                 )}
               </ButtonGroup>
