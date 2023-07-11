@@ -1,7 +1,6 @@
 import {
   ArrowUturnLeftIcon,
   CloudArrowUpIcon,
-  ComputerDesktopIcon,
   ServerIcon,
 } from "@heroicons/react/24/outline";
 import { Button } from "@mui/material";
@@ -24,22 +23,6 @@ function IdeaButtons() {
       >
         Cancel
       </Button>
-      {isNewIdea && (
-        <Button
-          variant="contained"
-          color="info"
-          startIcon={<ComputerDesktopIcon className="h-6 w-6" />}
-          className="flex rounded-full mx-2 min-w-[122px]"
-          onClick={() => navigate("/ideas/new/preview")}
-          sx={{
-            boxShadow: 1,
-            "&:hover": { boxShadow: 2 },
-            "&:active, &.Mui-focusVisible": { boxShadow: 4 },
-          }}
-        >
-          Preview
-        </Button>
-      )}
       <Button
         variant="contained"
         color={isNewIdea ? "primary" : "warning"}

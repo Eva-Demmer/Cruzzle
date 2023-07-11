@@ -65,28 +65,28 @@ function IdeaUpload() {
   return (
     <div className="my-8" aria-label="Upload Files">
       <h2 className="text-xl sm:text-2xl font-bold my-4">Upload files</h2>
-      <div className="flex flex-col sm:flex-row">
-        <div className="w-full flex justify-center items-center sm:mx-8">
+      <div className="flex flex-col lg:flex-row">
+        <div className="w-full flex justify-center items-center lg:mx-8">
           <Dropzone
             handleDropFiles={handleDropFiles}
             isClick
             onDragActive={setIsDragActive}
           >
             <div
-              className={`w-[316px] h-[202px] flex flex-col-reverse my-6 sm:w-[456px] sm:h-[372px] sm:flex-col rounded-3xl relative justify-around items-center py-10 sm:px-10 ${
+              className={`w-[316px] h-[202px] flex flex-col-reverse my-6 lg:w-[456px] lg:h-[372px] lg:flex-col rounded-3xl relative justify-around items-center py-10 lg:px-10 ${
                 isDragActive ? "bg-neutral-300" : "bg-neutral-200"
               }`}
             >
               <img
                 src={dragdrop}
                 alt="standard"
-                className="w-28 select-none sm:w-auto absolute top-[-40px] right-[-20px] sm:top-[-50px] sm:right-[-50px] "
+                className="w-28 select-none lg:w-auto absolute top-[-40px] right-[-20px] lg:top-[-50px] lg:right-[-50px] "
               />
 
-              <h2 className="hidden md:flex text-xl font-bold">
+              <h2 className="hidden lg:flex text-xl font-bold">
                 Drag and drop files here
               </h2>
-              <h2 className="hidden sm:flex text-xl font-normal">OR</h2>
+              <h2 className="hidden lg:flex text-xl font-normal">OR</h2>
               <UploadButton
                 id="uploadButton2"
                 accept=".doc, .docx, .pdf, .xls, .xlsx, .txt, .png, .jpeg, .jpg, .ogg, .mp3"
@@ -109,7 +109,7 @@ function IdeaUpload() {
           </Dropzone>
         </div>
 
-        <div className="w-full flex flex-col sm:mx-10 py-8">
+        <div className="w-full flex flex-col lg:mx-10 py-8">
           {filesAttachment.length !== 0 && (
             <>
               <p className="w-full my-4">

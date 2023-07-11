@@ -5,6 +5,8 @@ import {
   getUserById,
   updateUser,
   getUserByFilter,
+  verifyPasswordUser,
+  updatePasswordUser,
   getActivitiesByUserId,
 } from "../controllers/users.controllers";
 
@@ -28,10 +30,12 @@ router.get("/", getUsers);
 router.get("/filter", getUserByFilter);
 router.get("/activities/:id", getActivitiesByUserId); //
 router.get("/:id", getUserById);
+router.post("/verifyPassword", verifyPasswordUser);
 
 // // Protected routes
 // TODO: decomment line below when we want to protect routes
 // router.use(protectRoutes);
+router.put("/updatePassword", hashPassword, updatePasswordUser);
 router.put("/:id", hashPassword, updateUser);
 
 export default router;

@@ -1,12 +1,14 @@
 import { Request, Response } from "express";
 import jwt, { Secret } from "jsonwebtoken";
+import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import {
-  findActivitiesById,
   findAll,
   findById,
   findByMail,
   update,
+  updatePassword,
+  findActivitiesById,
 } from "../models/user.model";
 import { verifyPassword } from "../middlewares/auth.middlewares";
 import findByFilter from "../models/userFilter.model";
@@ -87,6 +89,51 @@ const updateUser = async (req: Request, res: Response) => {
     res.status(500).send(error);
   }
 };
+// Update Password user
+const updatePasswordUser = async (req: Request, res: Response) => {
+  const data = req.body;
+  try {
+    const result = await updatePassword(data);
+    if (result) {
+      res.sendStatus(200);
+    } else {
+      res.status(404).send("User not found");
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+// Verify password
+const verifyPasswordUser = async (req: Request, res: Response) => {
+  try {
+    const { mail, password } = req.body;
+    const dataUser = await findByMail(mail);
+
+    if (dataUser) {
+      const passwordMatch = await bcrypt.compare(
+        password,
+        dataUser.hashed_password
+      );
+
+      const data = {
+        id: dataUser.id,
+        mail: dataUser.mail,
+      };
+
+      if (passwordMatch) {
+        res.status(200).json(data);
+      } else {
+        res.sendStatus(401);
+      }
+    } else {
+      res.sendStatus(401);
+    }
+  } catch (error) {
+    console.error("Error verifying passwords:", error);
+    res.status(500).json({ error: "Internal server error." });
+  }
+};
 
 const getUserByFilter = async (req: Request, res: Response) => {
   const filterQuery: UserFilterQuery = req.query;
@@ -121,4 +168,6 @@ export {
   updateUser,
   getUserByFilter,
   getActivitiesByUserId,
+  verifyPasswordUser,
+  updatePasswordUser,
 };

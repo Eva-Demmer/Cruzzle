@@ -62,13 +62,15 @@ function Root() {
     <div className="flex h-screen overflow-hidden">
       {smallQuery && <Sidebar />}
       <div
-        className={`h-full relative flex flex-1 flex-col  ${
-          !smallQuery && activeMenu ? "overflow-y-hidden" : "overflow-y-auto"
-        } overflow-x-hidden`}
+        className="h-full relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
         ref={divRef}
         id="scrollbar"
       >
-        <div className="sticky flex flex-col top-0 z-50 w-full">
+        <div
+          className={`sticky flex flex-col top-0 z-50 w-full ${
+            !smallQuery && activeMenu ? "h-full" : ""
+          }`}
+        >
           <HeaderNav />
           {!smallQuery && activeMenu && <Sidebar />}
         </div>
