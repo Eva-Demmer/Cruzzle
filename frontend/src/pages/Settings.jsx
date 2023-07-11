@@ -1,4 +1,5 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useTranslation, Trans } from "react-i18next";
 import {
   InputAdornment,
   TextField,
@@ -21,6 +22,7 @@ import { apiUsersVerifyPasword } from "../services/api.users";
 import settingSvg from "../assets/settings.svg";
 
 function Settings() {
+  const { t, i18n } = useTranslation();
   const { handleSubmit, control, reset } = useForm();
   const { user } = useContext(UserContext);
   const { language, setLanguage } = useContext(LanguageContext);
@@ -52,12 +54,12 @@ function Settings() {
   const languages = [
     {
       code: "GB",
-      value: "EN",
+      value: "en",
       language: "English",
     },
     {
       code: "FR",
-      value: "FR",
+      value: "fr",
       language: "Français",
     },
   ];
@@ -65,22 +67,36 @@ function Settings() {
   return (
     <div className="ideas-page w-full flex flex-col h-full">
       <header className="w-full px-6 min-[1439px]:w-8/12">
-        <h2>Settings</h2>
+        <h2>
+          <Trans i18nKey="pages.settings.title">Settings</Trans>
+        </h2>
       </header>
       <main className="px-6 flex flex-col">
         <div className="flex">
           <div className="w-full max-w-[600px]">
             <div className="flex flex-col" aria-label="language">
-              <h3 className="py-6">Language</h3>
+              <h3 className="py-6">
+                {t("pages.settings.part.language.title")}
+              </h3>
               <div className="flex flex-col md:w-full">
                 <FormControl>
-                  <InputLabel shrink>Select language</InputLabel>
+                  <InputLabel shrink>
+                    {t("pages.settings.part.language.buttonselect")}
+                  </InputLabel>
                   <Select
                     id="languageSelect"
                     value={language}
-                    input={<OutlinedInput notched label="Select language" />}
-                    label="Age"
-                    onChange={(e) => setLanguage(e.target.value)}
+                    input={
+                      <OutlinedInput
+                        notched
+                        label={t("pages.settings.part.language.buttonselect")}
+                      />
+                    }
+                    label="langue"
+                    onChange={(e) => {
+                      setLanguage(e.target.value);
+                      i18n.changeLanguage(e.target.value.toLowerCase());
+                    }}
                   >
                     {languages.map((lang) => (
                       <MenuItem value={lang.value} key={lang.code}>
@@ -101,12 +117,18 @@ function Settings() {
               </div>
             </div>
             <div className="flex flex-col" aria-label="password">
-              <h3 className="py-6">Password</h3>
+              <h3 className="py-6">
+                {t("pages.settings.part.password.title")}
+              </h3>
               <div className="flex flex-col ">
                 <Alert severity="info" className="mb-6 md:w-full">
-                  <AlertTitle>Info</AlertTitle>
-                  You can <strong>change your password</strong> here. But you
-                  need to identify yourself again before proceeding.
+                  <AlertTitle>
+                    {t("pages.settings.part.password.info.title")}
+                  </AlertTitle>
+                  <Trans i18nKey="pages.settings.part.password.info.content">
+                    You can <strong>change your password</strong> here. But you
+                    need to identify yourself again before proceeding.
+                  </Trans>
                 </Alert>
                 <form
                   onSubmit={handleSubmit(onSubmit)}
@@ -119,9 +141,13 @@ function Settings() {
                     render={({ field: { value } }) => (
                       <TextField
                         fullWidth
-                        label="Email"
+                        label={t(
+                          "pages.settings.part.password.textfield.mail.label"
+                        )}
                         variant="outlined"
-                        placeholder="Enter your username"
+                        placeholder={t(
+                          "pages.settings.part.password.textfield.mail.placeholder"
+                        )}
                         value={value}
                         disabled
                         InputLabelProps={{ shrink: true }}
@@ -141,11 +167,21 @@ function Settings() {
                       <TextField
                         id="password-input"
                         fullWidth
-                        label="Password"
+                        label={t(
+                          "pages.settings.part.password.textfield.password.label"
+                        )}
                         variant="outlined"
-                        placeholder="Enter your password"
+                        placeholder={t(
+                          "pages.settings.part.password.textfield.password.placeholder"
+                        )}
                         error={passwordError}
-                        helperText={passwordError ? "Incorrect entry." : " "} // Ajoutez un espace vide pour maintenir l'espace réservé
+                        helperText={
+                          passwordError
+                            ? t(
+                                "pages.settings.part.password.textfield.password.helperText"
+                              )
+                            : " "
+                        }
                         value={value}
                         onChange={onChange}
                         type={showPassword ? "text" : "password"}
@@ -182,7 +218,7 @@ function Settings() {
                       "&:active, &.Mui-focusVisible": { boxShadow: 4 },
                     }}
                   >
-                    Confirm
+                    {t("buttons.confirm")}
                   </Button>
                 </form>
               </div>

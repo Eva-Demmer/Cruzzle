@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 export const LanguageContext = createContext({});
 
 function LanguageProvider({ children }) {
-  const [language, setLanguage] = useState("EN");
+  const [language, setLanguage] = useState("en");
 
   const langues = useMemo(
     () => ({ language, setLanguage }),

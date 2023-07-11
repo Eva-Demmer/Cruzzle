@@ -5,6 +5,7 @@ import { StyledEngineProvider, ThemeProvider } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/fr";
+import "./config/i18n";
 
 import UserProvider from "./contexts/UserContext";
 
@@ -71,7 +72,7 @@ const router = createBrowserRouter([
         element: <IdeaNew />,
       },
       {
-        path: "favorits/",
+        path: "favorites/",
         element: <Favorits />,
       },
       {

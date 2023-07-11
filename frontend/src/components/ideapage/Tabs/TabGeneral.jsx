@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 import { ChevronUpIcon } from "@heroicons/react/24/outline";
 import TabPanel from "../../tabs/TabPanel";
@@ -8,6 +9,7 @@ import TopComments from "../TopComments";
 import CreateComment from "../CreateComment";
 
 function TabGeneral({ tabValue, setTabValue, index }) {
+  const { t } = useTranslation();
   const { idea } = useContext(IdeaPageContext);
   const [expanded, setExpanded] = useState(true);
   const { goal, risks, profits, comment } = idea;
@@ -22,7 +24,9 @@ function TabGeneral({ tabValue, setTabValue, index }) {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <h3 className="text-xl ">Goal</h3>
+              <h3 className="text-xl ">
+                {t("pages.ideas.idea.tabsIdea.tabgeneral.goal")}
+              </h3>
             </AccordionSummary>
             <AccordionDetails>
               <p>{goal}</p>
@@ -36,7 +40,9 @@ function TabGeneral({ tabValue, setTabValue, index }) {
               aria-controls="panel2a-content"
               id="panel2a-header"
             >
-              <h3 className="text-xl ">Profits</h3>
+              <h3 className="text-xl ">
+                {t("pages.ideas.idea.tabsIdea.tabgeneral.profits")}
+              </h3>
             </AccordionSummary>
             <AccordionDetails>
               <p>{profits}</p>
@@ -50,7 +56,9 @@ function TabGeneral({ tabValue, setTabValue, index }) {
               aria-controls="panel2a-content"
               id="panel2a-header"
             >
-              <h3 className="text-xl ">Risks</h3>
+              <h3 className="text-xl ">
+                {t("pages.ideas.idea.tabsIdea.tabgeneral.risks")}
+              </h3>
             </AccordionSummary>
             <AccordionDetails>
               <p>{risks}</p>
