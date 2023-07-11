@@ -54,8 +54,6 @@ const create = async (item: NotificationIdea) => {
         idea_id: item.idea_id,
         user_id: item.user_id,
         type: item.type,
-        created_at: item.created_at,
-        red_at: item.red_at,
       },
     });
     return createditem;
@@ -108,9 +106,28 @@ const deleteRedNotificationByDate = async () => {
 
 const deleteById = async (id: number) => {
   try {
-    const data = await prisma.notification_idea.delete({
+    const data = await prisma.notification_idea.deleteMany({
       where: {
         id,
+      },
+    });
+
+    return data;
+  } catch (error) {
+    console.error("Prisma error:", error);
+    throw new Error("Error deleting notification.");
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+const deleteByIitem = async (item: NotificationIdea) => {
+  try {
+    const data = await prisma.notification_idea.deleteMany({
+      where: {
+        idea_id: item.idea_id,
+        user_id: item.user_id,
+        type: item.type,
       },
     });
 
@@ -129,4 +146,5 @@ export {
   updateById,
   deleteRedNotificationByDate,
   deleteById,
+  deleteByIitem,
 };

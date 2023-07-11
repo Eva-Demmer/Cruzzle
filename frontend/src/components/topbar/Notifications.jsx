@@ -21,7 +21,7 @@ import { UserContext } from "../../contexts/UserContext";
 import {
   apiGetCurrentUserNotificationsIdea,
   apiUpdateNotificationsIdea,
-  apiDeleteNotificationIdea,
+  apiDeleteOneNotificationIdea,
 } from "../../services/api.notifications";
 
 export default function NotificationsMenu() {
@@ -68,7 +68,7 @@ export default function NotificationsMenu() {
 
   const deleteNotification = async (id) => {
     try {
-      const res = await apiDeleteNotificationIdea(id);
+      const res = await apiDeleteOneNotificationIdea(id);
       if (res.status === 200) {
         setRefresh(true);
       } else {
@@ -182,7 +182,9 @@ export default function NotificationsMenu() {
           notificationList.map((not) => (
             <MenuItem
               key={`noti${not.id}`}
-              className={`${not.red_at ? "" : "bg-[#f0e4f5]"}`}
+              className={`${
+                not.red_at ? "" : "bg-[#f0e4f5]"
+              } flex justify-between`}
             >
               <button
                 id="notificationBtn"
@@ -201,36 +203,38 @@ export default function NotificationsMenu() {
                 ).format("MMM D, h:mm A")})`}</span>
               </button>
 
-              {not.red_at ? (
-                <IconButton
-                  className="ml-4"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    setNotificationAsNotRed(not.id);
-                  }}
-                >
-                  <EyeSlashIcon className="w-4 h-4" />
-                </IconButton>
-              ) : (
-                <IconButton
-                  className="ml-4"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    setNotificationAsRed(not.id);
-                  }}
-                >
-                  <EyeIcon className="w-4 h-4" />
-                </IconButton>
-              )}
+              <div className="notification-action-btn">
+                {not.red_at ? (
+                  <IconButton
+                    className="ml-4"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setNotificationAsNotRed(not.id);
+                    }}
+                  >
+                    <EyeSlashIcon className="w-4 h-4" />
+                  </IconButton>
+                ) : (
+                  <IconButton
+                    className="ml-4"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setNotificationAsRed(not.id);
+                    }}
+                  >
+                    <EyeIcon className="w-4 h-4" />
+                  </IconButton>
+                )}
 
-              <IconButton
-                onClick={(event) => {
-                  event.stopPropagation();
-                  deleteNotification(not.id);
-                }}
-              >
-                <TrashIcon className="w-4" />
-              </IconButton>
+                <IconButton
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    deleteNotification(not.id);
+                  }}
+                >
+                  <TrashIcon className="w-4" />
+                </IconButton>
+              </div>
             </MenuItem>
           ))
         ) : (

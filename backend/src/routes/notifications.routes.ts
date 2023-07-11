@@ -4,6 +4,7 @@ import {
   createNotificationIdea,
   updateNotificationIdea,
   deleteNotificationIdea,
+  deleteManyNotificationIdea,
 } from "../controllers/notifications.ideas.controllers";
 
 const router = express.Router();
@@ -16,6 +17,7 @@ router.use(timeLog);
 
 router.post("/ideas", createNotificationIdea);
 router.get("/ideas/:id", getNotificationIdea);
+router.put("/ideas/delete", deleteManyNotificationIdea);
 router.put("/ideas/:id", updateNotificationIdea);
 router.delete("/ideas/:id", deleteNotificationIdea);
 

@@ -8,20 +8,34 @@ const apiGetCurrentUserNotificationsIdea = async (id) => {
   return response;
 };
 
+const apiCreateNotificationsIdea = async (item) => {
+  const route = "/api/notifications/ideas/";
+  const response = await axios.post(`${url}${route}`, item);
+  return response;
+};
+
 const apiUpdateNotificationsIdea = async (id, item) => {
   const route = "/api/notifications/ideas/";
   const response = await axios.put(`${url}${route}${id}`, item);
   return response;
 };
 
-const apiDeleteNotificationIdea = async (id) => {
+const apiDeleteOneNotificationIdea = async (id) => {
   const route = "/api/notifications/ideas/";
   const response = await axios.delete(`${url}${route}${id}`);
   return response;
 };
 
+const apiDeleteManyNotificationIdea = async (item) => {
+  const route = "/api/notifications/ideas/delete";
+  const response = await axios.put(`${url}${route}`, item);
+  return response;
+};
+
 export {
   apiGetCurrentUserNotificationsIdea,
+  apiCreateNotificationsIdea,
   apiUpdateNotificationsIdea,
-  apiDeleteNotificationIdea,
+  apiDeleteOneNotificationIdea,
+  apiDeleteManyNotificationIdea,
 };
