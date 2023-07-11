@@ -4,20 +4,32 @@ import {
   PencilIcon,
   SquaresPlusIcon,
 } from "@heroicons/react/24/solid";
-// import puzzleIcon from "../../assets/PuzzleIcon.svg";
+import puzzleIcon from "../../assets/PuzzleIcon.svg";
 import { apiIdeas } from "../../services/api.ideas";
 import { UserContext } from "../../contexts/UserContext";
 import Card from "./IndividualOverviewCard";
+import { getUserPuzzlePercentageAchievementObject } from "../../utils/gamification";
 
 function OverviewCards() {
   const { user } = useContext(UserContext);
 
-  const {
-    _count: { id, comment_like: commentLike, idea },
-  } = user;
+  const [myIdeas, setMyIdeas] = useState(0);
+  const [participation, setParticipation] = useState(0);
   const [ideasCreatedToday, setIdeasCreatedToday] = useState(0);
+  const [finishedPuzzles, setFinishedPuzzles] = useState(0);
 
-  // const [finishedPuzzles, setFinishedPuzzles] = useState("à faire");
+  useEffect(() => {
+    const updateMyIdeasAndParticipations = () => {
+      const {
+        _count: { idea: newIdea, comment_like: newParticipation },
+      } = user;
+      setParticipation(newParticipation);
+      setMyIdeas(newIdea);
+    };
+    if (user) {
+      updateMyIdeasAndParticipations();
+    }
+  }, [user]);
 
   useEffect(() => {
     const fetchIdeasCreatedToday = async () => {
@@ -29,43 +41,63 @@ function OverviewCards() {
         console.error("Error fetching ideas created today:", error);
       }
     };
-    if (id) {
+    if (user) {
       fetchIdeasCreatedToday();
     }
-  }, [id]);
+  }, [user]);
 
-  // TODO: add finished puzzles route (and service)
+  useEffect(() => {
+    const updateFinishedPuzzles = async () => {
+      try {
+        const puzzlesPercentageAchievement =
+          getUserPuzzlePercentageAchievementObject(user);
+        const puzzleTot = Object.values(puzzlesPercentageAchievement).reduce(
+          (acc, percent) => {
+            return acc + (percent === 100 ? 1 : 0);
+          },
+          0
+        );
+        setFinishedPuzzles(puzzleTot);
+      } catch (error) {
+        setFinishedPuzzles("N/A");
+        console.error("Error updating finished puzzles:", error);
+      }
+    };
+    if (user) {
+      updateFinishedPuzzles();
+    }
+  }, [user]);
 
   return (
     <div className="md:pl-5 lg:w-3/4 grid grid-cols-2 gap-x-8 lg:gap-x-32 gap-y-12 ">
       <Card
+        isIcon
         icon={LightBulbIcon}
         rotate={45}
         cardTitle="Your ideas"
-        state={idea}
-        isIcon
+        state={myIdeas}
       />
       <Card
+        isIcon
         icon={PencilIcon}
         rotate={0}
         cardTitle="Today's ideas"
         state={ideasCreatedToday}
-        isIcon
       />
       <Card
+        isIcon
         icon={SquaresPlusIcon}
         rotate={0}
         cardTitle="Participations"
-        state={commentLike}
-        isIcon
+        state={participation}
       />
-      {/* <Card
+      <Card
+        isIcon={false}
         icon={puzzleIcon}
         rotate={0}
         cardTitle="Finished puzzles"
         state={finishedPuzzles}
-        isIcon={false}
-      /> */}
+      />
     </div>
   );
 }

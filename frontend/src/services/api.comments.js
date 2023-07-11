@@ -25,7 +25,6 @@ const apiGetCommentsByIdeaId = async (id) => {
   try {
     const response = await axios.get(`${url}${userRoute}/${id}`);
     if (response.status === 200) {
-      console.info(response.data);
       return response.data;
     }
     throw new Error(`Unexpected response status: ${response.status}`);
@@ -43,7 +42,6 @@ const apiGetTotalCommentsReceivedByUserId = async (userId) => {
   try {
     const response = await axios.get(`${url}${userRoute}user/${userId}`);
     if (response.status === 200) {
-      console.info(response.data);
       return response.data;
     }
     throw new Error(`Unexpected response status: ${response.status}`);

@@ -25,7 +25,6 @@ const apiGetTotalLikesReceivedByUserId = async (userId) => {
   try {
     const response = await axios.get(`${url}${userRoute}/users/${userId}`);
     if (response.status === 200) {
-      console.info(response.data);
       return response.data;
     }
     throw new Error(`Unexpected response status: ${response.status}`);

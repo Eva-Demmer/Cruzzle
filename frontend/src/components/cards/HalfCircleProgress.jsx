@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from "react";
 // TODO: add context when db is ok
 const score = 756;
 const nextScore = 1000;
-
 const pointsNextLevel = nextScore - score;
 
 function HalfCircleProgress() {

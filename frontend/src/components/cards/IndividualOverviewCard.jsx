@@ -36,11 +36,11 @@ function IdeaCard({
 }
 
 IdeaCard.propTypes = {
-  icon: PropTypes.elementType,
   isIcon: PropTypes.bool,
+  icon: PropTypes.elementType,
   rotate: PropTypes.number.isRequired,
   cardTitle: PropTypes.string.isRequired,
-  state: PropTypes.string.isRequired,
+  state: PropTypes.node.isRequired,
 };
 
 IdeaCard.defaultProps = {
