@@ -54,7 +54,7 @@ function Home() {
   }, []);
 
   return (
-    <div className="absolute top-0 h-screen bg-primary-900 bg-opacity-5 flex justify-between">
+    <div className="absolute top-0 h-screen w-full bg-primary-900 bg-opacity-5 flex justify-between">
       <div className="mt-5 p-10">
         {/* Welcome */}
         <div className="flex flex-col">
@@ -98,19 +98,21 @@ function Home() {
         <OverviewCards />
       </div>
 
-      <div className="h-screen w-5/12 bg-white pt-20 flex flex-col justify-center items-end">
+      <div className="px-10 h-screen bg-white flex flex-col justify-end">
         {/* Inspiration */}
-        <div className="px-5">
+        <div>
           <InspirationCards />
         </div>
         {/* Trending */}
-        <div>
-          <h4 className="pl-5 pb-0 mt-16 text-black">Trending ideas</h4>
-          {trendIdeas !== undefined ? (
-            <IdeaDisplayer ideas={trendIdeas} isMini />
-          ) : (
-            ""
-          )}
+        <div className="mt-16">
+          <h4 className="pl-5 text-black">Trending ideas</h4>
+          <div className="overflow-y-auto h-96">
+            {trendIdeas !== undefined ? (
+              <IdeaDisplayer ideas={trendIdeas} isMini />
+            ) : (
+              ""
+            )}
+          </div>
         </div>
       </div>
     </div>

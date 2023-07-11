@@ -4,10 +4,10 @@ import {
   HandThumbUpIcon,
   ChatBubbleBottomCenterTextIcon,
 } from "@heroicons/react/24/solid";
-import Trophy from "../../assets/dashboard/Trophy.png";
 import medalGold from "../../assets/dashboard/Medal_gold.png";
 import medalSilver from "../../assets/dashboard/Medal_silver.png";
 import medalBronze from "../../assets/dashboard/Medal_bronze.png";
+import puzzlePieces from "../../assets/dashboard/PuzzlePieces.svg";
 import { HalfCircleProgress, pointsNextLevel } from "./HalfCircleProgress";
 import CountAnimation from "../animations/CounterAnimation";
 import { UserContext } from "../../contexts/UserContext";
@@ -62,14 +62,9 @@ function InspirationCards() {
   }, []);
 
   return (
-    <div className="pt-60 flex flex-col lg:flex-row gap-5 lg:gap-6">
+    <div className="pr-6 -ml-20 flex flex-col lg:flex-row gap-5 lg:gap-10">
       {/* Leaderboard card */}
       <Paper elevation={3} className="h-80 w-56 rounded-2xl relative">
-        <img
-          src={Trophy}
-          alt="trophy"
-          className="h-24 opacity-40 absolute top-14 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-        />
         <h3 className="text-black text-lg md:text-xl lg:text-2xl px-5 pt-6 text-center relative z-10">
           Top cruzzlers this month
         </h3>
@@ -101,26 +96,32 @@ function InspirationCards() {
             points until next level
           </span>
           <div className="mb-8 flex flex-col items-center relative">
-            <HandThumbUpIcon className="w-24 text-primary-50 absolute top-[-18px] opacity-20" />
+            <HandThumbUpIcon className="w-24 text-primary-50 absolute top-[-18px] opacity-10" />
             <span className="text-4xl">{totalLikes}</span>
             <span className="pl-3 text-secondary-600">likes received</span>
           </div>
           <div className="flex flex-col items-center relative">
-            <ChatBubbleBottomCenterTextIcon className="w-20 text-primary-50 absolute top-[-10px] opacity-20" />
+            <ChatBubbleBottomCenterTextIcon className="w-20 text-primary-50 absolute top-[-10px] opacity-10" />
             <span className="text-4xl">{totalComments}</span>
             <span className="pl-3 text-secondary-600">comments received</span>
           </div>
         </div>
       </Paper>
       {/* Team activity card */}
-      <Paper elevation={3} className="h-80 w-56 rounded-2xl">
-        <div className="flex flex-col">
+      <Paper elevation={3} className="h-80 w-56 rounded-2xl relative">
+        <div className="flex flex-col items-center">
+          {/* <img src={puzzleIcon} alt="puzzle" className="h-20 opacity-50 "/> */}
+          <img
+            src={puzzlePieces}
+            alt="puzzle pieces"
+            className="w-9/12 absolute -top-8"
+          />
           <h3 className="text-black text-lg md:text-xl lg:text-2xl px-5 pt-6 text-center">
             Team activity
           </h3>
           <div className="py-5 flex items-center justify-center">
             <Paper
-              elevation={3}
+              elevation={0}
               className="h-40 w-40 rounded-full flex items-center justify-center"
             >
               <CountAnimation targetCount={totalIdeas} />

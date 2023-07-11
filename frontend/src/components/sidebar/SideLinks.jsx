@@ -63,7 +63,7 @@ function SideLinks() {
       icon: UserGroupIcon,
     },
     {
-      primary: "Pannel Admin",
+      primary: "Admin panel",
       icon: WrenchScrewdriverIcon,
       admin: true,
       subLink: [
