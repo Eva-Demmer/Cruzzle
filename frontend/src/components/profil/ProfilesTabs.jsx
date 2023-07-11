@@ -10,6 +10,7 @@ import "dayjs/locale/fr";
 import { UserProfileContext } from "../../contexts/UserProfile";
 import PuzzlesTab from "./puzzles/PuzzlesTab";
 import { getUserPuzzlePercentageAchievementObject } from "../../utils/gamification";
+import ActivityTab from "./ActivityTab";
 
 export default function ProfilesTabs() {
   const { user } = useContext(UserProfileContext);
@@ -132,7 +133,7 @@ export default function ProfilesTabs() {
           </div>
         </TabPanel>
         <TabPanel value={value} index={1} className="w-full">
-          à remplir
+          <ActivityTab />
         </TabPanel>
         <TabPanel value={value} index={2} className="w-full">
           à remplir
