@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Tabs, Tab, Box } from "@mui/material";
 import { LightBulbIcon, SquaresPlusIcon } from "@heroicons/react/24/solid";
 import dayjs from "dayjs";
@@ -8,6 +8,9 @@ import AllyProps from "../tabs/AllyProps";
 import PuzzleIcon from "../../assets/PuzzleIcon.svg";
 import "dayjs/locale/fr";
 import { UserProfileContext } from "../../contexts/UserProfile";
+import PuzzlesTab from "./puzzles/PuzzlesTab";
+import { getUserPuzzlePercentageAchievementObject } from "../../utils/gamification";
+import ActivityTab from "./ActivityTab";
 
 export default function ProfilesTabs() {
   const { user } = useContext(UserProfileContext);
@@ -23,8 +26,21 @@ export default function ProfilesTabs() {
     biography,
     agency: { name: agencyName },
     position: { name: positionName },
-    _count: { idea_teams: ideaTeams, idea, comment },
+    _count: { idea, comment },
   } = user;
+  const [puzzleFinished, setPuzzleFinished] = useState(0);
+
+  useEffect(() => {
+    const puzzlesPercentageAchievement =
+      getUserPuzzlePercentageAchievementObject(user);
+    const puzzleTot = Object.values(puzzlesPercentageAchievement).reduce(
+      (acc, percent) => {
+        return acc + (percent === 100 ? 1 : 0);
+      },
+      0
+    );
+    setPuzzleFinished(puzzleTot);
+  }, []);
 
   const userinfos = [
     {
@@ -86,7 +102,9 @@ export default function ProfilesTabs() {
                     src={PuzzleIcon}
                   />
                   <h3 className="text-black ml-5 mt-2">Finished puzzles</h3>
-                  <h2 className="text-black text-5xl ml-5 mb-5">{ideaTeams}</h2>
+                  <h2 className="text-black text-5xl ml-5 mb-5">
+                    {puzzleFinished}
+                  </h2>
                 </div>
                 <div className="h-30 w-60 shadow-md rounded-2xl flex flex-col relative">
                   <LightBulbIcon className="h-10 w-10 absolute top-[-18px] left-[-18px] text-primary-900 fill-current transform rotate-45" />
@@ -115,13 +133,13 @@ export default function ProfilesTabs() {
           </div>
         </TabPanel>
         <TabPanel value={value} index={1} className="w-full">
-          à remplir
+          <ActivityTab />
         </TabPanel>
         <TabPanel value={value} index={2} className="w-full">
           à remplir
         </TabPanel>
         <TabPanel value={value} index={3} className="w-full">
-          à remplir
+          <PuzzlesTab />
         </TabPanel>
       </Box>
     </div>

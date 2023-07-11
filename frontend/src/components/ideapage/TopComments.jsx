@@ -1,11 +1,13 @@
 import PropTypes from "prop-types";
 import { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { IconButton } from "@mui/material";
 import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
 import CommentBox from "./CommentBox";
 
 function TopComments({ setTabValue }) {
+  const { t } = useTranslation();
   const { idea } = useContext(IdeaPageContext);
   const { comment } = idea;
   const [sortComments, setSortComments] = useState(comment);
@@ -20,7 +22,9 @@ function TopComments({ setTabValue }) {
   return (
     <div className="w-full my-4" aria-label="top comment">
       <div className="flex justify-between items-center">
-        <h3 className="text-xl mb-2">Top comments</h3>
+        <h3 className="text-xl mb-2">
+          {t("pages.ideas.idea.tabsIdea.tabgeneral.topcomments")}
+        </h3>
         <IconButton
           aria-label="see more"
           size="medium"

@@ -1,17 +1,15 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import apiAdminRoles from "../../../services/api.admin.roles";
 import { apiAdminUpdateUserById } from "../../../services/api.admin.users";
 import { AlertToastContext } from "../../../contexts/AlertToastContext";
 
-export default function TableSelectRole({ user }) {
+export default function TableSelectRole({ user, roleList }) {
   const { setAlertAdminOpen, setAlertAdminMessage } =
     useContext(AlertToastContext);
-  const [roleList, setRoleList] = useState([{ id: 0, name: "loading" }]);
-  const [selectedUserRole, setSelectedUserRole] = useState(0);
+  const [selectedUserRole, setSelectedUserRole] = useState(user.role.id);
 
   const handleChange = (event) => {
     const roleId = event.target.value;
@@ -29,19 +27,6 @@ export default function TableSelectRole({ user }) {
 
     setSelectedUserRole(event.target.value);
   };
-
-  useEffect(() => {
-    apiAdminRoles()
-      .then((res) => {
-        if (res.status === 200) {
-          setRoleList(res.data);
-          setSelectedUserRole(user.role.id);
-        } else {
-          console.error("Cannot get roles");
-        }
-      })
-      .catch((error) => console.error("Error getting roles", error));
-  }, []);
 
   return (
     <FormControl variant="standard" size="small" className="w-28">
@@ -84,4 +69,10 @@ TableSelectRole.propTypes = {
       name: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  roleList: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    }).isRequired
+  ).isRequired,
 };

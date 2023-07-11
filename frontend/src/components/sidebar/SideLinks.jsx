@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -15,17 +15,20 @@ import {
   ChevronUpIcon,
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
+import { useTranslation } from "react-i18next";
 import Collapse from "@mui/material/Collapse";
 import LogoutLinks from "./LogoutLinks";
 import { MenuContext } from "../../contexts/MenuContext";
 import { UserContext } from "../../contexts/UserContext";
 
 function SideLinks() {
+  const { t } = useTranslation();
   const { user } = useContext(UserContext);
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const { activeMenu, setActiveMenu } = useContext(MenuContext);
   const isAdmin = [55, 88].includes(user.role.id);
+  const navigate = useNavigate();
 
   const iconSize = (item) => {
     return `h-6 w-6 ${location.pathname === item.to ? "text-primary-50" : ""}`;
@@ -35,53 +38,54 @@ function SideLinks() {
     setOpen(!open);
   };
 
-  const handleGoTo = () => {
+  const handleGoTo = (link) => {
     setActiveMenu(!activeMenu);
+    navigate(link);
   };
 
   const navlinks = [
     {
       to: "/dashboard",
-      primary: "Home",
+      primary: t("menu.sidebar.home"),
       icon: HomeIcon,
     },
     {
       to: "/ideas",
-      primary: "Ideas",
+      primary: t("menu.sidebar.ideas"),
       icon: LightBulbIcon,
     },
     {
-      to: "/favorits",
-      primary: "Favorits",
+      to: "/favorites",
+      primary: t("menu.sidebar.favorites"),
       icon: StarIcon,
     },
     {
       to: "/users",
-      primary: "Community",
+      primary: t("menu.sidebar.community"),
       icon: UserGroupIcon,
     },
     {
-      primary: "Pannel Admin",
+      primary: t("menu.sidebar.admin.pannel"),
       icon: WrenchScrewdriverIcon,
       admin: true,
       subLink: [
         {
           to: "/admin/users",
-          primary: "Users",
+          primary: t("menu.sidebar.admin.users"),
         },
         {
           to: "/admin/ideas",
-          primary: "Ideas",
+          primary: t("menu.sidebar.admin.ideas"),
         },
         {
           to: "/admin/categories",
-          primary: "Categories",
+          primary: t("menu.sidebar.admin.categories"),
         },
       ],
     },
     {
       to: "/settings",
-      primary: "Settings",
+      primary: t("menu.sidebar.settings"),
       icon: Cog6ToothIcon,
     },
   ];
@@ -102,9 +106,7 @@ function SideLinks() {
                 (!item.subLink && item.admin && isAdmin)) && (
                 <ListItemButton
                   key={item.primary}
-                  component={Link}
-                  to={item.to}
-                  onClick={() => handleGoTo}
+                  onClick={() => handleGoTo(item.to)}
                   className={`w-full ${
                     location.pathname === item.to
                       ? "Mui-selected text-primary-50"
@@ -137,8 +139,7 @@ function SideLinks() {
                         <ListItemButton
                           sx={{ pl: 8 }}
                           key={`subitem ${subitem.to}`}
-                          component={Link}
-                          to={subitem.to || ""}
+                          onClick={() => handleGoTo(subitem.to || "")}
                           className={` ${
                             location.pathname === subitem.to
                               ? "Mui-selected text-primary-50"

@@ -1,15 +1,29 @@
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
 import "dayjs/locale/fr";
 import { UserContext } from "../../../contexts/UserContext";
+import apiAdminRoles from "../../../services/api.admin.roles";
 import CheckboxUserIsActive from "./CheckboxUserIsActive";
 import TableSelectRole from "./TableSelectRole";
 import ActionIcons from "./ActionIcons";
 
 export default function TableOfUsers({ userList, setUpdateList }) {
   const { user } = useContext(UserContext);
+  const [roleList, setRoleList] = useState(null);
+
+  useEffect(() => {
+    apiAdminRoles()
+      .then((res) => {
+        if (res.status === 200) {
+          setRoleList(res.data);
+        } else {
+          console.error("Cannot get roles");
+        }
+      })
+      .catch((error) => console.error("Error getting roles", error));
+  }, []);
 
   const rows = userList;
   const columns = [
@@ -50,11 +64,11 @@ export default function TableOfUsers({ userList, setUpdateList }) {
       field: "role",
       headerName: "Role",
       renderCell: (params) => {
-        return user.role.id === 88 ? (
-          <TableSelectRole user={params.row} />
-        ) : (
-          params.row.role.name
-        );
+        return user.role.id === 88
+          ? roleList && (
+              <TableSelectRole user={params.row} roleList={roleList} />
+            )
+          : params.row.role.name;
       },
       minWidth: 140,
       sortable: false,

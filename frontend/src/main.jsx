@@ -5,6 +5,7 @@ import { StyledEngineProvider, ThemeProvider } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/fr";
+import "./config/i18n";
 
 import UserProvider from "./contexts/UserContext";
 
@@ -29,7 +30,6 @@ import AdminIdeas from "./pages/admin/AdminIdeas";
 import AdminCategories from "./pages/admin/AdminCategories";
 
 import Settings from "./pages/Settings";
-import Search from "./pages/Search";
 
 import "./styles/main.scss";
 import AlertToastProvider from "./contexts/AlertToastContext";
@@ -72,7 +72,7 @@ const router = createBrowserRouter([
         element: <IdeaNew />,
       },
       {
-        path: "favorits/",
+        path: "favorites/",
         element: <Favorits />,
       },
       {
@@ -102,10 +102,6 @@ const router = createBrowserRouter([
       {
         path: "settings/",
         element: <Settings />,
-      },
-      {
-        path: "search/",
-        element: <Search />,
       },
     ],
   },

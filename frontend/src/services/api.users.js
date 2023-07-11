@@ -21,6 +21,36 @@ const apiUsers = async (route = "") => {
   }
 };
 
+const apiUsersVerifyPasword = async (data) => {
+  const { mail, password } = data;
+  try {
+    const response = await axios.post(`${url}${userRoute}/verifyPassword`, {
+      mail,
+      password,
+    });
+
+    if (response.status === 200) {
+      return response;
+    }
+    throw new Error(response.status);
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const apiUsersUpdatePasword = async (data) => {
+  try {
+    const response = await axios.put(`${url}${userRoute}/updatePassword`, data);
+
+    if (response.status === 200) {
+      return response;
+    }
+    throw new Error(response.status);
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 const apiUsersLogin = async (mail, password) => {
   try {
     const response = await axios.post(`${url}${userRoute}login`, {
@@ -67,4 +97,30 @@ const apiUpdateUser = async (id, data) => {
   }
 };
 
-export { apiUsers, apiUpdateUser, apiUserById, apiUsersLogin };
+const apiGeActivitiesByUserId = async (id) => {
+  try {
+    const response = await axios.get(`${url}${userRoute}activities/${id}`);
+    if (response.status === 200) {
+      console.info("activities", response.data);
+      return response.data;
+    }
+    throw new Error(`Unexpected response status: ${response.status}`);
+  } catch (error) {
+    if (error.response && error.response.status === 500) {
+      console.error("Internal server error:", error);
+    } else {
+      console.error("Fetch  error:", error);
+    }
+    throw error;
+  }
+};
+
+export {
+  apiUsers,
+  apiUpdateUser,
+  apiUserById,
+  apiUsersLogin,
+  apiGeActivitiesByUserId,
+  apiUsersVerifyPasword,
+  apiUsersUpdatePasword,
+};

@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useContext, useLayoutEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import Sidebar from "../components/sidebar/Sidebar";
@@ -8,13 +8,16 @@ import { MenuContext } from "../contexts/MenuContext";
 import { ScrollContext } from "../contexts/ScrollContext";
 import { UserContext } from "../contexts/UserContext";
 import { apiUserById } from "../services/api.users";
+import { LanguageContext } from "../contexts/LanguageContext";
 
 function Root() {
   const { user, setUser } = useContext(UserContext);
   const smallQuery = useMediaQuery(sm);
   const { activeMenu, setActiveMenu } = useContext(MenuContext);
+  const { setLanguage } = useContext(LanguageContext);
   const { divRef } = useContext(ScrollContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const setCurrentUserIntoUserContext = (token) => {
     const parts = token.split(".");
@@ -36,7 +39,13 @@ function Root() {
     const token = localStorage.getItem("token");
     if (token) {
       setCurrentUserIntoUserContext(token);
-      navigate("/dashboard");
+      const lng = localStorage.getItem("i18nextLng");
+      if (lng) {
+        setLanguage(lng);
+      }
+      if (location.pathname === "/") {
+        navigate("/dashboard");
+      }
     } else {
       navigate("/login");
     }
@@ -63,7 +72,11 @@ function Root() {
         ref={divRef}
         id="scrollbar"
       >
-        <div className=" sticky flex flex-col top-0 z-50 w-full">
+        <div
+          className={`sticky flex flex-col top-0 z-50 w-full ${
+            !smallQuery && activeMenu ? "h-full" : ""
+          }`}
+        >
           <HeaderNav />
           {!smallQuery && activeMenu && <Sidebar />}
         </div>

@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { User } from "../interfaces/users.interface";
+import { UpdatePasswordUser, User } from "../interfaces/users.interface";
 
 const prisma = new PrismaClient();
 
@@ -34,6 +34,40 @@ const findAll = async () => {
       },
       orderBy: {
         lastname: "asc",
+      },
+    });
+    return data;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+const findActivitiesById = async (id: number) => {
+  try {
+    const data = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        idea_like: {
+          select: {
+            liked_at: true,
+            idea: {
+              select: { title: true },
+            },
+          },
+        },
+        comment: {
+          select: {
+            created_at: true,
+            idea: {
+              select: {
+                title: true,
+              },
+            },
+          },
+        },
       },
     });
     return data;
@@ -137,4 +171,29 @@ const update = async (id: number, updatedUser: User) => {
   }
 };
 
-export { findAll, findById, findByMail, update };
+const updatePassword = async (updatedPassword: UpdatePasswordUser) => {
+  const { id, hashed_password: hashedPassword } = updatedPassword;
+  try {
+    const data = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: { hashed_password: hashedPassword },
+    });
+    const { id: userId, mail } = data;
+    return { id: userId, mail };
+  } catch (error) {
+    throw new Error("Error updating user.");
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+export {
+  findAll,
+  findById,
+  findByMail,
+  update,
+  updatePassword,
+  findActivitiesById,
+};

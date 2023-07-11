@@ -1,5 +1,6 @@
 import { Paper, Avatar, Button, ButtonGroup } from "@mui/material";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 import { useContext, useState } from "react";
 import dayjs from "dayjs";
 import { HandThumbUpIcon as SolidHandThumbUpIcon } from "@heroicons/react/24/solid";
@@ -18,6 +19,7 @@ import { IdeaPageContext } from "../../contexts/IdeaPageContext";
 import { apiGetCommentsByIdeaId } from "../../services/api.comments";
 
 function CommentBox({ comment, tabComment = false }) {
+  const { t, i18n } = useTranslation();
   const { user } = useContext(UserContext);
   const { id: userId } = user;
 
@@ -75,7 +77,10 @@ function CommentBox({ comment, tabComment = false }) {
             </h4>
             <div className="flex items-center font-semibold">
               <p className="bloc text-secondary-600 text-sm">
-                - {dayjs(comment.created_at).format("DD MMM, YYYY HH:mm a")}
+                -{" "}
+                {dayjs(comment.created_at)
+                  .locale(i18n.language)
+                  .format(t("pages.ideas.idea.commentBox.dateFormats.long"))}
               </p>
             </div>
           </div>
@@ -103,7 +108,7 @@ function CommentBox({ comment, tabComment = false }) {
                 <Paper
                   elevation={0}
                   size="small"
-                  className="absolute flex items-center px-4 bottom-[-20px] right-6 w-24 h-8 border border-[#dadada] border-solid rounded-full"
+                  className="absolute flex items-center px-4 bottom-[-20px] right-6 sm:w-24 h-8 border border-[#dadada] border-solid rounded-full"
                 >
                   <div
                     className="flex items-center justify-center w-full text-secondary-600"
@@ -140,7 +145,9 @@ function CommentBox({ comment, tabComment = false }) {
                     onClick={() => handleClick()}
                     sx={{ margin: 1 }}
                   >
-                    Like
+                    {!isUserLikeComment()
+                      ? t("buttons.like")
+                      : t("buttons.unlike")}
                   </Button>
                 )}
 
@@ -152,7 +159,7 @@ function CommentBox({ comment, tabComment = false }) {
                     onClick={() => setModify(true)}
                     sx={{ margin: 1 }}
                   >
-                    Modify
+                    {t("buttons.modify")}
                   </Button>
                 )}
               </ButtonGroup>
