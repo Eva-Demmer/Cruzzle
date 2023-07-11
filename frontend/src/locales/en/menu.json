@@ -12,5 +12,24 @@
     },
     "settings": "Settings"
   },
-  "topbar": {}
+  "topbar": {
+    "accountsettings": {
+      "tooltip": {
+        "title": "Account Settings"
+      },
+      "profil": "Profil",
+      "settings": "Settings",
+      "logout": "Logout"
+    },
+    "languages": {
+      "tooltip": {
+        "title": "Languages"
+      }
+    },
+    "notifications": {
+      "tooltip": {
+        "title": "Notifications"
+      }
+    }
+  }
 }

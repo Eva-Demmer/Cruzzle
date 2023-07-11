@@ -28,6 +28,7 @@ import { MenuContext } from "../../contexts/MenuContext";
 import Progress from "../progressbar/Progress";
 
 function HeaderNav() {
+  const { t } = useTranslation();
   const { setActiveMenu, activeMenu } = useContext(MenuContext);
   const { language, setLanguage } = useContext(LanguageContext);
   const { i18n } = useTranslation();
@@ -120,7 +121,10 @@ function HeaderNav() {
 
           {smallQuery && (
             <>
-              <Tooltip title="Langages" className="mx-1">
+              <Tooltip
+                title={t("menu.topbar.languages.tooltip.title")}
+                className="mx-1"
+              >
                 <IconButton
                   onClick={handleClick}
                   aria-controls={open ? "language-menu" : undefined}
@@ -201,7 +205,10 @@ function HeaderNav() {
             </>
           )}
 
-          <Tooltip title="Notifications" className="mx-1">
+          <Tooltip
+            title={t("menu.topbar.notifications.tooltip.title")}
+            className="mx-1"
+          >
             <IconButton>
               <Badge badgeContent={notificationCount} color="primary">
                 <BellIcon className="h-7 w-7" />
