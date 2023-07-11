@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import {
   Fab,
@@ -37,6 +37,7 @@ function HeaderNav() {
   const open = Boolean(anchorEl);
 
   const navigate = useNavigate();
+  const location = useLocation();
   const smallQuery = useMediaQuery(sm);
 
   const notificationCount = 15; // TODO: add context
@@ -63,7 +64,13 @@ function HeaderNav() {
 
   return (
     <>
-      <div className="flex items-center justify-between py-2 px-4 shadow-2 md:px-6 2xl:px-11 bg-primary-800 sm:bg-white">
+      <div
+        className={`flex items-center justify-between py-2 px-4 shadow-2 md:px-6 2xl:px-11 bg-primary-800 ${
+          location.pathname === "/dashboard"
+            ? "sm:bg-transparent"
+            : "sm:bg-white"
+        }`}
+      >
         <div className="mx-2">
           {!smallQuery && (
             <IconButton
