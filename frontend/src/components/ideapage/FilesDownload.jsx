@@ -10,22 +10,24 @@ import {
 } from "@mui/material";
 import { FileIcon, defaultStyles } from "react-file-icon";
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 import getNameFileToFirebaseLink from "../../utils/getNameFileToFirebaseLink";
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
 import formatBytes from "../../utils/formatBytes";
 import downloadFile from "../../utils/downloadfile";
 
 function FilesDownload() {
+  const { t } = useTranslation();
   const columns = [
-    { id: 1, label: "Type" },
-    { id: 2, label: "File" },
+    { id: 1, label: t("pages.ideas.idea.tabsIdea.tabfiles.type") },
+    { id: 2, label: t("pages.ideas.idea.tabsIdea.tabfiles.file") },
     {
       id: 3,
-      label: "Size",
+      label: t("pages.ideas.idea.tabsIdea.tabfiles.size"),
     },
     {
       id: 4,
-      label: "Action",
+      label: t("pages.ideas.idea.tabsIdea.tabfiles.action"),
     },
   ];
   const { idea } = useContext(IdeaPageContext);
@@ -67,7 +69,7 @@ function FilesDownload() {
                         className="rounded-full"
                         onClick={() => downloadFile(file.content_url, filename)}
                       >
-                        DOWNLOAD
+                        {t("buttons.download")}
                       </Button>
                     </TableCell>
                   </TableRow>
