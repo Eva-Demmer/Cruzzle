@@ -8,6 +8,7 @@ import {
   findByMail,
   update,
   updatePassword,
+  findActivitiesById,
 } from "../models/user.model";
 import { verifyPassword } from "../middlewares/auth.middlewares";
 import findByFilter from "../models/userFilter.model";
@@ -145,12 +146,28 @@ const getUserByFilter = async (req: Request, res: Response) => {
   }
 };
 
+const getActivitiesByUserId = async (req: Request, res: Response) => {
+  const id: number = parseInt(req.params.id, 10);
+  try {
+    const data = await findActivitiesById(id);
+    if (data) {
+      res.status(200).json(data);
+    } else {
+      res.status(404).send("Idea Likes not found");
+    }
+  } catch (error) {
+    console.info(error);
+    res.status(500).send(error);
+  }
+};
+
 export {
   getUsers,
   getUserById,
   login,
   updateUser,
   getUserByFilter,
+  getActivitiesByUserId,
   verifyPasswordUser,
   updatePasswordUser,
 };

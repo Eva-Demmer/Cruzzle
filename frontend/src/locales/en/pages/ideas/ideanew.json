@@ -71,5 +71,19 @@
     "eb": "EB",
     "zb": "ZB",
     "yb": "YB"
+  },
+  "alert": {
+    "success": {
+      "message": "Idea updated successfully.",
+      "title": "Idea updated"
+    },
+    "error": {
+      "message": "Failed to create idea. Please try again.",
+      "title": "Error"
+    }
+  },
+  "dialog": {
+    "title": "Confirm Save Idea",
+    "content": "Are you sure you want to save this idea? If you delete the files, you won't be able to retrieve them again!"
   }
 }
