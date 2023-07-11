@@ -1,10 +1,15 @@
 {
+  "add": "Add",
+  "addfiles": "Add Files",
+  "agree": "Agree",
+  "archive": "Archive",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "download": "Download",
   "confirm": "Confirm",
   "modify": "Modify",
-  "cancel": "Cancel",
-  "agree": "Agree",
-  "unlike": "Unlike",
   "like": "Like",
-  "archive": "Archive",
-  "download": "Download"
+  "publish": "Publish",
+  "unlike": "Unlike",
+  "save": "Save"
 }
