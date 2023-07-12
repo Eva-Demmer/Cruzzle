@@ -39,51 +39,6 @@ export default function NotificationsMenu() {
 
   const open = Boolean(anchorEl);
 
-  // const setNotificationAsRed = async (id) => {
-  //   const item = {
-  //     red_at: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-  //   };
-  //   try {
-  //     const res = await apiUpdateNotificationsIdea(id, item);
-  //     if (res.status === 200) {
-  //       setRefresh(true);
-  //     } else {
-  //       console.error("Cannot set notification as read");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error setting notification as read", error);
-  //   }
-  // };
-
-  // const setNotificationAsNotRed = async (id) => {
-  //   const item = {
-  //     red_at: null,
-  //   };
-  //   try {
-  //     const res = await apiUpdateNotificationsIdea(id, item);
-  //     if (res.status === 200) {
-  //       setRefresh(true);
-  //     } else {
-  //       console.error("Cannot set notification as not read");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error setting notification as not read", error);
-  //   }
-  // };
-
-  // const deleteNotification = async (id) => {
-  //   try {
-  //     const res = await apiDeleteOneNotificationIdea(id);
-  //     if (res.status === 200) {
-  //       setRefresh(true);
-  //     } else {
-  //       console.error("Cannot delete notification");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error deleting notification", error);
-  //   }
-  // };
-
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     setRefresh(true);
