@@ -18,16 +18,13 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/outline";
 import { UserContext } from "../../contexts/UserContext";
-import {
-  apiGetCurrentUserNotificationsIdea,
-  // apiUpdateNotificationsIdea,
-  // apiDeleteOneNotificationIdea,
-} from "../../services/api.notifications";
+import { apiGetCurrentUserNotificationsIdea } from "../../services/api.notifications";
 import {
   setNotificationAsRed,
   setNotificationAsNotRed,
   deleteOneNotification,
 } from "../../utils/notifications";
+import SocketEvents from "../socket/SocketEvents";
 
 export default function NotificationsMenu() {
   const navigate = useNavigate();
@@ -38,51 +35,6 @@ export default function NotificationsMenu() {
   const [refresh, setRefresh] = useState(false);
 
   const open = Boolean(anchorEl);
-
-  // const setNotificationAsRed = async (id) => {
-  //   const item = {
-  //     red_at: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-  //   };
-  //   try {
-  //     const res = await apiUpdateNotificationsIdea(id, item);
-  //     if (res.status === 200) {
-  //       setRefresh(true);
-  //     } else {
-  //       console.error("Cannot set notification as read");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error setting notification as read", error);
-  //   }
-  // };
-
-  // const setNotificationAsNotRed = async (id) => {
-  //   const item = {
-  //     red_at: null,
-  //   };
-  //   try {
-  //     const res = await apiUpdateNotificationsIdea(id, item);
-  //     if (res.status === 200) {
-  //       setRefresh(true);
-  //     } else {
-  //       console.error("Cannot set notification as not read");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error setting notification as not read", error);
-  //   }
-  // };
-
-  // const deleteNotification = async (id) => {
-  //   try {
-  //     const res = await apiDeleteOneNotificationIdea(id);
-  //     if (res.status === 200) {
-  //       setRefresh(true);
-  //     } else {
-  //       console.error("Cannot delete notification");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error deleting notification", error);
-  //   }
-  // };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -133,11 +85,15 @@ export default function NotificationsMenu() {
         0
       );
       setNotificationCount(tot);
+    } else {
+      setNotificationCount(0);
+      setAnchorEl(null);
     }
   }, [notificationList]);
 
   return (
     <div className="notification-menu">
+      <SocketEvents setRefresh={setRefresh} />
       <Tooltip title="notifications" className="mx-1">
         <IconButton
           onClick={handleClick}
@@ -207,7 +163,7 @@ export default function NotificationsMenu() {
                   <HandThumbUpIcon className="w-4 h-4 mr-2" />
                 )}
                 {`from ${not.user.firstname} ${not.user.lastname} - ${not.idea.title}`}
-                <span className="text-xs text-gray-500 ml-2">{`(${dayjs(
+                <span className="text-xs text-gray-500 ml-2 hidden md:inline">{`(${dayjs(
                   not.created_at
                 ).format("MMM D, h:mm A")})`}</span>
               </button>
