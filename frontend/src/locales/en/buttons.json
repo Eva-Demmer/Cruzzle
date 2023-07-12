@@ -1,6 +1,7 @@
 {
   "add": "Add",
   "addfiles": "Add Files",
+  "adduser": "Add User",
   "agree": "Agree",
   "archive": "Archive",
   "cancel": "Cancel",
@@ -12,6 +13,7 @@
   "like": "Like",
   "publish": "Publish",
   "unlike": "Unlike",
+  "update": "Update",
   "reset": "Reset",
   "save": "Save"
 }

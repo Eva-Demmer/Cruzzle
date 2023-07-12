@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -10,6 +11,7 @@ export default function DialogUserSelectAgency({
   setSelectedAgency,
   agencyError,
 }) {
+  const { t } = useTranslation();
   const [agencyList, setAgencyList] = useState([]);
 
   useEffect(() => {
@@ -39,11 +41,21 @@ export default function DialogUserSelectAgency({
         <TextField
           {...params}
           error={agencyError}
-          helperText={agencyError ? "required" : null}
+          helperText={
+            agencyError
+              ? t(
+                  "pages.adminpannel.users.tableOfUsers.dialogUpdateUser.select.agency.helpertext"
+                )
+              : null
+          }
           variant="standard"
-          label="Agency"
+          label={t(
+            "pages.adminpannel.users.tableOfUsers.dialogUpdateUser.select.agency.label"
+          )}
           fullWidth
-          placeholder="Select an agency"
+          placeholder={t(
+            "pages.adminpannel.users.tableOfUsers.dialogUpdateUser.select.agency.placeholder"
+          )}
           InputLabelProps={{ shrink: true }}
         />
       )}

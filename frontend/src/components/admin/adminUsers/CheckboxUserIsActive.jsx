@@ -1,10 +1,12 @@
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { Checkbox, Tooltip } from "@mui/material";
 import PropTypes from "prop-types";
 import { apiAdminUpdateUserById } from "../../../services/api.admin.users";
 import { AlertToastContext } from "../../../contexts/AlertToastContext";
 
 export default function CheckboxUserIsActive(props) {
+  const { t } = useTranslation();
   const { setAlertAdminOpen, setAlertAdminMessage } =
     useContext(AlertToastContext);
   const { isActiveUser, setIsActiveUser, userId } = props;
@@ -14,7 +16,9 @@ export default function CheckboxUserIsActive(props) {
       .then((res) => {
         if (res.status === 200) {
           setIsActiveUser(!isActiveUser);
-          setAlertAdminMessage("User active status updated successfully");
+          setAlertAdminMessage(
+            t("pages.adminpannel.users.tableOfUsers.tooltip.active.alert")
+          );
           setAlertAdminOpen(true);
         } else {
           console.error("Cannot setting user Active/Unactive");
@@ -26,7 +30,10 @@ export default function CheckboxUserIsActive(props) {
   };
 
   return (
-    <Tooltip title="Acivate/Unactivate user" arrow>
+    <Tooltip
+      title={t("pages.adminpannel.users.tableOfUsers.tooltip.active.title")}
+      arrow
+    >
       <Checkbox checked={isActiveUser} onChange={handleChange} />
     </Tooltip>
   );

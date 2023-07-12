@@ -1,0 +1,131 @@
+{
+  "title": "Users",
+  "countercard": "Total Users",
+  "dateFormats": {
+    "long": "YYYY-MM-DD HH:mm:ss",
+    "short": "MM-DD-YYYY"
+  },
+  "tableOfUsers": {
+    "columns": {
+      "firstname": "First Name",
+      "lastname": "Last Name",
+      "mail": "Mail",
+      "createdAt": "Created At",
+      "joinedAt": "Joined At",
+      "agency": "Agency",
+      "position": "Position",
+      "role": "Role",
+      "isActive": "Active",
+      "actions": "Actions"
+    },
+    "tooltip": {
+      "active": {
+        "title": "Acivate/Unactivate user",
+        "alert": "User active status updated successfully"
+      },
+      "visitprofil": "Visit user profile",
+      "updateuser": "Update user",
+      "updatecredentials": "Update credentials"
+    },
+    "dialogUpdateUser": {
+      "title": "Update user",
+      "content": "You are about to edit {{firstname}} {{lastname}}'s informations. Please fill in the form below.",
+      "textfield": {
+        "firstname": {
+          "label": "Firstname",
+          "placeholder": "Enter a firstname",
+          "helpertext": "Incorrect entry"
+        },
+        "lastname": {
+          "label": "Lastname",
+          "placeholder": "Enter a lastname",
+          "helpertext": "Incorrect entry"
+        },
+        "joinedAt": {
+          "label": "Join at",
+          "helpertext": "required"
+        }
+      },
+      "select": {
+        "agency": {
+          "label": "Agency",
+          "helpertext": "required",
+          "placeholder": "Select an agency"
+        },
+        "position": {
+          "label": "Position",
+          "helpertext": "required",
+          "placeholder": "Select a position"
+        }
+      }
+    },
+    "dialogCreateUser": {
+      "title": "Create new user",
+      "content": " You are about to add a new user. Please fill in the form below.",
+      "textfield": {
+        "firstname": {
+          "label": "Firstname",
+          "placeholder": "Enter a firstname",
+          "helpertext": "Incorrect entry"
+        },
+        "lastname": {
+          "label": "Lastname",
+          "placeholder": "Enter a lastname",
+          "helpertext": "Incorrect entry"
+        },
+        "joinedAt": {
+          "label": "Join at",
+          "helpertext": "required"
+        },
+        "email": {
+          "label": "Email Address",
+          "placeholder": "Enter an email address"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Enter a password",
+          "helpertext": "Incorrect entry."
+        },
+        "passwordConfirm": {
+          "placeholder": "Confirm the password",
+          "helpertext": "The passwords entered do not match."
+        }
+      },
+      "alert": {
+        "success": {
+          "message": "User created successfully"
+        },
+        "error": {
+          "message": "Email not available"
+        }
+      }
+    },
+    "dialogResetPassword": {
+      "title": "Update credentials for {{ firstname }} {{ lastname }}",
+      "content": "This action will remove the user's current login information and generate new credentials.",
+      "textfield": {
+        "email": {
+          "label": "Email Address",
+          "placeholder": "Please enter your email address"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Enter your password",
+          "helpertext": "Incorrect entry."
+        },
+        "passwordConfirm": {
+          "placeholder": "Confirm your password",
+          "helpertext": "The passwords entered do not match."
+        }
+      },
+      "alert": {
+        "success": {
+          "message": "User credentials updated successfully"
+        },
+        "error": {
+          "message": "Email not available"
+        }
+      }
+    }
+  }
+}
