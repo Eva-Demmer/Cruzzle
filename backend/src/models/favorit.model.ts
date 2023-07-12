@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import dayjs from "dayjs";
 import { IdeaFilterQuery } from "../interfaces/ideas.interface";
 
 const prisma = new PrismaClient();
@@ -13,7 +14,17 @@ const findAll = async () => {
 };
 
 const findByFilter = async (filterQuery: IdeaFilterQuery) => {
-  const { userId } = filterQuery;
+  const {
+    userId,
+    userAgencyId,
+    publicationDateStart,
+    publicationDateEnd,
+    autorSelectionTag,
+    trendingTag,
+    titleContains,
+    hasAttachment,
+    hasNoComment,
+  } = filterQuery;
   console.info("from model ", filterQuery);
 
   let { selectedCategories } = filterQuery;
@@ -24,9 +35,6 @@ const findByFilter = async (filterQuery: IdeaFilterQuery) => {
 
   try {
     const data = await prisma.favorit.findMany({
-      where: {
-        user_id: userId ? parseInt(userId, 10) : undefined,
-      },
       select: {
         idea: {
           select: {
@@ -87,6 +95,44 @@ const findByFilter = async (filterQuery: IdeaFilterQuery) => {
               },
             },
           },
+        },
+      },
+      where: {
+        idea: {
+          deleted_at: null,
+          created_at: {
+            gte: dayjs(publicationDateStart).toISOString(),
+            lte: dayjs(publicationDateEnd).add(1, "day").toISOString(),
+          },
+          title: {
+            contains: titleContains !== null ? titleContains : undefined,
+          },
+          attachment: hasAttachment === "true" ? { some: {} } : { none: {} },
+          comment: hasNoComment === "true" ? { none: {} } : {},
+          idea_category: {
+            ...(selectedCategories.length > 0 && {
+              some: { category_id: { in: selectedCategories.map(Number) } },
+            }),
+            ...(selectedCategories.length === 0 && { undefined }),
+          },
+          user: {
+            ...(autorSelectionTag === "all" && {}),
+            ...(autorSelectionTag === "currentUserAgency" && userAgencyId
+              ? { agency: { id: parseInt(userAgencyId, 10) } }
+              : {}),
+            ...(autorSelectionTag === "currentUser" && userId
+              ? { id: parseInt(userId, 10) }
+              : {}),
+          },
+        },
+        user_id: userId ? parseInt(userId, 10) : undefined,
+      },
+      orderBy: {
+        idea: {
+          ...(trendingTag === "recent" && { created_at: "desc" }),
+          ...(trendingTag === "view" && { views: "desc" }),
+          ...(trendingTag === "comment" && { comment: { _count: "desc" } }),
+          ...(trendingTag === "like" && { idea_like: { _count: "desc" } }),
         },
       },
     });
