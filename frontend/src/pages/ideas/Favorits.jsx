@@ -2,20 +2,39 @@ import { useContext, useEffect, useState } from "react";
 
 import IdeaDisplayer from "../../components/idea/IdeaDisplayer";
 import IdeasProvider from "../../contexts/IdeasContext";
-import Filterbar from "../../components/filterbar/Filterbar";
+import FilterbarFavorites from "../../components/Favorites/filters/FilterbarFavorites";
 import { UserContext } from "../../contexts/UserContext";
-// import { FilterContext } from "../../contexts/FilterContext";
+import { FilterFavoritesContext } from "../../contexts/FilterFavoritesContext";
 import { fetchByQuery, fetchAll } from "../../services/api.services";
 
 function Favorits() {
-  const [favorites, setFavorites] = useState();
   const [trendIdeas, setTrendIdeas] = useState();
   const { user } = useContext(UserContext);
   const { id: userId } = user;
 
+  const {
+    update,
+    setUpdate,
+    // autorSelectionTag,
+    // selectedCategories,
+    // trendingTag,
+    // titleContains,
+    // hasAttachment,
+    // hasNoComment,
+    favoritesFiltered,
+    setFavoritesFiltered,
+  } = useContext(FilterFavoritesContext);
+
   useEffect(() => {
     const reqItems = {
       userId,
+      // autorSelectionTag,
+      // selectedCategories,
+      // trendingTag,
+      // titleContains,
+      // hasAttachment,
+      // hasNoComment,
+      // favoritesFiltered,
     };
 
     fetchByQuery("/api/favorits/filter", reqItems)
@@ -24,20 +43,20 @@ function Favorits() {
         const favoritArray = [];
         data.map((item) => favoritArray.push(item.idea));
 
-        setFavorites(favoritArray);
+        setFavoritesFiltered(favoritArray);
       })
       .catch((error) =>
         console.error("error from api.services.fetcherByQuery", error)
       );
-  }, []);
+  }, [update]);
 
   useEffect(() => {
-    console.info("favorites changed", favorites);
-  }, [favorites]);
+    console.info("favorites changed", favoritesFiltered);
+  }, [favoritesFiltered]);
 
   useEffect(() => {
     console.info("trends changed", trendIdeas);
-  }, [favorites]);
+  }, [favoritesFiltered]);
 
   useEffect(() => {
     fetchAll("/api/ideas/trends")
@@ -53,19 +72,23 @@ function Favorits() {
     <IdeasProvider>
       <div className="ideas-page w-full flex flex-col h-screen">
         <header className="w-full px-6 min-[1439px]:w-8/12">
-          <h2>Ideas</h2>
-          <Filterbar />
+          <h2>Your Favorites</h2>
+          <FilterbarFavorites />
         </header>
         <div className="ideas-header flex flex-row ">
           <main className="ideas-main w-full min-[1439px]:w-8/12">
-            {favorites ? (
-              <IdeaDisplayer ideas={favorites} isMini={false} />
+            {favoritesFiltered ? (
+              <IdeaDisplayer
+                setUpdate={setUpdate}
+                ideas={favoritesFiltered}
+                isMini={false}
+              />
             ) : (
               ""
             )}
           </main>
           <aside className="ideas-aside-right w-4/12 hidden pl-4 pr-4 min-[1439px]:inline-block">
-            <h3>Tendences</h3>
+            <h3>Trends</h3>
             {trendIdeas !== undefined ? (
               <IdeaDisplayer ideas={trendIdeas} isMini="true" />
             ) : (

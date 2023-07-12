@@ -13,9 +13,11 @@ import { postFavorit, deleteFavorit } from "../../services/api.favorits";
 import { sm } from "../../utils/mediaQueries";
 import { apiIdeas } from "../../services/api.ideas";
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
+import { FilterFavoritesContext } from "../../contexts/FilterFavoritesContext";
 
 export default function IdeaCardActions({ userId, user, id, isFavorite }) {
   const [favorite, setFavorite] = useState(isFavorite);
+  const { update, setUpdate } = useContext(FilterFavoritesContext);
 
   const smallQuery = useMediaQuery(sm);
   const { setIdea } = useContext(IdeaPageContext);
@@ -30,7 +32,6 @@ export default function IdeaCardActions({ userId, user, id, isFavorite }) {
 
   const handleClick = async (ideaId, route) => {
     await fetchDataAsync(ideaId);
-
     navigate(route);
   };
 
@@ -42,6 +43,7 @@ export default function IdeaCardActions({ userId, user, id, isFavorite }) {
       deleteFavorit(user, id, "favorits");
       setFavorite(false);
     }
+    setUpdate(!update);
   };
 
   return (
