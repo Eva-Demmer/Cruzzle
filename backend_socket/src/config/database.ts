@@ -12,13 +12,4 @@ const database: Pool = mysql.createPool({
   database: process.env.DB_NAME as string,
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-// database.query("SELECT * FROM `notification_idea`", (err: Error, data: any) => {
-//   if (err) {
-//     console.error(err);
-//     return;
-//   }
-//   console.info(data);
-// });
-
 export default database;

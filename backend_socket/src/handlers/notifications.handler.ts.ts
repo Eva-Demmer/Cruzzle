@@ -10,8 +10,6 @@ const handleNotification = async () => {
       "SELECT n.id AS notification_id, n.type AS notification_type, i.user_id AS idea_author_id FROM notification_idea AS n INNER JOIN idea AS i ON i.id = n.idea_id ORDER BY n.created_at DESC LIMIT 1",
       []
     );
-
-    console.info(data[0]);
     return data[0] as Notification;
   } catch (err) {
     console.error("Error retrieving data from database", err);
@@ -28,14 +26,16 @@ const compareLastNotification = async () => {
     const { notification_id: notificationId } = notification;
 
     if (notificationId !== previousNotificationId) {
-      console.info("Notification ID changed:", notificationId);
       previousNotificationId = notificationId;
       isNewNotification = true;
     } else {
-      console.info("Notification ID is the same:", notificationId);
       isNewNotification = false;
     }
-    return [isNewNotification, notification];
+    const notificationTuple: [boolean, Notification] = [
+      isNewNotification,
+      notification,
+    ];
+    return notificationTuple;
   } catch (err) {
     console.error("Error comparing notifications", err);
     throw err;
@@ -43,7 +43,7 @@ const compareLastNotification = async () => {
 };
 
 const listenerNotificationByInterval = (
-  callback: (isNewNotification: (boolean | Notification)[]) => void
+  callback: (isNewNotification: [boolean, Notification]) => void
 ) => {
   notificationInterval = setInterval(async () => {
     const isNewNotification = await compareLastNotification();

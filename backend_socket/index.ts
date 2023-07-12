@@ -7,6 +7,7 @@ import {
   listenerNotificationByInterval,
   stoplistenerNotificationByInterval,
 } from "./src/handlers/notifications.handler.ts";
+import UserIdDict from "./src/interfaces/users";
 
 dotenv.config();
 const port: number = parseInt(process.env.SOCKET_PORT ?? "6002", 10);
@@ -17,16 +18,17 @@ const io = new Server(httpServer, {
 });
 
 let isNotificationIntervalRunning = false;
+const usersIdDict: UserIdDict = {};
 
 io.on("connection", (socket) => {
   console.info("A user connected", socket.id);
-
   if (!isNotificationIntervalRunning) {
     listenerNotificationByInterval((tuple) => {
       const [boolValue, notification] = tuple;
       console.info(tuple);
       if (boolValue) {
-        io.emit("foo", notification);
+        const { idea_author_id: ideaAuthorId } = notification;
+        io.to(usersIdDict[ideaAuthorId]).emit("new-notification", notification);
       }
     });
     isNotificationIntervalRunning = true;
@@ -34,16 +36,23 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     console.info("A user disconnected", socket.id);
+    for (const userId in usersIdDict) {
+      if (usersIdDict[userId] === socket.id) {
+        delete usersIdDict[userId];
+      }
+    }
     if (io.sockets.sockets.size === 0) {
       stoplistenerNotificationByInterval();
       isNotificationIntervalRunning = false;
     }
   });
 
-  socket.on("create-something", (value) => {
-    console.info("Received value:", value);
+  socket.on("addUserId", (value) => {
+    usersIdDict[parseInt(value, 10)] = socket.id;
+  });
 
-    io.emit("foo", value);
+  socket.on("deleteUserId", (value) => {
+    delete usersIdDict[parseInt(value, 10)];
   });
 });
 
