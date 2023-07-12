@@ -1,0 +1,16 @@
+{
+  "sidebar": {
+    "home": "Home",
+    "ideas": "Ideas",
+    "favorites": "Favorites",
+    "community": "Community",
+    "admin": {
+      "pannel": "Pannel Admin",
+      "users": "Users",
+      "ideas": "Ideas",
+      "categories": "Categories"
+    },
+    "settings": "Settings"
+  },
+  "topbar": {}
+}

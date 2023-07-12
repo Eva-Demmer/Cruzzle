@@ -1,5 +1,6 @@
 import { Tab, Tabs, Box } from "@mui/material";
 import { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import AllyProps from "../tabs/AllyProps";
 import TabGeneral from "./Tabs/TabGeneral";
@@ -8,10 +9,17 @@ import TabComments from "./Tabs/TabComments";
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
 
 function TabsIdeaPage() {
+  const { t } = useTranslation();
   const [tabValue, setTabValue] = useState(0);
   const { idea } = useContext(IdeaPageContext);
 
-  const tabsContent = ["General", "Files", `Comments (${idea.comment.length})`];
+  const tabsContent = [
+    t("pages.ideas.idea.tabsIdea.content.general"),
+    t("pages.ideas.idea.tabsIdea.content.files"),
+    `${t("pages.ideas.idea.tabsIdea.content.comments")} (${
+      idea.comment.length
+    })`,
+  ];
 
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
@@ -26,14 +34,15 @@ function TabsIdeaPage() {
             onChange={handleChange}
             aria-label="basic tabs example"
           >
-            {tabsContent.map((tab, index) => (
-              <Tab
-                label={tab}
-                // eslint-disable-next-line react/jsx-props-no-spreading
-                {...AllyProps(index)}
-                key={`${tab}`}
-              />
-            ))}
+            {tabsContent &&
+              tabsContent.map((tab, index) => (
+                <Tab
+                  label={tab}
+                  // eslint-disable-next-line react/jsx-props-no-spreading
+                  {...AllyProps(index)}
+                  key={`${tab}`}
+                />
+              ))}
           </Tabs>
         </Box>
         {/* Insert CONTENT HERE */}

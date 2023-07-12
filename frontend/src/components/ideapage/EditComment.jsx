@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { TextField, IconButton, Snackbar, Alert } from "@mui/material";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import PropTypes from "prop-types";
@@ -10,6 +11,7 @@ import {
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
 
 function EditComment({ commentId, content, setContent, setModify }) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [alert, setAlert] = useState();
   const { setIdea, idea } = useContext(IdeaPageContext);
@@ -38,7 +40,7 @@ function EditComment({ commentId, content, setContent, setModify }) {
         const req = await apiUpdateComments(commentId, data);
         if (req) {
           setAlert({
-            message: "Message modifed !",
+            message: t("pages.ideas.idea.tabsIdea.editComment.alert.success"),
             severity: "success",
           });
           const { comment, ...rest } = idea;
@@ -51,20 +53,20 @@ function EditComment({ commentId, content, setContent, setModify }) {
             setModify(false);
           } else {
             setAlert({
-              message: "Message can't be modified",
+              message: t("pages.ideas.idea.tabsIdea.editComment.alert.error"),
               severity: "error",
             });
           }
         } else {
           setAlert({
-            message: "Message can't be modified",
+            message: t("pages.ideas.idea.tabsIdea.editComment.alert.error"),
             severity: "error",
           });
         }
       } catch (error) {
         console.error(error);
         setAlert({
-          message: "Message can't be modified",
+          message: t("pages.ideas.idea.tabsIdea.editComment.alert.error"),
           severity: "error",
         });
       }
@@ -90,7 +92,9 @@ function EditComment({ commentId, content, setContent, setModify }) {
             minRows={1}
             maxRows={4}
             onKeyDown={handleKeyPress}
-            placeholder="Leave a few words"
+            placeholder={t(
+              "pages.ideas.idea.tabsIdea.editComment.textfield.placeholder"
+            )}
             className="w-full"
             sx={{
               borderRadius: "0.75rem",
