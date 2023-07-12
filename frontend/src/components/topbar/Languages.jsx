@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { useTranslation } from "react-i18next";
 import {
   IconButton,
   Tooltip,
@@ -13,6 +14,7 @@ import { LanguageContext } from "../../contexts/LanguageContext";
 export default function LanguagesMenu() {
   const { language, setLanguage } = useContext(LanguageContext);
   const [anchorEl, setAnchorEl] = useState(null);
+  const { i18n } = useTranslation();
 
   const open = Boolean(anchorEl);
 
@@ -96,7 +98,13 @@ export default function LanguagesMenu() {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         {languages.map((item) => (
-          <MenuItem onClick={() => setLanguage(item.value)} key={item.value}>
+          <MenuItem
+            onClick={() => {
+              i18n.changeLanguage(item.value.toLowerCase());
+              setLanguage(item.value);
+            }}
+            key={item.value}
+          >
             <ListItemIcon>
               <img
                 loading="lazy"

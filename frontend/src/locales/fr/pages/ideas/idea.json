@@ -1,0 +1,67 @@
+{
+  "alert": "Idée archivée !",
+  "dialogModify": {
+    "title": "Confirmer la modification",
+    "content": "Êtes-vous sûr de vouloir modifier cette idée ?"
+  },
+  "headerIdea": {
+    "published": "Publié le",
+    "dateFormats": {
+      "long": "DD MMM YYYY"
+    },
+    "by": "Par",
+    "team": "Équipe",
+    "context": "Contexte"
+  },
+  "commentBox": {
+    "dateFormats": {
+      "long": "DD MMM YYYY, HH:mm"
+    }
+  },
+  "tabsIdea": {
+    "content": {
+      "general": "Général",
+      "files": "Fichiers",
+      "comments": "Commentaires"
+    },
+    "tabgeneral": {
+      "goal": "Objectif",
+      "profits": "Bénéfices",
+      "risks": "Risques",
+      "topcomments": "Top Commentaires"
+    },
+    "editComment": {
+      "alert": {
+        "error": "Le message ne peut pas être modifié",
+        "success": "Message modifié !"
+      },
+      "textfield": {
+        "placeholder": "Laissez quelques mots"
+      }
+    },
+    "createComment": {
+      "alert": {
+        "success": "Message créé !",
+        "error": "Le message ne peut pas être créé"
+      },
+      "textfield": {
+        "placeholder": "Laissez quelques mots"
+      }
+    },
+    "tabfiles": {
+      "nofiles": "Aucun fichier",
+      "type": "Type",
+      "file": "Fichier",
+      "size": "Taille",
+      "action": "Action"
+    },
+    "tabcomments": {
+      "title": "Commentaires",
+      "mostrecent": "Plus récents",
+      "mostliked": "Les plus aimés",
+      "nocomments": "Pas de commentaires",
+      "seemore": "Voir plus",
+      "seeless": "Voir moins"
+    }
+  }
+}

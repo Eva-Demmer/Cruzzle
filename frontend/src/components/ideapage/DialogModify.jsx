@@ -7,8 +7,10 @@ import {
   DialogActions,
 } from "@mui/material";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 function DialogModify({ open, setOpen, handleAgree }) {
+  const { t } = useTranslation();
   return (
     <Dialog
       open={open}
@@ -16,10 +18,12 @@ function DialogModify({ open, setOpen, handleAgree }) {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Confirm Modify</DialogTitle>
+      <DialogTitle id="alert-dialog-title">
+        {t("pages.ideas.idea.dialogModify.title")}
+      </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Are you sure you want to modify this idea?
+          {t("pages.ideas.idea.dialogModify.content")}
         </DialogContentText>
       </DialogContent>
       <DialogActions>

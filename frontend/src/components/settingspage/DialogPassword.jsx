@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import PropTypes from "prop-types";
 import { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
@@ -20,6 +21,7 @@ import { Axios } from "../../config/axios.config";
 import AlertOnSave from "../createidea/AlertOnSave";
 
 function DialogPassword({ open, onClose }) {
+  const { t } = useTranslation();
   const { user } = useContext(UserContext);
   const { handleSubmit, control, reset } = useForm();
   const [passwordError, setPasswordError] = useState(false);
@@ -74,14 +76,14 @@ function DialogPassword({ open, onClose }) {
         const response = await apiUsersUpdatePasword(userData);
         if (response.status === 200) {
           setAlert({
-            title: "Password updated",
-            message: "Password was updated successfully",
+            title: t("pages.settings.dialogPassword.alert.success.title"),
+            message: t("pages.settings.dialogPassword.alert.success.message"),
             severity: "success",
           });
         } else {
           setAlert({
-            title: "Error",
-            message: "Password was not updated",
+            title: t("pages.settings.dialogPassword.alert.error.title"),
+            message: t("pages.settings.dialogPassword.alert.error.message"),
             severity: "error",
           });
         }
@@ -95,7 +97,7 @@ function DialogPassword({ open, onClose }) {
   return (
     <>
       <Dialog open={open}>
-        <DialogTitle>Change Password</DialogTitle>
+        <DialogTitle>{t("pages.settings.dialogPassword.title")}</DialogTitle>
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogContent>
             <DialogContentText
@@ -103,8 +105,7 @@ function DialogPassword({ open, onClose }) {
                 marginBottom: 4,
               }}
             >
-              To change your password, please enter your new password and
-              confirm it below.
+              {t("pages.settings.dialogPassword.content")}
             </DialogContentText>
 
             <Controller
@@ -137,9 +138,13 @@ function DialogPassword({ open, onClose }) {
                 <TextField
                   id="password-input"
                   fullWidth
-                  label="Password"
+                  label={t(
+                    "pages.settings.dialogPassword.textfield.password.label"
+                  )}
                   variant="outlined"
-                  placeholder="Enter your password"
+                  placeholder={t(
+                    "pages.settings.dialogPassword.textfield.password.placeholder"
+                  )}
                   error={passwordError}
                   helperText={passwordError ? "Incorrect entry." : null}
                   value={value}
@@ -175,9 +180,13 @@ function DialogPassword({ open, onClose }) {
                 <TextField
                   id="password-confirmation-input"
                   fullWidth
-                  label="Confirm Password"
+                  label={t(
+                    "pages.settings.dialogPassword.textfield.passwordConfirm.label"
+                  )}
                   variant="outlined"
-                  placeholder="Confirm your password"
+                  placeholder={t(
+                    "pages.settings.dialogPassword.textfield.passwordConfirm.placeholder"
+                  )}
                   error={passwordConfirmationError}
                   helperText={
                     passwordConfirmationError
@@ -221,7 +230,7 @@ function DialogPassword({ open, onClose }) {
               onClick={handleClose}
               autoFocus
             >
-              Cancel
+              {t("buttons.cancel")}
             </Button>
             <Button
               variant="contained"
@@ -233,7 +242,7 @@ function DialogPassword({ open, onClose }) {
                 "&:active, &.Mui-focusVisible": { boxShadow: 4 },
               }}
             >
-              Confirm
+              {t("buttons.confirm")}
             </Button>
           </DialogActions>
         </form>

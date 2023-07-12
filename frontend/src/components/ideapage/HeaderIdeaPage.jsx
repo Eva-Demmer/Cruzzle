@@ -7,6 +7,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import dayjs from "dayjs";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import ProgressChip from "../styledComponents/ProgressChip";
@@ -16,6 +17,7 @@ import ButtonsIdea from "./ButtonsIdea";
 import LikesView from "./LikesView";
 
 function HeaderIdeaPage() {
+  const { t, i18n } = useTranslation();
   const { idea } = useContext(IdeaPageContext);
   const [openTeam, setOpenTeam] = useState(false);
 
@@ -73,13 +75,15 @@ function HeaderIdeaPage() {
             </div>
           )}
           <div className="flex md:px-4 my-2" aria-label="Published">
-            <p>Published on</p>
+            <p>{t("pages.ideas.idea.headerIdea.published")}</p>
             <p className="mx-2 font-semibold">
-              {dayjs(idea.created_at).format("DD MMM, YYYY")}
+              {dayjs(idea.created_at)
+                .locale(i18n.language)
+                .format(t("pages.ideas.idea.headerIdea.dateFormats.long"))}
             </p>
           </div>
           <div className="flex md:px-4 my-2" aria-label="Author">
-            <p>By</p>
+            <p>{t("pages.ideas.idea.headerIdea.by")}</p>
             <Link
               to={`/users/${idea.user.id}`}
               className="mx-2 font-semibold no-underline text-primary-900 hover:text-primary-50"
@@ -89,7 +93,7 @@ function HeaderIdeaPage() {
           </div>
           {idea.idea_teams && idea.idea_teams.length > 0 && (
             <div className="flex items-center md:px-4 my-2" aria-label="Team">
-              <p>Team :</p>
+              <p>{t("pages.ideas.idea.headerIdea.team")} :</p>
               <AvatarGroup spacing={8} className="mx-2">
                 {idea.idea_teams.map((team, index) => {
                   if (index < 4) {
@@ -191,7 +195,9 @@ function HeaderIdeaPage() {
             </div>
           )}
           <div className="md:px-4 w-auto" aria-label="Context">
-            <h2 className="text-xl">Context</h2>
+            <h2 className="text-xl">
+              {t("pages.ideas.idea.headerIdea.context")}
+            </h2>
             <p className="leading-6 text-base">{idea.context}</p>
           </div>
         </div>

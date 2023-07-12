@@ -12,6 +12,7 @@ import {
   Snackbar,
 } from "@mui/material";
 import { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { HandThumbUpIcon as HandThumbUpIconSolid } from "@heroicons/react/24/solid";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
@@ -31,6 +32,7 @@ import {
 } from "../../utils/notifications";
 
 function ButtonsIdea() {
+  const { t } = useTranslation();
   const { user } = useContext(UserContext);
   const { id: userId } = user;
   const { idea, setIdea } = useContext(IdeaPageContext);
@@ -153,7 +155,7 @@ function ButtonsIdea() {
           className="rounded-full mx-2 my-2 sm:w-[136px]"
           onClick={() => setOpenDialogModify(true)}
         >
-          Modify
+          {t("buttons.modify")}
         </Button>
       )}
       {smallQuery && userId === userIdea.id && idea.archived_at === null && (
@@ -166,7 +168,7 @@ function ButtonsIdea() {
             setOpenDialogArchive(true);
           }}
         >
-          Archive
+          {t("buttons.archive")}
         </Button>
       )}
       {smallQuery && (
@@ -177,7 +179,7 @@ function ButtonsIdea() {
           className="rounded-full mx-2 my-2 sm:w-[136px]"
           onClick={() => handleClickLike()}
         >
-          {isUserLikeIdea() ? "Unlike" : "Like"}
+          {isUserLikeIdea() ? t("buttons.unlike") : t("buttons.like")}
         </Button>
       )}
       <DialogArchive
@@ -201,7 +203,7 @@ function ButtonsIdea() {
           severity="success"
           sx={{ width: "100%" }}
         >
-          Idea archived !
+          {t("pages.ideas.idea.alert")}
         </Alert>
       </Snackbar>
     </div>
