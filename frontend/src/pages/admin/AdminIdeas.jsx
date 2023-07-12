@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { LightBulbIcon } from "@heroicons/react/24/solid";
 import { PlusIcon } from "@heroicons/react/24/outline";
@@ -10,6 +11,7 @@ import { apiAdminIdeas } from "../../services/api.admin.ideas";
 import { AlertToastContext } from "../../contexts/AlertToastContext";
 
 function AdminIdeas() {
+  const { t } = useTranslation();
   const {
     alertAdminOpen,
     setAlertAdminOpen,
@@ -46,17 +48,17 @@ function AdminIdeas() {
     <div className="admin-users w-full h-full pt-4 lg:pr-6 px-4 flex flex-col">
       <header className="w-full lg:h-44 flex items-center">
         <div className="header-left-container h-full min-w-[420px] grow self-start flex flex-col justify-between">
-          <h2>Ideas</h2>
+          <h2>{t("pages.adminpannel.ideas.title")}</h2>
           <div className="my-4">
             <Link to="../../ideas/new" relative="path">
-              <ActionButton icon={<PlusIcon />} text="Add idea" />
+              <ActionButton icon={<PlusIcon />} text={t("buttons.addidea")} />
             </Link>
           </div>
         </div>
         <div className="self-center hidden lg:block">
           <CounterCard
             icon={<LightBulbIcon className="rotate-45" />}
-            text="Total ideas"
+            text={t("pages.adminpannel.ideas.counter")}
             count={ideaList.length}
           />
         </div>
