@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -18,6 +19,7 @@ export default function DialogCreateCategory({
   setOpenDialog,
   setUpdateList,
 }) {
+  const { t } = useTranslation();
   const { setAlertAdminOpen, setAlertAdminMessage } =
     useContext(AlertToastContext);
   const [label, setLabel] = useState("");
@@ -47,7 +49,9 @@ export default function DialogCreateCategory({
         .then((res) => {
           if (res.status === 201) {
             setUpdateList(true);
-            setAlertAdminMessage("Category created successfully");
+            setAlertAdminMessage(
+              t("pages.adminpannel.categories.alert.success.createcategory")
+            );
             setAlertAdminOpen(true);
             handleClose();
           } else {
@@ -63,14 +67,16 @@ export default function DialogCreateCategory({
   return (
     <div>
       <Dialog open={openDialog} onClose={handleClose}>
-        <DialogTitle>Create new category</DialogTitle>
+        <DialogTitle>
+          {t("pages.adminpannel.categories.dialogCreateCategory.title")}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText
             sx={{
               marginBottom: 3,
             }}
           >
-            You are about to add a new category. Please fill the form below.
+            {t("pages.adminpannel.categories.dialogCreateCategory.content")}
           </DialogContentText>
 
           <Box
@@ -85,15 +91,21 @@ export default function DialogCreateCategory({
           >
             <TextField
               id="label"
-              label="Label"
+              label={t(
+                "pages.adminpannel.categories.dialogCreateCategory.textfield.label.label"
+              )}
               type="text"
               variant="standard"
-              placeholder="Enter a label"
+              placeholder={t(
+                "pages.adminpannel.categories.dialogCreateCategory.textfield.label.placeholder"
+              )}
               value={label}
               error={labelError}
               helperText={
                 labelError
-                  ? "Please enter a word between 2 and 25 letters."
+                  ? t(
+                      "pages.adminpannel.categories.dialogCreateCategory.textfield.label.helpertext"
+                    )
                   : null
               }
               onChange={handleChangeLabel}
@@ -115,8 +127,8 @@ export default function DialogCreateCategory({
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSubmit}>Save</Button>
+          <Button onClick={handleClose}>{t("buttons.cancel")}</Button>
+          <Button onClick={handleSubmit}>{t("buttons.save")}</Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -1,4 +1,5 @@
 import buttons from "./buttons.json";
+import datagrid from "./datagrid.json";
 import menu from "./menu.json";
 import settingsPage from "./pages/settings.json";
 import ideasPages from "./pages/ideas/index";
@@ -12,6 +13,7 @@ const translationEN = {
   },
   menu,
   buttons,
+  datagrid,
 };
 
 export default translationEN;

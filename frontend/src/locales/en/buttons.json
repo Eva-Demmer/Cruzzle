@@ -1,8 +1,9 @@
 {
   "add": "Add",
+  "addcategory": "Add category",
   "addfiles": "Add Files",
-  "adduser": "Add User",
   "addidea": "Add Idea",
+  "adduser": "Add User",
   "agree": "Agree",
   "archive": "Archive",
   "cancel": "Cancel",
