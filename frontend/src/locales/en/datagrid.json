@@ -28,6 +28,7 @@
   "filterRowReset": "Reset",
   "filterRowApply": "Apply",
   "filterRowPlaceholder": "Filter",
+  "filterRowFilterTooltip": "Filter",
   "sortingHeaderSortTooltip": "Sort",
   "sortingHeaderSortedTooltip": "Sorted {{order}}",
   "sortingHeaderUnsortedTooltip": "Unsorted",
