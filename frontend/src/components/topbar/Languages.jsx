@@ -48,7 +48,7 @@ export default function LanguagesMenu() {
           aria-expanded={open ? "true" : undefined}
         >
           <Badge
-            badgeContent={language}
+            badgeContent={language.toUpperCase()}
             sx={{
               "& .MuiBadge-badge": {
                 color: "#FFFFFF",
