@@ -7,6 +7,7 @@ import {
   getUserByFilter,
   verifyPasswordUser,
   updatePasswordUser,
+  getLeaderboard,
 } from "../controllers/users.controllers";
 
 import {
@@ -27,6 +28,7 @@ router.use(timeLog);
 router.post("/login", verifyPassword, login);
 router.get("/", getUsers);
 router.get("/filter", getUserByFilter);
+router.get("/leaderboard", getLeaderboard);
 router.get("/:id", getUserById);
 router.post("/verifyPassword", verifyPasswordUser);
 

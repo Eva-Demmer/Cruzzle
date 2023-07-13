@@ -8,10 +8,15 @@ import {
   findByMail,
   update,
   updatePassword,
+  findLeaderboard,
 } from "../models/user.model";
 import { verifyPassword } from "../middlewares/auth.middlewares";
 import findByFilter from "../models/userFilter.model";
-import { UserFilterQuery } from "../interfaces/users.interface";
+import {
+  UserFilterQuery,
+  FormattedUserLeaderboard,
+} from "../interfaces/users.interface";
+import getUserPonderatedScoreObject from "../utils/leaderboard";
 
 dotenv.config();
 const { JWT_SECRET } = process.env;
@@ -20,6 +25,29 @@ const { JWT_SECRET } = process.env;
 const getUsers = async (req: Request, res: Response) => {
   try {
     const data = await findAll();
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+// Show top 3 Cruzzlers for the current month
+const getLeaderboard = async (req: Request, res: Response) => {
+  try {
+    const data = await findLeaderboard();
+    if (data) {
+      const formattedData: FormattedUserLeaderboard[] = data
+        .map((item) => {
+          const { _count: count, ...rest } = item;
+          return {
+            ...rest,
+            score: getUserPonderatedScoreObject(item),
+          };
+        })
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3);
+      res.status(200).send(formattedData);
+    }
     res.status(200).json(data);
   } catch (error) {
     res.status(500).send(error);
@@ -134,6 +162,7 @@ const verifyPasswordUser = async (req: Request, res: Response) => {
   }
 };
 
+// Filter users
 const getUserByFilter = async (req: Request, res: Response) => {
   const filterQuery: UserFilterQuery = req.query;
 
@@ -153,4 +182,5 @@ export {
   getUserByFilter,
   verifyPasswordUser,
   updatePasswordUser,
+  getLeaderboard,
 };

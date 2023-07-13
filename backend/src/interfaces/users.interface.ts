@@ -57,10 +57,39 @@ interface UserFilterQuery {
   publicationDateEnd?: string;
 }
 
+interface UserLeaderboard {
+  id?: number;
+  firstname: string;
+  lastname: string;
+  _count: {
+    idea: number;
+    idea_like: number;
+    comment_like: number;
+    comment: number;
+    idea_teams: number;
+  };
+}
+
+interface FormattedUserLeaderboard {
+  id?: number;
+  firstname: string;
+  lastname: string;
+  _count?: {
+    idea: number;
+    idea_like: number;
+    comment_like: number;
+    comment: number;
+    idea_teams: number;
+  };
+  score: number;
+}
+
 export {
   User,
   CreateUser,
   UserLoginUpdatedRequest,
   UserFilterQuery,
   UpdatePasswordUser,
+  UserLeaderboard,
+  FormattedUserLeaderboard,
 };

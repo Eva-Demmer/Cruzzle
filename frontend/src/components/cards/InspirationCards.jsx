@@ -7,10 +7,11 @@ import {
 import medalGold from "../../assets/dashboard/Medal_gold.png";
 import medalSilver from "../../assets/dashboard/Medal_silver.png";
 import medalBronze from "../../assets/dashboard/Medal_bronze.png";
-import puzzlePieces from "../../assets/dashboard/PuzzlePieces.svg";
+import puzzlePieces from "../../assets/dashboard/PuzzlePieces_1.svg";
 import { HalfCircleProgress, pointsNextLevel } from "./HalfCircleProgress";
 import CountAnimation from "../animations/CounterAnimation";
 import { UserContext } from "../../contexts/UserContext";
+import { apiUserLeaderboard } from "../../services/api.users";
 import { apiTotalIdeasCount } from "../../services/api.ideas";
 import { apiGetTotalLikesReceivedByUserId } from "../../services/api.ideaLikes";
 import { apiGetTotalCommentsReceivedByUserId } from "../../services/api.comments";
@@ -18,9 +19,29 @@ import { apiGetTotalCommentsReceivedByUserId } from "../../services/api.comments
 function InspirationCards() {
   const { user } = useContext(UserContext);
   const { id } = user;
+  const [leaderboard, setLeaderboard] = useState();
   const [totalLikes, setTotalLikes] = useState(0);
   const [totalComments, setTotalComments] = useState(0);
   const [totalIdeas, setTotalIdeas] = useState(0);
+
+  // for the first three days of the month: display loading for users
+
+  // fetch leaderboard
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const leaderboardResponse = await apiUserLeaderboard();
+        console.info("leaderboard data", leaderboardResponse);
+        setLeaderboard(leaderboardResponse.data);
+      } catch (error) {
+        console.error(
+          "An error occurred while fetching the leaderboard",
+          error
+        );
+      }
+    };
+    fetchData();
+  }, []);
 
   // fetch number of total likes and comments received by specific user
   useEffect(() => {
@@ -42,7 +63,7 @@ function InspirationCards() {
     };
 
     fetchData();
-  }, []);
+  }, [user]);
 
   // fetch number of ideas created on platform
   useEffect(() => {
@@ -71,7 +92,11 @@ function InspirationCards() {
         <div className="flex flex-col px-5 mt-5">
           <div className="flex flex-row items-center">
             <img src={medalGold} alt="gold medal" className="h-10" />
-            <span className="pl-3 text-secondary-600">Sarah Conner</span>
+            <span className="pl-3 text-secondary-600">abc</span>
+            <span className="pl-3 text-secondary-600">{}</span>
+            <span className="pl-3 text-secondary-600">
+              {leaderboard[0].firstname}
+            </span>
           </div>
           <Divider variant="middle" className="my-4 mx-0" />
           <div className="flex flex-row items-center">
@@ -110,11 +135,10 @@ function InspirationCards() {
       {/* Team activity card */}
       <Paper elevation={3} className="h-80 w-56 rounded-2xl relative">
         <div className="flex flex-col items-center">
-          {/* <img src={puzzleIcon} alt="puzzle" className="h-20 opacity-50 "/> */}
           <img
             src={puzzlePieces}
             alt="puzzle pieces"
-            className="w-9/12 absolute -top-8"
+            className="w-10/12 absolute -top-12"
           />
           <h3 className="text-black text-lg md:text-xl lg:text-2xl px-5 pt-6 text-center">
             Team activity
