@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { Square3Stack3DIcon } from "@heroicons/react/24/solid";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { Snackbar, Alert } from "@mui/material";
@@ -10,6 +11,7 @@ import DialogCreateCategory from "../../components/admin/adminCategories/DialogC
 import { AlertToastContext } from "../../contexts/AlertToastContext";
 
 function AdminCategories() {
+  const { t } = useTranslation();
   const {
     alertAdminOpen,
     setAlertAdminOpen,
@@ -24,7 +26,9 @@ function AdminCategories() {
     if (reason === "clickaway") {
       return;
     }
-    setAlertAdminMessage("Success");
+    setAlertAdminMessage(
+      t("pages.adminpannel.categories.alert.success.message")
+    );
     setAlertAdminOpen(false);
   };
 
@@ -51,11 +55,11 @@ function AdminCategories() {
     <div className="admin-users w-full h-full pt-4 lg:pr-6 px-4 flex flex-col">
       <header className="w-full lg:h-44 flex items-center">
         <div className="header-left-container h-full min-w-[420px] grow self-start flex flex-col justify-between">
-          <h2>Categories</h2>
+          <h2>{t("pages.adminpannel.categories.title")}</h2>
           <div className="my-4">
             <ActionButton
               icon={<PlusIcon />}
-              text="Add category"
+              text={t("buttons.addcategory")}
               onClick={handleAddCategory}
             />
           </div>
@@ -63,7 +67,7 @@ function AdminCategories() {
         <div className="self-center hidden lg:block">
           <CounterCard
             icon={<Square3Stack3DIcon />}
-            text="Total categories"
+            text={t("pages.adminpannel.categories.counter")}
             count={categoriesList ? categoriesList.length : 0}
           />
         </div>

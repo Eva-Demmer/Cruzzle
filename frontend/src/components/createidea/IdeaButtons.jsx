@@ -4,9 +4,11 @@ import {
   ServerIcon,
 } from "@heroicons/react/24/outline";
 import { Button } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function IdeaButtons() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -21,7 +23,7 @@ function IdeaButtons() {
         className="flex rounded-full mx-2 min-w-[122px]"
         onClick={() => navigate(-1)}
       >
-        Cancel
+        {t("buttons.cancel")}
       </Button>
       <Button
         variant="contained"
@@ -41,7 +43,7 @@ function IdeaButtons() {
           "&:active, &.Mui-focusVisible": { boxShadow: 4 },
         }}
       >
-        {isNewIdea ? "Publish" : "Save"}
+        {isNewIdea ? t("buttons.publish") : t("buttons.save")}
       </Button>
     </div>
   );

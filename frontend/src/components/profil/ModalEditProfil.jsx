@@ -93,7 +93,7 @@ export default function ModalEditProfil({ open, close }) {
                 <Controller
                   name="phone"
                   control={control}
-                  defaultValue={phone}
+                  defaultValue={phone || ""}
                   render={({ field: { onChange, value } }) => (
                     <TextField
                       value={value}
@@ -176,7 +176,7 @@ export default function ModalEditProfil({ open, close }) {
                 <Controller
                   name="biography"
                   control={control}
-                  defaultValue={biography}
+                  defaultValue={biography || ""}
                   render={({ field: { onChange, value } }) => (
                     <TextField
                       value={value}
@@ -209,7 +209,7 @@ export default function ModalEditProfil({ open, close }) {
                 <Controller
                   name="link"
                   control={control}
-                  defaultValue={link}
+                  defaultValue={link || ""}
                   render={({ field: { onChange, value } }) => (
                     <TextField
                       value={value}

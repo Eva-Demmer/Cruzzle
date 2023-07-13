@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Alert, AlertTitle, Tab, Tabs, Box, TextField } from "@mui/material";
 import { useContext, useState } from "react";
 import { Controller } from "react-hook-form";
@@ -8,61 +9,38 @@ import AllyProps from "../tabs/AllyProps";
 import { IdeaFormContext } from "../../contexts/IdeaFormContext";
 
 function IdeaTabs() {
+  const { t } = useTranslation();
   const { control } = useContext(IdeaFormContext);
   const [tabValue, setTabValue] = useState(0);
 
   const tabsContent = [
     {
-      title: "Info",
-      label: "Goal",
+      title: t("pages.ideas.ideanew.tabs.goal.info"),
+      label: t("pages.ideas.ideanew.tabs.goal.label"),
       content: (
         <ul>
-          <li>
-            Clearly define the main objective you want to achieve with your
-            idea. This will help you stay focused and guide your actions
-            throughout the process.
-          </li>
-          <li>
-            Think about the specific goal you want to accomplish with your idea.
-            A well-defined goal will allow you to measure your progress and stay
-            focused on the expected outcomes.
-          </li>
+          <li>{t("pages.ideas.ideanew.tabs.goal.content1")}</li>
+          <li>{t("pages.ideas.ideanew.tabs.goal.content2")}</li>
         </ul>
       ),
     },
     {
-      title: "Info",
-      label: "Profits",
+      title: t("pages.ideas.ideanew.tabs.profits.info"),
+      label: t("pages.ideas.ideanew.tabs.profits.label"),
       content: (
         <ul>
-          <li>
-            Identify the advantages and benefits that your idea can bring. This
-            will help you understand the positive impact it could have and
-            effectively communicate its benefits to others.
-          </li>
-          <li>
-            Consider the concrete benefits that your idea can offer. By
-            highlighting these advantages, you can convince others of its
-            importance and value.
-          </li>
+          <li>{t("pages.ideas.ideanew.tabs.profits.content1")}</li>
+          <li>{t("pages.ideas.ideanew.tabs.profits.content2")}</li>
         </ul>
       ),
     },
     {
-      title: "Info",
-      label: "Risks",
+      title: t("pages.ideas.ideanew.tabs.risks.info"),
+      label: t("pages.ideas.ideanew.tabs.risks.label"),
       content: (
         <ul>
-          <li>
-            Identify potential risks associated with your idea. By recognizing
-            these risks early on, you will be better prepared to anticipate and
-            mitigate them, minimizing potential obstacles.
-          </li>
-          <li>
-            Examine the potential risks that could jeopardize the success of
-            your idea. By identifying them and developing mitigation strategies,
-            you will increase your chances of success.
-          </li>
+          <li>{t("pages.ideas.ideanew.tabs.risks.content1")}</li>
+          <li>{t("pages.ideas.ideanew.tabs.risks.content2")}</li>
         </ul>
       ),
     },
@@ -115,7 +93,9 @@ function IdeaTabs() {
                   onChange={onChange}
                   multiline
                   rows={6}
-                  placeholder="Leave a few words"
+                  placeholder={t(
+                    "pages.ideas.ideanew.tabs.textfield.placeholder"
+                  )}
                   className="w-full my-4"
                   InputLabelProps={{ shrink: true }}
                 />

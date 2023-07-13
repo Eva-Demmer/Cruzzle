@@ -21,6 +21,39 @@ const apiUsers = async (route = "") => {
   }
 };
 
+const apiUserPostImage = async (data, route = "") => {
+  try {
+    const response = await axios.post(`${url}${userRoute}${route}`, data);
+    if (response) {
+      return response;
+    }
+  } catch (error) {
+    console.error("Internal server error:", error);
+  }
+  return null;
+};
+
+const apiUserImageByQuery = async (
+  query,
+  route = "",
+  config = {
+    responseType: "blob",
+  }
+) => {
+  try {
+    const response = await axios.get(
+      `${url}${userRoute}${route}?${query}`,
+      config
+    );
+    if (response) {
+      return response;
+    }
+  } catch (error) {
+    console.error("Error getImageByQuery:", error);
+  }
+  return null;
+};
+
 const apiUsersVerifyPasword = async (data) => {
   const { mail, password } = data;
   try {
@@ -137,6 +170,8 @@ export {
   apiUserById,
   apiUsersLogin,
   apiGeActivitiesByUserId,
+  apiUserPostImage,
+  apiUserImageByQuery,
   apiUsersVerifyPasword,
   apiUsersUpdatePasword,
   apiGeContributionsByUserId,

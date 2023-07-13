@@ -1,10 +1,13 @@
 import express, { Request, Response, NextFunction } from "express";
+import { uploadImage } from "../middlewares/multer.middlewares";
 import {
   login,
   getUsers,
   getUserById,
   updateUser,
   getUserByFilter,
+  updateImage,
+  getImageHighRes,
   verifyPasswordUser,
   updatePasswordUser,
   getActivitiesByUserId,
@@ -31,7 +34,9 @@ router.get("/", getUsers);
 router.get("/filter", getUserByFilter);
 router.get("/activities/:id", getActivitiesByUserId);
 router.get("/contributions/:id", getContributionsByUserId);
+router.get("/image", getImageHighRes);
 router.get("/:id", getUserById);
+router.post("/image/:id", uploadImage, updateImage);
 router.post("/verifyPassword", verifyPasswordUser);
 
 // // Protected routes

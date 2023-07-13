@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
@@ -8,8 +9,10 @@ import apiAdminRoles from "../../../services/api.admin.roles";
 import CheckboxUserIsActive from "./CheckboxUserIsActive";
 import TableSelectRole from "./TableSelectRole";
 import ActionIcons from "./ActionIcons";
+import localeText from "../../../locales/datagridlocaletext";
 
 export default function TableOfUsers({ userList, setUpdateList }) {
+  const { t } = useTranslation();
   const { user } = useContext(UserContext);
   const [roleList, setRoleList] = useState(null);
 
@@ -27,27 +30,47 @@ export default function TableOfUsers({ userList, setUpdateList }) {
 
   const rows = userList;
   const columns = [
-    { field: "firstname", headerName: "First name", minWidth: 90, flex: 1 },
-    { field: "lastname", headerName: "Last name", minWidth: 90, flex: 1 },
-    { field: "mail", headerName: "Mail", minWidth: 200, flex: 1 },
+    {
+      field: "firstname",
+      headerName: t("pages.adminpannel.users.tableOfUsers.columns.firstname"),
+      minWidth: 90,
+      flex: 1,
+    },
+    {
+      field: "lastname",
+      headerName: t("pages.adminpannel.users.tableOfUsers.columns.lastname"),
+      minWidth: 90,
+      flex: 1,
+    },
+    {
+      field: "mail",
+      headerName: t("pages.adminpannel.users.tableOfUsers.columns.mail"),
+      minWidth: 200,
+      flex: 1,
+    },
     {
       field: "created_at",
-      headerName: "Created at",
+      headerName: t("pages.adminpannel.users.tableOfUsers.columns.createdAt"),
       valueGetter: (params) =>
-        dayjs(params.row.created_at).format("DD-MM-YYYY"),
+        dayjs(params.row.created_at).format(
+          t("pages.adminpannel.users.dateFormats.short")
+        ),
       minWidth: 110,
       flex: 1,
     },
     {
       field: "joined_at",
-      headerName: "Joined at",
-      valueGetter: (params) => dayjs(params.row.joined_at).format("DD-MM-YYYY"),
+      headerName: t("pages.adminpannel.users.tableOfUsers.columns.joinedAt"),
+      valueGetter: (params) =>
+        dayjs(params.row.joined_at).format(
+          t("pages.adminpannel.users.dateFormats.short")
+        ),
       minWidth: 110,
       flex: 1,
     },
     {
       field: "agency",
-      headerName: "Agency",
+      headerName: t("pages.adminpannel.users.tableOfUsers.columns.agency"),
       valueGetter: (params) =>
         `${params.row.agency.name}, ${params.row.agency.city}`,
       minWidth: 150,
@@ -55,14 +78,14 @@ export default function TableOfUsers({ userList, setUpdateList }) {
     },
     {
       field: "position",
-      headerName: "Position",
+      headerName: t("pages.adminpannel.users.tableOfUsers.columns.position"),
       valueGetter: (params) => params.row.position.name,
       minWidth: 150,
       flex: 1,
     },
     {
       field: "role",
-      headerName: "Role",
+      headerName: t("pages.adminpannel.users.tableOfUsers.columns.role"),
       renderCell: (params) => {
         return user.role.id === 88
           ? roleList && (
@@ -76,7 +99,7 @@ export default function TableOfUsers({ userList, setUpdateList }) {
     },
     {
       field: "is_active",
-      headerName: "Active",
+      headerName: t("pages.adminpannel.users.tableOfUsers.columns.isActive"),
       renderCell: (params) => {
         const [isActiveUser, setIsActiveUser] = useState(params.row.is_active);
         return (
@@ -94,7 +117,7 @@ export default function TableOfUsers({ userList, setUpdateList }) {
     },
     {
       field: "id",
-      headerName: "Actions",
+      headerName: t("pages.adminpannel.users.tableOfUsers.columns.actions"),
       renderCell: (params) => {
         return <ActionIcons user={params.row} setUpdateList={setUpdateList} />;
       },
@@ -115,6 +138,7 @@ export default function TableOfUsers({ userList, setUpdateList }) {
           toolbar: GridToolbar,
         }}
         disableRowSelectionOnClick
+        localeText={localeText}
       />
     </div>
   );

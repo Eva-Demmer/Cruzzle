@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import FilterBarCommunity from "../../components/community/FilterBarCommunity";
 import FilterCommunityProvider from "../../contexts/FilterCommunityContext";
@@ -8,6 +9,7 @@ import apiPositions from "../../services/api.positions";
 import apiAgencies from "../../services/api.agencies";
 
 function Community() {
+  const { t } = useTranslation();
   const [roleFilter, setRoleFilter] = useState([]);
   const [positionFilter, setPositionFilter] = useState([]);
   const [locationFilter, setLocationFilter] = useState([]);
@@ -70,7 +72,7 @@ function Community() {
       <FilterCommunityProvider>
         <div aria-label="header filter">
           <header className="w-full px-6">
-            <h2>Community</h2>
+            <h2>{t("pages.users.community.title")}</h2>
             <FilterBarCommunity
               roleFilter={roleFilter}
               positionFilter={positionFilter}

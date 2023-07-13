@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import {
   Button,
   Table,
@@ -14,6 +15,7 @@ import PropTypes from "prop-types";
 import formatBytes from "../../utils/formatBytes";
 
 function TableFilesUpload({ columns, rows, onClickDelete }) {
+  const { t } = useTranslation();
   return (
     <Paper className="w-full overflow-y-hidden sm:overflow-hidden">
       <TableContainer className="min-w-[500px] max-h-[310px]">
@@ -50,7 +52,7 @@ function TableFilesUpload({ columns, rows, onClickDelete }) {
                       className="rounded-full"
                       onClick={() => onClickDelete(file.id)}
                     >
-                      DELETE
+                      {t("buttons.delete")}
                     </Button>
                   </TableCell>
                 </TableRow>

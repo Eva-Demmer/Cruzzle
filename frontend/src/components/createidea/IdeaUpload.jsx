@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { useTranslation, Trans } from "react-i18next";
 
 import handleFileProcessing from "../../utils/handleFileProcessing";
 import formatBytes from "../../utils/formatBytes";
@@ -10,24 +11,25 @@ import Dropzone from "../styledComponents/Dropzone";
 
 import { IdeaFormContext } from "../../contexts/IdeaFormContext";
 
-const columns = [
-  { id: 1, label: "Type" },
-  { id: 2, label: "File" },
-  {
-    id: 3,
-    label: "Size",
-  },
-  {
-    id: 4,
-    label: "Action",
-  },
-];
-
 function IdeaUpload() {
+  const { t } = useTranslation();
   const { setOpen, filesAttachment, setFilesAttachment, setErrorFiles } =
     useContext(IdeaFormContext);
 
   const [isDragActive, setIsDragActive] = useState(false);
+
+  const columns = [
+    { id: 1, label: t("pages.ideas.idea.tabsIdea.tabfiles.type") },
+    { id: 2, label: t("pages.ideas.idea.tabsIdea.tabfiles.file") },
+    {
+      id: 3,
+      label: t("pages.ideas.idea.tabsIdea.tabfiles.size"),
+    },
+    {
+      id: 4,
+      label: t("pages.ideas.idea.tabsIdea.tabfiles.action"),
+    },
+  ];
 
   const maxSizeInKB = 4096; // Maximum size file in Kb
   const maxFiles = 10; // Maximum number of files
@@ -62,9 +64,13 @@ function IdeaUpload() {
     setFilesAttachment(newFiles);
   };
 
+  const nbAttachements = filesAttachment.length;
+
   return (
     <div className="my-8" aria-label="Upload Files">
-      <h2 className="text-xl sm:text-2xl font-bold my-4">Upload files</h2>
+      <h2 className="text-xl sm:text-2xl font-bold my-4">
+        {t("pages.ideas.ideanew.upload.title")}
+      </h2>
       <div className="flex flex-col lg:flex-row">
         <div className="w-full flex justify-center items-center lg:mx-8">
           <Dropzone
@@ -84,22 +90,28 @@ function IdeaUpload() {
               />
 
               <h2 className="hidden lg:flex text-xl font-bold">
-                Drag and drop files here
+                {t("pages.ideas.ideanew.upload.drag")}
               </h2>
-              <h2 className="hidden lg:flex text-xl font-normal">OR</h2>
+              <h2 className="hidden lg:flex text-xl font-normal">
+                {t("pages.ideas.ideanew.upload.or")}
+              </h2>
               <UploadButton
                 id="uploadButton2"
                 accept=".doc, .docx, .pdf, .xls, .xlsx, .txt, .png, .jpeg, .jpg, .ogg, .mp3"
                 multiple
                 onChange={handleChangeFile}
               >
-                ADD FILES
+                {t("buttons.addfiles")}
               </UploadButton>
 
               <div className="flex flex-col items-center">
-                <h2 className="text-sm font-bold my-2">Supported files</h2>
+                <h2 className="text-sm font-bold my-2">
+                  {t("pages.ideas.ideanew.upload.supportedfiles")}
+                </h2>
                 <p className="text-xs font-normal my-2">
-                  {formatBytes(maxSizeInKB * 1024)} max and {maxFiles} files max
+                  {formatBytes(maxSizeInKB * 1024)}{" "}
+                  {t("pages.ideas.ideanew.upload.maxand")} {maxFiles}{" "}
+                  {t("pages.ideas.ideanew.upload.filesmax")}
                 </p>
                 <p className="text-xs font-normal my-2">
                   doc, docx, pdf, xls, xlsx, txt, png, jpeg, jpg, ogg, mp3
@@ -113,8 +125,12 @@ function IdeaUpload() {
           {filesAttachment.length !== 0 && (
             <>
               <p className="w-full my-4">
-                {`Number of file${filesAttachment.length !== 0 ? "s" : ""}: `}
-                <strong>{filesAttachment.length}</strong>
+                <Trans
+                  i18nKey="pages.ideas.ideanew.upload.numberfiles"
+                  count={nbAttachements}
+                >
+                  Number of files : <strong>{{ nbAttachements }}</strong>
+                </Trans>
               </p>
               <TableFilesUpload
                 columns={columns}

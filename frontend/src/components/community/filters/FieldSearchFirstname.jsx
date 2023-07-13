@@ -1,9 +1,11 @@
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { TextField, IconButton } from "@mui/material";
 import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { FilterCommunityContext } from "../../../contexts/FilterCommunityContext";
 
 function FieldSearchFirstname() {
+  const { t } = useTranslation();
   const {
     setFirstnameContains,
     setFirstnameContainsValue,
@@ -33,7 +35,9 @@ function FieldSearchFirstname() {
     <TextField
       id="filter-text-search"
       className="mb-4"
-      placeholder="Firstname..."
+      placeholder={t(
+        "pages.users.community.pannel.fieldsearch.firstname.placeholder"
+      )}
       value={firstnameeContainsValue}
       onChange={handleChange}
       onBlur={handleSubmit}

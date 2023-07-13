@@ -8,6 +8,7 @@ import { DateField } from "@mui/x-date-pickers/DateField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
+import { useTranslation, Trans } from "react-i18next";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogUserSelectAgency from "./DialogUserSelectAgency";
@@ -21,6 +22,7 @@ export default function DialogUpdateUser({
   setOpenDialogUpdateUser,
   setUpdateList,
 }) {
+  const { t } = useTranslation();
   const { setAlertAdminOpen, setAlertAdminMessage } =
     useContext(AlertToastContext);
 
@@ -55,6 +57,11 @@ export default function DialogUpdateUser({
     setAgencyError(false);
     setPositionError(false);
     setOpenDialogUpdateUser(false);
+    setFirstname(user.firstname);
+    setLastname(user.lastname);
+    setJoinAt(user.joined_at);
+    setAgency(user.agency);
+    setPosition(user.position);
   };
 
   const handleSubmit = async () => {
@@ -108,26 +115,45 @@ export default function DialogUpdateUser({
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
     >
-      <DialogTitle id="form-dialog-title">{`Update user ${user.firstname} ${user.lastname}`}</DialogTitle>
+      <DialogTitle id="form-dialog-title">{`${t(
+        "pages.adminpannel.users.tableOfUsers.dialogUpdateUser.title"
+      )} ${user.firstname} ${user.lastname}`}</DialogTitle>
       <DialogContent>
         <DialogContentText
           sx={{
             marginBottom: 4,
           }}
         >
-          {`You are about to edit ${user.firstname} ${user.lastname}'s informations. Please fill in the form below.`}
+          <Trans
+            i18nKey="pages.adminpannel.users.tableOfUsers.dialogUpdateUser.content"
+            firstname={firstname}
+            lastname={lastname}
+          >
+            You are about to edit {{ firstname }} {{ lastname }}'s informations.
+            Please fill in the form below.
+          </Trans>
         </DialogContentText>
 
         <TextField
           id="firstname"
-          label="Firstname"
+          label={t(
+            "pages.adminpannel.users.tableOfUsers.dialogUpdateUser.textfield.firstname.label"
+          )}
           type="text"
           fullWidth
           variant="standard"
-          placeholder="Enter a firstname"
+          placeholder={t(
+            "pages.adminpannel.users.tableOfUsers.dialogUpdateUser.textfield.firstname.placeholder"
+          )}
           value={firstname}
           error={firstnameError}
-          helperText={firstnameError ? "Incorrect entry" : null}
+          helperText={
+            firstnameError
+              ? t(
+                  "pages.adminpannel.users.tableOfUsers.dialogUpdateUser.textfield.firstname.helpertext"
+                )
+              : null
+          }
           onChange={handleChangeFirstname}
           InputLabelProps={{ shrink: true }}
           sx={{
@@ -137,14 +163,24 @@ export default function DialogUpdateUser({
 
         <TextField
           id="lastname"
-          label="Lastname"
+          label={t(
+            "pages.adminpannel.users.tableOfUsers.dialogUpdateUser.textfield.lastname.label"
+          )}
           type="text"
           fullWidth
           variant="standard"
-          placeholder="Enter a lastname"
+          placeholder={t(
+            "pages.adminpannel.users.tableOfUsers.dialogUpdateUser.textfield.lastname.placeholder"
+          )}
           value={lastname}
           error={lastnameError}
-          helperText={lastnameError ? "Incorrect entry" : null}
+          helperText={
+            lastnameError
+              ? t(
+                  "pages.adminpannel.users.tableOfUsers.dialogUpdateUser.textfield.lastname.helpertext"
+                )
+              : null
+          }
           onChange={handleChangeLastName}
           InputLabelProps={{ shrink: true }}
           sx={{
@@ -153,13 +189,25 @@ export default function DialogUpdateUser({
         />
 
         <DateField
-          label="Join at"
+          label={t(
+            "pages.adminpannel.users.tableOfUsers.dialogUpdateUser.textfield.joinedAt.label"
+          )}
           value={dayjs(joinAt)}
           onChange={(newDate) =>
-            setJoinAt(dayjs(newDate).format("YYYY-MM-DD HH:mm:ss"))
+            setJoinAt(
+              dayjs(newDate).format(
+                t("pages.adminpannel.users.dateFormats.long")
+              )
+            )
           }
           error={joinAtError}
-          helperText={joinAtError ? "required" : null}
+          helperText={
+            joinAtError
+              ? t(
+                  "pages.adminpannel.users.tableOfUsers.dialogUpdateUser.textfield.joinedAt.helpertext"
+                )
+              : null
+          }
           fullWidth
           variant="standard"
           InputLabelProps={{ shrink: true }}
@@ -183,8 +231,8 @@ export default function DialogUpdateUser({
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleSubmit}>Update</Button>
+        <Button onClick={handleClose}>{t("buttons.cancel")}</Button>
+        <Button onClick={handleSubmit}>{t("buttons.update")}</Button>
       </DialogActions>
     </Dialog>
   );

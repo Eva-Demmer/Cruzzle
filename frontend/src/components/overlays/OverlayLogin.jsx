@@ -11,8 +11,10 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 function OverlayLogin() {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
@@ -24,6 +26,8 @@ function OverlayLogin() {
   };
 
   const handleClose = () => {
+    setEmailError(false);
+    setEmail("");
     setOpen(false);
   };
 
@@ -43,13 +47,17 @@ function OverlayLogin() {
     e.preventDefault();
 
     if (email && validateEmail(email)) {
-      setAlertMessage(
-        "Please check your email inbox in order to reset your password."
-      );
+      setAlertMessage(t("pages.login.forgetpassword.alert.success.email"));
       setShowAlert(true);
       setOpen(false);
     } else {
       setEmailError(!validateEmail(email));
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit(e);
     }
   };
 
@@ -60,54 +68,79 @@ function OverlayLogin() {
     setShowAlert(false);
   };
 
+  const buttonText = t("pages.login.forgetpassword.button.forgetpassword");
+  const capitalizedText =
+    buttonText.charAt(0).toUpperCase() + buttonText.slice(1);
+
   return (
     <div className="flex justify-end pb-4">
-      <Button variant="text" onClick={handleClickOpen}>
-        <span
-          style={{
-            textTransform: "lowercase",
-            color: "#000000DE",
-            fontSize: "16px",
-          }}
-        >
-          <span style={{ textTransform: "capitalize" }}>Forgot</span> your
-          password?
+      <Button
+        variant="text"
+        onClick={handleClickOpen}
+        sx={{
+          color: "#000000DE",
+          fontSize: "16px",
+        }}
+      >
+        {capitalizedText.charAt(0)}
+        <span style={{ textTransform: "lowercase" }}>
+          {capitalizedText.slice(1)}
         </span>
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Forgot your password?</DialogTitle>
+        <DialogTitle>
+          {t("pages.login.forgetpassword.dialog.title")}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText style={{ margin: "24px 0" }}>
-            <span>
-              Enter the email address associated with your account and we’ll
-              send you a link to reset your password.
-            </span>
-            <TextField
-              id="forgot-password-email"
-              type="email"
-              label="Email address"
-              name="email"
-              value={email}
-              onChange={handleEmailChange}
-              error={emailError}
-              helperText={emailError ? "Email address is invalid." : ""}
-              variant="outlined"
-              required
-              fullWidth
-              style={{ marginTop: "24px" }}
-            />
+            {t("pages.login.forgetpassword.dialog.content")}
           </DialogContentText>
+          <TextField
+            id="forgot-password-email"
+            type="email"
+            label={t(
+              "pages.login.forgetpassword.dialog.textfield.password.label"
+            )}
+            name="email"
+            value={email}
+            onChange={handleEmailChange}
+            error={emailError}
+            helperText={
+              emailError
+                ? t(
+                    "pages.login.forgetpassword.dialog.textfield.password.helpertext"
+                  )
+                : ""
+            }
+            variant="outlined"
+            required
+            fullWidth
+          />
+
           <Box noValidate component="form" />
         </DialogContent>
         <DialogActions>
           <Button
-            variant="contained"
-            type="submit"
-            fullWidth
-            onClick={handleSubmit}
-            style={{ margin: "0 16px 16px 16px" }}
+            variant="outlined"
+            color="error"
+            autoFocus
+            onClick={() => handleClose()}
           >
-            Continue
+            {t("buttons.cancel")}
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            onClick={(e) => handleSubmit(e)}
+            onKeyDown={(e) => handleKeyDown(e)}
+            sx={{
+              boxShadow: 1,
+              "&:hover": { boxShadow: 2 },
+              "&:active, &.Mui-focusVisible": { boxShadow: 4 },
+            }}
+          >
+            {t("buttons.confirm")}
           </Button>
         </DialogActions>
       </Dialog>

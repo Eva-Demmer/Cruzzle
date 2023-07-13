@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
 import "dayjs/locale/fr";
@@ -24,6 +25,7 @@ export default function DialogCreateUser({
   setOpenDialogAddUser,
   setUpdateList,
 }) {
+  const { t } = useTranslation();
   const { setAlertAdminOpen, setAlertAdminMessage } =
     useContext(AlertToastContext);
 
@@ -158,7 +160,11 @@ export default function DialogCreateUser({
         .then((res) => {
           if (res.status === 201) {
             setUpdateList(true);
-            setAlertAdminMessage("User created successfully");
+            setAlertAdminMessage(
+              t(
+                "pages.adminpannel.users.tableOfUsers.dialogCreateUser.alert.success.message"
+              )
+            );
             setAlertAdminOpen(true);
             handleClose();
           } else {
@@ -168,7 +174,11 @@ export default function DialogCreateUser({
         .catch((err) => {
           if (err.response.status === 409) {
             setEmailError(true);
-            setEmailErrorMessage("Email not available");
+            setEmailErrorMessage(
+              t(
+                "pages.adminpannel.users.tableOfUsers.dialogCreateUser.alert.error.message"
+              )
+            );
           } else {
             console.error("error creating new user", err);
           }
@@ -182,26 +192,38 @@ export default function DialogCreateUser({
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
     >
-      <DialogTitle id="form-dialog-title">Create new user</DialogTitle>
+      <DialogTitle id="form-dialog-title">
+        {t("pages.adminpannel.users.tableOfUsers.dialogCreateUser.title")}
+      </DialogTitle>
       <DialogContent>
         <DialogContentText
           sx={{
             marginBottom: 4,
           }}
         >
-          You are about to add a new user. Please fill in the form below.
+          {t("pages.adminpannel.users.tableOfUsers.dialogCreateUser.content")}
         </DialogContentText>
 
         <TextField
           id="firstname"
-          label="Firstname"
+          label={t(
+            "pages.adminpannel.users.tableOfUsers.dialogCreateUser.textfield.firstname.label"
+          )}
           type="text"
           fullWidth
           variant="standard"
-          placeholder="Enter a firstname"
+          placeholder={t(
+            "pages.adminpannel.users.tableOfUsers.dialogCreateUser.textfield.firstname.placeholder"
+          )}
           value={firstname}
           error={firstnameError}
-          helperText={firstnameError ? "Incorrect entry" : null}
+          helperText={
+            firstnameError
+              ? t(
+                  "pages.adminpannel.users.tableOfUsers.dialogCreateUser.textfield.firstname.helpertext"
+                )
+              : null
+          }
           onChange={handleChangeFirstname}
           InputLabelProps={{ shrink: true }}
           sx={{
@@ -211,14 +233,24 @@ export default function DialogCreateUser({
 
         <TextField
           id="lasttname"
-          label="Lastname"
+          label={t(
+            "pages.adminpannel.users.tableOfUsers.dialogCreateUser.textfield.lastname.label"
+          )}
           type="text"
           fullWidth
           variant="standard"
-          placeholder="Enter a lastname"
+          placeholder={t(
+            "pages.adminpannel.users.tableOfUsers.dialogCreateUser.textfield.lastname.placeholder"
+          )}
           value={lastname}
           error={lastnameError}
-          helperText={lastnameError ? "Incorrect entry" : null}
+          helperText={
+            lastnameError
+              ? t(
+                  "pages.adminpannel.users.tableOfUsers.dialogCreateUser.textfield.lastname.helpertext"
+                )
+              : null
+          }
           onChange={handleChangeLastName}
           InputLabelProps={{ shrink: true }}
           sx={{
@@ -227,12 +259,24 @@ export default function DialogCreateUser({
         />
 
         <DateField
-          label="Join at"
+          label={t(
+            "pages.adminpannel.users.tableOfUsers.dialogCreateUser.textfield.joinedAt.label"
+          )}
           onChange={(newDate) =>
-            setJoinAt(dayjs(newDate).format("YYYY-MM-DD HH:mm:ss"))
+            setJoinAt(
+              dayjs(newDate).format(
+                t("pages.adminpannel.users.dateFormats.long")
+              )
+            )
           }
           error={joinAtError}
-          helperText={joinAtError ? "required" : null}
+          helperText={
+            joinAtError
+              ? t(
+                  "pages.adminpannel.users.tableOfUsers.dialogCreateUser.textfield.joinedAt.helpertext"
+                )
+              : null
+          }
           fullWidth
           variant="standard"
           InputLabelProps={{ shrink: true }}
@@ -255,11 +299,15 @@ export default function DialogCreateUser({
 
         <TextField
           id="email"
-          label="Email Address"
+          label={t(
+            "pages.adminpannel.users.tableOfUsers.dialogCreateUser.textfield.email.label"
+          )}
           type="email"
           fullWidth
           variant="standard"
-          placeholder="Enter an email address"
+          placeholder={t(
+            "pages.adminpannel.users.tableOfUsers.dialogCreateUser.textfield.email.placeholder"
+          )}
           value={email}
           error={emailError}
           helperText={emailError ? emailErroressage : null}
@@ -272,12 +320,22 @@ export default function DialogCreateUser({
 
         <TextField
           id="password-input"
-          label="Password"
+          label={t(
+            "pages.adminpannel.users.tableOfUsers.dialogCreateUser.textfield.password.label"
+          )}
           fullWidth
           variant="standard"
-          placeholder="Enter a password"
+          placeholder={t(
+            "pages.adminpannel.users.tableOfUsers.dialogCreateUser.textfield.password.placeholder"
+          )}
           error={passwordError}
-          helperText={passwordError ? "Incorrect entry" : null}
+          helperText={
+            passwordError
+              ? t(
+                  "pages.adminpannel.users.tableOfUsers.dialogCreateUser.textfield.password.helpertext"
+                )
+              : null
+          }
           value={password}
           onChange={handleChangePassword}
           type={showPassword ? "text" : "password"}
@@ -304,11 +362,15 @@ export default function DialogCreateUser({
           id="password-confirmation-input"
           fullWidth
           variant="standard"
-          placeholder="Confirm the password"
+          placeholder={t(
+            "pages.adminpannel.users.tableOfUsers.dialogCreateUser.textfield.passwordConfirm.placeholder"
+          )}
           error={passwordConfirmationError}
           helperText={
             passwordConfirmationError
-              ? "The passwords entered do not match"
+              ? t(
+                  "pages.adminpannel.users.tableOfUsers.dialogCreateUser.textfield.passwordConfirm.helpertext"
+                )
               : null
           }
           value={passwordConfirmation}
@@ -337,8 +399,8 @@ export default function DialogCreateUser({
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleSubmit}>Add user</Button>
+        <Button onClick={handleClose}>{t("buttons.cancel")}</Button>
+        <Button onClick={handleSubmit}>{t("buttons.adduser")}</Button>
       </DialogActions>
     </Dialog>
   );

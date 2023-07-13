@@ -1,4 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import TextField from "@mui/material/TextField";
@@ -10,6 +11,7 @@ export default function DialogUserSelectPosition({
   setSelectedPosition,
   positionError,
 }) {
+  const { t } = useTranslation();
   const [positionList, setPositionList] = useState([]);
 
   useEffect(() => {
@@ -37,11 +39,21 @@ export default function DialogUserSelectPosition({
         <TextField
           {...params}
           error={positionError}
-          helperText={positionError ? "required" : null}
+          helperText={
+            positionError
+              ? t(
+                  "pages.adminpannel.users.tableOfUsers.dialogUpdateUser.select.position.helpertext"
+                )
+              : null
+          }
           variant="standard"
-          label="Position"
+          label={t(
+            "pages.adminpannel.users.tableOfUsers.dialogUpdateUser.select.position.label"
+          )}
           fullWidth
-          placeholder="Select a position"
+          placeholder={t(
+            "pages.adminpannel.users.tableOfUsers.dialogUpdateUser.select.position.placeholder"
+          )}
           InputLabelProps={{ shrink: true }}
         />
       )}

@@ -1,9 +1,11 @@
 import { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { TextField, IconButton } from "@mui/material";
 import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { FilterContext } from "../../contexts/FilterContext";
 
 function FilterbarTextSearch() {
+  const { t } = useTranslation();
   const { setTitleContains } = useContext(FilterContext);
   const [value, setValue] = useState("");
 
@@ -29,7 +31,9 @@ function FilterbarTextSearch() {
   return (
     <TextField
       id="filter-text-search"
-      placeholder="search by key words..."
+      placeholder={t(
+        "pages.ideas.ideaspage.filterpannel.fieldtext.textsearch.placeholder"
+      )}
       value={value}
       onChange={handleChange}
       onBlur={handleSubmit}
