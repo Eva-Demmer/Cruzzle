@@ -34,6 +34,7 @@ import AlertToastProvider from "./contexts/AlertToastContext";
 import LanguageProvider from "./contexts/LanguageContext";
 import MenuProvider from "./contexts/MenuContext";
 import FilterProvider from "./contexts/FilterContext";
+import FilterFavoritesProvider from "./contexts/FilterFavoritesContext";
 import ScrollProvider from "./contexts/ScrollContext";
 import IdeaPageProvider from "./contexts/IdeaPageContext";
 import IdeaEdit from "./pages/ideas/IdeaEdit";
@@ -115,11 +116,13 @@ root.render(
             <MenuProvider>
               <LanguageProvider>
                 <FilterProvider>
-                  <ScrollProvider>
-                    <IdeaPageProvider>
-                      <RouterProvider router={router} />
-                    </IdeaPageProvider>
-                  </ScrollProvider>
+                  <FilterFavoritesProvider>
+                    <ScrollProvider>
+                      <IdeaPageProvider>
+                        <RouterProvider router={router} />
+                      </IdeaPageProvider>
+                    </ScrollProvider>
+                  </FilterFavoritesProvider>
                 </FilterProvider>
               </LanguageProvider>
             </MenuProvider>

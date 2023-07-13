@@ -24,7 +24,10 @@ function Ideas() {
     hasNoComment,
   } = useContext(FilterContext);
 
-  const { id: userId, agency_id: userAgencyId } = user;
+  const {
+    id: userId,
+    agency: { id: userAgencyId },
+  } = user;
 
   useEffect(() => {
     const reqItems = {
@@ -42,6 +45,7 @@ function Ideas() {
     fetchByQuery("/api/ideas/filter", reqItems)
       .then((data) => {
         setFilteredIdeas(data);
+        console.info(data);
       })
       .catch((error) =>
         console.error("error from api.services.fetcherByQuery", error)

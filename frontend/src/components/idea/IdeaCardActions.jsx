@@ -24,6 +24,7 @@ import { postFavorit, deleteFavorit } from "../../services/api.favorits";
 import { sm } from "../../utils/mediaQueries";
 import { apiIdeas } from "../../services/api.ideas";
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
+import { FilterFavoritesContext } from "../../contexts/FilterFavoritesContext";
 
 export default function IdeaCardActions({
   userId,
@@ -34,6 +35,7 @@ export default function IdeaCardActions({
   idea,
 }) {
   const [favorite, setFavorite] = useState(isFavorite);
+  const { update, setUpdate } = useContext(FilterFavoritesContext);
   const [liked, setLiked] = useState(isLiked);
 
   const smallQuery = useMediaQuery(sm);
@@ -63,6 +65,7 @@ export default function IdeaCardActions({
       deleteFavorit(user, id, "favorits");
       setFavorite(false);
     }
+    setUpdate(!update);
   };
 
   const handleClickLike = async () => {
