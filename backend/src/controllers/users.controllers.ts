@@ -14,7 +14,10 @@ import {
 } from "../models/user.model";
 import { verifyPassword } from "../middlewares/auth.middlewares";
 import findByFilter from "../models/userFilter.model";
-import { UserFilterQuery } from "../interfaces/users.interface";
+import {
+  FormatedDataItem,
+  UserFilterQuery,
+} from "../interfaces/users.interface";
 import "dayjs/locale/fr";
 
 dotenv.config();
@@ -163,13 +166,6 @@ const getActivitiesByUserId = async (req: Request, res: Response) => {
     res.status(500).send(error);
   }
 };
-
-interface FormatedDataItem {
-  id: number;
-  type: string;
-  created_at: Date;
-  title: string;
-}
 
 const getContributionsByUserId = async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id, 10);
