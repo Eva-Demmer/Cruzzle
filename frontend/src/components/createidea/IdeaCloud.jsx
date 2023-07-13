@@ -1,10 +1,12 @@
 import { TextField } from "@mui/material";
 import { useContext } from "react";
 import { Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 import { IdeaFormContext } from "../../contexts/IdeaFormContext";
 
 function IdeaCloud() {
+  const { t } = useTranslation();
   const { control } = useContext(IdeaFormContext);
 
   return (
@@ -17,7 +19,7 @@ function IdeaCloud() {
         render={({ field: { onChange, value } }) => (
           <TextField
             id="cloudshare"
-            label="Cloud"
+            label={t("pages.ideas.ideanew.cloud.textfield.label")}
             placeholder="Dropbox, Google drive..."
             className="w-full lg:w-[720px] my-2"
             InputLabelProps={{ shrink: true }}

@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -7,6 +8,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import TeamBuilderList from "./TeamBuilderList";
 
 export default function TeamBuilder({ list, onChange, getOptions }) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const loading = open && options.length === 0;
@@ -70,8 +72,8 @@ export default function TeamBuilder({ list, onChange, getOptions }) {
           renderInput={(params) => (
             <TextField
               {...params}
-              label="Collaborators"
-              placeholder="Gather your team"
+              label={t("pages.ideas.ideanew.team.label")}
+              placeholder={t("pages.ideas.ideanew.team.placeholder")}
               value={list}
               InputLabelProps={{ shrink: true }}
               InputProps={{

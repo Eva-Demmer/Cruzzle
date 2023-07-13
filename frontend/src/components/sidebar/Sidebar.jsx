@@ -7,7 +7,7 @@ function Sidebar() {
   const navigate = useNavigate();
 
   return (
-    <aside className="h-full flex flex-col px-0 overflow-x-hidden overflow-y-auto bg-white z-50 sm:h-full sm:w-60 lg:w-64 sm:border-solid sm:border-t-[0px] sm:border-b-[0px] sm:border-l-[0px] sm:border-r-[1px] sm:border-gray-300">
+    <aside className="h-screen flex flex-col px-0 overflow-x-hidden overflow-y-auto bg-white z-50 sm:h-full sm:w-60 lg:w-64 sm:border-solid sm:border-t-[0px] sm:border-b-[0px] sm:border-l-[0px] sm:border-r-[1px] sm:border-gray-300">
       <div className="bg-primary-900 bg-opacity-5 h-full w-full flex flex-col sticky">
         <div className="flex-col items-center hidden sm:flex">
           <button

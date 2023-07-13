@@ -74,7 +74,7 @@ function Root() {
       >
         <div
           className={`sticky flex flex-col top-0 z-50 w-full ${
-            !smallQuery && activeMenu ? "h-full" : ""
+            !smallQuery && activeMenu ? "h-screen" : ""
           }`}
         >
           <HeaderNav />
