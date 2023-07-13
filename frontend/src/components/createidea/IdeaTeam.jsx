@@ -1,9 +1,8 @@
 import { useContext } from "react";
 import { useTranslation } from "react-i18next";
-import TeamBuilder from "../idea/TeamBuilder";
+import TeamBuilder from "./TeamBuilder";
 import { IdeaFormContext } from "../../contexts/IdeaFormContext";
 import { apiUsers } from "../../services/api.users";
-import TeamBuilder from "./TeamBuilder";
 
 function IdeaTeam() {
   const { t } = useTranslation();
