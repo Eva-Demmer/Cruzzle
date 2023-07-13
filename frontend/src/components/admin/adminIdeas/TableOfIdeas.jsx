@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import dayjs from "dayjs";
 import "dayjs/locale/fr";
 import ActionIcons from "./ActionIcons";
+import localeText from "../../../locales/datagridlocaletext";
 
 export default function TableOfIdeas({ ideaList, setUpdateList }) {
   const { t } = useTranslation();
@@ -108,6 +109,7 @@ export default function TableOfIdeas({ ideaList, setUpdateList }) {
           toolbar: GridToolbar,
         }}
         disableRowSelectionOnClick
+        localeText={localeText}
       />
     </div>
   );

@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import "dayjs/locale/fr";
+import { useTranslation } from "react-i18next";
 
 function UserCommunityCard({ user }) {
+  const { t, i18n } = useTranslation();
   const {
     id,
     firstname,
@@ -57,7 +59,10 @@ function UserCommunityCard({ user }) {
             aria-label="biography"
             className="my-1 text-sm sm:text-xs lg:text-base italic text-ellipsis text-secondary-600"
           >
-            Joined at : {dayjs(joinedAt).locale("fr").format("YYYY-MM-DD")}
+            {t("pages.users.community.card.joinedAt")} :{" "}
+            {dayjs(joinedAt)
+              .locale(i18n.language)
+              .format(t("pages.users.community.dateFormats.short"))}
           </div>
         </div>
       </div>
@@ -74,7 +79,7 @@ function UserCommunityCard({ user }) {
             "&:active, &.Mui-focusVisible": { boxShadow: 4 },
           }}
         >
-          View profile
+          {t("buttons.viewprofile")}
         </Button>
       </div>
     </div>
