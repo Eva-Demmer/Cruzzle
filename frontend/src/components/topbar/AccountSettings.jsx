@@ -3,6 +3,7 @@ import {
   ArrowRightOnRectangleIcon,
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
+import { useTranslation } from "react-i18next";
 import { UserIcon, Cog6ToothIcon } from "@heroicons/react/24/solid";
 import {
   IconButton,
@@ -18,6 +19,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { Axios } from "../../config/axios.config";
 
 function AccountSettings() {
+  const { t } = useTranslation();
   const { user } = useContext(UserContext);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -40,7 +42,10 @@ function AccountSettings() {
 
   return (
     <>
-      <Tooltip title="Account Settings" className="mx-1">
+      <Tooltip
+        title={t("menu.topbar.accountsettings.tooltip.title")}
+        className="mx-1"
+      >
         <IconButton
           onClick={handleClick}
           aria-controls={open ? "account-menu" : undefined}
@@ -109,20 +114,20 @@ function AccountSettings() {
           <ListItemIcon>
             <UserIcon className="h-6 w-6" />
           </ListItemIcon>
-          Profil
+          {t("menu.topbar.accountsettings.profil")}
         </MenuItem>
         <MenuItem onClick={handleClose} component={Link} to="settings/">
           <ListItemIcon>
             <Cog6ToothIcon className="h-6 w-6" />
           </ListItemIcon>
-          Settings
+          {t("menu.topbar.accountsettings.settings")}
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <ArrowRightOnRectangleIcon className="h-6 w-6" />
           </ListItemIcon>
-          Logout
+          {t("menu.topbar.accountsettings.logout")}
         </MenuItem>
       </Menu>
     </>

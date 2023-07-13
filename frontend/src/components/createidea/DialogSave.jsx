@@ -7,8 +7,10 @@ import {
   DialogActions,
 } from "@mui/material";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 function DialogSave({ open, setOpen, handleAgree }) {
+  const { t } = useTranslation();
   return (
     <Dialog
       open={open}
@@ -16,11 +18,12 @@ function DialogSave({ open, setOpen, handleAgree }) {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Confirm Save Idea</DialogTitle>
+      <DialogTitle id="alert-dialog-title">
+        {t("pages.ideas.ideanew.dialog.title")}
+      </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Are you sure you want to save this idea? If you delete the files, you
-          won't be able to retrieve them again!
+          {t("pages.ideas.ideanew.dialog.content")}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -30,7 +33,7 @@ function DialogSave({ open, setOpen, handleAgree }) {
           onClick={() => setOpen(false)}
           autoFocus
         >
-          Cancel
+          {t("buttons.cancel")}
         </Button>
         <Button
           variant="contained"
@@ -43,7 +46,7 @@ function DialogSave({ open, setOpen, handleAgree }) {
             "&:active, &.Mui-focusVisible": { boxShadow: 4 },
           }}
         >
-          Agree
+          {t("buttons.agree")}
         </Button>
       </DialogActions>
     </Dialog>

@@ -5,8 +5,10 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useTranslation } from "react-i18next";
 
 export default function DialogConfirm(props) {
+  const { t } = useTranslation();
   const { dialConfirmIsOpen, setDialConfirmIsOpen, setIsConfirmed, title } =
     props;
 
@@ -31,14 +33,13 @@ export default function DialogConfirm(props) {
         <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            please note that this action cannot be undone. Are you sure you want
-            to proceed ?
+            {t("pages.adminpannel.ideas.dialogConfirm.content")}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancel}>Cancel</Button>
+          <Button onClick={handleCancel}>{t("buttons.cancel")}</Button>
           <Button onClick={handleConfirm} autoFocus>
-            Confirm
+            {t("buttons.confirm")}
           </Button>
         </DialogActions>
       </Dialog>

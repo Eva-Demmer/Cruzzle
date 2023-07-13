@@ -2,9 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { StyledEngineProvider, ThemeProvider } from "@mui/material";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import "dayjs/locale/fr";
+
+import "./config/i18n";
 
 import UserProvider from "./contexts/UserContext";
 
@@ -71,7 +70,7 @@ const router = createBrowserRouter([
         element: <IdeaNew />,
       },
       {
-        path: "favorits/",
+        path: "favorites/",
         element: <Favorits />,
       },
       {
@@ -117,14 +116,9 @@ root.render(
               <LanguageProvider>
                 <FilterProvider>
                   <ScrollProvider>
-                    <LocalizationProvider
-                      dateAdapter={AdapterDayjs}
-                      adapterLocale="fr"
-                    >
-                      <IdeaPageProvider>
-                        <RouterProvider router={router} />
-                      </IdeaPageProvider>
-                    </LocalizationProvider>
+                    <IdeaPageProvider>
+                      <RouterProvider router={router} />
+                    </IdeaPageProvider>
                   </ScrollProvider>
                 </FilterProvider>
               </LanguageProvider>

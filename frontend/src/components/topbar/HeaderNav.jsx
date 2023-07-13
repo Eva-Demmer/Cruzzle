@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useContext, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
@@ -27,8 +28,10 @@ import { MenuContext } from "../../contexts/MenuContext";
 import Progress from "../progressbar/Progress";
 
 function HeaderNav() {
+  const { t } = useTranslation();
   const { setActiveMenu, activeMenu } = useContext(MenuContext);
   const { language, setLanguage } = useContext(LanguageContext);
+  const { i18n } = useTranslation();
 
   const { user } = useContext(UserContext);
 
@@ -52,12 +55,12 @@ function HeaderNav() {
   const languages = [
     {
       code: "GB",
-      value: "EN",
+      value: "en",
       language: "English",
     },
     {
       code: "FR",
-      value: "FR",
+      value: "fr",
       language: "Français",
     },
   ];
@@ -125,7 +128,10 @@ function HeaderNav() {
 
           {smallQuery && (
             <>
-              <Tooltip title="Langages" className="mx-1">
+              <Tooltip
+                title={t("menu.topbar.languages.tooltip.title")}
+                className="mx-1"
+              >
                 <IconButton
                   onClick={handleClick}
                   aria-controls={open ? "language-menu" : undefined}
@@ -133,7 +139,7 @@ function HeaderNav() {
                   aria-expanded={open ? "true" : undefined}
                 >
                   <Badge
-                    badgeContent={language}
+                    badgeContent={language.toUpperCase()}
                     sx={{
                       "& .MuiBadge-badge": {
                         color: "#FFFFFF",
@@ -184,7 +190,10 @@ function HeaderNav() {
               >
                 {languages.map((item) => (
                   <MenuItem
-                    onClick={() => setLanguage(item.value)}
+                    onClick={() => {
+                      i18n.changeLanguage(item.value.toLowerCase());
+                      setLanguage(item.value);
+                    }}
                     key={item.value}
                   >
                     <ListItemIcon>
@@ -203,7 +212,10 @@ function HeaderNav() {
             </>
           )}
 
-          <Tooltip title="Notifications" className="mx-1">
+          <Tooltip
+            title={t("menu.topbar.notifications.tooltip.title")}
+            className="mx-1"
+          >
             <IconButton>
               <Badge badgeContent={notificationCount} color="primary">
                 <BellIcon className="h-7 w-7" />

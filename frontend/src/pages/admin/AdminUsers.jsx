@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useEffect, useState, useContext } from "react";
 import { UserIcon } from "@heroicons/react/24/solid";
 import { PlusIcon } from "@heroicons/react/24/outline";
@@ -10,6 +11,7 @@ import DialogCreateUser from "../../components/admin/adminUsers/DialogCreateUser
 import { AlertToastContext } from "../../contexts/AlertToastContext";
 
 function AdminUsers() {
+  const { t } = useTranslation();
   const {
     alertAdminOpen,
     setAlertAdminOpen,
@@ -47,11 +49,11 @@ function AdminUsers() {
     <div className="admin-users w-full h-full pt-4 lg:pr-6 px-4 flex flex-col">
       <header className="w-full lg:h-44 flex items-center">
         <div className="header-left-container h-full min-w-[420px] grow self-start flex flex-col justify-between">
-          <h2>Users</h2>
+          <h2>{t("pages.adminpannel.users.title")}</h2>
           <div className="my-4 flex flex-col gap-4 md:block">
             <ActionButton
               icon={<PlusIcon />}
-              text="Add user"
+              text={t("buttons.adduser")}
               onClick={() => setOpenDialogAddUser(true)}
             />
           </div>
@@ -59,7 +61,7 @@ function AdminUsers() {
         <div className="self-center hidden lg:block">
           <CounterCard
             icon={<UserIcon />}
-            text="Total Users"
+            text={t("pages.adminpannel.users.countercard")}
             count={userList.length}
           />
         </div>

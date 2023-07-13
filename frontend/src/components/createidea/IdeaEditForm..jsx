@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { IdeaFormContext } from "../../contexts/IdeaFormContext";
 import { apiIdeas, apiUpdateIdeaById } from "../../services/api.ideas";
@@ -8,6 +9,7 @@ import DialogSave from "./DialogSave";
 import AlertOnSave from "./AlertOnSave";
 
 function IdeaEditForm({ children }) {
+  const { t } = useTranslation();
   const {
     handleSubmit,
     filesAttachment,
@@ -140,12 +142,12 @@ function IdeaEditForm({ children }) {
       setOpenDialog(false);
       if (updateIdea) {
         setIdIdea(updateIdea.id);
-        setAlertMessage("Idea updated successfully.");
-        setAlertTitle("Idea updated");
+        setAlertMessage(t("pages.ideas.ideaedit.alert.success.message"));
+        setAlertTitle(t("pages.ideas.ideaedit.alert.success.title"));
         setAlertOpen(true);
       } else {
-        setAlertMessage("Failed to update idea. Please try again.");
-        setAlertTitle("Error");
+        setAlertMessage(t("pages.ideas.ideaedit.alert.error.message"));
+        setAlertTitle(t("pages.ideas.ideaedit.alert.error.title"));
         setAlertSeverity("error");
         setAlertOpen(true);
       }

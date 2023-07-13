@@ -1,5 +1,7 @@
 import { Tab, Tabs, Box } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 
 import AllyProps from "../tabs/AllyProps";
 import TabGeneral from "./Tabs/TabGeneral";
@@ -8,10 +10,25 @@ import TabComments from "./Tabs/TabComments";
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
 
 function TabsIdeaPage() {
+  const { t } = useTranslation();
   const [tabValue, setTabValue] = useState(0);
   const { idea } = useContext(IdeaPageContext);
+  const location = useLocation();
 
-  const tabsContent = ["General", "Files", `Comments (${idea.comment.length})`];
+  useEffect(() => {
+    if (location.state && location.state.tabStateValue) {
+      console.info(location.state.tabStateValue);
+      setTabValue(parseInt(location.state.tabStateValue, 10));
+    }
+  }, []);
+
+  const tabsContent = [
+    t("pages.ideas.idea.tabsIdea.content.general"),
+    t("pages.ideas.idea.tabsIdea.content.files"),
+    `${t("pages.ideas.idea.tabsIdea.content.comments")} (${
+      idea.comment.length
+    })`,
+  ];
 
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
@@ -26,20 +43,25 @@ function TabsIdeaPage() {
             onChange={handleChange}
             aria-label="basic tabs example"
           >
-            {tabsContent.map((tab, index) => (
-              <Tab
-                label={tab}
-                // eslint-disable-next-line react/jsx-props-no-spreading
-                {...AllyProps(index)}
-                key={`${tab}`}
-              />
-            ))}
+            {tabsContent &&
+              tabsContent.map((tab, index) => (
+                <Tab
+                  label={tab}
+                  // eslint-disable-next-line react/jsx-props-no-spreading
+                  {...AllyProps(index)}
+                  key={`${tab}`}
+                />
+              ))}
           </Tabs>
         </Box>
         {/* Insert CONTENT HERE */}
         <TabGeneral tabValue={tabValue} setTabValue={setTabValue} index={0} />
         <TabFiles tabValue={tabValue} index={1} />
-        <TabComments tabValue={tabValue} index={2} />
+        <TabComments
+          tabStateValue={location.state && location.state.tabStateValue}
+          tabValue={tabValue}
+          index={2}
+        />
       </Box>
     </div>
   );

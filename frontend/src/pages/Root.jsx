@@ -8,11 +8,13 @@ import { MenuContext } from "../contexts/MenuContext";
 import { ScrollContext } from "../contexts/ScrollContext";
 import { UserContext } from "../contexts/UserContext";
 import { apiUserById } from "../services/api.users";
+import { LanguageContext } from "../contexts/LanguageContext";
 
 function Root() {
   const { user, setUser } = useContext(UserContext);
   const smallQuery = useMediaQuery(sm);
   const { activeMenu, setActiveMenu } = useContext(MenuContext);
+  const { setLanguage } = useContext(LanguageContext);
   const { divRef } = useContext(ScrollContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -37,6 +39,10 @@ function Root() {
     const token = localStorage.getItem("token");
     if (token) {
       setCurrentUserIntoUserContext(token);
+      const lng = localStorage.getItem("i18nextLng");
+      if (lng) {
+        setLanguage(lng);
+      }
       if (location.pathname === "/") {
         navigate("/dashboard");
       }
@@ -68,7 +74,7 @@ function Root() {
       >
         <div
           className={`sticky flex flex-col top-0 z-50 w-full ${
-            !smallQuery && activeMenu ? "h-full" : ""
+            !smallQuery && activeMenu ? "h-screen" : ""
           }`}
         >
           <HeaderNav />

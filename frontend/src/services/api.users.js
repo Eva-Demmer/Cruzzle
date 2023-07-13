@@ -21,6 +21,39 @@ const apiUsers = async (route = "") => {
   }
 };
 
+const apiUserPostImage = async (data, route = "") => {
+  try {
+    const response = await axios.post(`${url}${userRoute}${route}`, data);
+    if (response) {
+      return response;
+    }
+  } catch (error) {
+    console.error("Internal server error:", error);
+  }
+  return null;
+};
+
+const apiUserImageByQuery = async (
+  query,
+  route = "",
+  config = {
+    responseType: "blob",
+  }
+) => {
+  try {
+    const response = await axios.get(
+      `${url}${userRoute}${route}?${query}`,
+      config
+    );
+    if (response) {
+      return response;
+    }
+  } catch (error) {
+    console.error("Error getImageByQuery:", error);
+  }
+  return null;
+};
+
 // const apiUserLeaderboard = async () => {
 //   try {
 //     const response = await axios.get(`${url}${userRoute}/leaderboard`);
@@ -115,12 +148,33 @@ const apiUpdateUser = async (id, data) => {
   }
 };
 
+const apiGeActivitiesByUserId = async (id) => {
+  try {
+    const response = await axios.get(`${url}${userRoute}activities/${id}`);
+    if (response.status === 200) {
+      console.info("activities", response.data);
+      return response.data;
+    }
+    throw new Error(`Unexpected response status: ${response.status}`);
+  } catch (error) {
+    if (error.response && error.response.status === 500) {
+      console.error("Internal server error:", error);
+    } else {
+      console.error("Fetch  error:", error);
+    }
+    throw error;
+  }
+};
+
 export {
   apiUsers,
   // apiUserLeaderboard,
   apiUpdateUser,
   apiUserById,
   apiUsersLogin,
+  apiGeActivitiesByUserId,
+  apiUserPostImage,
+  apiUserImageByQuery,
   apiUsersVerifyPasword,
   apiUsersUpdatePasword,
 };

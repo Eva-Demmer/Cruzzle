@@ -12,11 +12,13 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { apiUsersLogin } from "../../services/api.users";
 import OverlayLogin from "../overlays/OverlayLogin";
 
 function LoginForm() {
+  const { t } = useTranslation();
   const [mail, setMail] = useState("");
   const [mailError, setMailError] = useState(false);
   const [password, setPassword] = useState("");
@@ -49,7 +51,7 @@ function LoginForm() {
     e.preventDefault();
     // Check if all fields are filled out
     if (mail === "" || password === "") {
-      setAlertMessage("Please fill out all the fields!");
+      setAlertMessage(t("pages.login.alert.error.email"));
       setShowAlert(true);
     } else {
       try {
@@ -60,19 +62,17 @@ function LoginForm() {
         if (error.response) {
           const { status } = error.response;
           if (status === 401) {
-            setAlertMessage("Wrong email or password.");
+            setAlertMessage(t("pages.login.alert.error.wrong"));
             setShowAlert(true);
           } else if (status === 404) {
-            setAlertMessage(
-              "User not found. Please contact your administrator."
-            );
+            setAlertMessage(t("pages.login.alert.error.wrong"));
             setShowAlert(true);
           } else {
-            setAlertMessage("Internal server error. Please try again later.");
+            setAlertMessage(t("pages.login.alert.error.server"));
             setShowAlert(true);
           }
         } else {
-          setAlertMessage("Network error. Please try again later.");
+          setAlertMessage(t("pages.login.alert.error.server"));
           setShowAlert(true);
         }
       }
@@ -90,23 +90,24 @@ function LoginForm() {
     <div className="flex justify-center">
       <form onSubmit={handleSubmit}>
         <Paper elevation={6} className="p-5 max-w-sm">
-          <h2 className="text-center">Login</h2>
-          <p className="my-8 text-center">Please enter your login details.</p>
+          <h2 className="text-center">{t("pages.login.title")}</h2>
+          <p className="my-8 text-center">{t("pages.login.subtitle")}</p>
           <TextField
             id="login-mail"
             type="mail"
-            label="Mail address"
+            label={t("pages.login.textfield.mail.label")}
             name="mail"
             value={mail}
             autoComplete="mail"
             autoFocus
             onChange={handleMailChange}
             error={mailError}
-            helperText={mailError ? "Please enter a valid mail address." : ""}
+            helperText={
+              mailError ? t("pages.login.textfield.mail.helpertext") : ""
+            }
             variant="outlined"
             required
             fullWidth
-            className=""
           />
           <FormControl
             variant="outlined"
@@ -115,7 +116,7 @@ function LoginForm() {
             className="mt-4 mb-2"
           >
             <InputLabel htmlFor="outlined-adornment-password">
-              Password
+              {t("pages.login.textfield.password.label")}
             </InputLabel>
             <OutlinedInput
               id="login-password"
@@ -132,7 +133,7 @@ function LoginForm() {
                   </IconButton>
                 </InputAdornment>
               }
-              label="Password"
+              label={t("pages.login.textfield.password.label")}
               name="password"
               value={password}
               onChange={handlePasswordChange}
@@ -146,7 +147,7 @@ function LoginForm() {
             className="mt-4"
             onClick={handleSubmit}
           >
-            Login
+            {t("buttons.login")}
           </Button>
         </Paper>
       </form>

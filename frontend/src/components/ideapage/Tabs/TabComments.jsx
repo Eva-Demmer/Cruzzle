@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
 import { useContext, useEffect, useState } from "react";
-
 import { Box, Button, Select, FormControl, MenuItem } from "@mui/material";
-
+import { useTranslation } from "react-i18next";
 import TabPanel from "../../tabs/TabPanel";
 import CommentBox from "../CommentBox";
 import FilterSvg from "../../../assets/Filter.svg";
@@ -10,6 +9,7 @@ import { IdeaPageContext } from "../../../contexts/IdeaPageContext";
 import CreateComment from "../CreateComment";
 
 function TabComments({ tabValue, index }) {
+  const { t } = useTranslation();
   const { idea } = useContext(IdeaPageContext);
   const { comment } = idea;
   const [selectValue, setSelectValue] = useState(0);
@@ -42,7 +42,9 @@ function TabComments({ tabValue, index }) {
       <TabPanel value={tabValue} index={index} className="w-full">
         {idea.archived_at === null && <CreateComment />}
         <div className="flex justify-between items-center mt-4">
-          <h3 className="text-xl mb-2">{`Comments (${allComments.length})`}</h3>
+          <h3 className="text-xl mb-2">{`${t(
+            "pages.ideas.idea.tabsIdea.tabcomments.title"
+          )} (${allComments.length})`}</h3>
           {allComments.length > 0 && (
             <FormControl>
               <Select
@@ -59,15 +61,21 @@ function TabComments({ tabValue, index }) {
                   );
                 }}
               >
-                <MenuItem value={0}>Most recent</MenuItem>
-                <MenuItem value={1}>Most liked</MenuItem>
+                <MenuItem value={0}>
+                  {t("pages.ideas.idea.tabsIdea.tabcomments.mostrecent")}
+                </MenuItem>
+                <MenuItem value={1}>
+                  {t("pages.ideas.idea.tabsIdea.tabcomments.mostliked")}
+                </MenuItem>
               </Select>
             </FormControl>
           )}
         </div>
         <div className="flex flex-col">
           {allComments.length === 0 && (
-            <div className="text-md mb-2">No comments</div>
+            <div className="text-md mb-2">
+              {t("pages.ideas.idea.tabsIdea.tabcomments.nocomments")}
+            </div>
           )}
           {allComments.map((item) => (
             <CommentBox comment={item} key={item.id} tabComment />
@@ -80,7 +88,9 @@ function TabComments({ tabValue, index }) {
                 className="flex  text-secondary-600"
                 onClick={() => setOpen(!open)}
               >
-                {open ? "See less" : "See more"}
+                {open
+                  ? t("pages.ideas.idea.tabsIdea.tabcomments.seeless")
+                  : t("pages.ideas.idea.tabsIdea.tabcomments.seemore")}
               </Button>
             </div>
           )}

@@ -42,6 +42,40 @@ const findAll = async () => {
   }
 };
 
+const findActivitiesById = async (id: number) => {
+  try {
+    const data = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        idea_like: {
+          select: {
+            liked_at: true,
+            idea: {
+              select: { title: true },
+            },
+          },
+        },
+        comment: {
+          select: {
+            created_at: true,
+            idea: {
+              select: {
+                title: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    return data;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
 const findById = async (id: number) => {
   try {
     const data = await prisma.user.findUnique({
@@ -128,6 +162,32 @@ const update = async (id: number, updatedUser: User) => {
         id,
       },
       data: updatedUser,
+    });
+    return data;
+  } catch (error) {
+    throw new Error("Error updating user.");
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+interface UploadImage {
+  banner_url?: string;
+  avatar_url?: string;
+}
+
+const updateUserImage = async (imageData: UploadImage, id: number) => {
+  try {
+    console.info(imageData);
+    const data = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: imageData,
+      select: {
+        avatar_url: true,
+        banner_url: true,
+      },
     });
     return data;
   } catch (error) {

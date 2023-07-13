@@ -15,12 +15,14 @@ import {
   ChevronUpIcon,
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
+import { useTranslation } from "react-i18next";
 import Collapse from "@mui/material/Collapse";
 import LogoutLinks from "./LogoutLinks";
 import { MenuContext } from "../../contexts/MenuContext";
 import { UserContext } from "../../contexts/UserContext";
 
 function SideLinks() {
+  const { t } = useTranslation();
   const { user } = useContext(UserContext);
   const [open, setOpen] = useState(false);
   const location = useLocation();
@@ -44,46 +46,46 @@ function SideLinks() {
   const navlinks = [
     {
       to: "/dashboard",
-      primary: "Home",
+      primary: t("menu.sidebar.home"),
       icon: HomeIcon,
     },
     {
       to: "/ideas",
-      primary: "Ideas",
+      primary: t("menu.sidebar.ideas"),
       icon: LightBulbIcon,
     },
     {
-      to: "/favorits",
-      primary: "Favorites",
+      to: "/favorites",
+      primary: t("menu.sidebar.favoritees"),
       icon: StarIcon,
     },
     {
       to: "/users",
-      primary: "Community",
+      primary: t("menu.sidebar.community"),
       icon: UserGroupIcon,
     },
     {
-      primary: "Admin panel",
+      primary: t("menu.sidebar.admin.pannel"),
       icon: WrenchScrewdriverIcon,
       admin: true,
       subLink: [
         {
           to: "/admin/users",
-          primary: "Users",
+          primary: t("menu.sidebar.admin.users"),
         },
         {
           to: "/admin/ideas",
-          primary: "Ideas",
+          primary: t("menu.sidebar.admin.ideas"),
         },
         {
           to: "/admin/categories",
-          primary: "Categories",
+          primary: t("menu.sidebar.admin.categories"),
         },
       ],
     },
     {
       to: "/settings",
-      primary: "Settings",
+      primary: t("menu.sidebar.settings"),
       icon: Cog6ToothIcon,
     },
   ];

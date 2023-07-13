@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { IconButton, Tooltip } from "@mui/material";
 import {
   EyeIcon,
@@ -16,6 +17,7 @@ import {
 } from "../../../services/api.admin.ideas";
 
 export default function ActionIcons(props) {
+  const { t } = useTranslation();
   const { idea, setUpdateList } = props;
   const { setAlertAdminOpen, setAlertAdminMessage } =
     useContext(AlertToastContext);
@@ -29,7 +31,9 @@ export default function ActionIcons(props) {
     apiAdminArchiveIdea(id)
       .then((res) => {
         if (res.status === 200) {
-          setAlertAdminMessage("Idea archived successfully");
+          setAlertAdminMessage(
+            t("pages.adminpannel.ideas.alert.succes.archive")
+          );
           setAlertAdminOpen(true);
           setUpdateList(true);
         } else {
@@ -46,7 +50,9 @@ export default function ActionIcons(props) {
     apiAdminDeleteIdea(id)
       .then((res) => {
         if (res.status === 200) {
-          setAlertAdminMessage("Idea deleted successfully");
+          setAlertAdminMessage(
+            t("pages.adminpannel.ideas.alert.succes.delete")
+          );
           setAlertAdminOpen(true);
           setUpdateList(true);
         } else {
@@ -74,7 +80,7 @@ export default function ActionIcons(props) {
   return (
     <>
       <Link to={`/ideas/${idea.id}`}>
-        <Tooltip title="Visit idea page" arrow>
+        <Tooltip title={t("pages.adminpannel.ideas.tooltip.view")} arrow>
           <IconButton>
             <EyeIcon className="w-4 text-green-600" />
           </IconButton>
@@ -82,14 +88,14 @@ export default function ActionIcons(props) {
       </Link>
 
       <Link to={`/ideas/${idea.id}/edit`}>
-        <Tooltip title="Edit idea" arrow>
+        <Tooltip title={t("pages.adminpannel.ideas.tooltip.edit")} arrow>
           <IconButton>
             <PencilSquareIcon className="w-4 text-yellow-600" />
           </IconButton>
         </Tooltip>
       </Link>
 
-      <Tooltip title="Archive idea" arrow>
+      <Tooltip title={t("pages.adminpannel.ideas.tooltip.archive")} arrow>
         <IconButton onClick={() => setDialConfirmArchiveIsOpen(true)}>
           <ArchiveBoxArrowDownIcon className="w-4 text-sky-600" />
         </IconButton>
@@ -98,10 +104,12 @@ export default function ActionIcons(props) {
         dialConfirmIsOpen={dialConfirmArchiveIsOpen}
         setDialConfirmIsOpen={setDialConfirmArchiveIsOpen}
         setIsConfirmed={setIsConfirmedArchiveIdea}
-        title={`Archiving idea : ${idea.title}`}
+        title={`${t("pages.adminpannel.ideas.dialogConfirm.title")} : ${
+          idea.title
+        }`}
       />
 
-      <Tooltip title="Delete idea" arrow>
+      <Tooltip title={t("pages.adminpannel.ideas.tooltip.delete")} arrow>
         <IconButton onClick={() => setDialConfirmDeleteIsOpen(true)}>
           <TrashIcon className="w-4 text-red-600" />
         </IconButton>

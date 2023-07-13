@@ -82,6 +82,15 @@ const findByFilter = async (filterQuery: IdeaFilterQuery) => {
             user_id: userId ? parseInt(userId, 10) : undefined,
           },
         },
+        idea_like: {
+          select: {
+            id: true,
+            user_id: true,
+          },
+          where: {
+            user_id: userId ? parseInt(userId, 10) : undefined,
+          },
+        },
         _count: {
           select: {
             idea_like: true,
