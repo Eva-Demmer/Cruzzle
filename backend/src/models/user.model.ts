@@ -171,6 +171,32 @@ const update = async (id: number, updatedUser: User) => {
   }
 };
 
+interface UploadImage {
+  banner_url?: string;
+  avatar_url?: string;
+}
+
+const updateUserImage = async (imageData: UploadImage, id: number) => {
+  try {
+    console.info(imageData);
+    const data = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: imageData,
+      select: {
+        avatar_url: true,
+        banner_url: true,
+      },
+    });
+    return data;
+  } catch (error) {
+    throw new Error("Error updating user.");
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
 const updatePassword = async (updatedPassword: UpdatePasswordUser) => {
   const { id, hashed_password: hashedPassword } = updatedPassword;
   try {
@@ -195,5 +221,6 @@ export {
   findByMail,
   update,
   updatePassword,
+  updateUserImage,
   findActivitiesById,
 };

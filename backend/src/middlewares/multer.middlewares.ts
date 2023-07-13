@@ -1,9 +1,7 @@
 import multer, { FileFilterCallback } from "multer";
 import { Request } from "express";
-
 // Setting up multer as a middleware to grab files uploads
 const upload = multer({ storage: multer.memoryStorage() });
-
 // Files Filter
 const imgFilter = (
   req: Request,
@@ -20,7 +18,6 @@ const imgFilter = (
     cb(null, false);
   }
 };
-
 const fileFilter = (
   req: Request,
   file: Express.Multer.File,
@@ -46,7 +43,6 @@ const fileFilter = (
     cb(null, false);
   }
 };
-
 // Combine filters
 const uploadIdea = multer({
   storage: multer.memoryStorage(),
@@ -60,10 +56,16 @@ const uploadIdea = multer({
     }
   },
 });
-
 const uploadFilesIdea = uploadIdea.fields([
   { name: "primaryImg", maxCount: 1 },
   { name: "attachement", maxCount: 10 },
 ]);
 
-export { upload, uploadFilesIdea };
+// Avatar
+
+const uploadImage = multer({
+  storage: multer.memoryStorage(),
+  fileFilter: imgFilter,
+}).any();
+
+export { upload, uploadFilesIdea, uploadImage };
