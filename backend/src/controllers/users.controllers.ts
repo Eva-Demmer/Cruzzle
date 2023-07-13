@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import dayjs from "dayjs";
 import jwt, { Secret } from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
@@ -9,10 +10,12 @@ import {
   update,
   updatePassword,
   findActivitiesById,
+  findContributionsById,
 } from "../models/user.model";
 import { verifyPassword } from "../middlewares/auth.middlewares";
 import findByFilter from "../models/userFilter.model";
 import { UserFilterQuery } from "../interfaces/users.interface";
+import "dayjs/locale/fr";
 
 dotenv.config();
 const { JWT_SECRET } = process.env;
@@ -161,6 +164,50 @@ const getActivitiesByUserId = async (req: Request, res: Response) => {
   }
 };
 
+interface FormatedDataItem {
+  id: number;
+  type: string;
+  created_at: Date;
+  title: string;
+}
+
+const getContributionsByUserId = async (req: Request, res: Response) => {
+  const id: number = parseInt(req.params.id, 10);
+  try {
+    const data = await findContributionsById(id);
+    if (data) {
+      const formatedData: FormatedDataItem[] = [];
+      if (data.idea_teams) {
+        data.idea_teams.map((item) =>
+          formatedData.push({ ...item.idea, type: "added" })
+        );
+      }
+      if (data.idea) {
+        data.idea.map((item) =>
+          formatedData.push({ ...item, type: "created" })
+        );
+      }
+      const sortedList = formatedData.sort((a, b) => {
+        const dateA = new Date(dayjs(a.created_at, "DD/MM/YYYY").toDate());
+        const dateB = new Date(dayjs(b.created_at, "DD/MM/YYYY").toDate());
+        if (dateA > dateB) {
+          return -1;
+        }
+        if (dateA < dateB) {
+          return 1;
+        }
+        return 0;
+      });
+      res.status(200).json(sortedList);
+    } else {
+      res.status(404).send("Idea Likes not found");
+    }
+  } catch (error) {
+    console.info(error);
+    res.status(500).send(error);
+  }
+};
+
 export {
   getUsers,
   getUserById,
@@ -170,4 +217,5 @@ export {
   getActivitiesByUserId,
   verifyPasswordUser,
   updatePasswordUser,
+  getContributionsByUserId,
 };

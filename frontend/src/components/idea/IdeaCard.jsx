@@ -36,12 +36,7 @@ export default function IdeaCard({ isMini, idea }) {
   const navigate = useNavigate();
 
   const { user: currentUser } = useContext(UserContext);
-  const {
-    id: userId,
-    firstname,
-    lastname,
-    avatar_url: avatarUrl,
-  } = currentUser;
+  const { id: userId } = currentUser;
   const {
     id,
     title,
@@ -228,8 +223,8 @@ export default function IdeaCard({ isMini, idea }) {
                 >
                   <Avatar
                     key={id}
-                    alt={`${firstname} ${lastname}`}
-                    src={avatarUrl}
+                    alt={`${user.firstname} ${user.lastname}`}
+                    src={user.avatar_url}
                     sx={{ width: 32, height: 32 }}
                   />
                   {ideaTeams.map((a) => (

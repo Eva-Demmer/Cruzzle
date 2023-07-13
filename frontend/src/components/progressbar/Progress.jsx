@@ -41,7 +41,7 @@ function Progress({ heightpx = 4, duration = 2 }) {
   const scrollStyle = {
     margin: 0,
     padding: 0,
-    top: 0,
+    top: -4,
     zIndex: 99,
     backgroundImage:
       "linear-gradient(90.01deg, #B0279B -7.26%, #F9D6FF 100.79%)",

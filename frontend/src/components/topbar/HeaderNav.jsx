@@ -64,8 +64,8 @@ function HeaderNav() {
   ];
 
   return (
-    <>
-      <div className="flex items-center justify-between py-2 px-4 shadow-2 md:px-6 2xl:px-11 bg-primary-800 sm:bg-white">
+    <div className="flex flex-col shadow-2  bg-primary-800 sm:bg-white z-[8000] sticky top-0">
+      <div className="w-full py-2 px-4 flex items-center justify-between md:px-6 2xl:px-11">
         <div className="mx-2">
           {!smallQuery && (
             <IconButton
@@ -229,9 +229,10 @@ function HeaderNav() {
           </div>
         )}
       </div>
-
-      {((!smallQuery && !activeMenu) || smallQuery) && <Progress />}
-    </>
+      {((!smallQuery && !activeMenu) || smallQuery) && (
+        <Progress heightpx={2} />
+      )}
+    </div>
   );
 }
 

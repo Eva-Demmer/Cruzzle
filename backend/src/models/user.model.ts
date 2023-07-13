@@ -76,6 +76,131 @@ const findActivitiesById = async (id: number) => {
   }
 };
 
+const findContributionsById = async (id: number) => {
+  try {
+    const data = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        idea: {
+          select: {
+            id: true,
+            title: true,
+            context: true,
+            favorit: true,
+            user: {
+              select: {
+                id: true,
+                firstname: true,
+                lastname: true,
+                avatar_url: true,
+              },
+            },
+            created_at: true,
+            archived_at: true,
+            deleted_at: true,
+            primary_img: true,
+            views: true,
+            idea_category: {
+              select: {
+                category: {
+                  select: {
+                    id: true,
+                    label: true,
+                    color: true,
+                  },
+                },
+              },
+            },
+            idea_teams: {
+              select: {
+                user_id: true,
+                user: {
+                  select: {
+                    id: true,
+                    firstname: true,
+                    lastname: true,
+                    avatar_url: true,
+                  },
+                },
+              },
+            },
+            _count: {
+              select: {
+                idea_like: true,
+                comment: true,
+                attachment: true,
+                idea_teams: true,
+              },
+            },
+          },
+        },
+        idea_teams: {
+          select: {
+            idea: {
+              select: {
+                id: true,
+                title: true,
+                context: true,
+                favorit: true,
+                user: {
+                  select: {
+                    id: true,
+                    firstname: true,
+                    lastname: true,
+                    avatar_url: true,
+                  },
+                },
+                created_at: true,
+                archived_at: true,
+                deleted_at: true,
+                primary_img: true,
+                views: true,
+                idea_category: {
+                  select: {
+                    category: {
+                      select: {
+                        id: true,
+                        label: true,
+                        color: true,
+                      },
+                    },
+                  },
+                },
+                idea_teams: {
+                  select: {
+                    user_id: true,
+                    user: {
+                      select: {
+                        id: true,
+                        firstname: true,
+                        lastname: true,
+                        avatar_url: true,
+                      },
+                    },
+                  },
+                },
+                _count: {
+                  select: {
+                    idea_like: true,
+                    comment: true,
+                    attachment: true,
+                    idea_teams: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+    return data;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
 const findById = async (id: number) => {
   try {
     const data = await prisma.user.findUnique({
@@ -196,4 +321,5 @@ export {
   update,
   updatePassword,
   findActivitiesById,
+  findContributionsById,
 };
