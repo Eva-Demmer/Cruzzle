@@ -7,7 +7,16 @@ export default function SocketEvents({ setRefresh, setPlayNotificationSound }) {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
+    if (user) {
+      socket.connect();
+    } else {
+      socket.disconnect();
+    }
+  }, [user]);
+
+  useEffect(() => {
     function onConnect() {
+      console.info("addUserId", user.id, socket.id);
       socket.emit("addUserId", user.id);
     }
 
