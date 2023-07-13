@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import socket from "../../config/socket.config";
 import { UserContext } from "../../contexts/UserContext";
 
-export default function SocketEvents({ setRefresh }) {
+export default function SocketEvents({ setRefresh, setPlayNotificationSound }) {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
@@ -14,6 +14,7 @@ export default function SocketEvents({ setRefresh }) {
     function onNewNotification(notification) {
       console.info(notification);
       setRefresh(true);
+      setPlayNotificationSound(true);
     }
 
     socket.on("connect", onConnect);
@@ -30,4 +31,5 @@ export default function SocketEvents({ setRefresh }) {
 
 SocketEvents.propTypes = {
   setRefresh: PropTypes.func.isRequired,
+  setPlayNotificationSound: PropTypes.func.isRequired,
 };

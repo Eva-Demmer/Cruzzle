@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import {
@@ -25,6 +25,7 @@ import {
   deleteOneNotification,
 } from "../../utils/notifications";
 import SocketEvents from "../socket/SocketEvents";
+import NotificationSound from "../../assets/audio/notification-sound.mp3";
 
 export default function NotificationsMenu() {
   const navigate = useNavigate();
@@ -33,6 +34,8 @@ export default function NotificationsMenu() {
   const [notificationList, setNotificationList] = useState([]);
   const [notificationCount, setNotificationCount] = useState(0);
   const [refresh, setRefresh] = useState(false);
+  const [playNotificationSound, setPlayNotificationSound] = useState(false);
+  const audioPlayer = useRef(null);
 
   const open = Boolean(anchorEl);
 
@@ -40,6 +43,7 @@ export default function NotificationsMenu() {
     setAnchorEl(event.currentTarget);
     setRefresh(true);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -91,9 +95,15 @@ export default function NotificationsMenu() {
     }
   }, [notificationList]);
 
+  useEffect(() => {
+    if (playNotificationSound) {
+      audioPlayer.current.play();
+    }
+    setPlayNotificationSound(false);
+  }, [notificationList]);
+
   return (
     <div className="notification-menu">
-      <SocketEvents setRefresh={setRefresh} />
       <Tooltip title="notifications" className="mx-1">
         <IconButton
           onClick={handleClick}
@@ -206,6 +216,13 @@ export default function NotificationsMenu() {
           <MenuItem>No notification</MenuItem>
         )}
       </Menu>
+      <SocketEvents
+        setRefresh={setRefresh}
+        setPlayNotificationSound={setPlayNotificationSound}
+      />
+
+      {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+      <audio className="hidden" ref={audioPlayer} src={NotificationSound} />
     </div>
   );
 }
