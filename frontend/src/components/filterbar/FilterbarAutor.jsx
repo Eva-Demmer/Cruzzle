@@ -1,10 +1,12 @@
 import { useContext } from "react";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 import { MenuItem, FormControl, Select } from "@mui/material";
 import { PencilIcon } from "@heroicons/react/24/outline";
 import { FilterContext } from "../../contexts/FilterContext";
 
 export default function FilterAutor({ isDisable }) {
+  const { t } = useTranslation();
   const { autorSelectionTag, setAutorSelectionTag } = useContext(FilterContext);
 
   const handleChange = (event) => {
@@ -21,9 +23,9 @@ export default function FilterAutor({ isDisable }) {
         onChange={handleChange}
         renderValue={(value) => {
           const textDict = {
-            all: "all autors",
-            currentUserAgency: "my agency",
-            currentUser: "me",
+            all: t("pages.ideas.ideaspage.filterauthor.allauthors"),
+            currentUserAgency: t("pages.ideas.ideaspage.filterauthor.myagency"),
+            currentUser: t("pages.ideas.ideaspage.filterauthor.me"),
           };
           return (
             <>
@@ -33,9 +35,15 @@ export default function FilterAutor({ isDisable }) {
           );
         }}
       >
-        <MenuItem value="all">all autors</MenuItem>
-        <MenuItem value="currentUserAgency">my agency</MenuItem>
-        <MenuItem value="currentUser">me</MenuItem>
+        <MenuItem value="all">
+          {t("pages.ideas.ideaspage.filterauthor.allauthors")}
+        </MenuItem>
+        <MenuItem value="currentUserAgency">
+          {t("pages.ideas.ideaspage.filterauthor.myagency")}
+        </MenuItem>
+        <MenuItem value="currentUser">
+          {t("pages.ideas.ideaspage.filterauthor.me")}
+        </MenuItem>
       </Select>
     </FormControl>
   );

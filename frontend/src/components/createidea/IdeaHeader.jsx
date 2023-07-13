@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useContext, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslation, Trans } from "react-i18next";
 import { TextField, Button, Autocomplete } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { TrashIcon } from "@heroicons/react/24/outline";
@@ -62,10 +62,12 @@ function IdeaHeader() {
       newErrorFiles.push({
         id: 1,
         message: (
-          <>
-            The file <strong>{file.name}</strong> exceeds the maximum allowed
-            size of {formatBytes(maxSizeInKB * 1024)}!
-          </>
+          <Trans i18nKey={t("pages.ideas.ideanew.header.fileserror")}>
+            <>
+              The file <strong>{file.name}</strong> exceeds the maximum allowed
+              size of {formatBytes(maxSizeInKB * 1024)}!
+            </>
+          </Trans>
         ),
       });
     }

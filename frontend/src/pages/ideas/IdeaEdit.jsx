@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Divider } from "@mui/material";
 
 import IdeaEditForm from "../../components/createidea/IdeaEditForm.";
@@ -12,12 +13,15 @@ import IdeaError from "../../components/createidea/IdeaError";
 import IdeaTeam from "../../components/createidea/IdeaTeam";
 
 function IdeaEdit() {
+  const { t } = useTranslation();
   return (
     <div className="w-full py-4 px-4">
       <div className="mb-8" aria-label="Title">
-        <h1 className="text-3xl font-bold my-4">Modify idea</h1>
+        <h1 className="text-3xl font-bold my-4">
+          {t("pages.ideas.ideaedit.title")}
+        </h1>
         <p className="text-base font-normal my-2">
-          Modify idea, add files and pictures
+          {t("pages.ideas.ideaedit.description")}
         </p>
       </div>
       <IdeaFormProvider>

@@ -11,7 +11,9 @@ function IdeaCloud() {
 
   return (
     <div className="my-8" aria-label="Cloud share">
-      <h2 className="text-xl sm:text-2xl font-bold my-4">Cloud share</h2>
+      <h2 className="text-xl sm:text-2xl font-bold my-4">
+        {t("pages.ideas.ideanew.cloud.title")}
+      </h2>
       <Controller
         name="cloudshare"
         control={control}

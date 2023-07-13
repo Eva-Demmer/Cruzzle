@@ -1,10 +1,12 @@
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import { MenuItem, FormControl, Select } from "@mui/material";
 import { EyeIcon } from "@heroicons/react/24/outline";
 import { FilterContext } from "../../contexts/FilterContext";
 
 export default function FilterbarTrending({ isDisable }) {
+  const { t } = useTranslation();
   const { trendingTag, setTrendingTag } = useContext(FilterContext);
 
   const handleChange = (event) => {
@@ -21,10 +23,10 @@ export default function FilterbarTrending({ isDisable }) {
         onChange={handleChange}
         renderValue={(selected) => {
           const textDict = {
-            recent: "recent",
-            view: "viewed",
-            comment: "commented",
-            like: "liked",
+            recent: t("pages.ideas.ideaspage.filterbarTrending.recent"),
+            view: t("pages.ideas.ideaspage.filterbarTrending.viewed"),
+            comment: t("pages.ideas.ideaspage.filterbarTrending.commented"),
+            like: t("pages.ideas.ideaspage.filterbarTrending.liked"),
           };
           return (
             <>
@@ -34,10 +36,18 @@ export default function FilterbarTrending({ isDisable }) {
           );
         }}
       >
-        <MenuItem value="recent">most recent</MenuItem>
-        <MenuItem value="view">most viewed</MenuItem>
-        <MenuItem value="comment">most commented</MenuItem>
-        <MenuItem value="like">most liked</MenuItem>
+        <MenuItem value="recent">
+          {t("pages.ideas.ideaspage.filterbarTrending.values.mostrecent")}
+        </MenuItem>
+        <MenuItem value="view">
+          {t("pages.ideas.ideaspage.filterbarTrending.values.mostviewed")}
+        </MenuItem>
+        <MenuItem value="comment">
+          {t("pages.ideas.ideaspage.filterbarTrending.values.mostcommented")}
+        </MenuItem>
+        <MenuItem value="like">
+          {t("pages.ideas.ideaspage.filterbarTrending.values.mostliked")}
+        </MenuItem>
       </Select>
     </FormControl>
   );
