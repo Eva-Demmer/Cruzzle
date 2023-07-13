@@ -9,6 +9,7 @@ import apiAdminRoles from "../../../services/api.admin.roles";
 import CheckboxUserIsActive from "./CheckboxUserIsActive";
 import TableSelectRole from "./TableSelectRole";
 import ActionIcons from "./ActionIcons";
+import localeText from "../../../locales/datagridlocaletext";
 
 export default function TableOfUsers({ userList, setUpdateList }) {
   const { t } = useTranslation();
@@ -137,6 +138,7 @@ export default function TableOfUsers({ userList, setUpdateList }) {
           toolbar: GridToolbar,
         }}
         disableRowSelectionOnClick
+        localeText={localeText}
       />
     </div>
   );

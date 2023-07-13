@@ -1,10 +1,12 @@
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { Select, FormControl, MenuItem } from "@mui/material";
 import { Square3Stack3DIcon } from "@heroicons/react/24/outline";
 import PropTypes from "prop-types";
 import { FilterCommunityContext } from "../../../contexts/FilterCommunityContext";
 
 function FilterRoles({ canDisable = false, roleFilter }) {
+  const { t } = useTranslation();
   const { filterPanelOpen, roleValue, setRoleValue } = useContext(
     FilterCommunityContext
   );
@@ -39,7 +41,7 @@ function FilterRoles({ canDisable = false, roleFilter }) {
         }}
         renderValue={(value) => {
           const textDict = {
-            all: "All roles",
+            all: t("pages.users.community.filterRole.all"),
             ...(roleFilter &&
               roleFilter.reduce((dict, item) => {
                 const updatedDict = { ...dict };
@@ -55,7 +57,9 @@ function FilterRoles({ canDisable = false, roleFilter }) {
           );
         }}
       >
-        <MenuItem value="all">All roles</MenuItem>
+        <MenuItem value="all">
+          {t("pages.users.community.filterRole.all")}
+        </MenuItem>
         {roleFilter &&
           roleFilter.map((item) => (
             <MenuItem key={item.name} value={item.name}>

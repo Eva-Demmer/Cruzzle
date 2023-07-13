@@ -4,6 +4,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import "dayjs/locale/fr";
 import { FilterContext } from "../../contexts/FilterContext";
+import localeText from "../../locales/datapicker";
 
 function FilterbarDatePicker() {
   const { t, i18n } = useTranslation();
@@ -42,9 +43,7 @@ function FilterbarDatePicker() {
         value={dayjs(publicationDateStart)}
         maxDate={dayjs(publicationDateEnd)}
         onChange={handleChangeStart}
-        localeText={{
-          cancelButtonLabel: t("buttons.cancel"),
-        }}
+        localeText={localeText}
       />
       <DatePicker
         className="filter-date-end min-w-[270px] bg-white"
@@ -55,9 +54,7 @@ function FilterbarDatePicker() {
         minDate={dayjs(publicationDateStart)}
         disableFuture
         onChange={handleChangeEnd}
-        localeText={{
-          cancelButtonLabel: t("buttons.cancel"),
-        }}
+        localeText={localeText}
       />
     </>
   );
