@@ -25,7 +25,6 @@ io.on("connection", (socket) => {
   if (!isNotificationIntervalRunning) {
     listenerNotificationByInterval((tuple) => {
       const [boolValue, notification] = tuple;
-      console.info(tuple);
       if (boolValue) {
         const { idea_author_id: ideaAuthorId } = notification;
         io.to(usersIdDict[ideaAuthorId]).emit("new-notification", notification);
