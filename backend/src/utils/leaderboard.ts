@@ -1,6 +1,6 @@
 import { UserLeaderboard } from "../interfaces/users.interface";
 
-const getUserPonderatedScoreObject = (user: UserLeaderboard) => {
+const calculateLeaderboardScore = (user: UserLeaderboard) => {
   const { _count: count } = user;
   const {
     idea,
@@ -20,4 +20,4 @@ const getUserPonderatedScoreObject = (user: UserLeaderboard) => {
   return sum;
 };
 
-export default getUserPonderatedScoreObject;
+export default calculateLeaderboardScore;

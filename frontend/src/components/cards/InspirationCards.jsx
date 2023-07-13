@@ -11,7 +11,7 @@ import puzzlePieces from "../../assets/dashboard/PuzzlePieces_1.svg";
 import { HalfCircleProgress, pointsNextLevel } from "./HalfCircleProgress";
 import CountAnimation from "../animations/CounterAnimation";
 import { UserContext } from "../../contexts/UserContext";
-import { apiUserLeaderboard } from "../../services/api.users";
+// import { apiUserLeaderboard } from "../../services/api.users";
 import { apiTotalIdeasCount } from "../../services/api.ideas";
 import { apiGetTotalLikesReceivedByUserId } from "../../services/api.ideaLikes";
 import { apiGetTotalCommentsReceivedByUserId } from "../../services/api.comments";
@@ -19,29 +19,29 @@ import { apiGetTotalCommentsReceivedByUserId } from "../../services/api.comments
 function InspirationCards() {
   const { user } = useContext(UserContext);
   const { id } = user;
-  const [leaderboard, setLeaderboard] = useState();
+  // const [leaderboard, setLeaderboard] = useState();
   const [totalLikes, setTotalLikes] = useState(0);
   const [totalComments, setTotalComments] = useState(0);
   const [totalIdeas, setTotalIdeas] = useState(0);
 
   // for the first three days of the month: display loading for users
 
-  // fetch leaderboard
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const leaderboardResponse = await apiUserLeaderboard();
-        console.info("leaderboard data", leaderboardResponse);
-        setLeaderboard(leaderboardResponse.data);
-      } catch (error) {
-        console.error(
-          "An error occurred while fetching the leaderboard",
-          error
-        );
-      }
-    };
-    fetchData();
-  }, []);
+  // // fetch leaderboard
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const leaderboardResponse = await apiUserLeaderboard();
+  //       console.info("leaderboard data", leaderboardResponse);
+  //       setLeaderboard(leaderboardResponse.data);
+  //     } catch (error) {
+  //       console.error(
+  //         "An error occurred while fetching the leaderboard",
+  //         error
+  //       );
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
   // fetch number of total likes and comments received by specific user
   useEffect(() => {
@@ -93,9 +93,8 @@ function InspirationCards() {
           <div className="flex flex-row items-center">
             <img src={medalGold} alt="gold medal" className="h-10" />
             <span className="pl-3 text-secondary-600">abc</span>
-            <span className="pl-3 text-secondary-600">{}</span>
             <span className="pl-3 text-secondary-600">
-              {leaderboard[0].firstname}
+              {/* {leaderboard[0].firstname} */}
             </span>
           </div>
           <Divider variant="middle" className="my-4 mx-0" />

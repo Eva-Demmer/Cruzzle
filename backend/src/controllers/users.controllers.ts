@@ -16,7 +16,7 @@ import {
   UserFilterQuery,
   FormattedUserLeaderboard,
 } from "../interfaces/users.interface";
-import getUserPonderatedScoreObject from "../utils/leaderboard";
+import calculateLeaderboardScore from "../utils/leaderboard";
 
 dotenv.config();
 const { JWT_SECRET } = process.env;
@@ -41,7 +41,7 @@ const getLeaderboard = async (req: Request, res: Response) => {
           const { _count: count, ...rest } = item;
           return {
             ...rest,
-            score: getUserPonderatedScoreObject(item),
+            score: calculateLeaderboardScore(item),
           };
         })
         .sort((a, b) => b.score - a.score)
