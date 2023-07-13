@@ -52,6 +52,7 @@ export default function IdeaCard({ isMini, idea }) {
     deleted_at: deletedAt,
     favorit,
     idea_category: ideaCategory,
+    idea_like: ideaLike,
     _count: count,
     views,
     idea_teams: ideaTeams,
@@ -68,6 +69,7 @@ export default function IdeaCard({ isMini, idea }) {
   }, [smallQuery, mediumQuery, largeQuery]);
 
   const isFavorite = favorit.some((item) => item.user_id === userId);
+  const isLiked = ideaLike && ideaLike.some((item) => item.user_id === userId);
   const isDisabled = archivedAt !== null || deletedAt !== null;
   const incViews = views + 1;
 
@@ -252,6 +254,8 @@ export default function IdeaCard({ isMini, idea }) {
           user={userId}
           id={id}
           isFavorite={isFavorite}
+          isLiked={isLiked}
+          idea={idea}
         />
       )}
     </div>
