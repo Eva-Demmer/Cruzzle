@@ -7,6 +7,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
+import { useTranslation } from "react-i18next";
 import { SliderPicker } from "react-color";
 import { Box } from "@mui/material";
 import CustomChip from "../../styledComponents/CustomChip";
@@ -19,6 +20,7 @@ export default function DialogUpdateColor({
   category,
   setUpdateList,
 }) {
+  const { t } = useTranslation();
   const { setAlertAdminOpen, setAlertAdminMessage } =
     useContext(AlertToastContext);
   const [label, setLabel] = useState(category.label);
@@ -48,7 +50,9 @@ export default function DialogUpdateColor({
         .then((res) => {
           if (res.status === 200) {
             setUpdateList(true);
-            setAlertAdminMessage("Category updated successfully");
+            setAlertAdminMessage(
+              t("pages.adminpannel.categories.alert.success.updatecategory")
+            );
             setAlertAdminOpen(true);
             handleClose();
           } else {
@@ -64,15 +68,16 @@ export default function DialogUpdateColor({
   return (
     <div>
       <Dialog open={openDialog} onClose={handleClose}>
-        <DialogTitle>Edit category</DialogTitle>
+        <DialogTitle>
+          {t("pages.adminpannel.categories.dialogUpdateCategory.title")}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText
             sx={{
               marginBottom: 3,
             }}
           >
-            You are about to edit the label and color of the selected category.
-            Please fill the form below.
+            {t("pages.adminpannel.categories.dialogUpdateCategory.content")}
           </DialogContentText>
 
           <Box
@@ -87,15 +92,21 @@ export default function DialogUpdateColor({
           >
             <TextField
               id="label"
-              label="Label"
+              label={t(
+                "pages.adminpannel.categories.dialogUpdateCategory.textfield.label.label"
+              )}
               type="text"
               variant="standard"
-              placeholder="Enter a label"
+              placeholder={t(
+                "pages.adminpannel.categories.dialogUpdateCategory.textfield.label.placeholder"
+              )}
               value={label}
               error={labelError}
               helperText={
                 labelError
-                  ? "Please enter a word between 2 and 25 letters."
+                  ? t(
+                      "pages.adminpannel.categories.dialogUpdateCategory.textfield.label.helpertext"
+                    )
                   : null
               }
               onChange={handleChangeLabel}
@@ -117,8 +128,8 @@ export default function DialogUpdateColor({
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSubmit}>Save</Button>
+          <Button onClick={handleClose}>{t("buttons.cancel")}</Button>
+          <Button onClick={handleSubmit}>{t("buttons.save")}</Button>
         </DialogActions>
       </Dialog>
     </div>

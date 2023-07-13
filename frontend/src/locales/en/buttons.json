@@ -1,17 +1,21 @@
 {
   "add": "Add",
+  "addcategory": "Add category",
   "addfiles": "Add Files",
+  "addidea": "Add Idea",
+  "adduser": "Add User",
   "agree": "Agree",
   "archive": "Archive",
   "cancel": "Cancel",
   "close": "Close",
+  "confirm": "Confirm",
   "delete": "Delete",
   "download": "Download",
-  "confirm": "Confirm",
   "modify": "Modify",
   "like": "Like",
   "publish": "Publish",
   "unlike": "Unlike",
+  "update": "Update",
   "reset": "Reset",
   "save": "Save"
 }

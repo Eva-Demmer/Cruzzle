@@ -1,24 +1,48 @@
 /* eslint-disable no-underscore-dangle */
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import CustomChip from "../../styledComponents/CustomChip";
 import ActionIcons from "./ActionIcons";
+import datagridlocaletext from "../../../locales/datagridlocaletext";
 
 export default function TableOfCategories({ categoriesList, setUpdateList }) {
+  const { t } = useTranslation();
   const rows = categoriesList;
   const columns = [
-    { field: "label", headerName: "Label", minWidth: 200, flex: 1.75 },
+    {
+      field: "label",
+      headerName: t(
+        "pages.adminpannel.categories.tableOfCategories.columns.title"
+      ),
+      minWidth: 200,
+      flex: 1.75,
+    },
     {
       field: "ideas",
-      headerName: "Use",
-      valueGetter: (params) => `${params.row._count.idea_category} ideas`,
+      headerName: t(
+        "pages.adminpannel.categories.tableOfCategories.columns.use.title"
+      ),
+      valueGetter: (params) =>
+        `${params.row._count.idea_category} ${t(
+          "pages.adminpannel.categories.tableOfCategories.columns.use.render"
+        )}`,
       minWidth: 100,
       flex: 1,
     },
-    { field: "color", headerName: "Color", minWidth: 250, flex: 1 },
+    {
+      field: "color",
+      headerName: t(
+        "pages.adminpannel.categories.tableOfCategories.columns.color"
+      ),
+      minWidth: 250,
+      flex: 1,
+    },
     {
       field: "preview",
-      headerName: "Preview",
+      headerName: t(
+        "pages.adminpannel.categories.tableOfCategories.columns.preview"
+      ),
       renderCell: (params) => {
         return (
           <CustomChip label={params.row.label} colorchoice={params.row.color} />
@@ -30,7 +54,9 @@ export default function TableOfCategories({ categoriesList, setUpdateList }) {
     },
     {
       field: "actions",
-      headerName: "Actions",
+      headerName: t(
+        "pages.adminpannel.categories.tableOfCategories.columns.actions"
+      ),
       renderCell: (params) => {
         return (
           <ActionIcons category={params.row} setUpdateList={setUpdateList} />
@@ -38,7 +64,7 @@ export default function TableOfCategories({ categoriesList, setUpdateList }) {
       },
       minWidth: 100,
       flex: 0.25,
-      align: "center",
+      align: "left",
       sortable: false,
     },
   ];
@@ -53,6 +79,7 @@ export default function TableOfCategories({ categoriesList, setUpdateList }) {
         slots={{
           toolbar: GridToolbar,
         }}
+        localeText={datagridlocaletext}
       />
     </div>
   );

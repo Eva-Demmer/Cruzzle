@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { IconButton, Tooltip } from "@mui/material";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import { apiAdminDeleteCategory } from "../../../services/api.admin.categories";
 import DialogUpdateCategory from "./DialogUpdateCategory";
@@ -8,6 +9,7 @@ import DialogConfirm from "../DialogConfirm";
 import { AlertToastContext } from "../../../contexts/AlertToastContext";
 
 export default function ActionIcons({ category, setUpdateList }) {
+  const { t } = useTranslation();
   const { setAlertAdminOpen, setAlertAdminMessage } =
     useContext(AlertToastContext);
   const [openDialog, setOpenDialog] = useState(false);
@@ -24,7 +26,9 @@ export default function ActionIcons({ category, setUpdateList }) {
       .then((res) => {
         if (res.status === 200) {
           setUpdateList(true);
-          setAlertAdminMessage("Category deleted successfully");
+          setAlertAdminMessage(
+            t("pages.adminpannel.categories.alert.success.delete")
+          );
           setAlertAdminOpen(true);
         } else {
           console.error("Cannot delete category");
@@ -42,13 +46,13 @@ export default function ActionIcons({ category, setUpdateList }) {
 
   return (
     <>
-      <Tooltip title="Edit idea" arrow>
+      <Tooltip title={t("pages.adminpannel.categories.tooltip.edit")} arrow>
         <IconButton onClick={handleEdit}>
           <PencilSquareIcon className="w-4 text-yellow-600" />
         </IconButton>
       </Tooltip>
 
-      <Tooltip title="Delete idea" arrow>
+      <Tooltip title={t("pages.adminpannel.categories.tooltip.delete")} arrow>
         <IconButton onClick={() => setDialConfirmDeleteIsOpen(true)}>
           <TrashIcon className="w-4 text-red-600" />
         </IconButton>
@@ -65,7 +69,9 @@ export default function ActionIcons({ category, setUpdateList }) {
         dialConfirmIsOpen={dialConfirmDeleteIsOpen}
         setDialConfirmIsOpen={setDialConfirmDeleteIsOpen}
         setIsConfirmed={setIsConfirmedDeleteCategory}
-        title={`Deleting category : ${category.label}`}
+        title={`${t("pages.adminpannel.categories.dialogConfirm.title")} : ${
+          category.label
+        }`}
       />
     </>
   );

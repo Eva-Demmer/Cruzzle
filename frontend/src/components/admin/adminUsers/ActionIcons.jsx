@@ -2,25 +2,33 @@ import { useState } from "react";
 import { IconButton, Tooltip } from "@mui/material";
 import { EyeIcon, PencilSquareIcon, KeyIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import DialogResetPassword from "./DialogResetPassword";
 import DialogUpdateUser from "./DialogUpdateUser";
 
 export default function ActionIcons({ user, setUpdateList }) {
+  const { t } = useTranslation();
   const [openDialogPassword, setOpenDialogPassword] = useState(false);
   const [openDialogUpdateUser, setOpenDialogUpdateUser] = useState(false);
 
   return (
     <>
       <Link to={`/users/${user.id}`}>
-        <Tooltip title="Visit user profile" arrow>
+        <Tooltip
+          title={t("pages.adminpannel.users.tableOfUsers.tooltip.visitprofil")}
+          arrow
+        >
           <IconButton className="my-1">
             <EyeIcon className="w-4 text-green-600" />
           </IconButton>
         </Tooltip>
       </Link>
 
-      <Tooltip title="Update user" arrow>
+      <Tooltip
+        title={t("pages.adminpannel.users.tableOfUsers.tooltip.updateuser")}
+        arrow
+      >
         <IconButton
           onClick={() => setOpenDialogUpdateUser(true)}
           className="my-1"
@@ -29,7 +37,12 @@ export default function ActionIcons({ user, setUpdateList }) {
         </IconButton>
       </Tooltip>
 
-      <Tooltip title="Update credentials" arrow>
+      <Tooltip
+        title={t(
+          "pages.adminpannel.users.tableOfUsers.tooltip.updatecredentials"
+        )}
+        arrow
+      >
         <IconButton
           onClick={() => setOpenDialogPassword(true)}
           className="my-1"
