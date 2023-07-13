@@ -23,13 +23,15 @@ const compareLastNotification = async () => {
   let isNewNotification = false;
   try {
     const notification: Notification = await handleNotification();
-    const { notification_id: notificationId } = notification;
+    if (notification) {
+      const { notification_id: notificationId } = notification;
 
-    if (notificationId !== previousNotificationId) {
-      previousNotificationId = notificationId;
-      isNewNotification = true;
-    } else {
-      isNewNotification = false;
+      if (notificationId !== previousNotificationId) {
+        previousNotificationId = notificationId;
+        isNewNotification = true;
+      } else {
+        isNewNotification = false;
+      }
     }
     const notificationTuple: [boolean, Notification] = [
       isNewNotification,

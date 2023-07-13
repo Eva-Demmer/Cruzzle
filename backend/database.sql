@@ -379,9 +379,3 @@ CREATE TABLE `notification_idea` (
   FOREIGN KEY (`idea_id`) REFERENCES `idea` (`id`),
   FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 );
-INSERT INTO `notification_idea` (`idea_id`, `user_id`, `type`)
-VALUES
-  (1, 2, "like"),
-  (1, 2, "comment"),
-  (2, 3, "like"),
-  (2, 4, "like");

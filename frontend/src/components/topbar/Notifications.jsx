@@ -158,9 +158,9 @@ export default function NotificationsMenu() {
                 onClick={handleClickNotification(not.id)}
               >
                 {not.type === "like" ? (
-                  <ChatBubbleBottomCenterIcon className="w-4 h-4 mr-2" />
-                ) : (
                   <HandThumbUpIcon className="w-4 h-4 mr-2" />
+                ) : (
+                  <ChatBubbleBottomCenterIcon className="w-4 h-4 mr-2" />
                 )}
                 {`from ${not.user.firstname} ${not.user.lastname} - ${not.idea.title}`}
                 <span className="text-xs text-gray-500 ml-2 hidden md:inline">{`(${dayjs(
