@@ -99,7 +99,7 @@ function ButtonsIdea() {
   };
 
   return (
-    <div className="flex justify-center mb-2 2xl:flex-col xl:absolute xl:top-20 xl:right-10">
+    <div className="flex justify-center mb-2 xl:flex-col xl:absolute xl:top-20 xl:right-10">
       {!smallQuery && (
         <div className="flex justify-between items-center py-2">
           {userId === userIdea.id && (
