@@ -61,7 +61,7 @@ function TopSectionProfil() {
           <div className="relative ">
             <AvatarUserProfile />
             {isCurrentUserProfile && (
-              <div className="absolute z-[900] left-16 bottom-[-4px]">
+              <div className="absolute z-[30] left-16 bottom-[-4px]">
                 <ModifierButton
                   onClick={() => toggleModal(isOpenAvatar, setIsOpenAvatar)}
                 />
@@ -70,7 +70,7 @@ function TopSectionProfil() {
           </div>
         </div>
         {isCurrentUserProfile && (
-          <div className="absolute z-[900] right-7 bottom-[+20px] md:bottom-[+20px] md:right-5">
+          <div className="absolute z-[30] right-7 bottom-[+20px] md:bottom-[+20px] md:right-5">
             <ModifierButton
               onClick={() => toggleModal(isOpenBanner, setIsOpenBanner)}
             />

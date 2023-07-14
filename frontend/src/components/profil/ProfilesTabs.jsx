@@ -79,7 +79,7 @@ export default function ProfilesTabs() {
       <Box className="my-4">
         <Box
           sx={{ borderBottom: 1, borderColor: "divider" }}
-          className="w-full sticky z-[600] top-[66px] xl:top-[62px] bg-white"
+          className="w-full sticky z-[600] top-[66px] sm:top-[62px] bg-white"
         >
           <Tabs
             value={value}

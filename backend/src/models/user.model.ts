@@ -97,6 +97,13 @@ const findContributionsById = async (id: number) => {
                 avatar_url: true,
               },
             },
+            idea_like: {
+              select: {
+                id: true,
+                user_id: true,
+                idea_id: true,
+              },
+            },
             created_at: true,
             archived_at: true,
             deleted_at: true,
@@ -150,6 +157,13 @@ const findContributionsById = async (id: number) => {
                     firstname: true,
                     lastname: true,
                     avatar_url: true,
+                  },
+                },
+                idea_like: {
+                  select: {
+                    id: true,
+                    user_id: true,
+                    idea_id: true,
                   },
                 },
                 created_at: true,
