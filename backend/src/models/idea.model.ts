@@ -105,6 +105,7 @@ const findById = async (id: number) => {
         id: true,
         title: true,
         context: true,
+        favorit: true,
         user: {
           select: {
             id: true,

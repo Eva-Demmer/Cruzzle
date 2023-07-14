@@ -34,6 +34,7 @@ import AlertToastProvider from "./contexts/AlertToastContext";
 import LanguageProvider from "./contexts/LanguageContext";
 import MenuProvider from "./contexts/MenuContext";
 import FilterProvider from "./contexts/FilterContext";
+import FilterFavoritesProvider from "./contexts/FilterFavoritesContext";
 import ScrollProvider from "./contexts/ScrollContext";
 import IdeaPageProvider from "./contexts/IdeaPageContext";
 import IdeaEdit from "./pages/ideas/IdeaEdit";
@@ -46,7 +47,13 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <Root />,
+    element: (
+      <MenuProvider>
+        <ScrollProvider>
+          <Root />
+        </ScrollProvider>
+      </MenuProvider>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {
@@ -55,11 +62,19 @@ const router = createBrowserRouter([
       },
       {
         path: "ideas/",
-        element: <Ideas />,
+        element: (
+          <FilterProvider>
+            <Ideas />
+          </FilterProvider>
+        ),
       },
       {
         path: "ideas/:id",
-        element: <Idea />,
+        element: (
+          <IdeaPageProvider>
+            <Idea />
+          </IdeaPageProvider>
+        ),
       },
       {
         path: "ideas/:id/edit",
@@ -71,7 +86,11 @@ const router = createBrowserRouter([
       },
       {
         path: "favorites/",
-        element: <Favorits />,
+        element: (
+          <FilterFavoritesProvider>
+            <Favorits />
+          </FilterFavoritesProvider>
+        ),
       },
       {
         path: "users/:id",
@@ -112,17 +131,9 @@ root.render(
       <ThemeProvider theme={themeMui}>
         <UserProvider>
           <AlertToastProvider>
-            <MenuProvider>
-              <LanguageProvider>
-                <FilterProvider>
-                  <ScrollProvider>
-                    <IdeaPageProvider>
-                      <RouterProvider router={router} />
-                    </IdeaPageProvider>
-                  </ScrollProvider>
-                </FilterProvider>
-              </LanguageProvider>
-            </MenuProvider>
+            <LanguageProvider>
+              <RouterProvider router={router} />
+            </LanguageProvider>
           </AlertToastProvider>
         </UserProvider>
       </ThemeProvider>

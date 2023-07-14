@@ -11,6 +11,7 @@ import {
   verifyPasswordUser,
   updatePasswordUser,
   getActivitiesByUserId,
+  getContributionsByUserId,
   getLeaderboard,
 } from "../controllers/users.controllers";
 
@@ -32,7 +33,8 @@ router.use(timeLog);
 router.post("/login", verifyPassword, login);
 router.get("/", getUsers);
 router.get("/filter", getUserByFilter);
-router.get("/activities/:id", getActivitiesByUserId); //
+router.get("/activities/:id", getActivitiesByUserId);
+router.get("/contributions/:id", getContributionsByUserId);
 router.get("/image", getImageHighRes);
 router.get("/leaderboard", getLeaderboard);
 router.get("/:id", getUserById);

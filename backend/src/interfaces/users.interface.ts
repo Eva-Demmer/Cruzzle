@@ -57,6 +57,13 @@ interface UserFilterQuery {
   publicationDateEnd?: string;
 }
 
+interface FormatedDataItem {
+  id: number;
+  type: string;
+  created_at: Date;
+  title: string;
+}
+
 interface UserLeaderboard {
   id?: number;
   firstname: string;
@@ -90,6 +97,7 @@ export {
   UserLoginUpdatedRequest,
   UserFilterQuery,
   UpdatePasswordUser,
+  FormatedDataItem,
   UserLeaderboard,
   FormattedUserLeaderboard,
 };

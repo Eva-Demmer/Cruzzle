@@ -151,7 +151,23 @@ const apiGeActivitiesByUserId = async (id) => {
   try {
     const response = await axios.get(`${url}${userRoute}activities/${id}`);
     if (response.status === 200) {
-      console.info("activities", response.data);
+      return response.data;
+    }
+    throw new Error(`Unexpected response status: ${response.status}`);
+  } catch (error) {
+    if (error.response && error.response.status === 500) {
+      console.error("Internal server error:", error);
+    } else {
+      console.error("Fetch  error:", error);
+    }
+    throw error;
+  }
+};
+
+const apiGeContributionsByUserId = async (id) => {
+  try {
+    const response = await axios.get(`${url}${userRoute}contributions/${id}`);
+    if (response.status === 200) {
       return response.data;
     }
     throw new Error(`Unexpected response status: ${response.status}`);
@@ -176,4 +192,5 @@ export {
   apiUserImageByQuery,
   apiUsersVerifyPasword,
   apiUsersUpdatePasword,
+  apiGeContributionsByUserId,
 };

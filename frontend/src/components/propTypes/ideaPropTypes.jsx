@@ -10,11 +10,6 @@ const positionPropTypes = PropTypes.shape({
   name: PropTypes.string,
 });
 
-const attachmentsPropTypes = PropTypes.shape({
-  id: PropTypes.number,
-  content_url: PropTypes.string,
-});
-
 const agencyPropTypes = PropTypes.shape({
   id: PropTypes.number,
   name: PropTypes.string,
@@ -44,34 +39,26 @@ const ideaPropTypes = PropTypes.shape({
   context: PropTypes.string.isRequired,
   user: userPropTypes,
   created_at: PropTypes.string.isRequired,
-  archived_at: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  deleted_at: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  archived_at: PropTypes.string,
+  deleted_at: PropTypes.string,
   favorite: FavoritPropTypes,
-  goal: PropTypes.string.isRequired,
-  profits: PropTypes.string.isRequired,
-  risks: PropTypes.string.isRequired,
-  cloudshare: PropTypes.string,
   primary_img: PropTypes.string.isRequired,
   views: PropTypes.number.isRequired,
   idea_category: PropTypes.arrayOf(categoryPropTypes).isRequired,
-  attachment: PropTypes.arrayOf(attachmentsPropTypes).isRequired,
   idea_teams: PropTypes.arrayOf(userPropTypes),
   _count: PropTypes.shape({
-    idea_like: PropTypes.number.isRequired,
     comment: PropTypes.number.isRequired,
-    attachment: PropTypes.number.isRequired,
-    idea_teams: PropTypes.number.isRequired,
   }).isRequired,
 });
 
 const IdeasPropTypes = {
-  isMini: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
+  isMini: PropTypes.bool.isRequired,
   ideas: PropTypes.arrayOf(ideaPropTypes).isRequired,
 };
 
 const IdeaPropTypes = {
-  isMini: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
+  isMini: PropTypes.bool.isRequired,
   idea: ideaPropTypes,
 };
 
-export { IdeasPropTypes, IdeaPropTypes };
+export { IdeasPropTypes, IdeaPropTypes, ideaPropTypes };
