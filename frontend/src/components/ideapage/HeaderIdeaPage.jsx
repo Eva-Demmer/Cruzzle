@@ -37,7 +37,7 @@ function HeaderIdeaPage() {
       aria-label="Header Idea Page"
     >
       <div
-        className="flex flex-col lg:flex-row lg:items-center justify-between w-full"
+        className="flex flex-col xl:flex-row xl:items-center justify-between w-full"
         aria-label="Title"
       >
         <div className="flex items-center">
@@ -45,7 +45,7 @@ function HeaderIdeaPage() {
             isArchived={idea.archived_at}
             isDeleted={idea.deleted_at}
           />
-          <h1 className="text-xl md:text-3xl font-bold md:mt-2 lg:my-4 mx-2 p-0 w-auto">
+          <h1 className="text-xl md:text-3xl font-bold md:mt-2 xl:my-4 mx-2 p-0 w-auto">
             {idea.title}
           </h1>
         </div>
@@ -55,11 +55,11 @@ function HeaderIdeaPage() {
         </div>
       </div>
 
-      <div className="flex flex-col w-full md:flex-row" aria-label="Context">
+      <div className="flex flex-col w-full lg:flex-row" aria-label="Context">
         <img
           src={idea.primary_img}
           alt="principal idea"
-          className="w-full h-[214px] object-cover rounded md:w-[280px] md:h-[160px] lg:w-auto lg:min-w-[442px] lg:h-[308px]"
+          className="w-full h-[214px] object-cover rounded md:w-[442px] md:h-[308px]"
         />
         <div className="flex flex-col content-between lg:px-4 md:h-full">
           {idea.idea_category.length > 0 && (

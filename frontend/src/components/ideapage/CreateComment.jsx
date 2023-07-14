@@ -1,8 +1,9 @@
 import { Avatar, TextField, IconButton, Snackbar, Alert } from "@mui/material";
+import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { useContext, useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { UserContext } from "../../contexts/UserContext";
 import {
@@ -11,7 +12,7 @@ import {
 } from "../../services/api.comments";
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
 
-function CreateComment() {
+function CreateComment({ tabValue }) {
   const { t } = useTranslation();
   const { user } = useContext(UserContext);
   const [comment, setComment] = useState();
@@ -21,9 +22,6 @@ function CreateComment() {
   const { setIdea, idea } = useContext(IdeaPageContext);
   const params = useParams();
   const [isFocused, setIsFocused] = useState(false);
-  const location = useLocation();
-
-  const tabStateValue = location.state && location.state.tabStateValue;
 
   const handleFocus = () => {
     setIsFocused(true);
@@ -105,7 +103,7 @@ function CreateComment() {
         />
         <div className="w-full relative p-0" aria-label="comment">
           <TextField
-            autoFocus={tabStateValue ? "true" : "false"}
+            autoFocus={tabValue === 2}
             id="commentUser"
             onChange={(e) => handleChange(e)}
             onFocus={handleFocus}
@@ -153,5 +151,9 @@ function CreateComment() {
     </>
   );
 }
+
+CreateComment.propTypes = {
+  tabValue: PropTypes.number.isRequired,
+};
 
 export default CreateComment;

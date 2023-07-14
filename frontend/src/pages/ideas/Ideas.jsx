@@ -45,7 +45,6 @@ function Ideas() {
     fetchByQuery("/api/ideas/filter", reqItems)
       .then((data) => {
         setFilteredIdeas(data);
-        console.info(data);
       })
       .catch((error) =>
         console.error("error from api.services.fetcherByQuery", error)
@@ -82,19 +81,13 @@ function Ideas() {
         </header>
         <div className="ideas-header flex flex-row ">
           <main className="ideas-main w-full min-[1439px]:w-8/12">
-            {filteredIdeas !== undefined ? (
+            {filteredIdeas && (
               <IdeaDisplayer ideas={filteredIdeas} isMini={false} />
-            ) : (
-              ""
             )}
           </main>
           <aside className="ideas-aside-right w-4/12 hidden pl-4 pr-4 min-[1439px]:inline-block">
             <h3>{t("pages.ideas.ideaspage.tendences")}</h3>
-            {trendIdeas !== undefined ? (
-              <IdeaDisplayer ideas={trendIdeas} isMini="true" />
-            ) : (
-              ""
-            )}
+            {trendIdeas && <IdeaDisplayer ideas={trendIdeas} />}
           </aside>
         </div>
       </div>

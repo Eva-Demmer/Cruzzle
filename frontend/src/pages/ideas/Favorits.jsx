@@ -44,7 +44,6 @@ function Favorits() {
     };
     fetchByQuery("/api/favorits/filter", reqItems)
       .then((data) => {
-        console.info("data", data);
         const favoritArray = [];
         data.map((item) => favoritArray.push(item.idea));
 
@@ -66,10 +65,6 @@ function Favorits() {
     hasAttachment,
     hasNoComment,
   ]);
-
-  useEffect(() => {
-    console.info("trends changed", trendIdeas);
-  }, [favoritesFiltered]);
 
   useEffect(() => {
     fetchAll("/api/ideas/trends")
@@ -101,7 +96,7 @@ function Favorits() {
         </main>
         <aside className="ideas-aside-right w-4/12 hidden pl-4 pr-4 min-[1439px]:inline-block">
           <h3>Trends</h3>
-          {trendIdeas ? <IdeaDisplayer ideas={trendIdeas} isMini="true" /> : ""}
+          {trendIdeas ? <IdeaDisplayer ideas={trendIdeas} /> : ""}
         </aside>
       </div>
     </div>
