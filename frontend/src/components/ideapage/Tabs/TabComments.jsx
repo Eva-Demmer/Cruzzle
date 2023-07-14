@@ -40,7 +40,7 @@ function TabComments({ tabValue, index }) {
   return (
     <div>
       <TabPanel value={tabValue} index={index} className="w-full">
-        {idea.archived_at === null && <CreateComment />}
+        {idea.archived_at === null && <CreateComment tabValue={tabValue} />}
         <div className="flex justify-between items-center mt-4">
           <h3 className="text-xl mb-2">{`${t(
             "pages.ideas.idea.tabsIdea.tabcomments.title"

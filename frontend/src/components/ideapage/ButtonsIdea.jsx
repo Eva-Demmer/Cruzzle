@@ -22,7 +22,7 @@ import {
   apiDeleteIdeaLikesById,
   apiGetIdeaLikesByIdeaId,
 } from "../../services/api.ideaLikes";
-import { lg } from "../../utils/mediaQueries";
+import { xl } from "../../utils/mediaQueries";
 import { apiArchiveIdeas } from "../../services/api.ideas";
 import DialogArchive from "./DialogArchive";
 import DialogModify from "./DialogModify";
@@ -33,7 +33,7 @@ function ButtonsIdea() {
   const { id: userId } = user;
   const { idea, setIdea } = useContext(IdeaPageContext);
   const { user: userIdea } = idea;
-  const smallQuery = useMediaQuery(lg.query);
+  const smallQuery = useMediaQuery(xl.query);
 
   const [openDialogArchive, setOpenDialogArchive] = useState(false);
   const [openDialogModify, setOpenDialogModify] = useState(false);
@@ -99,7 +99,7 @@ function ButtonsIdea() {
   };
 
   return (
-    <div className="flex justify-center mb-2 xl:flex-col xl:absolute xl:top-20 xl:right-10">
+    <div className="flex justify-center mb-2 2xl:flex-col xl:absolute xl:top-20 xl:right-10">
       {!smallQuery && (
         <div className="flex justify-between items-center py-2">
           {userId === userIdea.id && (

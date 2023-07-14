@@ -17,7 +17,6 @@ function TabsIdeaPage() {
 
   useEffect(() => {
     if (location.state && location.state.tabStateValue) {
-      console.info(location.state.tabStateValue);
       setTabValue(parseInt(location.state.tabStateValue, 10));
     }
   }, []);
@@ -57,11 +56,7 @@ function TabsIdeaPage() {
         {/* Insert CONTENT HERE */}
         <TabGeneral tabValue={tabValue} setTabValue={setTabValue} index={0} />
         <TabFiles tabValue={tabValue} index={1} />
-        <TabComments
-          tabStateValue={location.state && location.state.tabStateValue}
-          tabValue={tabValue}
-          index={2}
-        />
+        <TabComments tabValue={tabValue} index={2} />
       </Box>
     </div>
   );

@@ -1,7 +1,7 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+
 import {
   HandThumbUpIcon as HandThumbUpIconOutline,
   PencilIcon,
@@ -13,7 +13,7 @@ import {
   HandThumbUpIcon as HandThumbUpIconSolid,
 } from "@heroicons/react/24/solid";
 import { useMediaQuery } from "react-responsive";
-import { IdeaPropTypes } from "../propTypes/ideaPropTypes";
+import { ideaPropTypes } from "../propTypes/ideaPropTypes";
 
 import {
   apiCreateIdeaLikes,
@@ -22,70 +22,66 @@ import {
 } from "../../services/api.ideaLikes";
 import { postFavorit, deleteFavorit } from "../../services/api.favorits";
 import { sm } from "../../utils/mediaQueries";
-import { apiIdeas } from "../../services/api.ideas";
-import { IdeaPageContext } from "../../contexts/IdeaPageContext";
+import { FilterFavoritesContext } from "../../contexts/FilterFavoritesContext";
+import { UserContext } from "../../contexts/UserContext";
 
 export default function IdeaCardActions({
-  userId,
-  user,
-  id,
   isFavorite,
   isLiked,
-  idea,
+  idea: newIdea,
 }) {
   const [favorite, setFavorite] = useState(isFavorite);
+  const { favoritesFiltered, setFavoritesFiltered } = useContext(
+    FilterFavoritesContext
+  );
   const [liked, setLiked] = useState(isLiked);
+  const [idea, setIdea] = useState(newIdea);
+  const { user } = useContext(UserContext);
+  const location = useLocation();
 
   const smallQuery = useMediaQuery(sm);
-  const { setIdea } = useContext(IdeaPageContext);
-  const navigate = useNavigate();
-
-  const fetchDataAsync = async (ideaId) => {
-    const result = await apiIdeas(ideaId);
-    if (result) {
-      setIdea(result);
-    }
-  };
-
-  const handleClick = async (ideaId, route) => {
-    await fetchDataAsync(ideaId);
-
-    navigate(route, {
-      state: { tabStateValue: 2 },
-    });
-  };
 
   const handleFavoriteClick = () => {
+    if (location.pathname === "/favorites" && favorite) {
+      deleteFavorit(user.id, idea.id, "favorits");
+      const filterredFavorites = favoritesFiltered.filter(
+        (item) => item.id !== idea.id
+      );
+      setFavoritesFiltered(filterredFavorites);
+
+      setFavorite(false);
+    }
+
     if (!favorite) {
-      postFavorit(user, id, "favorits");
+      postFavorit(user.id, idea.id, "favorits");
       setFavorite(true);
     } else {
-      deleteFavorit(user, id, "favorits");
+      deleteFavorit(user.id, idea.id, "favorits");
       setFavorite(false);
     }
   };
 
   const handleClickLike = async () => {
+    const searchLikeUser = idea.idea_like.filter(
+      (item) => item.user_id === user.id
+    );
     try {
-      const getIdeaLikesByIdea = await apiGetIdeaLikesByIdeaId(id);
-
-      if (getIdeaLikesByIdea) {
-        const searchLikeUser = getIdeaLikesByIdea.filter(
-          (item) => item.user_id === user
+      if (searchLikeUser.length > 0) {
+        await apiDeleteIdeaLikesById(searchLikeUser[0].id);
+        const withoutDeletedLike = idea.idea_like.filter(
+          (item) => item.user_id !== user.id
         );
-        if (searchLikeUser.length > 0) {
-          await apiDeleteIdeaLikesById(searchLikeUser[0].id);
-          setLiked(false);
-        } else {
-          await apiCreateIdeaLikes(user, id);
-          setLiked(true);
-        }
-        const { idea_like: ideaLike, ...restOfIdea } = idea;
-        const getAllIdeaLikeByIdea = await apiGetIdeaLikesByIdeaId(id);
+        const { idea_like: ideaLike, ...rest } = idea;
+        setIdea({ idea_like: withoutDeletedLike, ...rest });
+        setLiked(false);
+      } else {
+        await apiCreateIdeaLikes(user.id, idea.id);
+        const ideaLikes = await apiGetIdeaLikesByIdeaId(idea.id);
 
-        if (getAllIdeaLikeByIdea) {
-          setIdea({ ...restOfIdea, idea_like: getAllIdeaLikeByIdea });
-        }
+        const { idea_like: ideaLike, ...rest } = idea;
+        setIdea({ idea_like: ideaLikes, ...rest });
+
+        setLiked(true);
       }
     } catch (error) {
       console.error(error);
@@ -114,7 +110,8 @@ export default function IdeaCardActions({
         )}
         <Link
           className="no-underline w-auto"
-          onClick={() => handleClick(id, `/ideas/${id}`)}
+          to={`/ideas/${idea.id}`}
+          state={{ tabStateValue: 2 }}
         >
           <ChatBubbleOvalLeftEllipsisIcon className="h-6 w-6 text-gray-900 hover:text-primary-900" />
         </Link>
@@ -129,12 +126,8 @@ export default function IdeaCardActions({
             onClick={handleClickLike}
           />
         )}
-        <Link
-          className="no-underline w-auto"
-          to={`/ideas/${id}`}
-          onClick={() => handleClick(id, `/ideas/${id}`)}
-        >
-          {userId === user && (
+        <Link className="no-underline w-auto" to={`/ideas/${idea.id}`}>
+          {user.id === idea.user.id && (
             <PencilIcon className="h-6 w-6 text-gray-900 hover:text-primary-900" />
           )}
         </Link>
@@ -144,11 +137,7 @@ export default function IdeaCardActions({
 }
 
 IdeaCardActions.propTypes = {
-  user: PropTypes.number.isRequired,
-  idea_like: PropTypes.number.isRequired,
-  userId: PropTypes.number.isRequired,
-  id: PropTypes.number.isRequired,
   isFavorite: PropTypes.bool.isRequired,
   isLiked: PropTypes.bool.isRequired,
-  ...IdeaPropTypes,
+  idea: ideaPropTypes.isRequired,
 };
