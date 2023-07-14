@@ -298,9 +298,11 @@ const findLeaderboard = async () => {
 
 export {
   findAll,
+  findActivitiesById,
   findById,
   findByMail,
   update,
+  updateUserImage,
   updatePassword,
   findLeaderboard,
 };

@@ -32,7 +32,7 @@ function InspirationCards() {
   //     try {
   //       const leaderboardResponse = await apiUserLeaderboard();
   //       console.info("leaderboard data", leaderboardResponse);
-  //       setLeaderboard(leaderboardResponse.data);
+  //       setLeaderboard(leaderboardResponse);
   //     } catch (error) {
   //       console.error(
   //         "An error occurred while fetching the leaderboard",
@@ -93,9 +93,9 @@ function InspirationCards() {
           <div className="flex flex-row items-center">
             <img src={medalGold} alt="gold medal" className="h-10" />
             <span className="pl-3 text-secondary-600">abc</span>
-            <span className="pl-3 text-secondary-600">
-              {/* {leaderboard[0].firstname} */}
-            </span>
+            {/* <span className="pl-3 text-secondary-600">
+              {leaderboard[0].firstname}
+            </span> */}
           </div>
           <Divider variant="middle" className="my-4 mx-0" />
           <div className="flex flex-row items-center">

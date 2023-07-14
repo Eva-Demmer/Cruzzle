@@ -56,7 +56,7 @@ const apiUserImageByQuery = async (
 
 // const apiUserLeaderboard = async () => {
 //   try {
-//     const response = await axios.get(`${url}${userRoute}/leaderboard`);
+//     const response = await axios.get(`${url}${userRoute}leaderboard`);
 //     if (response.status === 200) {
 //       return response.data;
 //     }
@@ -65,10 +65,9 @@ const apiUserImageByQuery = async (
 //     if (error.response && error.response.status === 500) {
 //       console.error("Internal server error:", error);
 //     } else {
-//       console.error("Fetch  error:", error);
+//       console.error("Fetch error:", error);
 //     }
 //     throw error;
-//     // Ajouter la redirection (voir pour une fonction dans service qui prend un param "error" afin d'afficher la page erreur)
 //   }
 // };
 
