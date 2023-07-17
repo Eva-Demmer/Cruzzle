@@ -42,6 +42,7 @@ function Favorits() {
       hasAttachment,
       hasNoComment,
     };
+
     fetchByQuery("/api/favorits/filter", reqItems)
       .then((data) => {
         const favoritArray = [];
@@ -66,15 +67,62 @@ function Favorits() {
     hasNoComment,
   ]);
 
-  useEffect(() => {
-    fetchAll("/api/ideas/trends")
-      .then((data) => {
-        setTrendIdeas(data);
-      })
-      .catch((error) =>
-        console.error("error from api.services.fetcherByQuery", error)
+  const getTrendsCategories = () => {
+    const categoriesInFavorites = favoritesFiltered.map(
+      (favorite) => favorite.idea_category
+    );
+    const idsArrayOfCategories = categoriesInFavorites.map((arr) =>
+      arr.map((item) => item.category.id)
+    );
+    const idsOfCategories = idsArrayOfCategories.flat();
+
+    const findMostRepeatedIds = (catIds) => {
+      const idCount = {};
+
+      catIds.forEach((catId) => {
+        if (idCount[catId]) {
+          idCount[catId] += 1;
+        } else {
+          idCount[catId] = 1;
+        }
+      });
+
+      const sortedIds = Object.keys(idCount).sort(
+        (a, b) => idCount[b] - idCount[a]
       );
-  }, []);
+
+      return sortedIds.slice(0, 3);
+    };
+
+    const mostRepeatedIds = findMostRepeatedIds(idsOfCategories);
+    return mostRepeatedIds;
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = getTrendsCategories();
+      const cardArr = [];
+
+      await Promise.all(
+        data.map((id) =>
+          fetchAll(`/api/ideas/trends/${id}`)
+            .then((result) => {
+              cardArr.push(result);
+            })
+            .catch((error) =>
+              console.error("error from api.services.fetcherByQuery", error)
+            )
+        )
+      );
+
+      const uniqueIdeas = [
+        ...new Map(cardArr.map((idea) => [idea.id, idea])).values(),
+      ];
+      setTrendIdeas(uniqueIdeas);
+    };
+
+    fetchData();
+  }, [favoritesFiltered]);
 
   return (
     <div className="ideas-page w-full flex flex-col h-screen">

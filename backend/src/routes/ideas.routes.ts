@@ -8,6 +8,7 @@ import {
   deleteIdeaById,
   archivedIdeaById,
   getIdeasTrends,
+  getIdeasTrendsFavorits,
   updateIdeaById,
   updateIdeaViewById,
 } from "../controllers/ideas.controllers";
@@ -24,6 +25,7 @@ router.use(timeLog);
 router.get("/", getIdeas);
 router.get("/filter", getIdeaByFilter);
 router.get("/trends", getIdeasTrends);
+router.get("/trends/:id", getIdeasTrendsFavorits);
 
 router.get("/:id", getIdeaById);
 router.get("/:userId/count", getIdeasCreatedToday);
