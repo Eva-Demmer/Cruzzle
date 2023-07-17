@@ -1,11 +1,11 @@
-import axios from "axios";
+import Axios from "../config/axios.config";
 
 const url = import.meta.env.VITE_BACKEND_URL;
 const route = "/api/agencies/";
 
 const apiAgencies = async () => {
   try {
-    const response = await axios.get(`${url}${route}`);
+    const response = await Axios.get(`${url}${route}`);
     if (response.status === 200) {
       return response.data;
     }

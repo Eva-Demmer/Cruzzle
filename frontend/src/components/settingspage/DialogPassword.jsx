@@ -17,7 +17,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 import { apiUsersUpdatePasword } from "../../services/api.users";
-import { Axios } from "../../config/axios.config";
+import Axios from "../../config/axios.config";
 import AlertOnSave from "../createidea/AlertOnSave";
 
 function DialogPassword({ open, onClose }) {

@@ -1,11 +1,11 @@
-import axios from "axios";
+import Axios from "../config/axios.config";
 
 const url = import.meta.env.VITE_BACKEND_URL;
 const userRoute = "/api/categories/";
 
 const apiCategories = async (route = "") => {
   try {
-    const response = await axios.get(`${url}${userRoute}${route}`);
+    const response = await Axios.get(`${url}${userRoute}${route}`);
     if (response.status === 200) {
       return response.data;
     }
