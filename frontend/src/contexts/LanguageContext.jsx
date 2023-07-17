@@ -1,4 +1,7 @@
 import { createContext, useMemo, useState } from "react";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import "dayjs/locale/fr";
 import PropTypes from "prop-types";
 
 export const LanguageContext = createContext({});
@@ -13,7 +16,9 @@ function LanguageProvider({ children }) {
 
   return (
     <LanguageContext.Provider value={langues}>
-      {children}
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={language}>
+        {children}
+      </LocalizationProvider>
     </LanguageContext.Provider>
   );
 }

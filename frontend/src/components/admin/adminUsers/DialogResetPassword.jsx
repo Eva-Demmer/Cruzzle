@@ -7,6 +7,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useTranslation, Trans } from "react-i18next";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
@@ -20,10 +21,12 @@ export default function DialogResetPassword({
   user,
   setUpdateList,
 }) {
+  const { t } = useTranslation();
   const { setAlertAdminOpen, setAlertAdminMessage } =
     useContext(AlertToastContext);
 
   // Fields values
+  const { firstname, lastname } = user;
   const [email, setEmail] = useState(user.mail);
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
@@ -98,7 +101,11 @@ export default function DialogResetPassword({
         .then((res) => {
           if (res.status === 200) {
             setUpdateList(true);
-            setAlertAdminMessage("User credentials updated successfully");
+            setAlertAdminMessage(
+              t(
+                "pages.adminpannel.users.tableOfUsers.dialogResetPassword.alert.success.message"
+              )
+            );
             setAlertAdminOpen(true);
             handleClose();
           } else {
@@ -108,7 +115,11 @@ export default function DialogResetPassword({
         .catch((err) => {
           if (err.response.status === 409) {
             setEmailError(true);
-            setEmailErrorMessage("Email not available");
+            setEmailErrorMessage(
+              t(
+                "pages.adminpannel.users.tableOfUsers.dialogResetPassword.alert.error.message"
+              )
+            );
           } else {
             console.error("error updating user", err);
           }
@@ -119,24 +130,37 @@ export default function DialogResetPassword({
   return (
     <div>
       <Dialog open={openDialogPassword} onClose={handleClose}>
-        <DialogTitle>{`Update credentials for ${user.firstname} ${user.lastname}`}</DialogTitle>
+        <DialogTitle>
+          <Trans
+            i18nKey="pages.adminpannel.users.tableOfUsers.dialogResetPassword.title"
+            firstname={firstname}
+            lastname={lastname}
+          >
+            Update credentials for {{ firstname }} {{ lastname }}
+          </Trans>
+        </DialogTitle>
         <DialogContent>
           <DialogContentText
             sx={{
               marginBottom: 3,
             }}
           >
-            This action will remove the user's current login information and
-            generate new credentials.
+            {t(
+              "pages.adminpannel.users.tableOfUsers.dialogResetPassword.content"
+            )}
           </DialogContentText>
 
           <TextField
             id="name"
-            label="Email Address"
+            label={t(
+              "pages.adminpannel.users.tableOfUsers.dialogResetPassword.textfield.email.label"
+            )}
             type="email"
             fullWidth
             variant="standard"
-            placeholder="Please enter your email address"
+            placeholder={t(
+              "pages.adminpannel.users.tableOfUsers.dialogResetPassword.textfield.email.placeholder"
+            )}
             value={email}
             error={emailError}
             helperText={emailError ? emailErroressage : null}
@@ -149,12 +173,22 @@ export default function DialogResetPassword({
 
           <TextField
             id="password-input"
-            label="Password"
+            label={t(
+              "pages.adminpannel.users.tableOfUsers.dialogResetPassword.textfield.password.label"
+            )}
             fullWidth
             variant="standard"
-            placeholder="Enter your password"
+            placeholder={t(
+              "pages.adminpannel.users.tableOfUsers.dialogResetPassword.textfield.password.placeholder"
+            )}
             error={passwordError}
-            helperText={passwordError ? "Incorrect entry." : null}
+            helperText={
+              passwordError
+                ? t(
+                    "pages.adminpannel.users.tableOfUsers.dialogResetPassword.textfield.password.helpertext"
+                  )
+                : null
+            }
             value={password}
             onChange={handleChangePassword}
             type={showPassword ? "text" : "password"}
@@ -181,11 +215,15 @@ export default function DialogResetPassword({
             id="password-confirmation-input"
             fullWidth
             variant="standard"
-            placeholder="Confirm your password"
+            placeholder={t(
+              "pages.adminpannel.users.tableOfUsers.dialogResetPassword.textfield.passwordConfirm.placeholder"
+            )}
             error={passwordConfirmationError}
             helperText={
               passwordConfirmationError
-                ? "The passwords entered do not match."
+                ? t(
+                    "pages.adminpannel.users.tableOfUsers.dialogResetPassword.textfield.passwordConfirm.helpertext"
+                  )
                 : null
             }
             value={passwordConfirmation}
@@ -214,8 +252,8 @@ export default function DialogResetPassword({
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSubmit}>Update</Button>
+          <Button onClick={handleClose}>{t("buttons.cancel")}</Button>
+          <Button onClick={handleSubmit}>{t("buttons.update")}</Button>
         </DialogActions>
       </Dialog>
     </div>

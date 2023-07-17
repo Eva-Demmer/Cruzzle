@@ -1,10 +1,12 @@
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { Select, FormControl, MenuItem } from "@mui/material";
 import { MapPinIcon } from "@heroicons/react/24/outline";
 import PropTypes from "prop-types";
 import { FilterCommunityContext } from "../../../contexts/FilterCommunityContext";
 
 function FilterLocations({ canDisable = false, locationFilter }) {
+  const { t } = useTranslation();
   const { filterPanelOpen, setLocationValue, locationValue } = useContext(
     FilterCommunityContext
   );
@@ -31,7 +33,7 @@ function FilterLocations({ canDisable = false, locationFilter }) {
           );
           let displayValue = "";
           if (value === "all") {
-            displayValue = "All locations";
+            displayValue = t("pages.users.community.filterLocation.all");
           } else if (selectedMenuItem) {
             displayValue = selectedMenuItem.country;
           }
@@ -43,7 +45,9 @@ function FilterLocations({ canDisable = false, locationFilter }) {
           );
         }}
       >
-        <MenuItem value="all">All locations</MenuItem>
+        <MenuItem value="all">
+          {t("pages.users.community.filterLocation.all")}
+        </MenuItem>
         {locationFilter &&
           locationFilter.map((item) => (
             <MenuItem key={item.id} value={item.country}>

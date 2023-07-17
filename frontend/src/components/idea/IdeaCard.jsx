@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { useTranslation } from "react-i18next";
 import React, { useState, useContext, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -20,6 +21,7 @@ import { IdeaPropTypes } from "../propTypes/ideaPropTypes";
 import { apiUpdateIdeaView } from "../../services/api.ideas";
 
 export default function IdeaCard({ isMini, idea }) {
+  const { t, i18n } = useTranslation();
   const [avatarGroupWidth, setAvatarGroupWidth] = useState();
   const [containerWidth, setContainerWidth] = useState();
 
@@ -46,19 +48,21 @@ export default function IdeaCard({ isMini, idea }) {
     id,
     title,
     context,
-    user,
     created_at: createdAt,
     archived_at: archivedAt,
     deleted_at: deletedAt,
     favorit,
     idea_category: ideaCategory,
+    idea_like: ideaLike,
     _count: count,
     views,
     idea_teams: ideaTeams,
     primary_img: primaryImg,
   } = idea;
 
-  const date = dayjs(createdAt).format("DD/MM/YYYY");
+  const date = dayjs(createdAt)
+    .locale(i18n.language)
+    .format(t("pages.ideas.ideaspage.dateFormats.short"));
 
   useEffect(() => {
     if (avatarGroupRef.current && containerRef.current) {
@@ -67,7 +71,8 @@ export default function IdeaCard({ isMini, idea }) {
     }
   }, [smallQuery, mediumQuery, largeQuery]);
 
-  const isFavorite = favorit.some((item) => item.user_id === userId);
+  const isFavorite = favorit && favorit.some((item) => item.user_id === userId);
+  const isLiked = ideaLike && ideaLike.some((item) => item.user_id === userId);
   const isDisabled = archivedAt !== null || deletedAt !== null;
   const incViews = views + 1;
 
@@ -191,13 +196,21 @@ export default function IdeaCard({ isMini, idea }) {
           {!isMini && (
             <div className="flex items-center mt-6 sm:mt-4 text-gray-400 ">
               <div className="hidden text-sm md:flex flex-1">
-                <span className="mr-1">Date: </span>
+                <span className="mr-1">
+                  {t("pages.ideas.ideaspage.ideacard.date")}:
+                </span>
                 <span className="font-bold">{date}</span>
               </div>
               <Stack direction="row" className="items-center flex-1">
-                <span className="text-sm mr-1">Status: </span>
+                <span className="text-sm mr-1">
+                  {t("pages.ideas.ideaspage.ideacard.status.title")}:
+                </span>
                 <Chip
-                  label={archivedAt || deletedAt ? "Closed" : "In progress"}
+                  label={
+                    archivedAt || deletedAt
+                      ? t("pages.ideas.ideaspage.ideacard.status.close")
+                      : t("pages.ideas.ideaspage.ideacard.status.inprogress")
+                  }
                   size="small"
                   variant="filled"
                   className={
@@ -207,14 +220,17 @@ export default function IdeaCard({ isMini, idea }) {
               </Stack>
               <div className="text-sm">
                 <span className="font-bold mr-1">{count.comment}</span>
-                <span>replies</span>
+                <span>{t("pages.ideas.ideaspage.ideacard.replies")}</span>
               </div>
               <Stack
                 direction="row"
                 className="hidden items-center lg:flex flex-1 justify-end"
               >
                 <span className="text-sm mr-1">
-                  {ideaTeams.length ? "Team: " : "Author: "}
+                  {ideaTeams.length
+                    ? t("pages.ideas.ideaspage.ideacard.team")
+                    : t("pages.ideas.ideaspage.ideacard.author")}
+                  :{" "}
                 </span>
                 <AvatarGroup
                   max={4}
@@ -248,10 +264,9 @@ export default function IdeaCard({ isMini, idea }) {
       </Link>
       {!isMini && !isDisabled && (
         <IdeaCardActions
-          userId={user.id}
-          user={userId}
-          id={id}
           isFavorite={isFavorite}
+          isLiked={isLiked}
+          idea={idea}
         />
       )}
     </div>

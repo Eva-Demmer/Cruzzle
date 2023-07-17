@@ -2,7 +2,13 @@ import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 
-export default function Modal({ isOpen, onClose, onSave, children }) {
+export default function Modal({
+  saveButton,
+  isOpen,
+  onClose,
+  onSave,
+  children,
+}) {
   if (!isOpen) return null;
 
   const globalOverlay = useRef();
@@ -28,26 +34,28 @@ export default function Modal({ isOpen, onClose, onSave, children }) {
         <div className="flex flex-col gap-4 px-2 pt-8 pb-8 sm:px-8 sm:pt-8 sm:pb-10">
           {children}
         </div>
-        <div className="flex gap-6 justify-center py-4 bg-white drop-shadow-top sticky bottom-0 z-[100] sm:py-6">
+        <div className="flex gap-6 justify-center py-4 bg-white border-1 border-solid border-gray-100 drop-shadow-top sticky bottom-0 z-[100] sm:py-6">
+          {saveButton && (
+            <Button
+              className="rounded-3xl"
+              disableElevation
+              variant="contained"
+              sx={{ width: "125px" }}
+              onClick={onSave}
+            >
+              Save
+            </Button>
+          )}
           <Button
+            className="rounded-3xl"
             ref={closeButton}
             disableElevation
-            variant="text"
-            className="rounded-3xl"
-            color="error"
+            color="primary"
+            variant="outlined"
             sx={{ width: "125px" }}
             onClick={handleClose}
           >
-            Cancel
-          </Button>
-          <Button
-            disableElevation
-            variant="contained"
-            className="rounded-3xl"
-            sx={{ width: "125px" }}
-            onClick={onSave}
-          >
-            Save
+            Close
           </Button>
         </div>
       </div>
@@ -56,8 +64,16 @@ export default function Modal({ isOpen, onClose, onSave, children }) {
 }
 
 Modal.propTypes = {
+  saveButton: PropTypes.bool,
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
+  onSave: PropTypes.func,
   children: PropTypes.node.isRequired,
+};
+
+Modal.defaultProps = {
+  saveButton: true,
+  onSave: () => {
+    console.info("Save button clicked");
+  },
 };

@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useContext, useEffect, useState } from "react";
+import { useTranslation, Trans } from "react-i18next";
 import { TextField, Button, Autocomplete } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { TrashIcon } from "@heroicons/react/24/outline";
@@ -15,6 +16,7 @@ import addPicture from "../../assets/idea/addpicture.svg";
 import apiCategories from "../../services/api.categories";
 
 function IdeaHeader() {
+  const { t } = useTranslation();
   const [categoriesApi, setCategoriesApi] = useState([]);
 
   const {
@@ -60,10 +62,12 @@ function IdeaHeader() {
       newErrorFiles.push({
         id: 1,
         message: (
-          <>
-            The file <strong>{file.name}</strong> exceeds the maximum allowed
-            size of {formatBytes(maxSizeInKB * 1024)}!
-          </>
+          <Trans i18nKey={t("pages.ideas.ideanew.header.fileserror")}>
+            <>
+              The file <strong>{file.name}</strong> exceeds the maximum allowed
+              size of {formatBytes(maxSizeInKB * 1024)}!
+            </>
+          </Trans>
         ),
       });
     }
@@ -89,7 +93,9 @@ function IdeaHeader() {
 
   return (
     <div className="sm:my-8" aria-label="Header">
-      <h2 className="text-xl sm:text-2xl font-bold my-4">Header</h2>
+      <h2 className="text-xl sm:text-2xl font-bold my-4">
+        {t("pages.ideas.ideanew.header.title")}
+      </h2>
       <Controller
         name="title"
         control={control}
@@ -98,8 +104,8 @@ function IdeaHeader() {
           <TextField
             required
             id="title"
-            label="Title"
-            placeholder="Title of idea"
+            label={t("pages.ideas.ideanew.textfield.title.label")}
+            placeholder={t("pages.ideas.ideanew.textfield.title.placeholder")}
             className="w-full lg:w-[720px] my-2"
             InputLabelProps={{ shrink: true }}
             inputProps={{ maxLength: 255 }}
@@ -132,7 +138,7 @@ function IdeaHeader() {
                 }}
                 value={value}
               >
-                ADD
+                {t("buttons.add")}
               </UploadButton>
             )}
           />
@@ -146,7 +152,7 @@ function IdeaHeader() {
               setPrimaryImg(null);
             }}
           >
-            DELETE
+            {t("buttons.delete")}
           </Button>
         </div>
       </div>
@@ -157,14 +163,14 @@ function IdeaHeader() {
         render={({ field: { onChange, value } }) => (
           <TextField
             id="context"
-            label="Context"
+            label={t("pages.ideas.ideanew.textfield.context.label")}
             required
             multiline
             rows={4}
             defaultValue={value}
             onChange={onChange}
             inputProps={{ maxLength: 255 }}
-            placeholder="Leave a few words"
+            placeholder={t("pages.ideas.ideanew.textfield.context.placeholder")}
             className="w-full lg:w-[720px] my-4"
             InputLabelProps={{ shrink: true }}
           />
@@ -196,8 +202,10 @@ function IdeaHeader() {
               {...params}
               id="titleIdea"
               required={valueCategories.length === 0}
-              label="Categories"
-              placeholder="Select category or categories"
+              label={t("pages.ideas.ideanew.textfield.categories.label")}
+              placeholder={t(
+                "pages.ideas.ideanew.textfield.categories.placeholder"
+              )}
               InputLabelProps={{ shrink: true }}
             />
           )}

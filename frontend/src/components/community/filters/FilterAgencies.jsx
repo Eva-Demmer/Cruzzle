@@ -1,10 +1,12 @@
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { Select, FormControl, MenuItem } from "@mui/material";
 import { BuildingOffice2Icon } from "@heroicons/react/24/outline";
 import PropTypes from "prop-types";
 import { FilterCommunityContext } from "../../../contexts/FilterCommunityContext";
 
 function FilterAgencies({ canDisable = false, agenciesFilter }) {
+  const { t } = useTranslation();
   const { filterPanelOpen, agenciesValue, setAgenciesValue } = useContext(
     FilterCommunityContext
   );
@@ -31,7 +33,7 @@ function FilterAgencies({ canDisable = false, agenciesFilter }) {
           );
           let displayValue = "";
           if (value === 0) {
-            displayValue = "All agencies";
+            displayValue = t("pages.users.community.filterAgencies.all");
           } else if (selectedMenuItem) {
             displayValue = selectedMenuItem.name;
           }
@@ -43,7 +45,9 @@ function FilterAgencies({ canDisable = false, agenciesFilter }) {
           );
         }}
       >
-        <MenuItem value={0}>All agencies</MenuItem>
+        <MenuItem value={0}>
+          {t("pages.users.community.filterAgencies.all")}
+        </MenuItem>
         {agenciesFilter &&
           agenciesFilter.map((item) => (
             <MenuItem key={item.id} value={item.id}>

@@ -317,7 +317,6 @@ CREATE TABLE `idea_teams` (
 );
 INSERT INTO `idea_teams` (`idea_id`, `user_id`)
 VALUES
-  (1, 1),
   (1, 2),
   (1, 3),
   (1, 4),

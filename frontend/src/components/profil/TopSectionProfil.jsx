@@ -5,11 +5,13 @@ import {
   PencilSquareIcon,
   BriefcaseIcon,
 } from "@heroicons/react/24/outline";
-import { Button } from "@mui/material";
+import { Button, Snackbar, Alert } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 
 import { sm } from "../../utils/mediaQueries";
+
+import ModalEditImage from "./ModalEditImage";
 import ModifierButton from "./ModifierButton";
 import AvatarUserProfile from "../avatar/AvatarUserProfile";
 import ModalEditProfil from "./ModalEditProfil";
@@ -23,10 +25,25 @@ function TopSectionProfil() {
   const isCurrentUserProfile =
     parseInt(id, 10) === parseInt(currentUser.id, 10);
   const smallQuery = useMediaQuery(sm);
+
+  const [isOpenAvatar, setIsOpenAvatar] = useState(false);
+  const [isOpenBanner, setIsOpenBanner] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const [blobAvatar, setBloblobAvatar] = useState(null);
+  const [blobBanner, setBloblobBanner] = useState(null);
+
+  const [alert, setAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(false);
+  const [alertSeverity, setAlertSeverity] = useState(null);
+
+  const handleAlert = () => {
+    setAlert(!alert);
+  };
+
   const {
     firstname,
     lastname,
+    avatar_url: avatarUrl,
     banner_url: bannerUrl,
     agency: { name: agencyName },
     position: { name: positionName },
@@ -44,15 +61,19 @@ function TopSectionProfil() {
           <div className="relative ">
             <AvatarUserProfile />
             {isCurrentUserProfile && (
-              <div className="absolute left-16 bottom-[-4px]">
-                <ModifierButton />
+              <div className="absolute z-[30] left-16 bottom-[-4px]">
+                <ModifierButton
+                  onClick={() => toggleModal(isOpenAvatar, setIsOpenAvatar)}
+                />
               </div>
             )}
           </div>
         </div>
         {isCurrentUserProfile && (
-          <div className="absolute right-7 bottom-[+20px] md:bottom-[+20px] md:right-5">
-            <ModifierButton />
+          <div className="absolute z-[30] right-7 bottom-[+20px] md:bottom-[+20px] md:right-5">
+            <ModifierButton
+              onClick={() => toggleModal(isOpenBanner, setIsOpenBanner)}
+            />
           </div>
         )}
         {isCurrentUserProfile && smallQuery && (
@@ -68,7 +89,7 @@ function TopSectionProfil() {
           </Button>
         )}
         <div
-          className="w-full h-64 bg-cover bg-center"
+          className="w-full h-56 bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${bannerUrl})`,
           }}
@@ -116,10 +137,56 @@ function TopSectionProfil() {
           </div>
         )}
       </div>
-      <ModalEditProfil
-        open={openEdit}
-        close={() => toggleModal(openEdit, setOpenEdit)}
-      />
+      {isOpenAvatar && (
+        <ModalEditImage
+          handleAlert={handleAlert}
+          setAlertSeverity={setAlertSeverity}
+          setAlertMessage={setAlertMessage}
+          isOpen={isOpenAvatar}
+          setIsOpen={setIsOpenAvatar}
+          src={avatarUrl}
+          onClose={() => toggleModal(isOpenAvatar, setIsOpenAvatar)}
+          blobImg={blobAvatar}
+          setBlobImg={setBloblobAvatar}
+          fieldName="avatar"
+          width="160"
+          height="160"
+          radius="150"
+        />
+      )}
+      {isOpenBanner && (
+        <ModalEditImage
+          handleAlert={handleAlert}
+          setAlertSeverity={setAlertSeverity}
+          setAlertMessage={setAlertMessage}
+          isOpen={isOpenBanner}
+          setIsOpen={setIsOpenBanner}
+          src={bannerUrl}
+          onClose={() => toggleModal(isOpenBanner, setIsOpenBanner)}
+          blobImg={blobBanner}
+          setBlobImg={setBloblobBanner}
+          fieldName="banner"
+          width="1136"
+          height="356"
+          radius="0"
+        />
+      )}
+      {openEdit && (
+        <ModalEditProfil
+          open={openEdit}
+          close={() => toggleModal(openEdit, setOpenEdit)}
+        />
+      )}
+      <Snackbar
+        open={alert}
+        autoHideDuration={3000}
+        onClose={handleAlert}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert variant="filled" severity={alertSeverity} onClose={handleAlert}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

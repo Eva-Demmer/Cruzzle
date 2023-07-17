@@ -2,9 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { StyledEngineProvider, ThemeProvider } from "@mui/material";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import "dayjs/locale/fr";
+
 import "./config/i18n";
 
 import UserProvider from "./contexts/UserContext";
@@ -36,6 +34,7 @@ import AlertToastProvider from "./contexts/AlertToastContext";
 import LanguageProvider from "./contexts/LanguageContext";
 import MenuProvider from "./contexts/MenuContext";
 import FilterProvider from "./contexts/FilterContext";
+import FilterFavoritesProvider from "./contexts/FilterFavoritesContext";
 import ScrollProvider from "./contexts/ScrollContext";
 import IdeaPageProvider from "./contexts/IdeaPageContext";
 import IdeaEdit from "./pages/ideas/IdeaEdit";
@@ -48,7 +47,13 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <Root />,
+    element: (
+      <MenuProvider>
+        <ScrollProvider>
+          <Root />
+        </ScrollProvider>
+      </MenuProvider>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {
@@ -57,11 +62,19 @@ const router = createBrowserRouter([
       },
       {
         path: "ideas/",
-        element: <Ideas />,
+        element: (
+          <FilterProvider>
+            <Ideas />
+          </FilterProvider>
+        ),
       },
       {
         path: "ideas/:id",
-        element: <Idea />,
+        element: (
+          <IdeaPageProvider>
+            <Idea />
+          </IdeaPageProvider>
+        ),
       },
       {
         path: "ideas/:id/edit",
@@ -73,7 +86,11 @@ const router = createBrowserRouter([
       },
       {
         path: "favorites/",
-        element: <Favorits />,
+        element: (
+          <FilterFavoritesProvider>
+            <Favorits />
+          </FilterFavoritesProvider>
+        ),
       },
       {
         path: "users/:id",
@@ -114,22 +131,9 @@ root.render(
       <ThemeProvider theme={themeMui}>
         <UserProvider>
           <AlertToastProvider>
-            <MenuProvider>
-              <LanguageProvider>
-                <FilterProvider>
-                  <ScrollProvider>
-                    <LocalizationProvider
-                      dateAdapter={AdapterDayjs}
-                      adapterLocale="fr"
-                    >
-                      <IdeaPageProvider>
-                        <RouterProvider router={router} />
-                      </IdeaPageProvider>
-                    </LocalizationProvider>
-                  </ScrollProvider>
-                </FilterProvider>
-              </LanguageProvider>
-            </MenuProvider>
+            <LanguageProvider>
+              <RouterProvider router={router} />
+            </LanguageProvider>
           </AlertToastProvider>
         </UserProvider>
       </ThemeProvider>

@@ -11,6 +11,7 @@ import { UserProfileContext } from "../../contexts/UserProfile";
 import PuzzlesTab from "./puzzles/PuzzlesTab";
 import { getUserPuzzlePercentageAchievementObject } from "../../utils/gamification";
 import ActivityTab from "./ActivityTab";
+import ContributionsTabs from "./ContributionsTabs";
 
 export default function ProfilesTabs() {
   const { user } = useContext(UserProfileContext);
@@ -75,12 +76,17 @@ export default function ProfilesTabs() {
 
   return (
     <div className="my-8" aria-label="Context">
-      <Box className="my-4 w-full">
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+      <Box className="my-4">
+        <Box
+          sx={{ borderBottom: 1, borderColor: "divider" }}
+          className="w-full sticky z-[600] top-[66px] sm:top-[62px] bg-white"
+        >
           <Tabs
             value={value}
             onChange={handleChange}
             aria-label="basic tabs example"
+            scrollButtons="auto"
+            variant="scrollable"
           >
             <Tab label="General" {...AllyProps(0)} />
             <Tab label="Activity" {...AllyProps(1)} />
@@ -136,7 +142,7 @@ export default function ProfilesTabs() {
           <ActivityTab />
         </TabPanel>
         <TabPanel value={value} index={2} className="w-full">
-          à remplir
+          <ContributionsTabs />
         </TabPanel>
         <TabPanel value={value} index={3} className="w-full">
           <PuzzlesTab />

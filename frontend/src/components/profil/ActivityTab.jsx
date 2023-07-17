@@ -98,13 +98,6 @@ export default function ActivityTab() {
                       <ListItemAvatar>
                         <Avatar alt="avatar user" src={user.avatar_url} />
                       </ListItemAvatar>
-                      {index !== sortedList.length - 1 && (
-                        <Divider
-                          orientation="vertical"
-                          variant="middle"
-                          className="h-7 absolute left-9 top-14 z-10"
-                        />
-                      )}
                     </div>
                     <div className="flex items-center">
                       <p className="text-base text-secondary-600">

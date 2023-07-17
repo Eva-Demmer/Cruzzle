@@ -1,12 +1,14 @@
 import PropTypes from "prop-types";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { IdeaFormContext } from "../../contexts/IdeaFormContext";
 import { apiIdeasNew } from "../../services/api.ideas";
 import AlertOnSave from "./AlertOnSave";
 
 function IdeaForm({ children }) {
+  const { t } = useTranslation();
   const { handleSubmit, filesAttachment, teamSelect, valueCategories } =
     useContext(IdeaFormContext);
 
@@ -59,12 +61,12 @@ function IdeaForm({ children }) {
 
       if (newIdea) {
         setIdIdea(newIdea.id);
-        setAlertMessage("Idea updated successfully.");
-        setAlertTitle("Idea updated");
+        setAlertMessage(t("pages.ideas.ideanew.alert.success.message"));
+        setAlertTitle(t("pages.ideas.ideanew.alert.success.title"));
         setAlertOpen(true);
       } else {
-        setAlertMessage("Failed to create idea. Please try again.");
-        setAlertTitle("Error");
+        setAlertMessage(t("pages.ideas.ideanew.alert.error.message"));
+        setAlertTitle(t("pages.ideas.ideanew.alert.error.title"));
         setAlertSeverity("error");
         setAlertOpen(true);
       }

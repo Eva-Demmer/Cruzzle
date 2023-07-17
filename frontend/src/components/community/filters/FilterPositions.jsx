@@ -1,10 +1,12 @@
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { Select, FormControl, MenuItem } from "@mui/material";
 import { BriefcaseIcon } from "@heroicons/react/24/outline";
 import PropTypes from "prop-types";
 import { FilterCommunityContext } from "../../../contexts/FilterCommunityContext";
 
 function FilterPositions({ canDisable = false, positionFilter }) {
+  const { t } = useTranslation();
   const { filterPanelOpen, positionValue, setPositionValue } = useContext(
     FilterCommunityContext
   );
@@ -31,7 +33,7 @@ function FilterPositions({ canDisable = false, positionFilter }) {
           );
           let displayValue = "";
           if (value === 0) {
-            displayValue = "All positions";
+            displayValue = t("pages.users.community.filterPosition.all");
           } else if (selectedMenuItem) {
             displayValue = selectedMenuItem.name;
           }
@@ -43,7 +45,9 @@ function FilterPositions({ canDisable = false, positionFilter }) {
           );
         }}
       >
-        <MenuItem value={0}>All positions</MenuItem>
+        <MenuItem value={0}>
+          {t("pages.users.community.filterPosition.all")}
+        </MenuItem>
         {positionFilter &&
           positionFilter.map((item) => (
             <MenuItem key={item.id} value={item.id}>

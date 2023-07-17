@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import IdeaDisplayer from "../../components/idea/IdeaDisplayer";
 import IdeasProvider from "../../contexts/IdeasContext";
@@ -8,6 +9,7 @@ import { FilterContext } from "../../contexts/FilterContext";
 import { fetchByQuery, fetchAll } from "../../services/api.services";
 
 function Ideas() {
+  const { t } = useTranslation();
   const [filteredIdeas, setFilteredIdeas] = useState();
   const [trendIdeas, setTrendIdeas] = useState();
   const { user } = useContext(UserContext);
@@ -22,7 +24,10 @@ function Ideas() {
     hasNoComment,
   } = useContext(FilterContext);
 
-  const { id: userId, agency_id: userAgencyId } = user;
+  const {
+    id: userId,
+    agency: { id: userAgencyId },
+  } = user;
 
   useEffect(() => {
     const reqItems = {
@@ -71,24 +76,18 @@ function Ideas() {
     <IdeasProvider>
       <div className="ideas-page w-full flex flex-col h-screen">
         <header className="w-full px-6 min-[1439px]:w-8/12">
-          <h2>Ideas</h2>
+          <h2>{t("pages.ideas.ideaspage.title")}</h2>
           <Filterbar />
         </header>
         <div className="ideas-header flex flex-row ">
           <main className="ideas-main w-full min-[1439px]:w-8/12">
-            {filteredIdeas !== undefined ? (
+            {filteredIdeas && (
               <IdeaDisplayer ideas={filteredIdeas} isMini={false} />
-            ) : (
-              ""
             )}
           </main>
           <aside className="ideas-aside-right w-4/12 hidden pl-4 pr-4 min-[1439px]:inline-block">
-            <h3>Tendences</h3>
-            {trendIdeas !== undefined ? (
-              <IdeaDisplayer ideas={trendIdeas} isMini="true" />
-            ) : (
-              ""
-            )}
+            <h3>{t("pages.ideas.ideaspage.tendences")}</h3>
+            {trendIdeas && <IdeaDisplayer ideas={trendIdeas} />}
           </aside>
         </div>
       </div>

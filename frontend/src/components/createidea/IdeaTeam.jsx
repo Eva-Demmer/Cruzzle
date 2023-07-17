@@ -1,9 +1,11 @@
 import { useContext } from "react";
-import TeamBuilder from "../idea/TeamBuilder";
+import { useTranslation } from "react-i18next";
+import TeamBuilder from "./TeamBuilder";
 import { IdeaFormContext } from "../../contexts/IdeaFormContext";
 import { apiUsers } from "../../services/api.users";
 
 function IdeaTeam() {
+  const { t } = useTranslation();
   const { teamSelect, setTeamSelect } = useContext(IdeaFormContext);
 
   const userList = () => {
@@ -20,7 +22,9 @@ function IdeaTeam() {
 
   return (
     <div className="my-8" aria-label="Team">
-      <h2 className="text-xl sm:text-2xl font-bold my-4">Team</h2>
+      <h2 className="text-xl sm:text-2xl font-bold my-4">
+        {t("pages.ideas.ideanew.team.title")}
+      </h2>
       <div className="lg:mx-6 my-6">
         <TeamBuilder
           list={teamSelect}

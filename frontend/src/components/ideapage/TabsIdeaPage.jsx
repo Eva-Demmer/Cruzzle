@@ -1,6 +1,7 @@
 import { Tab, Tabs, Box } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 
 import AllyProps from "../tabs/AllyProps";
 import TabGeneral from "./Tabs/TabGeneral";
@@ -12,6 +13,13 @@ function TabsIdeaPage() {
   const { t } = useTranslation();
   const [tabValue, setTabValue] = useState(0);
   const { idea } = useContext(IdeaPageContext);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state && location.state.tabStateValue) {
+      setTabValue(parseInt(location.state.tabStateValue, 10));
+    }
+  }, []);
 
   const tabsContent = [
     t("pages.ideas.idea.tabsIdea.content.general"),

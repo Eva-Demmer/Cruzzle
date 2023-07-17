@@ -1,6 +1,7 @@
 import { useContext } from "react";
 
 import { Button } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { FunnelIcon } from "@heroicons/react/24/outline";
 import PropTypes from "prop-types";
 import { FilterCommunityContext } from "../../contexts/FilterCommunityContext";
@@ -16,6 +17,7 @@ function FilterBarCommunity({
   locationFilter,
   agenciesFilter,
 }) {
+  const { t } = useTranslation();
   const { filterPanelOpen, setFilterPanelOpen } = useContext(
     FilterCommunityContext
   );
@@ -37,7 +39,7 @@ function FilterBarCommunity({
               onClick={() => setFilterPanelOpen(!filterPanelOpen)}
             >
               <FunnelIcon className="w-4 mr-2" />
-              More filters
+              {t("pages.users.community.button.morefilter")}
             </Button>
             <div className="w-full flex space-x-2 lg:grid lg:grid-cols-3">
               <div className="lg:px-6 mx-2">

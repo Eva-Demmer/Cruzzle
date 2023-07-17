@@ -76,6 +76,145 @@ const findActivitiesById = async (id: number) => {
   }
 };
 
+const findContributionsById = async (id: number) => {
+  try {
+    const data = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        idea: {
+          select: {
+            id: true,
+            title: true,
+            context: true,
+            favorit: true,
+            user: {
+              select: {
+                id: true,
+                firstname: true,
+                lastname: true,
+                avatar_url: true,
+              },
+            },
+            idea_like: {
+              select: {
+                id: true,
+                user_id: true,
+                idea_id: true,
+              },
+            },
+            created_at: true,
+            archived_at: true,
+            deleted_at: true,
+            primary_img: true,
+            views: true,
+            idea_category: {
+              select: {
+                category: {
+                  select: {
+                    id: true,
+                    label: true,
+                    color: true,
+                  },
+                },
+              },
+            },
+            idea_teams: {
+              select: {
+                user_id: true,
+                user: {
+                  select: {
+                    id: true,
+                    firstname: true,
+                    lastname: true,
+                    avatar_url: true,
+                  },
+                },
+              },
+            },
+            _count: {
+              select: {
+                idea_like: true,
+                comment: true,
+                attachment: true,
+                idea_teams: true,
+              },
+            },
+          },
+        },
+        idea_teams: {
+          select: {
+            idea: {
+              select: {
+                id: true,
+                title: true,
+                context: true,
+                favorit: true,
+                user: {
+                  select: {
+                    id: true,
+                    firstname: true,
+                    lastname: true,
+                    avatar_url: true,
+                  },
+                },
+                idea_like: {
+                  select: {
+                    id: true,
+                    user_id: true,
+                    idea_id: true,
+                  },
+                },
+                created_at: true,
+                archived_at: true,
+                deleted_at: true,
+                primary_img: true,
+                views: true,
+                idea_category: {
+                  select: {
+                    category: {
+                      select: {
+                        id: true,
+                        label: true,
+                        color: true,
+                      },
+                    },
+                  },
+                },
+                idea_teams: {
+                  select: {
+                    user_id: true,
+                    user: {
+                      select: {
+                        id: true,
+                        firstname: true,
+                        lastname: true,
+                        avatar_url: true,
+                      },
+                    },
+                  },
+                },
+                _count: {
+                  select: {
+                    idea_like: true,
+                    comment: true,
+                    attachment: true,
+                    idea_teams: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+    return data;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
 const findById = async (id: number) => {
   try {
     const data = await prisma.user.findUnique({
@@ -171,6 +310,32 @@ const update = async (id: number, updatedUser: User) => {
   }
 };
 
+interface UploadImage {
+  banner_url?: string;
+  avatar_url?: string;
+}
+
+const updateUserImage = async (imageData: UploadImage, id: number) => {
+  try {
+    console.info(imageData);
+    const data = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: imageData,
+      select: {
+        avatar_url: true,
+        banner_url: true,
+      },
+    });
+    return data;
+  } catch (error) {
+    throw new Error("Error updating user.");
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
 const updatePassword = async (updatedPassword: UpdatePasswordUser) => {
   const { id, hashed_password: hashedPassword } = updatedPassword;
   try {
@@ -195,5 +360,7 @@ export {
   findByMail,
   update,
   updatePassword,
+  updateUserImage,
   findActivitiesById,
+  findContributionsById,
 };
