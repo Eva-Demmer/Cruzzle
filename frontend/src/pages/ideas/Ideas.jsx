@@ -74,18 +74,18 @@ function Ideas() {
 
   return (
     <IdeasProvider>
-      <div className="ideas-page w-full flex flex-col h-screen">
-        <header className="w-full px-6 min-[1439px]:w-8/12">
+      <div className="ideas-page w-full h-min flex flex-col">
+        <header className="w-full px-6 sticky top-[66px] z-50 xl:w-8/12 sm:top-[62px] bg-white">
           <h2>{t("pages.ideas.ideaspage.title")}</h2>
           <Filterbar />
         </header>
-        <div className="ideas-header flex flex-row ">
-          <main className="ideas-main w-full min-[1439px]:w-8/12">
+        <div className="ideas-header flex flex-row">
+          <main className="ideas-main w-full xl:w-8/12">
             {filteredIdeas && (
               <IdeaDisplayer ideas={filteredIdeas} isMini={false} />
             )}
           </main>
-          <aside className="ideas-aside-right w-4/12 hidden pl-4 pr-4 min-[1439px]:inline-block">
+          <aside className="w-4/12 hidden pl-4 pr-4 xl:inline sticky top-[62px] right-0 h-min">
             <h3>{t("pages.ideas.ideaspage.tendences")}</h3>
             {trendIdeas && <IdeaDisplayer ideas={trendIdeas} />}
           </aside>
