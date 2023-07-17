@@ -56,7 +56,7 @@ function SideLinks() {
     },
     {
       to: "/favorites",
-      primary: t("menu.sidebar.favoritees"),
+      primary: t("menu.sidebar.favorites"),
       icon: StarIcon,
     },
     {

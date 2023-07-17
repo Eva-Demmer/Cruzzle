@@ -57,11 +57,11 @@ const getLeaderboard = async (req: Request, res: Response) => {
         })
         .sort((a, b) => b.score - a.score)
         .slice(0, 3);
-      res.status(200).send(formattedData);
+      return res.status(200).send(formattedData);
     }
-    res.status(200).json(data);
+    return res.status(200).json(data);
   } catch (error) {
-    res.status(500).send(error);
+    return res.status(500).send(error);
   }
 };
 
