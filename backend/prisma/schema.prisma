@@ -84,7 +84,7 @@ model idea {
   attachment    attachment[]
   comment       comment[]
   favorit       favorit[]
-  user          user            @relation(fields: [user_id], references: [id], onUpdate: Restrict, map: "idea_ibfk_1")
+  user          user            @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "idea_ibfk_1")
   idea_category idea_category[]
   idea_like     idea_like[]
   idea_teams    idea_teams[]
@@ -119,8 +119,8 @@ model idea_teams {
   id      Int  @id @default(autoincrement())
   idea_id Int
   user_id Int
-  idea    idea @relation(fields: [idea_id], references: [id], onUpdate: Restrict, map: "idea_teams_ibfk_1")
-  user    user @relation(fields: [user_id], references: [id], onUpdate: Restrict, map: "idea_teams_ibfk_2")
+  idea    idea @relation(fields: [idea_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "idea_teams_ibfk_1")
+  user    user @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "idea_teams_ibfk_2")
 
   @@index([idea_id], map: "idea_id")
   @@index([user_id], map: "user_id")
@@ -156,7 +156,7 @@ model user {
   agency_id       Int
   joined_at       DateTime       @db.DateTime(0)
   position_id     Int
-  created_at      DateTime       @default(now()) @db.Timestamp(0)
+  created_at      DateTime?      @default(now()) @db.Timestamp(0)
   is_active       Boolean?       @default(false)
   language        String?        @default("EN") @db.VarChar(2)
   comment         comment[]
@@ -165,9 +165,9 @@ model user {
   idea            idea[]
   idea_like       idea_like[]
   idea_teams      idea_teams[]
-  role            role           @relation(fields: [role_id], references: [id], onUpdate: Restrict, map: "user_ibfk_1")
-  agency          agency         @relation(fields: [agency_id], references: [id], onUpdate: Restrict, map: "user_ibfk_2")
-  position        position       @relation(fields: [position_id], references: [id], onUpdate: Restrict, map: "user_ibfk_3")
+  role            role           @relation(fields: [role_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_ibfk_1")
+  agency          agency         @relation(fields: [agency_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_ibfk_2")
+  position        position       @relation(fields: [position_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_ibfk_3")
 
   @@index([agency_id], map: "agency_id")
   @@index([position_id], map: "position_id")

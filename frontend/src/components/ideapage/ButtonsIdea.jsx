@@ -26,6 +26,10 @@ import { xl } from "../../utils/mediaQueries";
 import { apiArchiveIdeas } from "../../services/api.ideas";
 import DialogArchive from "./DialogArchive";
 import DialogModify from "./DialogModify";
+import {
+  createNotification,
+  deleteManyNotification,
+} from "../../utils/notifications";
 
 function ButtonsIdea() {
   const { t } = useTranslation();
@@ -82,8 +86,10 @@ function ButtonsIdea() {
         );
         if (searchLikeUser.length > 0) {
           await apiDeleteIdeaLikesById(searchLikeUser[0].id);
+          await deleteManyNotification(userId, idea, "like");
         } else {
           await apiCreateIdeaLikes(userId, idea.id);
+          await createNotification(userId, idea, "like");
         }
 
         const { idea_like: ideaLike, ...restOfIdea } = idea;
