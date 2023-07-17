@@ -11,7 +11,7 @@ import puzzlePieces from "../../assets/dashboard/PuzzlePieces_1.svg";
 import { HalfCircleProgress, pointsNextLevel } from "./HalfCircleProgress";
 import CountAnimation from "../animations/CounterAnimation";
 import { UserContext } from "../../contexts/UserContext";
-// import { apiUserLeaderboard } from "../../services/api.users";
+// import { apiLeaderboard } from "../../services/api.users";
 import { apiTotalIdeasCount } from "../../services/api.ideas";
 import { apiGetTotalLikesReceivedByUserId } from "../../services/api.ideaLikes";
 import { apiGetTotalCommentsReceivedByUserId } from "../../services/api.comments";
@@ -30,7 +30,7 @@ function InspirationCards() {
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
-  //       const leaderboardResponse = await apiUserLeaderboard();
+  //       const leaderboardResponse = await apiLeaderboard();
   //       console.info("leaderboard data", leaderboardResponse);
   //       setLeaderboard(leaderboardResponse);
   //     } catch (error) {

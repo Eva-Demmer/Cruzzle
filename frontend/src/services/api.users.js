@@ -54,23 +54,6 @@ const apiUserImageByQuery = async (
   return null;
 };
 
-// const apiUserLeaderboard = async () => {
-//   try {
-//     const response = await axios.get(`${url}${userRoute}leaderboard`);
-//     if (response.status === 200) {
-//       return response.data;
-//     }
-//     throw new Error(`Unexpected response status: ${response.status}`);
-//   } catch (error) {
-//     if (error.response && error.response.status === 500) {
-//       console.error("Internal server error:", error);
-//     } else {
-//       console.error("Fetch error:", error);
-//     }
-//     throw error;
-//   }
-// };
-
 const apiUsersVerifyPasword = async (data) => {
   const { mail, password } = data;
   try {
@@ -181,9 +164,26 @@ const apiGeContributionsByUserId = async (id) => {
   }
 };
 
+// const apiLeaderboard = async () => {
+//   try {
+//     const response = await axios.get(`${url}${userRoute}leaderboard`);
+//     if (response.status === 200) {
+//       console.info(response.data);
+//       return response.data;
+//     }
+//     throw new Error(`Unexpected response status: ${response.status}`);
+//   } catch (error) {
+//     if (error.response && error.response.status === 500) {
+//       console.error("Internal server error:", error);
+//     } else {
+//       console.error("Fetch error:", error);
+//     }
+//     throw error;
+//   }
+// };
+
 export {
   apiUsers,
-  // apiUserLeaderboard,
   apiUpdateUser,
   apiUserById,
   apiUsersLogin,
@@ -193,4 +193,5 @@ export {
   apiUsersVerifyPasword,
   apiUsersUpdatePasword,
   apiGeContributionsByUserId,
+  // apiLeaderboard,
 };

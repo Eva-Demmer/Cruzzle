@@ -15,15 +15,12 @@ import {
   findContributionsById,
   findLeaderboard,
 } from "../models/user.model";
-
 import {
   uploadImageToFirebase,
   getUrlByNameAndRoute,
 } from "../services/firebase";
 import { verifyPassword } from "../middlewares/auth.middlewares";
 import findByFilter from "../models/userFilter.model";
-import { UserFilterQuery } from "../interfaces/users.interface";
-
 import {
   FormattedUserLeaderboard,
   FormatedDataItem,
