@@ -6,7 +6,7 @@ function CategoryCards({ categoryName, categoryColor }) {
   const color = categoryColor.split("(")[1].split(")")[0].split(",");
 
   return (
-    <div className="px-2 py-4 w-28 h-32 flex flex-col justify-between items-center text-center gap-1 rounded-3xl border border-solid border-gray-400">
+    <div className="px-2 py-4 w-28 h-32 min-w-28 min-h-32 flex flex-col justify-between items-center text-center flex-shrink-0 gap-1 rounded-3xl border border-solid border-gray-400">
       <div
         className="h-10 w-10 flex justify-center items-center rounded-full"
         style={{

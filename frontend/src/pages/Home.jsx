@@ -197,7 +197,7 @@ function Home() {
     //   )}
     // </div>
 
-    <div className="xl:absolute xl:top-0 xl:h-screen xl:w-full xl:bg-primary-900 xl:bg-opacity-5 flex flex-col xl:justify-between">
+    <div className="xl:absolute xl:top-0 h-screen xl:w-full xl:bg-primary-900 xl:bg-opacity-5 flex flex-col xl:justify-between">
       <div className="xl:mt-5 p-5 xl:p-10">
         {/* Welcome */}
         <div className="flex flex-col">
@@ -235,7 +235,7 @@ function Home() {
         </div>
         {/* Categories */}
         <h4 className="mt-12 pb-3 text-black">Top 5 categories</h4>
-        <div className="flex flex-row gap-4">
+        <div className="flex flex-row gap-4 overflow-x-auto no-scrollbar">
           {displayCategories.map((category) => {
             return (
               <CategoryCard

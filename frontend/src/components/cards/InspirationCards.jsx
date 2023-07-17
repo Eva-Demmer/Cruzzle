@@ -82,9 +82,12 @@ function InspirationCards() {
   }, []);
 
   return (
-    <div className="xl:pr-6 xl:-ml-20 flex xl:flex-col flex-wrap items-center gap-5 xl:gap-10">
+    <div className="xl:pr-6 xl:-ml-20 px-5 flex items-center gap-5 xl:gap-10 overflow-x-auto no-scrollbar">
       {/* Leaderboard card */}
-      <Paper elevation={3} className="h-80 w-56 rounded-2xl relative">
+      <Paper
+        elevation={3}
+        className="h-80 w-56 rounded-2xl relative flex-shrink-0 my-2"
+      >
         <h3 className="text-black text-lg md:text-xl xl:text-2xl px-5 pt-6 text-center relative z-10">
           Top cruzzlers this month
         </h3>
@@ -115,11 +118,16 @@ function InspirationCards() {
         </div>
       </Paper>
       {/* Next level card */}
-      <Paper elevation={3} className="h-80 w-56 rounded-2xl">
+      <Paper
+        elevation={3}
+        className="h-80 w-56 rounded-2xl flex-shrink-0 my-2 relative"
+      >
         <div className="flex flex-col px-5 mt-5">
           <div className="h-20 flex justify-center">
-            <span className="text-3xl mt-6 pt-3">{pointsNextLevel}</span>
-            <HalfCircleProgress />
+            <span className="text-3xl mt-6 pt-3 flex">{pointsNextLevel}</span>
+            <div className="absolute left-1/2 transform -translate-x-1/2">
+              <HalfCircleProgress />
+            </div>
           </div>
           <span className="pl-3 pb-5 text-secondary-600">
             points until next level
@@ -139,7 +147,7 @@ function InspirationCards() {
       {/* Team activity card */}
       <Paper
         elevation={3}
-        className="mt-10 md:mt-0 h-80 w-56 rounded-2xl relative"
+        className="md:mt-0 h-80 w-56 rounded-2xl relative flex-shrink-0 my-2"
       >
         <div className="flex flex-col items-center">
           <img

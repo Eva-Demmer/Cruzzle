@@ -30,7 +30,7 @@ function HalfCircleProgress() {
   const viewBoxSize = radius * 2 + strokeWidth * 2;
 
   return (
-    <div className="progressBar w-[8.7rem] h-[8.7rem] sm:h-44 sm:w-44 lg:h-32 lg:w-36 absolute">
+    <div className="progressBar w-[8.7rem] h-[8.7rem] sm:h-44 sm:w-44 lg:h-32 lg:w-36">
       <svg
         className="h-full w-full"
         viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
