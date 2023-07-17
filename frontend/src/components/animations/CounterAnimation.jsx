@@ -23,11 +23,7 @@ function CountAnimation({ targetCount }) {
     };
   }, [targetCount]);
 
-  return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="text-5xl text-primary-900">{count}</div>
-    </div>
-  );
+  return <div className="text-5xl text-primary-900">{count}</div>;
 }
 
 CountAnimation.propTypes = {
