@@ -7,7 +7,6 @@ const apiGetIdeaLikesByIdeaId = async (id) => {
   try {
     const response = await axios.get(`${url}${userRoute}${id}`);
     if (response.status === 200) {
-      console.info(response.data);
       return response.data;
     }
     throw new Error(`Unexpected response status: ${response.status}`);
@@ -42,7 +41,6 @@ const apiDeleteIdeaLikesById = async (id) => {
   try {
     const response = await axios.delete(`${url}${userRoute}/${id}`);
     if (response.status === 204) {
-      console.info(response.data);
       return response.data;
     }
     throw new Error(`Unexpected response status: ${response.status}`);
@@ -66,7 +64,6 @@ const apiCreateIdeaLikes = async (userId, ideaId) => {
       user_id: idUser,
     });
     if (response.status === 201) {
-      console.info(response.data);
       return response.data;
     }
     throw new Error(`Unexpected response status: ${response.status}`);

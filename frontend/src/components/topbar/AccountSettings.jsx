@@ -16,11 +16,11 @@ import {
 } from "@mui/material";
 import { useState, useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
-import { Axios } from "../../config/axios.config";
 
 function AccountSettings() {
+  const { user, setUser } = useContext(UserContext);
   const { t } = useTranslation();
-  const { user } = useContext(UserContext);
+
   const [anchorEl, setAnchorEl] = useState(null);
 
   const open = Boolean(anchorEl);
@@ -36,7 +36,7 @@ function AccountSettings() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    delete Axios.defaults.headers.common.Authorization;
+    setUser(null);
     navigate("/login");
   };
 

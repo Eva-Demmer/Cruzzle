@@ -1,16 +1,29 @@
+import { useContext } from "react";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
+import { UserContext } from "../../contexts/UserContext";
 import { sm } from "../../utils/mediaQueries";
 
 function LogoutLinks() {
+  const { setUser } = useContext(UserContext);
   const location = useLocation();
+  const navigate = useNavigate();
+
   const smallQuery = useMediaQuery(sm);
+
+  const handleLogout = () => {
+    console.info("logout");
+    localStorage.removeItem("token");
+    setUser(null);
+    navigate("/login");
+  };
   return !smallQuery ? (
     <ListItemButton
+      onClick={handleLogout}
       component={Link}
       to="#"
       className={`w-full ${

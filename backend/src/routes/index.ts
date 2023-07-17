@@ -10,6 +10,7 @@ import ideaLikesRoutes from "./idea_likes.routes";
 import agenciesRoutes from "./agencies.routes";
 import positionsRoutes from "./positions.routes";
 import rolesRoutes from "./roles.routes";
+import notificationsRoutes from "./notifications.routes";
 
 const app: Application = express();
 
@@ -28,6 +29,7 @@ app.use("/api/ideas/likes", ideaLikesRoutes);
 app.use("/api/agencies", agenciesRoutes);
 app.use("/api/positions", positionsRoutes);
 app.use("/api/roles", rolesRoutes);
+app.use("/api/notifications", notificationsRoutes);
 
 app.use("/api/admin", adminRoutes);
 

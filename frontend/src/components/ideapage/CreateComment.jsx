@@ -11,6 +11,7 @@ import {
   apiGetCommentsByIdeaId,
 } from "../../services/api.comments";
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
+import { createNotification } from "../../utils/notifications";
 
 function CreateComment({ tabValue }) {
   const { t } = useTranslation();
@@ -56,19 +57,27 @@ function CreateComment({ tabValue }) {
       try {
         const req = await apiCreateComments(data);
         if (req) {
-          setAlert({
-            message: t("pages.ideas.idea.tabsIdea.createComment.alert.success"),
-            severity: "success",
-          });
-          const { comment: commendIdea, ...rest } = idea;
-          const getComments = await apiGetCommentsByIdeaId(idea.id);
-          if (getComments) {
-            setIdea({
-              ...rest,
-              comment: getComments,
+          try {
+            createNotification(user.id, idea, "comment");
+          } catch (error) {
+            console.error(error);
+          } finally {
+            setAlert({
+              message: t(
+                "pages.ideas.idea.tabsIdea.createComment.alert.success"
+              ),
+              severity: "success",
             });
+            const { comment: commendIdea, ...rest } = idea;
+            const getComments = await apiGetCommentsByIdeaId(idea.id);
+            if (getComments) {
+              setIdea({
+                ...rest,
+                comment: getComments,
+              });
+            }
+            setComment("");
           }
-          setComment("");
         } else {
           setAlert({
             message: t("pages.ideas.idea.tabsIdea.createComment.alert.error"),

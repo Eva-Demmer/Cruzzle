@@ -21,7 +21,7 @@ function Idea() {
   useEffect(() => {
     setIsLoading(true);
     fetchIdeaAsync(id);
-  }, []);
+  }, [id]);
 
   if (isLoading) {
     return null;
