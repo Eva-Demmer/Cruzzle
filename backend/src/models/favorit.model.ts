@@ -73,6 +73,7 @@ const findByFilter = async (filterQuery: IdeaFilterQuery) => {
                 id: true,
                 category: {
                   select: {
+                    id: true,
                     label: true,
                     color: true,
                   },

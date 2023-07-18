@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -44,6 +45,7 @@ function Favorits() {
       hasAttachment,
       hasNoComment,
     };
+
     fetchByQuery("/api/favorits/filter", reqItems)
       .then((data) => {
         const favoritArray = [];
@@ -68,15 +70,42 @@ function Favorits() {
     hasNoComment,
   ]);
 
+  const getTrendsCategories = () => {
+    const categoriesInFavorites = favoritesFiltered.flatMap((favorite) =>
+      favorite.idea_category.map((item) => item.category.id)
+    );
+
+    const idCount = categoriesInFavorites.reduce((count, catId) => {
+      count[catId] = (count[catId] || 0) + 1;
+      return count;
+    }, {});
+
+    const sortedIds = Object.keys(idCount).sort(
+      (a, b) => idCount[b] - idCount[a]
+    );
+
+    return sortedIds.slice(0, 3);
+  };
+
   useEffect(() => {
-    fetchAll("/api/ideas/trends")
-      .then((data) => {
-        setTrendIdeas(data);
-      })
-      .catch((error) =>
-        console.error("error from api.services.fetcherByQuery", error)
-      );
-  }, []);
+    const fetchData = async () => {
+      try {
+        const data = getTrendsCategories();
+        const cardArr = await Promise.all(
+          data.map((id) => fetchAll(`/api/ideas/trends/${id}`))
+        );
+
+        const uniqueIdeas = [
+          ...new Map(cardArr.map((idea) => [idea.id, idea])).values(),
+        ];
+        setTrendIdeas(uniqueIdeas);
+      } catch (error) {
+        console.error("error from api.services.fetcherByQuery", error);
+      }
+    };
+
+    fetchData();
+  }, [favoritesFiltered]);
 
   return (
     <div className="ideas-page w-full flex flex-col">
