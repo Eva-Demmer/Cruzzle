@@ -77,13 +77,13 @@ function Favorits() {
   }, []);
 
   return (
-    <div className="ideas-page w-full flex flex-col h-screen">
-      <header className="w-full px-6 min-[1439px]:w-8/12">
+    <div className="ideas-page w-full flex flex-col">
+      <header className="w-full px-6 sticky top-[66px] z-50 xl:w-8/12 sm:top-[62px] bg-white">
         <h2>Your Favorites</h2>
         <FilterbarFavorites />
       </header>
       <div className="ideas-header flex flex-row ">
-        <main className="ideas-main w-full min-[1439px]:w-8/12">
+        <main className="ideas-main w-full xl:w-8/12">
           {favoritesFiltered ? (
             <IdeaDisplayer
               setUpdate={setUpdate}
@@ -94,7 +94,7 @@ function Favorits() {
             ""
           )}
         </main>
-        <aside className="ideas-aside-right w-4/12 hidden pl-4 pr-4 min-[1439px]:inline-block">
+        <aside className="w-4/12 hidden pl-4 pr-4 xl:inline xl:sticky xl:top-[62px] xl:right-0 xl:h-min">
           <h3>Trends</h3>
           {trendIdeas ? <IdeaDisplayer ideas={trendIdeas} /> : ""}
         </aside>

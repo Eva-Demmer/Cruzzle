@@ -27,7 +27,7 @@ function FilterRoles({ canDisable = false, roleFilter }) {
     >
       <Select
         id="filter-autor-select"
-        className="h-10 w-full rounded-full lg:min-w-[220px]"
+        className="h-10 w-full rounded-full "
         color="primary"
         value={roleValue}
         onChange={(e) => {

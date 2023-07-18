@@ -26,7 +26,7 @@ function HeaderNav() {
   const smallQuery = useMediaQuery(sm);
 
   return (
-    <div className="flex flex-col shadow-2  bg-primary-800 sm:bg-white z-[8000] sticky top-0">
+    <div className="flex flex-col shadow-2 bg-primary-800 sm:bg-white z-48 sticky top-0 right-0 ">
       <div className="w-full py-2 px-4 flex items-center justify-between md:px-6 2xl:px-11">
         <div className="mx-2">
           {!smallQuery && (
