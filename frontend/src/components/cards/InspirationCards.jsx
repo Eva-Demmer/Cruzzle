@@ -24,8 +24,6 @@ function InspirationCards() {
   const [totalComments, setTotalComments] = useState(0);
   const [totalIdeas, setTotalIdeas] = useState(0);
 
-  // for the first three days of the month: display loading for users
-
   // fetch leaderboard
   useEffect(() => {
     const fetchData = async () => {
@@ -82,18 +80,22 @@ function InspirationCards() {
   }, []);
 
   return (
-    <div className="xxl:pr-6 xl:-ml-10 xxl:-ml-20 px-5 flex items-center gap-5 xl:gap-10 overflow-x-auto no-scrollbar">
+    <div className="px-5 flex items-center gap-5 xl:gap-3 overflow-x-auto no-scrollbar xl:overflow-x-hidden xl:-ml-20">
       {/* Leaderboard card */}
       <Paper
         elevation={3}
-        className="h-80 w-56 rounded-2xl relative flex-shrink-0 my-2"
+        className="h-80 w-56 xl:h-72 xl:w-48 xxl:h-80 xxl:w-56 rounded-2xl relative flex-shrink-0 my-2"
       >
-        <h3 className="text-black text-lg md:text-xl xl:text-2xl px-5 pt-6 text-center relative z-10">
+        <h3 className="text-black text-lg md:text-xl xxl:text-2xl px-5 pt-6 text-center relative z-10">
           Top cruzzlers this month
         </h3>
         <div className="flex flex-col px-5 mt-5">
           <div className="flex flex-row items-center">
-            <img src={medalGold} alt="gold medal" className="h-10" />
+            <img
+              src={medalGold}
+              alt="gold medal"
+              className="h-10 xl:h-8 xxl:h-10"
+            />
             <span className="pl-3 text-secondary-600">
               {leaderboard.length > 0 &&
                 `${leaderboard[0].firstname} ${leaderboard[0].lastname}`}
@@ -101,7 +103,11 @@ function InspirationCards() {
           </div>
           <Divider variant="middle" className="my-4 mx-0" />
           <div className="flex flex-row items-center">
-            <img src={medalSilver} alt="silver medal" className="h-10" />
+            <img
+              src={medalSilver}
+              alt="silver medal"
+              className="h-10 xl:h-8 xxl:h-10"
+            />
             <span className="pl-3 text-secondary-600">
               {leaderboard.length > 0 &&
                 `${leaderboard[1].firstname} ${leaderboard[1].lastname}`}
@@ -109,7 +115,11 @@ function InspirationCards() {
           </div>
           <Divider variant="middle" className="my-4 mx-0" />
           <div className="flex flex-row items-center">
-            <img src={medalBronze} alt="bronze medal" className="h-10" />
+            <img
+              src={medalBronze}
+              alt="bronze medal"
+              className="h-10 xl:h-8 xxl:h-10"
+            />
             <span className="pl-3 text-secondary-600">
               {leaderboard.length > 0 &&
                 `${leaderboard[2].firstname} ${leaderboard[2].lastname}`}
@@ -120,7 +130,7 @@ function InspirationCards() {
       {/* Next level card */}
       <Paper
         elevation={3}
-        className="h-80 w-56 rounded-2xl flex-shrink-0 my-2 relative"
+        className="h-80 w-56 xl:h-72 xl:w-48 xxl:h-80 xxl:w-56 rounded-2xl flex-shrink-0 my-2 relative"
       >
         <div className="flex flex-col px-5 mt-5">
           <div className="h-20 flex justify-center">
@@ -129,17 +139,21 @@ function InspirationCards() {
               <HalfCircleProgress />
             </div>
           </div>
-          <span className="pl-3 pb-5 text-secondary-600">
+          <span className="pl-3 pb-5 xl:px-0 xxl:pl-3 xxl:pb-5 text-secondary-600">
             points until next level
           </span>
-          <div className="mb-8 flex flex-col items-center relative">
-            <HandThumbUpIcon className="w-24 text-primary-50 absolute top-[-18px] opacity-10" />
-            <span className="text-4xl">{totalLikes}</span>
+          <div className="mb-8 xl:mb-4 xxl:mb-8 flex flex-col items-center relative">
+            <HandThumbUpIcon className="w-24 xl:w-16 xxl:w-24 text-primary-50 absolute top-[-18px] opacity-10" />
+            <span className="text-4xl xl:text-3xl xxl:text-4xl">
+              {totalLikes}
+            </span>
             <span className="pl-3 text-secondary-600">likes received</span>
           </div>
           <div className="flex flex-col items-center relative">
-            <ChatBubbleBottomCenterTextIcon className="w-20 text-primary-50 absolute top-[-10px] opacity-10" />
-            <span className="text-4xl">{totalComments}</span>
+            <ChatBubbleBottomCenterTextIcon className="w-24 xl:w-14 xxl:w-24 text-primary-50 absolute top-[-4px] opacity-10" />
+            <span className="text-4xl xl:text-3xl xxl:text-4xl">
+              {totalComments}
+            </span>
             <span className="pl-3 text-secondary-600">comments received</span>
           </div>
         </div>
@@ -147,22 +161,24 @@ function InspirationCards() {
       {/* Team activity card */}
       <Paper
         elevation={3}
-        className="md:mt-0 h-80 w-56 rounded-2xl relative flex-shrink-0 my-2"
+        className="h-80 w-56 xl:h-72 xl:w-48 xxl:h-80 xxl:w-56 rounded-2xl relative flex-shrink-0 my-2"
       >
-        <div className="flex flex-col items-center">
-          <img
-            src={puzzlePieces}
-            alt="puzzle pieces"
-            className="w-10/12 absolute -top-12"
-          />
-          <div className="flex flex-col items-center justify-between py-5">
-            <h3 className="pb-32 text-black text-lg md:text-xl xl:text-2xl px-5 pt-6 text-center">
-              Team activity
-            </h3>
-            <CountAnimation targetCount={totalIdeas} />
-            <span className="pt-4 text-secondary-600">
-              ideas created on Cruzzle
-            </span>
+        <div className="flex flex-col h-full items-center">
+          <h3 className="text-black text-lg md:text-xl xxl:text-2xl px-5 pt-6 text-center">
+            Team activity
+          </h3>
+          <div className="flex flex-col items-center flex-grow justify-end">
+            <img
+              src={puzzlePieces}
+              alt="puzzle pieces"
+              className="w-8/12 absolute -top-0"
+            />
+            <div className="flex flex-col items-center py-5">
+              <CountAnimation targetCount={totalIdeas} />
+              <span className="pt-4 text-secondary-600">
+                ideas created on Cruzzle
+              </span>
+            </div>
           </div>
         </div>
       </Paper>

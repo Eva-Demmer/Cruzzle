@@ -69,7 +69,7 @@ function OverviewCards() {
   }, [user]);
 
   return (
-    <div className="md:pl-5 max-w-xl xl:w-5/6 grid grid-cols-2 gap-x-8 xl:gap-x-10 gap-y-12 ">
+    <div className="md:pl-5 max-w-xl grid grid-cols-2 gap-x-8 xl:gap-x-10 gap-y-12 xl:gap-y-8 ">
       <Card
         isIcon
         icon={LightBulbIcon}
