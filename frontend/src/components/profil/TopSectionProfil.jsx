@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import React, { useContext, useState } from "react";
 import {
   MapPinIcon,
@@ -19,6 +20,7 @@ import { UserProfileContext } from "../../contexts/UserProfile";
 import { UserContext } from "../../contexts/UserContext";
 
 function TopSectionProfil() {
+  const { t } = useTranslation();
   const { user } = useContext(UserProfileContext);
   const { user: currentUser } = useContext(UserContext);
   const { id } = useParams();
@@ -84,7 +86,7 @@ function TopSectionProfil() {
           >
             <span className="flex gap-2 text-primary-900">
               <PencilSquareIcon className="h-6 w-6" />
-              <span className="font-bold">MODIFY</span>
+              <span className="font-bold">{t("buttons.modify")}</span>
             </span>
           </Button>
         )}
@@ -107,7 +109,7 @@ function TopSectionProfil() {
           >
             <span className="flex gap-2 text-primary-900">
               <PencilSquareIcon className="h-6 w-6" />
-              <span className="font-bold">MODIFY</span>
+              <span className="font-bold">{t("buttons.modify")}</span>
             </span>
           </Button>
         )}

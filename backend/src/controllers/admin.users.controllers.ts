@@ -33,6 +33,12 @@ const CreateUserByAdmin = async (req: Request, res: Response) => {
 const updateUserByIdByAdmin = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, 10);
   const updatedUser = req.body;
+
+  if (updatedUser.role_id) {
+    delete updatedUser.role_id;
+  }
+
+  console.info(updatedUser);
   try {
     const data = await updateByIdByAdmin(id, updatedUser);
     if (data.status === "success" && data.user) {

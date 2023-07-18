@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { UserProfileContext } from "../../../contexts/UserProfile";
 import { getUserPuzzlePercentageAchievementObject } from "../../../utils/gamification";
 import Puzzle from "./Puzzle";
@@ -7,6 +8,7 @@ import collectionImg from "../../../assets/puzzle_collection.svg";
 import geoImg from "../../../assets/images/login.svg";
 
 export default function PuzzlesTab() {
+  const { t } = useTranslation();
   const { user } = useContext(UserProfileContext);
   const userPuzzles = getUserPuzzlePercentageAchievementObject(user);
 
@@ -14,9 +16,9 @@ export default function PuzzlesTab() {
     <div className="w-full flex gap-16">
       <div className="puzzles-container grow">
         <h3 className="text-xl mb-2">
-          Puzzle "Likes"
+          {t("pages.users.profile.tabs.puzzles.puzzlesLikes.title")}
           <span className="text-sm ml-2">
-            (Increase your number of likes to reveal the puzzle.)
+            {t("pages.users.profile.tabs.puzzles.puzzlesLikes.description")}
           </span>
         </h3>
         {userPuzzles.likesPuzzlePercentageAchievement !== undefined && (
@@ -31,9 +33,10 @@ export default function PuzzlesTab() {
         )}
 
         <h3 className="text-xl mb-1">
-          Puzzle "Comments"
+          {t("pages.users.profile.tabs.puzzles.puzzlesComments.title")}
+
           <span className="text-sm ml-2">
-            (Increase your number of comments to reveal the puzzle.)
+            {t("pages.users.profile.tabs.puzzles.puzzlesComments.description")}
           </span>
         </h3>
         {userPuzzles.commentsPuzzlePercentageAchievement !== undefined && (
@@ -46,11 +49,11 @@ export default function PuzzlesTab() {
             ]}
           />
         )}
-
         <h3 className="text-xl mb-1">
-          Puzzle "Ideas"
+          {t("pages.users.profile.tabs.puzzles.puzzlesIdeas.title")}
+
           <span className="text-sm ml-2">
-            (To unlock the puzzle, increase your number of ideas.)
+            {t("pages.users.profile.tabs.puzzles.puzzlesIdeas.description")}
           </span>
         </h3>
         {userPuzzles.ideasPuzzlePercentageAchievement !== undefined && (
@@ -65,10 +68,10 @@ export default function PuzzlesTab() {
         )}
 
         <h3 className="text-xl mb-1">
-          Puzzle "Favorites"
+          {t("pages.users.profile.tabs.puzzles.puzzlesFavorites.title")}
+
           <span className="text-sm ml-2">
-            (To unveil the puzzle, increase the number of ideas you have
-            favorited.)
+            {t("pages.users.profile.tabs.puzzles.puzzlesFavorites.description")}
           </span>
         </h3>
         {userPuzzles.favoritsPuzzlePercentageAchievement !== undefined && (
@@ -83,10 +86,10 @@ export default function PuzzlesTab() {
         )}
 
         <h3 className="text-xl mb-1">
-          Puzzle "Teams"
+          {t("pages.users.profile.tabs.puzzles.puzzlesTeams.title")}
+
           <span className="text-sm ml-2">
-            (To unveil the puzzle, enhance your engagement by joining more
-            teams.)
+            {t("pages.users.profile.tabs.puzzles.puzzlesTeams.description")}
           </span>
         </h3>
         {userPuzzles.teamsPuzzlePercentageAchievement !== undefined && (

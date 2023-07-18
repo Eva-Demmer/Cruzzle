@@ -41,7 +41,7 @@ function Root() {
       setCurrentUserIntoUserContext(token);
       const lng = localStorage.getItem("i18nextLng");
       if (lng) {
-        setLanguage(lng);
+        setLanguage(lng.split("-")[0]);
       }
       if (location.pathname === "/") {
         navigate("/dashboard");

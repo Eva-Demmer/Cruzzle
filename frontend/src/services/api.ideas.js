@@ -1,11 +1,11 @@
-import axios from "axios";
+import Axios from "../config/axios.config";
 
 const url = import.meta.env.VITE_BACKEND_URL;
 const ideaRoute = "/api/ideas/";
 
 const apiIdeas = async (route = "") => {
   try {
-    const response = await axios.get(`${url}${ideaRoute}${route}`);
+    const response = await Axios.get(`${url}${ideaRoute}${route}`);
     if (response.status === 200) {
       return response.data;
     }
@@ -40,7 +40,7 @@ const apiTotalIdeasCount = async () => {
 
 const apiIdeasNew = async (data) => {
   try {
-    const response = await axios.post(`${url}${ideaRoute}`, data);
+    const response = await Axios.post(`${url}${ideaRoute}`, data);
     if (response.status === 201) {
       return response.data;
     }
@@ -58,7 +58,7 @@ const apiIdeasNew = async (data) => {
 
 const apiUpdateIdeaView = async (id, data) => {
   try {
-    const response = await axios.patch(`${url}${ideaRoute}views/${id}`, {
+    const response = await Axios.patch(`${url}${ideaRoute}views/${id}`, {
       views: data,
     });
     if (response.status === 201) {
@@ -77,7 +77,7 @@ const apiUpdateIdeaView = async (id, data) => {
 
 const apiArchiveIdeas = async (id) => {
   try {
-    const response = await axios.patch(`${url}${ideaRoute}archive/${id}`);
+    const response = await Axios.patch(`${url}${ideaRoute}archive/${id}`);
     if (response.status === 200) {
       return response.data;
     }
@@ -94,7 +94,7 @@ const apiArchiveIdeas = async (id) => {
 
 const apiUpdateIdeaById = async (id, data) => {
   try {
-    const response = await axios.put(`${url}${ideaRoute}${id}`, data);
+    const response = await Axios.put(`${url}${ideaRoute}${id}`, data);
     if (response.status === 201) {
       return response.data;
     }

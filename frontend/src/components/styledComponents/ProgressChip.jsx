@@ -1,21 +1,23 @@
 import PropTypes from "prop-types";
 import { Chip } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 function ProgressChip({ className, isArchived, isDeleted }) {
+  const { t } = useTranslation();
   let color;
   let label;
   switch (true) {
     case isDeleted !== null:
       color = "#d32f2f";
-      label = "Deleted";
+      label = t("components.customChip.deleted");
       break;
     case isArchived !== null:
       color = "#AAAAAA";
-      label = "Archived";
+      label = t("components.customChip.archived");
       break;
     default:
       color = "#AFE2B1";
-      label = "In progress";
+      label = t("components.customChip.inprogress");
       break;
   }
 

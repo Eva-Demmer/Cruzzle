@@ -3,11 +3,11 @@ import jwt, { Secret } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
 import { findByMail } from "../models/user.model";
+import { TokenPayload } from "../interfaces/auth.interfaces";
 
 dotenv.config();
 const { JWT_SECRET } = process.env;
 
-// Hash password before storing it in the database
 const hashPassword = async (
   req: Request,
   res: Response,
@@ -33,7 +33,6 @@ const hashPassword = async (
   }
 };
 
-// Verify password
 const verifyPassword = async (
   req: Request,
   res: Response,
@@ -63,13 +62,11 @@ const verifyPassword = async (
   }
 };
 
-// Protect routes
 const protectRoutes = (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (token) {
     try {
-      const decodedToken = jwt.verify(token, JWT_SECRET as Secret);
-      console.info(decodedToken);
+      jwt.verify(token, JWT_SECRET as Secret);
       next();
     } catch (error) {
       console.error("Error verifying token:", error);
@@ -80,4 +77,66 @@ const protectRoutes = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { hashPassword, verifyPassword, protectRoutes };
+const protectAdminRoutes = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (token) {
+    try {
+      const decodedToken = jwt.verify(
+        token,
+        JWT_SECRET as Secret
+      ) as TokenPayload;
+      if (decodedToken.role_id === 55 || decodedToken.role_id === 88) {
+        next();
+      } else {
+        res
+          .status(401)
+          .json({ error: "Access unauthorized. Please contact your admin" });
+      }
+    } catch (error) {
+      console.error("Error verifying token:", error);
+      res.status(401).json({ error: "Invalid token." });
+    }
+  } else {
+    res.status(401).json({ error: "No token provided." });
+  }
+};
+
+const protectSuperAdminRoutes = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (token) {
+    try {
+      const decodedToken = jwt.verify(
+        token,
+        JWT_SECRET as Secret
+      ) as TokenPayload;
+      if (decodedToken.role_id === 88) {
+        next();
+      } else {
+        res
+          .status(401)
+          .json({ error: "Access unauthorized. Please contact your admin" });
+      }
+    } catch (error) {
+      console.error("Error verifying token:", error);
+      res.status(401).json({ error: "Invalid token." });
+    }
+  } else {
+    res.status(401).json({ error: "No token provided." });
+  }
+};
+
+export {
+  hashPassword,
+  verifyPassword,
+  protectRoutes,
+  protectAdminRoutes,
+  protectSuperAdminRoutes,
+};

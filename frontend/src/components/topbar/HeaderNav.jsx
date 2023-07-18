@@ -28,7 +28,7 @@ function HeaderNav() {
 
   return (
     <div
-      className={`flex flex-col shadow-2  bg-primary-800 z-[8000] sticky top-0 ${
+      className={`flex flex-col shadow-2 bg-primary-800 z-48 sticky top-0 right-0 ${
         location.pathname === "/dashboard" ? "xl:bg-transparent" : "sm:bg-white"
       }`}
     >

@@ -8,6 +8,7 @@ import dragdrop from "../../assets/idea/dragdrop.svg";
 import UploadButton from "../styledComponents/UploadButton";
 import TableFilesUpload from "./TableFilesUpload";
 import Dropzone from "../styledComponents/Dropzone";
+import nodata from "../../assets/idea/nodata2.svg";
 
 import { IdeaFormContext } from "../../contexts/IdeaFormContext";
 
@@ -138,6 +139,23 @@ function IdeaUpload() {
                 onClickDelete={handleDeleteFiles}
               />
             </>
+          )}
+          {filesAttachment.length === 0 && (
+            <div className="h-full flex flex-col">
+              <div>
+                <Trans
+                  i18nKey="pages.ideas.ideanew.upload.numberfiles"
+                  count={nbAttachements}
+                >
+                  Number of files : <strong>{{ nbAttachements }}</strong>
+                </Trans>
+              </div>
+              <img
+                src={nodata}
+                alt="no data"
+                className="h-28 md:h-36 lg:h-52 self-center mt-2"
+              />
+            </div>
           )}
         </div>
       </div>

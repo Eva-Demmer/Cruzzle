@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import jwt, { Secret, JwtPayload } from "jsonwebtoken";
 import findByFilter from "../models/ideaFilter.model";
 import {
   findAll,
@@ -108,8 +109,15 @@ const postIdea = async (req: Request, res: Response) => {
   try {
     const { team, categories, ...idea } = req.body;
 
-    // getIdByUserToken and set userId
-    const userId = 1;
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) {
+      return res.sendStatus(401);
+    }
+    const payload = jwt.verify(
+      token,
+      process.env.JWT_SECRET as Secret
+    ) as JwtPayload;
+    const userId = payload.id;
 
     const createdIdea = await createIdea(idea, userId);
     const idIdea = createdIdea.id;
@@ -168,9 +176,9 @@ const postIdea = async (req: Request, res: Response) => {
       await createCategoryByIdea(formattedCategories);
     }
 
-    res.status(201).json({ id: idIdea });
+    return res.status(201).json({ id: idIdea });
   } catch (error) {
-    res.status(500).json({ "Error when post idea :": error });
+    return res.status(500).json({ "Error when post idea :": error });
   }
 };
 

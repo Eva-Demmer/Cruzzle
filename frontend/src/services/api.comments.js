@@ -1,11 +1,11 @@
-import axios from "axios";
+import Axios from "../config/axios.config";
 
 const url = import.meta.env.VITE_BACKEND_URL;
 const userRoute = "/api/comments/";
 
 const apiGetComments = async (route = "") => {
   try {
-    const response = await axios.get(`${url}${userRoute}${route}`);
+    const response = await Axios.get(`${url}${userRoute}${route}`);
     if (response.status === 200) {
       console.info(response.data);
       return response.data;
@@ -23,7 +23,7 @@ const apiGetComments = async (route = "") => {
 
 const apiGetCommentsByIdeaId = async (id) => {
   try {
-    const response = await axios.get(`${url}${userRoute}/${id}`);
+    const response = await Axios.get(`${url}${userRoute}/${id}`);
     if (response.status === 200) {
       return response.data;
     }
@@ -57,7 +57,7 @@ const apiGetTotalCommentsReceivedByUserId = async (userId) => {
 
 const apiUpdateComments = async (id, data) => {
   try {
-    const response = await axios.put(`${url}${userRoute}/${id}`, data);
+    const response = await Axios.put(`${url}${userRoute}/${id}`, data);
     console.info(response);
     if (response.status === 201) {
       console.info(response.data);
@@ -76,7 +76,7 @@ const apiUpdateComments = async (id, data) => {
 
 const apiCreateComments = async (data) => {
   try {
-    const response = await axios.post(`${url}${userRoute}`, data);
+    const response = await Axios.post(`${url}${userRoute}`, data);
     console.info(response);
     if (response.status === 201) {
       return response.data;
@@ -94,7 +94,7 @@ const apiCreateComments = async (data) => {
 
 const apiDeleteComments = async (id) => {
   try {
-    const response = await axios.post(`${url}${userRoute}/${id}`);
+    const response = await Axios.post(`${url}${userRoute}/${id}`);
     if (response.status === 204) {
       console.info(response.data);
       return response.data;
