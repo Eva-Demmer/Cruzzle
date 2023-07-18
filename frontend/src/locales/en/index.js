@@ -7,6 +7,7 @@ import components from "./components.json";
 import settingsPage from "./pages/settings.json";
 import ideasPages from "./pages/ideas/index";
 import adminpannel from "./pages/admin/index";
+import error from "./pages/error.json";
 import users from "./pages/users/index";
 import login from "./pages/login.json";
 
@@ -17,6 +18,7 @@ const translationEN = {
     adminpannel,
     login,
     users,
+    error,
   },
   notifications,
   components,
