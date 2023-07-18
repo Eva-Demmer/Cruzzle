@@ -64,6 +64,12 @@ interface FormatedDataItem {
   title: string;
 }
 
+interface FormatedDataActivities {
+  type: string;
+  created_at: Date;
+  title: string;
+}
+
 export {
   User,
   CreateUser,
@@ -71,4 +77,5 @@ export {
   UserFilterQuery,
   UpdatePasswordUser,
   FormatedDataItem,
+  FormatedDataActivities,
 };

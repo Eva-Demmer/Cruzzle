@@ -49,7 +49,6 @@ const findActivitiesById = async (id: number) => {
         id,
       },
       select: {
-        id: true,
         idea_like: {
           select: {
             liked_at: true,

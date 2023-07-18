@@ -24,6 +24,7 @@ import findByFilter from "../models/userFilter.model";
 import {
   FormatedDataItem,
   UserFilterQuery,
+  FormatedDataActivities,
 } from "../interfaces/users.interface";
 import "dayjs/locale/fr";
 
@@ -159,21 +160,6 @@ const getUserByFilter = async (req: Request, res: Response) => {
   }
 };
 
-const getActivitiesByUserId = async (req: Request, res: Response) => {
-  const id: number = parseInt(req.params.id, 10);
-  try {
-    const data = await findActivitiesById(id);
-    if (data) {
-      res.status(200).json(data);
-    } else {
-      res.status(404).send("Idea Likes not found");
-    }
-  } catch (error) {
-    console.info(error);
-    res.status(500).send(error);
-  }
-};
-
 const getImageHighRes = async (req: Request, res: Response) => {
   const { url } = req.query;
   if (typeof url === "string") {
@@ -253,6 +239,51 @@ const updateImage = async (req: Request, res: Response) => {
     }
   } catch (err) {
     console.error(err);
+  }
+};
+
+const getActivitiesByUserId = async (req: Request, res: Response) => {
+  const id: number = parseInt(req.params.id, 10);
+  try {
+    const data = await findActivitiesById(id);
+    if (data) {
+      const formatedData: FormatedDataActivities[] = [];
+      if (data.idea_like) {
+        data.idea_like.map((item) =>
+          formatedData.push({
+            type: "liked",
+            created_at: item.liked_at,
+            title: item.idea?.title || "",
+          })
+        );
+      }
+      if (data.comment) {
+        data.comment.map((item) =>
+          formatedData.push({
+            type: "comment",
+            created_at: item.created_at,
+            title: item.idea?.title || "",
+          })
+        );
+      }
+      const sortedList = formatedData.sort((a, b) => {
+        const dateA = new Date(dayjs(a.created_at, "DD/MM/YYYY").toDate());
+        const dateB = new Date(dayjs(b.created_at, "DD/MM/YYYY").toDate());
+        if (dateA > dateB) {
+          return -1;
+        }
+        if (dateA < dateB) {
+          return 1;
+        }
+        return 0;
+      });
+      res.status(200).json(sortedList);
+    } else {
+      res.status(404).send("Idea Likes not found");
+    }
+  } catch (error) {
+    console.info(error);
+    res.status(500).send(error);
   }
 };
 
