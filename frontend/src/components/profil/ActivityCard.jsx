@@ -58,8 +58,10 @@ function ActivityCard({ activities }) {
                         <b>
                           {firstname} {lastname}
                         </b>{" "}
-                        {item.type === "created" ? "created" : "was added to"}{" "}
-                        the <b>{item.title}</b> idea.
+                        {item.type === "liked"
+                          ? "liked \u{1F44D} in"
+                          : "added comment to"}{" "}
+                        <b>{item.title}</b> idea.
                       </p>
                     </div>
                   </div>
