@@ -1,11 +1,11 @@
-import axios from "axios";
+import Axios from "../config/axios.config";
 
 const url = import.meta.env.VITE_BACKEND_URL;
 const userRoute = "/api/users/";
 
 const apiUsers = async (route = "") => {
   try {
-    const response = await axios.get(`${url}${userRoute}${route}`);
+    const response = await Axios.get(`${url}${userRoute}${route}`);
     if (response.status === 200) {
       return response.data;
     }
@@ -23,7 +23,7 @@ const apiUsers = async (route = "") => {
 
 const apiUserPostImage = async (data, route = "") => {
   try {
-    const response = await axios.post(`${url}${userRoute}${route}`, data);
+    const response = await Axios.post(`${url}${userRoute}${route}`, data);
     if (response) {
       return response;
     }
@@ -41,7 +41,7 @@ const apiUserImageByQuery = async (
   }
 ) => {
   try {
-    const response = await axios.get(
+    const response = await Axios.get(
       `${url}${userRoute}${route}?${query}`,
       config
     );
@@ -57,7 +57,7 @@ const apiUserImageByQuery = async (
 const apiUsersVerifyPasword = async (data) => {
   const { mail, password } = data;
   try {
-    const response = await axios.post(`${url}${userRoute}/verifyPassword`, {
+    const response = await Axios.post(`${url}${userRoute}/verifyPassword`, {
       mail,
       password,
     });
@@ -73,7 +73,7 @@ const apiUsersVerifyPasword = async (data) => {
 
 const apiUsersUpdatePasword = async (data) => {
   try {
-    const response = await axios.put(`${url}${userRoute}/updatePassword`, data);
+    const response = await Axios.put(`${url}${userRoute}/updatePassword`, data);
 
     if (response.status === 200) {
       return response;
@@ -86,7 +86,7 @@ const apiUsersUpdatePasword = async (data) => {
 
 const apiUsersLogin = async (mail, password) => {
   try {
-    const response = await axios.post(`${url}${userRoute}login`, {
+    const response = await Axios.post(`${url}${userRoute}login`, {
       mail,
       password,
     });
@@ -107,14 +107,14 @@ const apiUsersLogin = async (mail, password) => {
 
 const apiUserById = async (id) => {
   const route = "/api/users/";
-  const response = await axios.get(`${url}${route}${id}`);
+  const response = await Axios.get(`${url}${route}${id}`);
   return response;
 };
 
 const apiUpdateUser = async (id, data) => {
   const route = "/api/users/";
   try {
-    const response = await axios.put(`${url}${route}${id}`, data);
+    const response = await Axios.put(`${url}${route}${id}`, data);
     if (response.status === 200) {
       return response;
     }
@@ -131,7 +131,7 @@ const apiUpdateUser = async (id, data) => {
 
 const apiGeActivitiesByUserId = async (id) => {
   try {
-    const response = await axios.get(`${url}${userRoute}activities/${id}`);
+    const response = await Axios.get(`${url}${userRoute}activities/${id}`);
     if (response.status === 200) {
       return response.data;
     }
@@ -148,7 +148,7 @@ const apiGeActivitiesByUserId = async (id) => {
 
 const apiGeContributionsByUserId = async (id) => {
   try {
-    const response = await axios.get(`${url}${userRoute}contributions/${id}`);
+    const response = await Axios.get(`${url}${userRoute}contributions/${id}`);
     if (response.status === 200) {
       return response.data;
     }

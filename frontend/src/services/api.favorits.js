@@ -1,11 +1,11 @@
-import axios from "axios";
+import Axios from "../config/axios.config";
 
 const url = import.meta.env.VITE_BACKEND_URL;
 const userRoute = "/api/favorits/";
 
 const postFavorit = async (user, id) => {
   try {
-    const response = await axios.post(`${url}${userRoute}`, {
+    const response = await Axios.post(`${url}${userRoute}`, {
       userId: user,
       ideaId: id,
     });
@@ -25,7 +25,7 @@ const postFavorit = async (user, id) => {
 
 const deleteFavorit = async (user, id) => {
   try {
-    const response = await axios.delete(`${url}${userRoute}`, {
+    const response = await Axios.delete(`${url}${userRoute}`, {
       data: {
         userId: user,
         ideaId: id,

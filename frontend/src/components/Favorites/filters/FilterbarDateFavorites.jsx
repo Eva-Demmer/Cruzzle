@@ -1,4 +1,5 @@
 import { useEffect, useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import { MenuItem, FormControl, Select } from "@mui/material";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
@@ -7,6 +8,7 @@ import "dayjs/locale/fr";
 import { FilterFavoritesContext } from "../../../contexts/FilterFavoritesContext";
 
 export default function FilterbarDateFavorites({ isDisable }) {
+  const { t, i18n } = useTranslation();
   const {
     dateDelta,
     setDateDelta,
@@ -17,7 +19,7 @@ export default function FilterbarDateFavorites({ isDisable }) {
   } = useContext(FilterFavoritesContext);
   const [isDisableByCustomDate, setisDisableByCustomDate] = useState(false);
 
-  const today = dayjs().locale("fr");
+  const today = dayjs().locale(i18n.language);
   const publicationDateEndIsToday =
     dayjs(publicationDateEnd).diff(today, "day") === 0;
   const deltaList = [30, 7, 0];
@@ -25,9 +27,16 @@ export default function FilterbarDateFavorites({ isDisable }) {
   const handleChange = (event) => {
     const { value } = event.target;
     setDateDelta(value);
-    setPublicationDateEnd(dayjs().locale("fr").format("YYYY-MM-DD HH:mm:ss"));
+    setPublicationDateEnd(
+      dayjs()
+        .locale(i18n.language)
+        .format(t("pages.ideas.ideaspage.dateFormats.long"))
+    );
     setPublicationDateStart(
-      dayjs().locale("fr").subtract(value, "day").format("YYYY-MM-DD HH:mm:ss")
+      dayjs()
+        .locale(i18n.language)
+        .subtract(value, "day")
+        .format(t("pages.ideas.ideaspage.dateFormats.long"))
     );
   };
 
@@ -58,15 +67,15 @@ export default function FilterbarDateFavorites({ isDisable }) {
         onChange={handleChange}
         renderValue={(value) => {
           const textDict = {
-            30: "past month",
-            7: "past week",
-            0: "today",
+            30: t("pages.ideas.ideaspage.filterdate.pastmonth"),
+            7: t("pages.ideas.ideaspage.filterdate.pastweek"),
+            0: t("pages.ideas.ideaspage.filterdate.today"),
           };
           return (
             <>
               <CalendarDaysIcon className="w-4 mr-2" />
               {isDisableByCustomDate ? (
-                <span>custom</span>
+                <span>{t("pages.ideas.ideaspage.filterdate.custom")}</span>
               ) : (
                 <span>{textDict[value]}</span>
               )}
@@ -74,9 +83,15 @@ export default function FilterbarDateFavorites({ isDisable }) {
           );
         }}
       >
-        <MenuItem value={30}>past month</MenuItem>
-        <MenuItem value={7}>past week</MenuItem>
-        <MenuItem value={0}>today</MenuItem>
+        <MenuItem value={30}>
+          {t("pages.ideas.ideaspage.filterdate.pastmonth")}
+        </MenuItem>
+        <MenuItem value={7}>
+          {t("pages.ideas.ideaspage.filterdate.pastweek")}
+        </MenuItem>
+        <MenuItem value={0}>
+          {t("pages.ideas.ideaspage.filterdate.today")}
+        </MenuItem>
       </Select>
     </FormControl>
   );

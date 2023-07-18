@@ -6,6 +6,7 @@ import {
   deleteNotificationIdea,
   deleteManyNotificationIdea,
 } from "../controllers/notifications.ideas.controllers";
+import { protectRoutes } from "../middlewares/auth.middlewares";
 
 const router = express.Router();
 
@@ -14,6 +15,9 @@ const timeLog = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 router.use(timeLog);
+
+// Protected routes
+router.use(protectRoutes);
 
 router.post("/ideas", createNotificationIdea);
 router.get("/ideas/:id", getNotificationIdea);
