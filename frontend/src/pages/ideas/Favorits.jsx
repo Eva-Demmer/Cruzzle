@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -70,57 +71,37 @@ function Favorits() {
   ]);
 
   const getTrendsCategories = () => {
-    const categoriesInFavorites = favoritesFiltered.map(
-      (favorite) => favorite.idea_category
+    const categoriesInFavorites = favoritesFiltered.flatMap((favorite) =>
+      favorite.idea_category.map((item) => item.category.id)
     );
-    const idsArrayOfCategories = categoriesInFavorites.map((arr) =>
-      arr.map((item) => item.category.id)
+
+    const idCount = categoriesInFavorites.reduce((count, catId) => {
+      count[catId] = (count[catId] || 0) + 1;
+      return count;
+    }, {});
+
+    const sortedIds = Object.keys(idCount).sort(
+      (a, b) => idCount[b] - idCount[a]
     );
-    const idsOfCategories = idsArrayOfCategories.flat();
 
-    const findMostRepeatedIds = (catIds) => {
-      const idCount = {};
-
-      catIds.forEach((catId) => {
-        if (idCount[catId]) {
-          idCount[catId] += 1;
-        } else {
-          idCount[catId] = 1;
-        }
-      });
-
-      const sortedIds = Object.keys(idCount).sort(
-        (a, b) => idCount[b] - idCount[a]
-      );
-
-      return sortedIds.slice(0, 3);
-    };
-
-    const mostRepeatedIds = findMostRepeatedIds(idsOfCategories);
-    return mostRepeatedIds;
+    return sortedIds.slice(0, 3);
   };
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = getTrendsCategories();
-      const cardArr = [];
+      try {
+        const data = getTrendsCategories();
+        const cardArr = await Promise.all(
+          data.map((id) => fetchAll(`/api/ideas/trends/${id}`))
+        );
 
-      await Promise.all(
-        data.map((id) =>
-          fetchAll(`/api/ideas/trends/${id}`)
-            .then((result) => {
-              cardArr.push(result);
-            })
-            .catch((error) =>
-              console.error("error from api.services.fetcherByQuery", error)
-            )
-        )
-      );
-
-      const uniqueIdeas = [
-        ...new Map(cardArr.map((idea) => [idea.id, idea])).values(),
-      ];
-      setTrendIdeas(uniqueIdeas);
+        const uniqueIdeas = [
+          ...new Map(cardArr.map((idea) => [idea.id, idea])).values(),
+        ];
+        setTrendIdeas(uniqueIdeas);
+      } catch (error) {
+        console.error("error from api.services.fetcherByQuery", error);
+      }
     };
 
     fetchData();
