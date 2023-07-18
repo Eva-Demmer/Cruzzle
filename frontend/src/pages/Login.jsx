@@ -43,7 +43,7 @@ function Login() {
               alt="logo"
             />
             <img
-              className="w-auto h-1/2 lg:h-2/3 absolute bottom-0 -left-8 lg:-left-20"
+              className="max-w-full w-full h-auto absolute bottom-0 -left-8 lg:-left-20"
               src={login}
               alt="login"
             />
