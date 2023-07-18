@@ -9,6 +9,7 @@
   "cancel": "Cancel",
   "close": "Close",
   "confirm": "Confirm",
+  "contact": "Contact",
   "delete": "Delete",
   "download": "Download",
   "modify": "Modify",
@@ -17,7 +18,9 @@
   "publish": "Publish",
   "unlike": "Unlike",
   "update": "Update",
+  "upload": "Upload",
   "reset": "Reset",
+  "return": "Return",
   "save": "Save",
   "viewprofile": "View profile"
 }

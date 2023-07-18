@@ -1,10 +1,10 @@
-import axios from "axios";
+import Axios from "../config/axios.config";
 
 const url = import.meta.env.VITE_BACKEND_URL;
 
 const apiAdminAgencies = async () => {
   const route = "/api/admin/agencies/";
-  const response = await axios.get(`${url}${route}`);
+  const response = await Axios.get(`${url}${route}`);
   return response;
 };
 

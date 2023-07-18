@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { apiAdminUpdateUserById } from "../../../services/api.admin.users";
+import { apiAdminUpdateUserRoleById } from "../../../services/api.admin.users";
 import { AlertToastContext } from "../../../contexts/AlertToastContext";
 
 export default function TableSelectRole({ user, roleList }) {
@@ -13,19 +13,21 @@ export default function TableSelectRole({ user, roleList }) {
 
   const handleChange = (event) => {
     const roleId = event.target.value;
-    apiAdminUpdateUserById(user.id, { role_id: roleId })
+    apiAdminUpdateUserRoleById(user.id, { role_id: roleId })
       .then((res) => {
         if (res.status === 200) {
           setSelectedUserRole(event.target.value);
           setAlertAdminMessage("User role updated successfully");
           setAlertAdminOpen(true);
         } else {
+          setSelectedUserRole(user.role.id);
           console.error("Cannot update user role");
         }
       })
-      .catch((error) => console.error("Error updating user role", error));
-
-    setSelectedUserRole(event.target.value);
+      .catch((error) => {
+        setSelectedUserRole(user.role.id);
+        console.error("Error updating user role", error);
+      });
   };
 
   return (

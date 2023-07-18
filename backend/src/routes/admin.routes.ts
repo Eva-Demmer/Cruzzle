@@ -19,7 +19,11 @@ import {
   deleteCategoryByIdByAdmin,
 } from "../controllers/admin.categories.controllers";
 
-import { hashPassword } from "../middlewares/auth.middlewares";
+import {
+  hashPassword,
+  protectAdminRoutes,
+  protectSuperAdminRoutes,
+} from "../middlewares/auth.middlewares";
 
 const router = express.Router();
 
@@ -28,6 +32,9 @@ const timeLog = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 router.use(timeLog);
+
+// Protected Admin routes
+router.use(protectAdminRoutes);
 
 router.get("/users", getUsersByAdmin);
 router.post("/users", hashPassword, CreateUserByAdmin);
@@ -47,5 +54,10 @@ router.get("/categories", getCategoriesByAdmin);
 router.post("/categories", createCategoryByAdmin);
 router.put("/categories/:id", updateCategoryByIdByAdmin);
 router.delete("/categories/:id", deleteCategoryByIdByAdmin);
+
+// Protected Admin routes
+router.use(protectSuperAdminRoutes);
+
+router.put("/users/roles/:id", hashPassword, updateUserByIdByAdmin);
 
 export default router;

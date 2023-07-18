@@ -1,10 +1,12 @@
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@mui/material";
 
 import { FunnelIcon } from "@heroicons/react/24/outline";
 import { FilterFavoritesContext } from "../../../contexts/FilterFavoritesContext";
 
 export default function FilterBtnAdvanceSearchFavorites() {
+  const { t } = useTranslation();
   const { filterPanelIsOpen, setFilterPanelIsOpen } = useContext(
     FilterFavoritesContext
   );
@@ -21,7 +23,7 @@ export default function FilterBtnAdvanceSearchFavorites() {
       onClick={handleClick}
     >
       <FunnelIcon className="w-4 mr-2" />
-      More filters
+      {t("pages.ideas.ideaspage.morefilters")}
     </Button>
   );
 }

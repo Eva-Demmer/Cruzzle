@@ -7,6 +7,7 @@ import AvatarEditor from "react-avatar-editor";
 import RotateRightIcon from "@mui/icons-material/RotateRight";
 import AspectRatioIcon from "@mui/icons-material/AspectRatio";
 
+import { useTranslation } from "react-i18next";
 import { Controller, useForm } from "react-hook-form";
 import { Button, Slider, Skeleton, useMediaQuery } from "@mui/material";
 import UploadButton from "../styledComponents/UploadButton";
@@ -40,6 +41,7 @@ function ModalEditImage({
   handleAlert,
 }) {
   console.info(fieldName);
+  const { t } = useTranslation();
   const [slideScaleValue, setSlideScaleValue] = useState(10);
   const [slideRotateValue, setSlideRotateValue] = useState(0);
 
@@ -125,7 +127,11 @@ function ModalEditImage({
       const postImage = await apiUserPostImage(formData, `image/${id}`);
       if (postImage) {
         setBlobImg(null);
-        setAlertMessage(`Your ${fieldName} is updated`);
+        if (fieldName === "avatar") {
+          setAlertMessage(t("pages.users.profile.edit.picture.alert.avatar"));
+        } else {
+          setAlertMessage(t("pages.users.profile.edit.picture.alert.banner"));
+        }
         setAlertSeverity("success");
         handleAlert(true);
         const updatedUser = {
@@ -137,7 +143,7 @@ function ModalEditImage({
         setIsOpen(false);
       } else {
         handleAlert(true);
-        setAlertMessage(`Something wrong happened`);
+        setAlertMessage(t("pages.users.profile.edit.picture.alert.error"));
         setAlertSeverity("warning");
       }
     } catch (error) {
@@ -230,7 +236,7 @@ function ModalEditImage({
                   onChange={handleImgChange}
                   value={value}
                 >
-                  Upload
+                  {t("buttons.upload")}
                 </UploadButton>
               )}
             />
@@ -240,7 +246,7 @@ function ModalEditImage({
               variant="contained"
               color="primary"
             >
-              Save
+              {t("buttons.save")}
             </Button>
           </div>
         </form>
