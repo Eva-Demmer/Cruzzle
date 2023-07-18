@@ -82,7 +82,7 @@ function InspirationCards() {
   }, []);
 
   return (
-    <div className="xl:pr-6 xl:-ml-20 px-5 flex items-center gap-5 xl:gap-10 overflow-x-auto no-scrollbar">
+    <div className="xxl:pr-6 xl:-ml-10 xxl:-ml-20 px-5 flex items-center gap-5 xl:gap-10 overflow-x-auto no-scrollbar">
       {/* Leaderboard card */}
       <Paper
         elevation={3}

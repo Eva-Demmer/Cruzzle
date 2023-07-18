@@ -197,7 +197,7 @@ function Home() {
     //   )}
     // </div>
 
-    <div className="xl:absolute xl:top-0 h-screen xl:w-full xl:bg-primary-900 xl:bg-opacity-5 flex flex-col xl:justify-between">
+    <div className="absolute top-0 h-screen bg-primary-900 bg-opacity-5 flex justify-between">
       <div className="xl:mt-5 p-5 xl:p-10">
         {/* Welcome */}
         <div className="flex flex-col">
@@ -252,14 +252,14 @@ function Home() {
       </div>
 
       <div className="flex flex-col">
-        <div className="h-screen xl:bg-white xl:flex fxl:lex-col xl:justify-end">
+        <div className="h-screen xl:mt-16 xl:bg-white xl:flex xl:flex-col">
           {/* Inspiration */}
           <div>
-            <h4 className="mt-5 mb-2 px-5 text-black">Your stats</h4>
+            <h4 className="mt-5 mb-2 px-5 text-black xl:hidden">Your stats</h4>
             <InspirationCards />
           </div>
           {/* Trending */}
-          <div className="xl:mt-16">
+          <div className="xl:mt-5">
             <h4 className="pl-5 mt-10 pb-5 text-black">Trending ideas</h4>
             <div className="overflow-y-auto h-96">
               {trendIdeas !== undefined ? (
