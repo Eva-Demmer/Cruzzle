@@ -23,7 +23,7 @@ const apiIdeas = async (route = "") => {
 
 const apiTotalIdeasCount = async () => {
   try {
-    const response = await axios.get(`${url}${ideaRoute}total`);
+    const response = await Axios.get(`${url}${ideaRoute}total`);
     if (response.status === 200) {
       return response.data;
     }

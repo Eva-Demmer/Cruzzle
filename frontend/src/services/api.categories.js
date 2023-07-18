@@ -23,7 +23,7 @@ const apiCategories = async (route = "") => {
 
 const apiCategoriesOrder = async () => {
   try {
-    const response = await axios.get(`${url}${userRoute}order`);
+    const response = await Axios.get(`${url}${userRoute}order`);
     if (response.status === 200) {
       return response.data;
     }

@@ -166,7 +166,7 @@ const apiGeContributionsByUserId = async (id) => {
 
 const apiLeaderboard = async () => {
   try {
-    const response = await axios.get(`${url}${userRoute}leaderboard`);
+    const response = await Axios.get(`${url}${userRoute}leaderboard`);
     if (response.status === 200) {
       return response.data;
     }

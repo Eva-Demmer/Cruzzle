@@ -22,7 +22,7 @@ const apiGetIdeaLikesByIdeaId = async (id) => {
 
 const apiGetTotalLikesReceivedByUserId = async (userId) => {
   try {
-    const response = await axios.get(`${url}${userRoute}/users/${userId}`);
+    const response = await Axios.get(`${url}${userRoute}/users/${userId}`);
     if (response.status === 200) {
       return response.data;
     }

@@ -40,7 +40,7 @@ const apiGetCommentsByIdeaId = async (id) => {
 
 const apiGetTotalCommentsReceivedByUserId = async (userId) => {
   try {
-    const response = await axios.get(`${url}${userRoute}user/${userId}`);
+    const response = await Axios.get(`${url}${userRoute}user/${userId}`);
     if (response.status === 200) {
       return response.data;
     }
