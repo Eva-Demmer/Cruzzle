@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Trans, useTranslation } from "react-i18next";
 import { Avatar, Chip, Divider, ListItemAvatar } from "@mui/material";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
@@ -7,22 +8,24 @@ import { UserProfileContext } from "../../contexts/UserProfile";
 import IdeaCard from "../idea/IdeaCard";
 
 function ContributionCard({ ideas }) {
+  const { t, i18n } = useTranslation();
   const { user } = useContext(UserProfileContext);
   const { avatar_url: avatarUrl, firstname, lastname } = user;
 
   const { created_at: createdAt } = ideas[0];
 
   let displayDate;
-  if (
-    dayjs(createdAt, "DD/MM/YYYY").isSame(dayjs().subtract(0, "day"), "day")
-  ) {
-    displayDate = "Today";
-  } else if (
-    dayjs(createdAt, "DD/MM/YYYY").isSame(dayjs().subtract(1, "day"), "day")
-  ) {
-    displayDate = "Yesterday";
+
+  if (dayjs(createdAt).isSame(dayjs().subtract(0, "day"), "day")) {
+    displayDate = t("pages.users.profile.tabs.contributions.displayDate.today");
+  } else if (dayjs(createdAt).isSame(dayjs().subtract(1, "day"), "day")) {
+    displayDate = t(
+      "pages.users.profile.tabs.contributions.displayDate.yesterday"
+    );
   } else {
-    displayDate = dayjs(createdAt).locale("fr").format("DD/MM/YYYY");
+    displayDate = dayjs(createdAt)
+      .locale(i18n.language)
+      .format(t("pages.users.profile.dateFormats.shortVariant"));
   }
   return (
     <div className="my-4 w-full">
@@ -56,8 +59,24 @@ function ContributionCard({ ideas }) {
                         <b>
                           {firstname} {lastname}
                         </b>{" "}
-                        {item.type === "created" ? "created" : "was added to"}{" "}
-                        the <b>{item.title}</b> idea.
+                        {item.type === "created" && (
+                          <Trans
+                            i18nKey="pages.users.profile.tabs.contributions.created"
+                            values={{ idea: item.title }}
+                            components={{
+                              b: <b />,
+                            }}
+                          />
+                        )}
+                        {item.type !== "created" && (
+                          <Trans
+                            i18nKey="pages.users.profile.tabs.contributions.added"
+                            values={{ idea: item.title }}
+                            components={{
+                              b: <b />,
+                            }}
+                          />
+                        )}
                       </p>
                     </div>
                   </div>
@@ -67,7 +86,9 @@ function ContributionCard({ ideas }) {
                       alt="Logo"
                       className="inline-block mr-1 w-5"
                     />{" "}
-                    {dayjs(item.created_at).locale("fr").format("HH:mm")}
+                    {dayjs(item.created_at)
+                      .locale(i18n.language)
+                      .format("HH:mm")}
                   </p>
                 </div>
                 <div className="w-full xl:pl-10 mb-4">

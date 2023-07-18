@@ -1,5 +1,6 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
+import helmet from "helmet";
 import * as fs from "fs";
 import * as path from "path";
 
@@ -24,6 +25,7 @@ const options: cors.CorsOptions = {
   preflightContinue: false,
 };
 app.use(cors(options));
+app.use(helmet());
 app.use(express.json());
 
 // import and mount the API routes

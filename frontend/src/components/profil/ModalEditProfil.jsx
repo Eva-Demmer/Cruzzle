@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import {
   Button,
   Divider,
@@ -9,7 +10,7 @@ import PropTypes from "prop-types";
 import { Controller, useForm } from "react-hook-form";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Modal from "../modal/Modal";
 import EditProfil1 from "../../assets/EditProfil1.svg";
 import EditProfil2 from "../../assets/EditProfil2.svg";
@@ -17,20 +18,29 @@ import { apiUpdateUser, apiUserById } from "../../services/api.users";
 import { UserProfileContext } from "../../contexts/UserProfile";
 
 export default function ModalEditProfil({ open, close }) {
+  const { t, i18n } = useTranslation();
   const { handleSubmit, control } = useForm();
   const { user, setUser } = useContext(UserProfileContext);
-  const [sharePhone, setSharePhone] = useState(user.share_phone);
-  const [displayBirthday, setDisplayBirthday] = useState(user.share_birthdate);
-  const [selectedDate, setSelectedDate] = useState(null);
   const {
     firstname,
     lastname,
     biography,
+    birthdate,
     mail,
     phone,
     agency: { city, country },
     link,
   } = user;
+  const [sharePhone, setSharePhone] = useState(user.share_phone);
+  const [displayBirthday, setDisplayBirthday] = useState(user.share_birthdate);
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  useEffect(() => {
+    if (birthdate) {
+      setSelectedDate(dayjs(birthdate));
+    }
+  }, []);
+
   const onSubmit = async (data) => {
     const updatedData = {
       ...data,
@@ -61,32 +71,40 @@ export default function ModalEditProfil({ open, close }) {
     <Modal isOpen={open} onClose={close} onSave={handleSubmit(onSubmit)}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <h4 className="text-black font-medium">
-          Update your general information
+          {t("pages.users.profile.edit.title")}
         </h4>
         <Divider orientation="horizontal" />
         <div className="flex flex-col items-start justify-between border-none rounded-t">
           <div className="flex flex-col sm:gap-8 w-full sm:flex-row ">
             <div className="flex flex-col mb-5 sm:w-96 ">
-              <h2 className="text-secondary-600 mb-8 ">Information</h2>
+              <h2 className="text-secondary-600 mb-8 ">
+                {t("pages.users.profile.edit.section.information.title")}
+              </h2>
               <div className="pl-4 flex flex-col gap-3">
                 <TextField
                   disabled
                   defaultValue={firstname}
-                  label="First name"
+                  label={t(
+                    "pages.users.profile.edit.section.information.textfield.firstname.label"
+                  )}
                   variant="outlined"
                   className="mb-4 bg-black bg-opacity-5"
                 />
                 <TextField
                   disabled
                   defaultValue={lastname}
-                  label="Last name"
+                  label={t(
+                    "pages.users.profile.edit.section.information.textfield.lastname.label"
+                  )}
                   variant="outlined"
                   className="mb-4  bg-black bg-opacity-5"
                 />
                 <TextField
                   disabled
                   defaultValue={mail}
-                  label="Email"
+                  label={t(
+                    "pages.users.profile.edit.section.information.textfield.email.label"
+                  )}
                   variant="outlined"
                   className="mb-4  bg-black bg-opacity-5"
                 />
@@ -97,9 +115,13 @@ export default function ModalEditProfil({ open, close }) {
                   render={({ field: { onChange, value } }) => (
                     <TextField
                       value={value}
-                      placeholder="Phone"
+                      placeholder={t(
+                        "pages.users.profile.edit.section.information.textfield.phone.placeholder"
+                      )}
                       InputLabelProps={{ shrink: true }}
-                      label="Phone"
+                      label={t(
+                        "pages.users.profile.edit.section.information.textfield.phone.label"
+                      )}
                       variant="outlined"
                       onChange={onChange}
                       inputProps={{ maxLength: 15 }}
@@ -114,24 +136,35 @@ export default function ModalEditProfil({ open, close }) {
                       onChange={(e) => setSharePhone(e.target.checked)}
                     />
                   }
-                  label="Display phone number"
+                  label={t(
+                    "pages.users.profile.edit.section.information.textfield.phone.switch"
+                  )}
                   className="mb-4 ml-2"
                 />
-                <h4 className="text-secondary-600">Birthday</h4>
+                <h4 className="text-secondary-600">
+                  {t(
+                    "pages.users.profile.edit.section.information.textfield.birthday.title"
+                  )}
+                </h4>
                 <Controller
                   name="birthdate"
                   control={control}
                   render={({ field }) => (
                     <DatePicker
                       value={selectedDate}
-                      label="Date"
-                      format="YYYY-MM-DD"
+                      defaultValue={dayjs(selectedDate)}
+                      label={t(
+                        "pages.users.profile.edit.section.information.textfield.birthday.label"
+                      )}
+                      format={t("pages.users.profile.dateFormats.short")}
                       clearable
                       disableFuture
                       InputLabelProps={{ shrink: true }}
                       onChange={(date) => {
                         setSelectedDate(
-                          dayjs(date).locale("fr").format("YYYY-MM-DD")
+                          dayjs(date)
+                            .locale(i18n.language)
+                            .format(t("pages.users.profile.dateFormats.short"))
                         );
                         field.onChange(date);
                       }}
@@ -146,7 +179,9 @@ export default function ModalEditProfil({ open, close }) {
                       onChange={(e) => setDisplayBirthday(e.target.checked)}
                     />
                   }
-                  label="Display birthday"
+                  label={t(
+                    "pages.users.profile.edit.section.information.textfield.birthday.switch"
+                  )}
                   className="mb-4 ml-2"
                 />
               </div>
@@ -159,11 +194,13 @@ export default function ModalEditProfil({ open, close }) {
               />
               <div className="flex flex-col w-72 gap-8 p-4">
                 <p className="text-secondary-600 font-bold w-9/12 text-base">
-                  Contact us if you made an error in the gray fields.
+                  {t(
+                    "pages.users.profile.edit.section.information.contactadmin"
+                  )}
                 </p>
                 <Button variant="outlined" className="rounded-3xl w-32 h-auto">
                   <span className="font-bold items-center justify-center">
-                    Contact
+                    {t("buttons.contact")}
                   </span>
                 </Button>
               </div>
@@ -171,7 +208,9 @@ export default function ModalEditProfil({ open, close }) {
           </div>
           <div className="flex flex-col sm:gap-8 w-full sm:flex-row ">
             <div className="flex flex-col mb-5 sm:w-96">
-              <h2 className="text-secondary-600 mb-4 ">General</h2>
+              <h2 className="text-secondary-600 mb-4 ">
+                {t("pages.users.profile.edit.section.general.title")}
+              </h2>
               <div className="pl-4 flex flex-col gap-3">
                 <Controller
                   name="biography"
@@ -181,8 +220,12 @@ export default function ModalEditProfil({ open, close }) {
                     <TextField
                       value={value}
                       onChange={onChange}
-                      placeholder="Leave a few words..."
-                      label="About me"
+                      placeholder={t(
+                        "pages.users.profile.edit.section.general.textfield.biography.placeholder"
+                      )}
+                      label={t(
+                        "pages.users.profile.edit.section.general.textfield.biography.label"
+                      )}
                       variant="outlined"
                       className="mb-4"
                       multiline
@@ -195,14 +238,18 @@ export default function ModalEditProfil({ open, close }) {
                 <TextField
                   disabled
                   defaultValue={city}
-                  label="City"
+                  label={t(
+                    "pages.users.profile.edit.section.general.textfield.city.label"
+                  )}
                   variant="outlined"
                   className="mb-4  bg-black bg-opacity-5"
                 />
                 <TextField
                   disabled
                   defaultValue={country}
-                  label="Country"
+                  label={t(
+                    "pages.users.profile.edit.section.general.textfield.country.label"
+                  )}
                   variant="outlined"
                   className="mb-4  bg-black bg-opacity-5"
                 />
@@ -214,9 +261,13 @@ export default function ModalEditProfil({ open, close }) {
                     <TextField
                       value={value}
                       onChange={onChange}
-                      placeholder="Link to share with collaborators"
+                      placeholder={t(
+                        "pages.users.profile.edit.section.general.textfield.link.placeholder"
+                      )}
                       InputLabelProps={{ shrink: true }}
-                      label="Link"
+                      label={t(
+                        "pages.users.profile.edit.section.general.textfield.link.label"
+                      )}
                       variant="outlined"
                       className="mb-4"
                     />
@@ -232,8 +283,7 @@ export default function ModalEditProfil({ open, close }) {
               />
               <div className="flex flex-col w-72 gap-10 p-4 justify-center">
                 <p className="text-secondary-600 font-bold w-8/12 text-base">
-                  Leave a few words for your colleagues. It's always nice to get
-                  to know the person a little.
+                  {t("pages.users.profile.edit.section.general.description")}
                 </p>
               </div>
             </div>

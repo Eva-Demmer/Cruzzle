@@ -70,7 +70,10 @@ function Community() {
   return (
     <div className="w-full flex flex-col h-screen" aria-label="page">
       <FilterCommunityProvider>
-        <div aria-label="header filter">
+        <div
+          aria-label="header filter"
+          className="w-full sticky top-[66px] z-50 sm:top-[62px] bg-white"
+        >
           <header className="w-full px-6">
             <h2>{t("pages.users.community.title")}</h2>
             <FilterBarCommunity

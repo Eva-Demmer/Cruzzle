@@ -7,8 +7,6 @@ const Axios = axios.create({
 Axios.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
-    // Ou pour le stockage de session
-    // const token = sessionStorage.getItem("token");
 
     if (token) {
       return {
@@ -27,8 +25,4 @@ Axios.interceptors.request.use(
   }
 );
 
-const updateHeaders = (token) => {
-  Axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-};
-
-export { Axios, updateHeaders };
+export default Axios;

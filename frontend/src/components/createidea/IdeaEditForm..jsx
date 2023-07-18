@@ -38,8 +38,7 @@ function IdeaEditForm({ children }) {
   useEffect(() => {
     const isEdit = async () => {
       try {
-        const getIdeaById = await apiIdeas(`/${params.id}`);
-
+        const getIdeaById = await apiIdeas(`/edit/${params.id}`);
         // Header
         setValue(`title`, getIdeaById.title);
         setValue("context", getIdeaById.context);
@@ -85,7 +84,7 @@ function IdeaEditForm({ children }) {
           }))
         );
       } catch (error) {
-        console.error(error);
+        navigate(`/error/${error.response.status}`);
       }
     };
     isEdit();

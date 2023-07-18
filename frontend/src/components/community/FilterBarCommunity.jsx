@@ -26,8 +26,8 @@ function FilterBarCommunity({
     <div className="w-full">
       <HorizontalScroll>
         <div className="w-fit flex flex-row-reverse lg:w-full items-center lg:flex-col overflow-y-auto">
-          <div className="w-full flex justify-end my-2">
-            <div className="lg:px-6 mx-2 lg:mx-0 lg:w-min-[180px]">
+          <div className="w-full flex justify-end">
+            <div className="lg:px-6 mx-2 lg:mx-0 lg:w-min-[140px] 2xl:w-min-[180px]">
               <FilterRoles canDisable roleFilter={roleFilter} />
             </div>
           </div>
