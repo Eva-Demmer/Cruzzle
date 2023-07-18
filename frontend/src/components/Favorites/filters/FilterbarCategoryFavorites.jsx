@@ -1,4 +1,5 @@
 import { useContext, useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import { MenuItem, FormControl, Select } from "@mui/material";
 import { Square3Stack3DIcon } from "@heroicons/react/24/outline";
@@ -6,6 +7,7 @@ import { FilterFavoritesContext } from "../../../contexts/FilterFavoritesContext
 import { fetchAll } from "../../../services/api.services";
 
 export default function FilterbarCategoryFavorites({ isDisable }) {
+  const { t } = useTranslation();
   const [categoryList, setCategoryList] = useState([]);
   const { selectedCategories, setSelectedCategories } = useContext(
     FilterFavoritesContext
@@ -40,7 +42,9 @@ export default function FilterbarCategoryFavorites({ isDisable }) {
             <>
               <Square3Stack3DIcon className="w-4 mr-2" />
               {categoryList.length === 0 || selected.length === 0 ? (
-                <span>all categories</span>
+                <span>
+                  {t("pages.ideas.ideaspage.filterbarCategory.allcategories")}
+                </span>
               ) : (
                 selected.map((id) => categoryList[id - 1].label).join(", ")
               )}

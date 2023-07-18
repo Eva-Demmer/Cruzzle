@@ -20,7 +20,6 @@ import IdeaNew from "./pages/ideas/IdeaNew";
 import Favorits from "./pages/ideas/Favorits";
 
 import Profile from "./pages/users/Profile";
-import ProfileEdit from "./pages/users/ProfileEdit";
 import Profiles from "./pages/users/Profiles";
 
 import AdminUsers from "./pages/admin/AdminUsers";
@@ -95,10 +94,6 @@ const router = createBrowserRouter([
       {
         path: "users/:id",
         element: <Profile />,
-      },
-      {
-        path: "users/:id/edit",
-        element: <ProfileEdit />,
       },
       {
         path: "users/",

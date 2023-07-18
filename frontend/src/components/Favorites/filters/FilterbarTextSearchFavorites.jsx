@@ -1,9 +1,11 @@
 import { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { TextField, IconButton } from "@mui/material";
 import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { FilterFavoritesContext } from "../../../contexts/FilterFavoritesContext";
 
 function FilterbarTextSearchFavorites() {
+  const { t } = useTranslation();
   const { setTitleContains } = useContext(FilterFavoritesContext);
   const [value, setValue] = useState("");
 
@@ -29,7 +31,9 @@ function FilterbarTextSearchFavorites() {
   return (
     <TextField
       id="filter-text-search"
-      placeholder="search by key words..."
+      placeholder={t(
+        "pages.ideas.ideaspage.filterpannel.fieldtext.textsearch.placeholder"
+      )}
       value={value}
       onChange={handleChange}
       onBlur={handleSubmit}

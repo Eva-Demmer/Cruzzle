@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
+import { useTranslation } from "react-i18next";
 
 export default function Modal({
   saveButton,
@@ -9,6 +10,7 @@ export default function Modal({
   onSave,
   children,
 }) {
+  const { t } = useTranslation();
   if (!isOpen) return null;
 
   const globalOverlay = useRef();
@@ -43,7 +45,7 @@ export default function Modal({
               sx={{ width: "125px" }}
               onClick={onSave}
             >
-              Save
+              {t("buttons.save")}
             </Button>
           )}
           <Button
@@ -55,7 +57,7 @@ export default function Modal({
             sx={{ width: "125px" }}
             onClick={handleClose}
           >
-            Close
+            {t("buttons.close")}
           </Button>
         </div>
       </div>

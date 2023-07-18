@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import IdeaDisplayer from "../../components/idea/IdeaDisplayer";
 import FilterbarFavorites from "../../components/Favorites/filters/FilterbarFavorites";
@@ -7,6 +8,7 @@ import { FilterFavoritesContext } from "../../contexts/FilterFavoritesContext";
 import { fetchByQuery, fetchAll } from "../../services/api.services";
 
 function Favorits() {
+  const { t } = useTranslation();
   const [trendIdeas, setTrendIdeas] = useState();
   const { user } = useContext(UserContext);
   const {
@@ -79,7 +81,7 @@ function Favorits() {
   return (
     <div className="ideas-page w-full flex flex-col h-screen">
       <header className="w-full px-6 min-[1439px]:w-8/12">
-        <h2>Your Favorites</h2>
+        <h2>{t("pages.ideas.favorites.title")}</h2>
         <FilterbarFavorites />
       </header>
       <div className="ideas-header flex flex-row ">
@@ -95,7 +97,7 @@ function Favorits() {
           )}
         </main>
         <aside className="ideas-aside-right w-4/12 hidden pl-4 pr-4 min-[1439px]:inline-block">
-          <h3>Trends</h3>
+          <h3>{t("pages.ideas.favorites.trends")}</h3>
           {trendIdeas ? <IdeaDisplayer ideas={trendIdeas} /> : ""}
         </aside>
       </div>

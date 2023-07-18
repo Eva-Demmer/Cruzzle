@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
@@ -28,6 +29,7 @@ import SocketEvents from "../socket/SocketEvents";
 import NotificationSound from "../../assets/audio/notification-sound.mp3";
 
 export default function NotificationsMenu() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -104,7 +106,7 @@ export default function NotificationsMenu() {
 
   return (
     <div className="notification-menu">
-      <Tooltip title="notifications" className="mx-1">
+      <Tooltip title={t("notifications.tooltip")} className="mx-1">
         <IconButton
           onClick={handleClick}
           aria-controls={open ? "notification-menu" : undefined}
@@ -172,10 +174,12 @@ export default function NotificationsMenu() {
                 ) : (
                   <ChatBubbleBottomCenterIcon className="w-4 h-4 mr-2" />
                 )}
-                {`from ${not.user.firstname} ${not.user.lastname} - ${not.idea.title}`}
+                {`${t("notifications.from")} ${not.user.firstname} ${
+                  not.user.lastname
+                } - ${not.idea.title}`}
                 <span className="text-xs text-gray-500 ml-2 hidden md:inline">{`(${dayjs(
                   not.created_at
-                ).format("MMM D, h:mm A")})`}</span>
+                ).format(t("notifications.dateFormats.long"))})`}</span>
               </button>
 
               <div className="notification-action-btn">
@@ -213,7 +217,7 @@ export default function NotificationsMenu() {
             </MenuItem>
           ))
         ) : (
-          <MenuItem>No notification</MenuItem>
+          <MenuItem>{t("notifications.menuItem")}</MenuItem>
         )}
       </Menu>
       <SocketEvents
