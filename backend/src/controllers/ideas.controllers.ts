@@ -12,6 +12,7 @@ import {
   deleteIdea,
   updateIdea,
   archiveIdea,
+  findTrendsFavorits,
 } from "../models/idea.model";
 import {
   deleteFilesInFolder,
@@ -65,6 +66,17 @@ const getIdeasTrends = async (req: Request, res: Response) => {
   try {
     const data = await findTrends();
     res.status(200).json(data);
+  } catch (error) {
+    res.status(500).send(" error from controller");
+  }
+};
+
+const getIdeasTrendsFavorits = async (req: Request, res: Response) => {
+  const id: number = parseInt(req.params.id, 10);
+  console.info(id);
+  try {
+    const data = await findTrendsFavorits(id);
+    res.status(200).json(data[0]);
   } catch (error) {
     res.status(500).send(" error from controller");
   }
@@ -397,6 +409,7 @@ export {
   getIdeas,
   getTotalIdeasCount,
   getIdeasTrends,
+  getIdeasTrendsFavorits,
   getIdeaById,
   getIdeaByFilter,
   getIdeasCreatedToday,

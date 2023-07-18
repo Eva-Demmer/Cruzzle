@@ -99,14 +99,11 @@ export default function IdeaCard({ isMini, idea }) {
           className={`${
             isMini
               ? "hidden"
-              : "w-full h-32 bg-cover bg-center opacity-100  duration-100 rounded-t-xl lg:h-auto lg:w-1/4 lg:rounded-l-xl lg:rounded-r-none"
-          }
-          ${isDisabled ? "" : "group-hover:opacity-90"}
-          `}
-          style={{
-            backgroundImage: `url(${primaryImg})`,
-          }}
-        />
+              : "h-40 w-full overflow-hidden opacity-100 duration-100 rounded-t-xl lg:h-48 lg:w-1/4 lg:rounded-l-xl lg:rounded-r-none flex items-center justify-center"
+          } ${isDisabled ? "" : "group-hover:opacity-90"}`}
+        >
+          <img className="w-full lg:scale-110" src={primaryImg} alt={context} />
+        </div>
         <div
           className={`${
             isMini ? "w-auto" : "max-w-4xl lg:w-3/4"

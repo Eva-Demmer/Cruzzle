@@ -55,6 +55,7 @@ const findTrends = async () => {
             id: true,
             category: {
               select: {
+                id: true,
                 label: true,
                 color: true,
               },
@@ -90,6 +91,81 @@ const findTrends = async () => {
         },
       ],
       take: 3,
+    });
+
+    return data;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+const findTrendsFavorits = async (value: number) => {
+  const last3Months: string = dayjs(dayjs()).subtract(90, "day").toISOString();
+
+  try {
+    const data = await prisma.idea.findMany({
+      select: {
+        id: true,
+        title: true,
+        context: true,
+        created_at: true,
+        archived_at: true,
+        deleted_at: true,
+        favorit: true,
+        goal: true,
+        profits: true,
+        risks: true,
+        primary_img: true,
+        views: true,
+        attachment: true,
+        idea_category: {
+          select: {
+            id: true,
+            category: {
+              select: {
+                id: true,
+                label: true,
+                color: true,
+              },
+            },
+          },
+        },
+        _count: {
+          select: {
+            idea_like: true,
+            comment: true,
+            attachment: true,
+            idea_teams: true,
+          },
+        },
+      },
+      where: {
+        archived_at: null,
+        deleted_at: null,
+        created_at: {
+          gte: last3Months,
+        },
+        idea_category: {
+          some: {
+            category: {
+              id: value,
+            },
+          },
+        },
+      },
+
+      orderBy: [
+        {
+          comment: { _count: "desc" },
+        },
+        {
+          idea_like: { _count: "desc" },
+        },
+        {
+          views: "desc",
+        },
+      ],
+      take: 1,
     });
 
     return data;
@@ -325,6 +401,7 @@ export {
   countAllIdeas,
   findTrends,
   findById,
+  findTrendsFavorits,
   findByUserIdAndDate,
   createIdea,
   addPrimaryImgIdea,
