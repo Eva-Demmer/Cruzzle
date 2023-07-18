@@ -13,6 +13,9 @@ module.exports = {
       dropShadow: {
         top: "0px -8px 16px rgba(255, 255, 255, 0.90)",
       },
+      width: {
+        375: "37%",
+      },
       colors: {
         primary: {
           50: "#A73FB9", // text color

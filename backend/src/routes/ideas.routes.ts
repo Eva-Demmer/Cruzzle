@@ -8,6 +8,7 @@ import {
   deleteIdeaById,
   archivedIdeaById,
   getIdeasTrends,
+  getIdeasTrendsFavorits,
   updateIdeaById,
   updateIdeaViewById,
 } from "../controllers/ideas.controllers";
@@ -29,6 +30,7 @@ router.use(protectRoutes);
 router.get("/", getIdeas);
 router.get("/filter", getIdeaByFilter);
 router.get("/trends", getIdeasTrends);
+router.get("/trends/:id", getIdeasTrendsFavorits);
 
 router.get("/edit/:id", verifyAuthor, getIdeaById);
 router.get("/:id", getIdeaById);
