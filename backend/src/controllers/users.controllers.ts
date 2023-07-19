@@ -13,8 +13,8 @@ import {
   updateUserImage,
   findActivitiesById,
   findContributionsById,
+  findLeaderboard,
 } from "../models/user.model";
-
 import {
   uploadImageToFirebase,
   getUrlByNameAndRoute,
@@ -22,9 +22,11 @@ import {
 import { verifyPassword } from "../middlewares/auth.middlewares";
 import findByFilter from "../models/userFilter.model";
 import {
+  FormattedUserLeaderboard,
   FormatedDataItem,
   UserFilterQuery,
 } from "../interfaces/users.interface";
+import calculateLeaderboardScore from "../utils/leaderboard";
 import "dayjs/locale/fr";
 
 dotenv.config();
@@ -37,6 +39,29 @@ const getUsers = async (req: Request, res: Response) => {
     res.status(200).json(data);
   } catch (error) {
     res.status(500).send(error);
+  }
+};
+
+// Show top 3 Cruzzlers for the current month
+const getLeaderboard = async (req: Request, res: Response) => {
+  try {
+    const data = await findLeaderboard();
+    if (data) {
+      const formattedData: FormattedUserLeaderboard[] = data
+        .map((item) => {
+          const { _count: count, ...rest } = item;
+          return {
+            ...rest,
+            score: calculateLeaderboardScore(item),
+          };
+        })
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3);
+      return res.status(200).send(formattedData);
+    }
+    return res.status(200).json(data);
+  } catch (error) {
+    return res.status(500).send(error);
   }
 };
 
@@ -148,6 +173,7 @@ const verifyPasswordUser = async (req: Request, res: Response) => {
   }
 };
 
+// Filter users
 const getUserByFilter = async (req: Request, res: Response) => {
   const filterQuery: UserFilterQuery = req.query;
 
@@ -305,4 +331,5 @@ export {
   verifyPasswordUser,
   updatePasswordUser,
   getContributionsByUserId,
+  getLeaderboard,
 };

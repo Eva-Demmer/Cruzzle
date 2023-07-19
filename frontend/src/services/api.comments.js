@@ -25,7 +25,6 @@ const apiGetCommentsByIdeaId = async (id) => {
   try {
     const response = await Axios.get(`${url}${userRoute}/${id}`);
     if (response.status === 200) {
-      console.info(response.data);
       return response.data;
     }
     throw new Error(`Unexpected response status: ${response.status}`);
@@ -34,6 +33,23 @@ const apiGetCommentsByIdeaId = async (id) => {
       console.error("Internal server error:", error);
     } else {
       console.error("Fetch  error:", error);
+    }
+    throw error;
+  }
+};
+
+const apiGetTotalCommentsReceivedByUserId = async (userId) => {
+  try {
+    const response = await Axios.get(`${url}${userRoute}user/${userId}`);
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error(`Unexpected response status: ${response.status}`);
+  } catch (error) {
+    if (error.response && error.response.status === 500) {
+      console.error("Internal server error:", error);
+    } else {
+      console.error("Fetch error:", error);
     }
     throw error;
   }
@@ -100,4 +116,5 @@ export {
   apiCreateComments,
   apiDeleteComments,
   apiGetCommentsByIdeaId,
+  apiGetTotalCommentsReceivedByUserId,
 };

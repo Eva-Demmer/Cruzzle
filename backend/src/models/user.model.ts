@@ -354,13 +354,95 @@ const updatePassword = async (updatedPassword: UpdatePasswordUser) => {
   }
 };
 
+const findLeaderboard = async () => {
+  try {
+    const currentDate = new Date();
+    const startOfMonth = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      1
+    );
+    const endOfMonth = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth() + 1,
+      0
+    );
+
+    const data = await prisma.user.findMany({
+      select: {
+        id: true,
+        firstname: true,
+        lastname: true,
+        _count: {
+          select: {
+            // Ideas created by the user this month
+            idea: {
+              where: {
+                created_at: {
+                  gte: startOfMonth,
+                  lte: endOfMonth,
+                },
+                archived_at: null,
+                deleted_at: null,
+              },
+            },
+            // Ideas & comments liked by the user this month
+            idea_like: {
+              where: {
+                liked_at: {
+                  gte: startOfMonth,
+                  lte: endOfMonth,
+                },
+              },
+            },
+            comment_like: {
+              where: {
+                comment: {
+                  created_at: {
+                    gte: startOfMonth,
+                    lte: endOfMonth,
+                  },
+                },
+              },
+            },
+            // Comments given by the user this month
+            comment: {
+              where: {
+                created_at: {
+                  gte: startOfMonth,
+                  lte: endOfMonth,
+                },
+              },
+            },
+            // Teams the user has been added to this month
+            idea_teams: {
+              where: {
+                idea: {
+                  created_at: {
+                    gte: startOfMonth,
+                    lte: endOfMonth,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+    return data;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
 export {
   findAll,
+  findActivitiesById,
   findById,
   findByMail,
   update,
-  updatePassword,
   updateUserImage,
-  findActivitiesById,
+  updatePassword,
+  findLeaderboard,
   findContributionsById,
 };

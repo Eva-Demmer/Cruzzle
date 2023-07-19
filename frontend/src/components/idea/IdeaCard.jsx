@@ -85,7 +85,7 @@ export default function IdeaCard({ isMini, idea }) {
     <div
       className={`${
         isMini
-          ? "max-w-xl py-1 border-solid border-primary-50 border-4 border-t-0 border-b-0 border-r-0"
+          ? "py-1 border-solid border-primary-50 border-4 border-t-0 border-b-0 border-r-0"
           : "max-w-6xl min-w-[250px]"
       }
       ${isDisabled ? "opacity-50 hover:opacity-90" : ""}

@@ -14,6 +14,23 @@ const findAll = async () => {
   }
 };
 
+const countAllIdeas = async () => {
+  try {
+    const totalIdeas = await prisma.idea.count({
+      where: {
+        archived_at: null,
+        deleted_at: null,
+      },
+    });
+
+    return totalIdeas;
+  } catch (error) {
+    throw new Error("Model error generating total number of ideas.");
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
 const findTrends = async () => {
   const last3Months: string = dayjs(dayjs()).subtract(90, "day").toISOString();
 
@@ -381,6 +398,7 @@ const updateIdea = async (
 
 export {
   findAll,
+  countAllIdeas,
   findTrends,
   findById,
   findTrendsFavorits,

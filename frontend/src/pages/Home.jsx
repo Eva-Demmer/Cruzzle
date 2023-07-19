@@ -1,63 +1,132 @@
-/* eslint-disable camelcase */
-import { useState, useEffect, useContext } from "react";
-import {
-  LightBulbIcon,
-  PencilIcon,
-  SquaresPlusIcon,
-  TrophyIcon,
-} from "@heroicons/react/24/solid";
-import { UserContext } from "../contexts/UserContext";
-import { apiIdeas } from "../services/api.ideas";
-import OverviewCards from "../components/OverviewCards";
+import { useState, useEffect } from "react";
+import { useMediaQuery } from "@mui/material";
+import Greeting from "../components/dashboard/Greeting";
+import CategoryCard from "../components/dashboard/CategoryCards";
+import OverviewCards from "../components/dashboard/OverviewCards";
+import InspirationCards from "../components/dashboard/InspirationCards";
+import IdeaDisplayer from "../components/idea/IdeaDisplayer";
+import { apiCategoriesOrder } from "../services/api.categories";
+import { fetchAll } from "../services/api.services";
+import { xl } from "../utils/mediaQueries";
 
 function Home() {
-  const { user } = useContext(UserContext);
-  const [ideasCreatedToday, setIdeasCreatedToday] = useState();
+  const xlQuery = useMediaQuery(xl.query);
+  const [categories, setCategories] = useState([]);
+  const [trendIdeas, setTrendIdeas] = useState();
+
+  const displayCategories = categories.slice(0, 5);
 
   useEffect(() => {
-    const fetchIdeasCreatedToday = async () => {
+    const fetchCategories = async () => {
       try {
-        const response = await apiIdeas(`${user.id}/count`);
-        setIdeasCreatedToday(response.count);
+        const response = await apiCategoriesOrder();
+        setCategories(response);
       } catch (error) {
-        setIdeasCreatedToday("N/A");
-        console.error("Error fetching ideas created today:", error);
+        console.error("Error fetching categories:", error);
       }
     };
-    if (user.id) {
-      fetchIdeasCreatedToday();
-    }
-  }, [user.id]);
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    fetchAll("/api/ideas/trends")
+      .then((data) => {
+        setTrendIdeas(data);
+      })
+      .catch((error) =>
+        console.error("error from api.services.fetcherByQuery", error)
+      );
+  }, []);
 
   return (
-    <div className="h-screen p-5 lg:w-3/5 xl:w-2/5">
-      <h3 className="text-black mb-5">Overview</h3>
-      <div className="p-2">
-        <div className="grid grid-cols-2 gap-x-8 gap-y-12 md:gap-y-8 lg:gap-x-16">
-          <OverviewCards
-            icon={TrophyIcon}
-            title="Finished puzzles"
-            value={10}
-          />
-          <OverviewCards icon={LightBulbIcon} title="Total ideas" value={10} />
-          <OverviewCards
-            icon={SquaresPlusIcon}
-            title="Participations"
-            value={10}
-          />
-          <div className="h-36 w-40 md:w-52 shadow-md rounded-2xl flex flex-col relative">
-            <PencilIcon className="h-8 md:h-10 w-8 md:w-10 absolute top-[-10px] md:top-[-18px] left-[-10px] md:left-[-18px] text-primary-900 fill-current" />
-            <div className="flex flex-col justify-between h-full">
-              <h3 className="text-black text-lg md:text-xl px-5 pt-5">
-                Ideas created today
-              </h3>
-              <h2 className="text-black text-2xl md:text-3xl px-5 pb-5">
-                {ideasCreatedToday}
-              </h2>
+    <div>
+      {/* desktop */}
+      {xlQuery && (
+        <div className="absolute top-0 h-screen flex justify-between w-full">
+          <div className="pl-10 pb-10 pt-16 w-6/12 bg-primary-900 bg-opacity-5 flex flex-col justify-between">
+            {/* Welcome */}
+            <Greeting />
+            {/* Categories */}
+            <div>
+              <div>
+                <h4 className="pb-3 text-black">Top categories</h4>
+                <div className="flex flex-row gap-4 overflow-x-auto no-scrollbar">
+                  {displayCategories.slice(0, 4).map((category) => {
+                    return (
+                      <CategoryCard
+                        key={category.id}
+                        categoryName={category.label}
+                        categoryColor={category.color}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+              {/* Overview */}
+              <div className="pr-10">
+                <h4 className="mt-12 pb-5 text-black">Overview</h4>
+                <OverviewCards />
+              </div>
+            </div>
+          </div>
+          <div className="px-10 pt-14 bg-white flex flex-col items-end justify-between">
+            <InspirationCards />
+            {/* Trending */}
+            <div>
+              <h4 className="pl-5 text-black">Trending ideas</h4>
+              <div className="overflow-y-auto h-96">
+                {trendIdeas !== undefined ? (
+                  <IdeaDisplayer ideas={trendIdeas} isMini />
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
+
+      {/* mobile */}
+      {!xlQuery && (
+        <div className="h-screen flex flex-col">
+          <div className="p-5">
+            {/* Welcome */}
+            <Greeting />
+            {/* Categories */}
+            <h4 className="mt-12 pb-3 text-black">Top 5 categories</h4>
+            <div className="flex flex-row gap-4 overflow-x-auto no-scrollbar">
+              {displayCategories.map((category) => {
+                return (
+                  <CategoryCard
+                    key={category.id}
+                    categoryName={category.label}
+                    categoryColor={category.color}
+                  />
+                );
+              })}
+            </div>
+            {/* Overview */}
+            <h4 className="mt-10 pb-5 text-black">Overview</h4>
+            <OverviewCards />
+          </div>
+          {/* Inspiration */}
+          <div>
+            <h4 className="mt-5 mb-2 px-5 text-black">Your stats</h4>
+            <InspirationCards />
+          </div>
+          {/* Trending */}
+          <div>
+            <h4 className="pl-5 mt-10 pb-5 text-black">Trending ideas</h4>
+            <div className="overflow-y-auto h-96">
+              {trendIdeas !== undefined ? (
+                <IdeaDisplayer ideas={trendIdeas} isMini />
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

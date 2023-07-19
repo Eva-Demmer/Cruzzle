@@ -12,6 +12,7 @@ import {
   updatePasswordUser,
   getActivitiesByUserId,
   getContributionsByUserId,
+  getLeaderboard,
 } from "../controllers/users.controllers";
 
 import {
@@ -39,6 +40,7 @@ router.get("/filter", getUserByFilter);
 router.get("/activities/:id", getActivitiesByUserId);
 router.get("/contributions/:id", getContributionsByUserId);
 router.get("/image", getImageHighRes);
+router.get("/leaderboard", getLeaderboard);
 router.get("/:id", getUserById);
 router.post("/image/:id", uploadImage, updateImage);
 router.post("/verifyPassword", verifyPasswordUser);

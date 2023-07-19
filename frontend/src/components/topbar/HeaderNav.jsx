@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { Fab, IconButton, Button } from "@mui/material";
 import { PlusIcon } from "@heroicons/react/24/outline";
@@ -23,10 +23,15 @@ function HeaderNav() {
   const { user } = useContext(UserContext);
 
   const navigate = useNavigate();
+  const location = useLocation();
   const smallQuery = useMediaQuery(sm);
 
   return (
-    <div className="flex flex-col shadow-2 bg-primary-800 sm:bg-white z-48 sticky top-0 right-0 ">
+    <div
+      className={`flex flex-col shadow-2 bg-primary-800 z-48 sticky top-0 right-0 ${
+        location.pathname === "/dashboard" ? "xl:bg-transparent" : "sm:bg-white"
+      }`}
+    >
       <div className="w-full py-2 px-4 flex items-center justify-between md:px-6 2xl:px-11">
         <div className="mx-2">
           {!smallQuery && (

@@ -45,6 +45,21 @@ const findByIdeaId = async (id: number) => {
   }
 };
 
+const findTotalCommentsReceivedByUserId = async (userId: number) => {
+  try {
+    const data = await prisma.comment.count({
+      where: {
+        idea: {
+          user_id: userId,
+        },
+      },
+    });
+    return data;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
 const addComment = async (comment: CreateComments) => {
   const { idea_id: ideaId, user_id: userId, body } = comment;
   try {
@@ -85,4 +100,11 @@ const deleteCommentById = async (id: number) => {
   }
 };
 
-export { findAll, findByIdeaId, editComment, deleteCommentById, addComment };
+export {
+  findAll,
+  findByIdeaId,
+  findTotalCommentsReceivedByUserId,
+  editComment,
+  deleteCommentById,
+  addComment,
+};

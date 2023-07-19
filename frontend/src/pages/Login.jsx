@@ -1,13 +1,12 @@
 import React from "react";
-import { Container } from "@mui/material";
-import { useMediaQuery } from "react-responsive";
+import { Container, useMediaQuery } from "@mui/material";
 import LoginForm from "../components/forms/LoginForm";
 import fullLogo from "../assets/logo/fullLogo.svg";
 import login from "../assets/images/login.svg";
 import { sm } from "../utils/mediaQueries";
 
 function Login() {
-  const smallQuery = useMediaQuery(sm);
+  const smallQuery = useMediaQuery(sm.query);
 
   return (
     <div>
@@ -43,7 +42,7 @@ function Login() {
               alt="logo"
             />
             <img
-              className="w-auto h-1/2 lg:h-2/3 absolute bottom-0 -left-8 lg:-left-20"
+              className="max-w-full w-full h-auto absolute bottom-0 -left-8 lg:-left-20"
               src={login}
               alt="login"
             />

@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from "express";
 import {
   getIdeas,
+  getTotalIdeasCount,
   getIdeaById,
   getIdeaByFilter,
   getIdeasCreatedToday,
@@ -28,6 +29,7 @@ router.use(timeLog);
 router.use(protectRoutes);
 
 router.get("/", getIdeas);
+router.get("/total", getTotalIdeasCount);
 router.get("/filter", getIdeaByFilter);
 router.get("/trends", getIdeasTrends);
 router.get("/trends/:id", getIdeasTrendsFavorits);

@@ -20,6 +20,23 @@ const apiGetIdeaLikesByIdeaId = async (id) => {
   }
 };
 
+const apiGetTotalLikesReceivedByUserId = async (userId) => {
+  try {
+    const response = await Axios.get(`${url}${userRoute}/users/${userId}`);
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error(`Unexpected response status: ${response.status}`);
+  } catch (error) {
+    if (error.response && error.response.status === 500) {
+      console.error("Internal server error:", error);
+    } else {
+      console.error("Fetch error:", error);
+    }
+    throw error;
+  }
+};
+
 const apiDeleteIdeaLikesById = async (id) => {
   try {
     const response = await Axios.delete(`${url}${userRoute}/${id}`);
@@ -60,4 +77,9 @@ const apiCreateIdeaLikes = async (userId, ideaId) => {
   }
 };
 
-export { apiGetIdeaLikesByIdeaId, apiDeleteIdeaLikesById, apiCreateIdeaLikes };
+export {
+  apiGetIdeaLikesByIdeaId,
+  apiGetTotalLikesReceivedByUserId,
+  apiDeleteIdeaLikesById,
+  apiCreateIdeaLikes,
+};

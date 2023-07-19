@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import {
   getIdeaLikes,
   getIdeaLikesById,
+  getTotalLikesReceivedByUserId,
   createIdeaLike,
   deleteIdeaLike,
 } from "../controllers/idea_likes.controllers";
@@ -20,6 +21,7 @@ router.use(protectRoutes);
 
 router.get("/", getIdeaLikes);
 router.get("/:id", getIdeaLikesById);
+router.get("/users/:userId", getTotalLikesReceivedByUserId);
 router.post("/", createIdeaLike);
 
 router.delete("/:id", deleteIdeaLike);
