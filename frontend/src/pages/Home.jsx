@@ -42,12 +42,12 @@ function Home() {
     <div>
       {/* desktop */}
       {xlQuery && (
-        <div className="absolute top-0 h-screen flex">
-          <div className="px-10 pb-10 pt-16 bg-primary-900 bg-opacity-5 flex flex-col justify-between">
+        <div className="absolute top-0 h-screen flex justify-between w-full">
+          <div className="pl-10 pb-10 pt-16 w-6/12 bg-primary-900 bg-opacity-5 flex flex-col justify-between">
             {/* Welcome */}
             <Greeting />
             {/* Categories */}
-            <div className="">
+            <div>
               <div>
                 <h4 className="pb-3 text-black">Top categories</h4>
                 <div className="flex flex-row gap-4 overflow-x-auto no-scrollbar">
@@ -63,19 +63,16 @@ function Home() {
                 </div>
               </div>
               {/* Overview */}
-              <div>
+              <div className="pr-10">
                 <h4 className="mt-12 pb-5 text-black">Overview</h4>
                 <OverviewCards />
               </div>
             </div>
           </div>
-          <div className="px-10 bg-white flex flex-col items-end justify-between xl:pt-14">
-            {/* Inspiration */}
-            <div>
-              <InspirationCards />
-            </div>
+          <div className="px-10 pt-14 bg-white flex flex-col items-end justify-between">
+            <InspirationCards />
             {/* Trending */}
-            <div className="mt-16 xl:mt-3">
+            <div>
               <h4 className="pl-5 text-black">Trending ideas</h4>
               <div className="overflow-y-auto h-96">
                 {trendIdeas !== undefined ? (

@@ -80,7 +80,7 @@ function InspirationCards() {
   }, []);
 
   return (
-    <div className="px-5 flex items-center gap-5 xl:gap-3 overflow-x-auto no-scrollbar xl:overflow-x-hidden xl:-ml-20">
+    <div className="px-5 xl:-ml-24 flex items-center gap-5 xl:gap-3 overflow-x-auto no-scrollbar xl:overflow-x-hidden">
       {/* Leaderboard card */}
       <Paper
         elevation={3}
@@ -157,7 +157,7 @@ function InspirationCards() {
               alt="puzzle pieces"
               className="w-8/12 absolute -top-0"
             />
-            <div className="flex flex-col items-center py-5">
+            <div className="flex flex-col items-center py-[22px]">
               <CountAnimation targetCount={totalIdeas} />
               <span className="pt-4 text-secondary-600">
                 ideas created on Cruzzle
