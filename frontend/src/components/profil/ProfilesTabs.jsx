@@ -126,7 +126,7 @@ export default function ProfilesTabs() {
                 <div className="h-30 w-60 shadow-md rounded-2xl flex flex-col relative">
                   <img
                     className="h-10 w-10 absolute top-[-18px] left-[-18px]"
-                    alt=""
+                    alt={t("alts.puzzleIcon")}
                     src={PuzzleIcon}
                   />
                   <h3 className="text-black ml-5 mt-2">

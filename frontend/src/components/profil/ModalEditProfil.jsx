@@ -189,7 +189,7 @@ export default function ModalEditProfil({ open, close }) {
             <div className=" bg-black bg-opacity-5 sm:w-2/4 sm:h-1/5 w-64 rounded-3xl sm:mt-28 relative">
               <img
                 className="absolute top-[-18px] sm:right-[-50px] w-52 right-[-60px]"
-                alt="contact admin"
+                alt={t("alts.contactadmin")}
                 src={EditProfil1}
               />
               <div className="flex flex-col w-72 gap-8 p-4">
@@ -278,7 +278,7 @@ export default function ModalEditProfil({ open, close }) {
             <div className="bg-black bg-opacity-5 sm:w-2/4 sm:h-1/5 w-64 rounded-3xl sm:mt-28 relative">
               <img
                 className="absolute top-[-33px] sm:right-[-30px] w-48 right-[-70px]"
-                alt="contact admin"
+                alt={t("alts.contactAdmin")}
                 src={EditProfil2}
               />
               <div className="flex flex-col w-72 gap-10 p-4 justify-center">

@@ -118,7 +118,7 @@ export default function PuzzlesTab() {
         <img
           className="w-4/5"
           src={geoImg}
-          alt={t("pages.users.profile.tabs.puzzles.puzzlesImages.geoImg")}
+          alt={t("pages.users.profile.tabs.puzzles.puzzlesImages.treasure")}
         />
       </div>
     </div>

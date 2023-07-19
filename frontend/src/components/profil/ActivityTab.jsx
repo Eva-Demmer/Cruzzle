@@ -52,7 +52,7 @@ export default function ActivityTab() {
         <div className="flex justify-center w-48">
           <img
             src={NoActivity}
-            alt={t("pages.users.profile.tabs.activity.noActivityImg")}
+            alt={t("alts.noActivityImg")}
             className="max-w-full max-h-full"
           />
         </div>

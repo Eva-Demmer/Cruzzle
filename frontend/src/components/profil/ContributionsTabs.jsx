@@ -51,7 +51,7 @@ export default function ContributionsTabs() {
         <div className="flex justify-center w-48">
           <img
             src={NoActivity}
-            alt={t("pages.users.profile.tabs.contributions.noActivities")}
+            alt={t("alts.noActivities")}
             className="max-w-full max-h-full"
           />
         </div>

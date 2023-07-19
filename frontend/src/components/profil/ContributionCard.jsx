@@ -44,7 +44,7 @@ function ContributionCard({ ideas }) {
                   <div className="flex align-items-center w-full">
                     <div className="flex flex-col">
                       <ListItemAvatar>
-                        <Avatar alt="avatar user" src={avatarUrl} />
+                        <Avatar alt={t("alts.description")} src={avatarUrl} />
                       </ListItemAvatar>
                       {ideas.length - 1 !== index && (
                         <Divider
@@ -83,7 +83,7 @@ function ContributionCard({ ideas }) {
                   <p className="text-sm text-secondary-600 xl:pl-16 md:pl-14 pl-14 flex items-center mb-4">
                     <img
                       src={logoMobile}
-                      alt="Logo"
+                      alt={t("alts.logo")}
                       className="inline-block mr-1 w-5"
                     />{" "}
                     {dayjs(item.created_at)

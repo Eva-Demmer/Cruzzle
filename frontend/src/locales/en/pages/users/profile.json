@@ -86,15 +86,12 @@
       "joinedCompagny": "Joined Company"
     },
     "activity": {
-      "noActivityImg": "No activity",
       "activityCard": {
         "liked": " liked 👍 in ",
         "comment": " added comment to ",
         "idea": " idea.",
         "today": "Today",
-        "yesterday": "Yesterday",
-        "avatar": "Avatar user",
-        "logo": "Logo"
+        "yesterday": "Yesterday"
       }
     },
     "puzzles": {
