@@ -4,6 +4,9 @@
     "short": "MM-DD-YYYY",
     "shortVariant": "MM/DD/YYYY"
   },
+  "hourFormats": {
+    "standard": "HH:mm"
+  },
   "edit": {
     "title": "Update your general information",
     "picture": {
@@ -63,6 +66,7 @@
   },
   "tabs": {
     "title": {
+      "ariaLabel": "Tab profil",
       "general": "General",
       "activity": "Activity",
       "contributions": "Contributions",
@@ -80,6 +84,18 @@
       "birthday": "Birthday",
       "phone": "Phone",
       "joinedCompagny": "Joined Company"
+    },
+    "activity": {
+      "noActivityImg": "No activity",
+      "activityCard": {
+        "liked": " liked 👍 in ",
+        "comment": " added comment to ",
+        "idea": " idea.",
+        "today": "Today",
+        "yesterday": "Yesterday",
+        "avatar": "Avatar user",
+        "logo": "Logo"
+      }
     },
     "puzzles": {
       "puzzlesLikes": {
@@ -101,6 +117,11 @@
       "puzzlesTeams": {
         "title": "Puzzle \"Teams\"",
         "description": "(To unveil the puzzle, enhance your engagement by joining more teams.)"
+      },
+      "puzzlesImages": {
+        "treasure": "Treasure discovering",
+        "collectionImg": "Collection",
+        "geoImg": "Geometric"
       }
     },
     "contributions": {
@@ -109,7 +130,8 @@
       "displayDate": {
         "today": "Today",
         "yesterday": "Yesterday"
-      }
+      },
+      "noActivities": "No activities"
     }
   }
 }

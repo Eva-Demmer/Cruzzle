@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import "dayjs/locale/fr";
 import dayjs from "dayjs";
+import { useTranslation } from "react-i18next";
 import { UserProfileContext } from "../../contexts/UserProfile";
 import { apiGeActivitiesByUserId } from "../../services/api.users";
 import ActivityCard from "./ActivityCard";
@@ -10,6 +11,7 @@ export default function ActivityTab() {
   const { user } = useContext(UserProfileContext);
   const [userActivities, setUserActivities] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     apiGeActivitiesByUserId(user.id)
@@ -50,7 +52,7 @@ export default function ActivityTab() {
         <div className="flex justify-center w-48">
           <img
             src={NoActivity}
-            alt="no activities"
+            alt={t("pages.users.profile.tabs.activity.noActivityImg")}
             className="max-w-full max-h-full"
           />
         </div>

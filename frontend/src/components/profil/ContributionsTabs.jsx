@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import dayjs from "dayjs";
+import { useTranslation } from "react-i18next";
 import { UserProfileContext } from "../../contexts/UserProfile";
 import { apiGeContributionsByUserId } from "../../services/api.users";
 import ContributionCard from "./ContributionCard";
@@ -9,6 +10,7 @@ export default function ContributionsTabs() {
   const { user } = useContext(UserProfileContext);
   const [userContributions, setUserContributions] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     apiGeContributionsByUserId(user.id)
@@ -49,7 +51,7 @@ export default function ContributionsTabs() {
         <div className="flex justify-center w-48">
           <img
             src={NoActivity}
-            alt="no activities"
+            alt={t("pages.users.profile.tabs.contributions.noActivities")}
             className="max-w-full max-h-full"
           />
         </div>

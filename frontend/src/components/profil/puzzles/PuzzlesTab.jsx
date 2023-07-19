@@ -105,9 +105,21 @@ export default function PuzzlesTab() {
       </div>
 
       <div className="image-container w-2/5 hidden lg:flex flex-col justify-around items-center">
-        <img className="w-4/5" src={treasureImg} alt="treasure discovering" />
-        <img className="w-4/5" src={collectionImg} alt="collection" />
-        <img className="w-4/5" src={geoImg} alt="geometric" />
+        <img
+          className="w-4/5"
+          src={treasureImg}
+          alt={t("pages.users.profile.tabs.puzzles.puzzlesImages.treasure")}
+        />
+        <img
+          className="w-4/5"
+          src={collectionImg}
+          alt={t("pages.users.profile.tabs.puzzles.puzzlesImages.collection")}
+        />
+        <img
+          className="w-4/5"
+          src={geoImg}
+          alt={t("pages.users.profile.tabs.puzzles.puzzlesImages.geoImg")}
+        />
       </div>
     </div>
   );
