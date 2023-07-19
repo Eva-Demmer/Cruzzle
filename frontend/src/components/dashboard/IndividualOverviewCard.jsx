@@ -11,7 +11,7 @@ function IdeaCard({
   return (
     <Paper
       elevation={3}
-      className="py-2 px-5 md:px-8 h-28 xl:h-24 xxl:h-28 w-full md:w-auto rounded-2xl flex flex-col relative"
+      className="py-2 px-5 md:px-8 h-28 xl:h-24 w-full md:w-auto rounded-2xl flex flex-col relative"
     >
       {isIcon && (
         <Icon
@@ -28,10 +28,10 @@ function IdeaCard({
       )}
 
       <div className="flex flex-col justify-around h-full">
-        <h3 className="text-black text-base md:text-xl pb-0 xl:pt-0 xxl:pt-2">
+        <h3 className="text-black text-base md:text-xl pb-0 xl:pt-0">
           {cardTitle}
         </h3>
-        <h2 className="text-black text-3xl md:text-4xl xl:text-3xl xl:pb-0 xxl:pb-2 xxl:text-4xl pt-0">
+        <h2 className="text-black text-3xl md:text-4xl xl:text-3xl xl:pb-0 pt-0">
           {state}
         </h2>
       </div>

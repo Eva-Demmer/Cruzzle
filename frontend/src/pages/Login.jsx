@@ -1,13 +1,12 @@
 import React from "react";
-import { Container } from "@mui/material";
-import { useMediaQuery } from "react-responsive";
+import { Container, useMediaQuery } from "@mui/material";
 import LoginForm from "../components/forms/LoginForm";
 import fullLogo from "../assets/logo/fullLogo.svg";
 import login from "../assets/images/login.svg";
 import { sm } from "../utils/mediaQueries";
 
 function Login() {
-  const smallQuery = useMediaQuery(sm);
+  const smallQuery = useMediaQuery(sm.query);
 
   return (
     <div>
