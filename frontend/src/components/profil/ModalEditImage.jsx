@@ -240,14 +240,17 @@ function ModalEditImage({
                 </UploadButton>
               )}
             />
-            <Button
-              type="submit"
-              className="w-[110px] rounded-full mx-2 my-2 sm:w-[174px]"
-              variant="contained"
-              color="primary"
-            >
-              {t("buttons.save")}
-            </Button>
+            {inputAvatarEditor && (
+              <Button
+                disabled={!inputAvatarEditor}
+                type="submit"
+                className="w-[110px] rounded-full mx-2 my-2 sm:w-[174px]"
+                variant="contained"
+                color="primary"
+              >
+                {t("buttons.save")}
+              </Button>
+            )}
           </div>
         </form>
       </div>
