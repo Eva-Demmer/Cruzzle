@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { UserContext } from "../../contexts/UserContext";
 
 function Greeting() {
@@ -8,6 +9,7 @@ function Greeting() {
   const { user } = useContext(UserContext);
   const { firstname } = user;
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const hour = new Date().getHours();
@@ -28,7 +30,7 @@ function Greeting() {
       <span className="text-4xl font-semibold">{greeting},</span>
       <span className="pt-4 xl:pt-2 text-4xl font-semibold">{firstname}</span>
       <p className="mt-6 mb-8 xl:mt-4 xl:mb-6">
-        Here you can track your activity and find ideas!
+        {t("pages.home.greetings.introduction")}
       </p>
       <div className="flex gap-5 xl:gap-6">
         <Button
@@ -36,14 +38,14 @@ function Greeting() {
           onClick={() => navigate("/ideas")}
           className="rounded-full bg-black"
         >
-          See suggestions
+          {t("buttons.suggestions")}
         </Button>
         <Button
           variant="contained"
           onClick={() => navigate("/ideas/new")}
           className="rounded-full"
         >
-          Create idea
+          {t("buttons.create")}
         </Button>
       </div>
     </div>

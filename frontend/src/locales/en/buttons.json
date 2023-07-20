@@ -22,5 +22,7 @@
   "reset": "Reset",
   "return": "Return",
   "save": "Save",
-  "viewprofile": "View profile"
+  "viewprofile": "View profile",
+  "suggestions": "See suggestions",
+  "create": "Create idea"
 }

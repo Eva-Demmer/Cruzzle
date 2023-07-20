@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useMediaQuery } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import Greeting from "../components/dashboard/Greeting";
 import CategoryCard from "../components/dashboard/CategoryCards";
 import OverviewCards from "../components/dashboard/OverviewCards";
@@ -11,6 +12,7 @@ import { xl } from "../utils/mediaQueries";
 
 function Home() {
   const xlQuery = useMediaQuery(xl.query);
+  const { t } = useTranslation();
   const [categories, setCategories] = useState([]);
   const [trendIdeas, setTrendIdeas] = useState();
 
@@ -49,7 +51,9 @@ function Home() {
             {/* Categories */}
             <div>
               <div>
-                <h4 className="pb-3 text-black">Top categories</h4>
+                <h4 className="pb-3 text-black">
+                  {t("pages.home.dashboard.topCategories")}
+                </h4>
                 <div className="flex flex-row gap-4 overflow-x-auto no-scrollbar">
                   {displayCategories.slice(0, 4).map((category) => {
                     return (
@@ -64,7 +68,9 @@ function Home() {
               </div>
               {/* Overview */}
               <div className="pr-10">
-                <h4 className="mt-12 pb-5 text-black">Overview</h4>
+                <h4 className="mt-12 pb-5 text-black">
+                  {t("pages.home.dashboard.overview")}
+                </h4>
                 <OverviewCards />
               </div>
             </div>
@@ -73,7 +79,9 @@ function Home() {
             <InspirationCards />
             {/* Trending */}
             <div>
-              <h4 className="pl-5 text-black">Trending ideas</h4>
+              <h4 className="pl-5 text-black">
+                {t("pages.home.dashboard.trends")}
+              </h4>
               <div className="overflow-y-auto h-96">
                 {trendIdeas !== undefined ? (
                   <IdeaDisplayer ideas={trendIdeas} isMini />
@@ -93,7 +101,9 @@ function Home() {
             {/* Welcome */}
             <Greeting />
             {/* Categories */}
-            <h4 className="mt-12 pb-3 text-black">Top 5 categories</h4>
+            <h4 className="mt-12 pb-3 text-black">
+              {t("pages.home.dashboard.top5Categories")}
+            </h4>
             <div className="flex flex-row gap-4 overflow-x-auto no-scrollbar">
               {displayCategories.map((category) => {
                 return (
@@ -106,17 +116,23 @@ function Home() {
               })}
             </div>
             {/* Overview */}
-            <h4 className="mt-10 pb-5 text-black">Overview</h4>
+            <h4 className="mt-10 pb-5 text-black">
+              {t("pages.home.dashboard.overview")}
+            </h4>
             <OverviewCards />
           </div>
           {/* Inspiration */}
           <div>
-            <h4 className="mt-5 mb-2 px-5 text-black">Your stats</h4>
+            <h4 className="mt-5 mb-2 px-5 text-black">
+              {t("pages.home.dashboard.stats")}
+            </h4>
             <InspirationCards />
           </div>
           {/* Trending */}
           <div>
-            <h4 className="pl-5 mt-10 pb-5 text-black">Trending ideas</h4>
+            <h4 className="pl-5 mt-10 pb-5 text-black">
+              {t("pages.home.dashboard.trends")}
+            </h4>
             <div className="overflow-y-auto h-96">
               {trendIdeas !== undefined ? (
                 <IdeaDisplayer ideas={trendIdeas} isMini />
