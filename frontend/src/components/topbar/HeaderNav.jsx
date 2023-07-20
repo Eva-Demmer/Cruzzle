@@ -39,7 +39,7 @@ function HeaderNav() {
               type="button"
               aria-label="logo-icon"
               onClick={() => {
-                navigate("/");
+                navigate("/dashboard");
                 setActiveMenu(false);
               }}
             >

@@ -5,12 +5,31 @@
     "favorites": "Favoris",
     "community": "Communauté",
     "admin": {
-      "pannel": "Pannel Admin",
+      "pannel": "Administration",
       "users": "Utilisateurs",
       "ideas": "Idées",
       "categories": "Catégories"
     },
     "settings": "Paramètres"
   },
-  "topbar": {}
+  "topbar": {
+    "accountsettings": {
+      "tooltip": {
+        "title": "Paramètres du compte"
+      },
+      "profil": "Profil",
+      "settings": "Paramètres",
+      "logout": "Déconnexion"
+    },
+    "languages": {
+      "tooltip": {
+        "title": "Langues"
+      }
+    },
+    "notifications": {
+      "tooltip": {
+        "title": "Notifications"
+      }
+    }
+  }
 }

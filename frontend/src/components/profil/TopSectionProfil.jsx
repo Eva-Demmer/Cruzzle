@@ -91,7 +91,7 @@ function TopSectionProfil() {
           </Button>
         )}
         <div
-          className="w-full h-56 bg-center bg-no-repeat"
+          className="w-full h-56 bg-center bg-no-repeat bg-cover"
           style={{
             backgroundImage: `url(${bannerUrl})`,
           }}

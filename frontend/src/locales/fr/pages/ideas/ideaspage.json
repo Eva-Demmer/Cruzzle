@@ -1,0 +1,60 @@
+{
+  "title": "Idées",
+  "tendences": "Tendances",
+  "dateFormats": {
+    "long": "YYYY-MM-DD HH:mm:ss",
+    "short": "DD/MM/YYYY"
+  },
+  "filterdate": {
+    "pastmonth": "Mois dernier",
+    "pastweek": "Semaine dernière",
+    "today": "Aujourd'hui",
+    "custom": "Personnalisé"
+  },
+  "morefilters": "Plus de filtres",
+  "filterauthor": {
+    "allauthors": "Tous les auteurs",
+    "myagency": "Mon agence",
+    "me": "Moi"
+  },
+  "filterbarCategory": {
+    "allcategories": "Toutes les catégories"
+  },
+  "filterbarTrending": {
+    "recent": "Récent",
+    "viewed": "Consulté",
+    "commented": "Commenté",
+    "liked": "Apprécié",
+    "values": {
+      "mostrecent": "Le plus récent",
+      "mostviewed": "Le plus consulté",
+      "mostcommented": "Le plus commenté",
+      "mostliked": "Le plus apprécié"
+    }
+  },
+  "filterpannel": {
+    "title": "Filtres",
+    "attachments": "Contient des pièces jointes",
+    "notcommentedyet": "Pas encore commenté",
+    "fieldtext": {
+      "textsearch": {
+        "title": "Le titre contient",
+        "placeholder": "Recherche par mots-clés..."
+      },
+      "datepicker": {
+        "title": "Publié entre"
+      }
+    }
+  },
+  "ideacard": {
+    "date": "Date",
+    "status": {
+      "title": "Statut",
+      "close": "Fermé",
+      "inprogress": "En cours"
+    },
+    "replies": "réponses",
+    "team": "Équipe",
+    "author": "Auteur"
+  }
+}

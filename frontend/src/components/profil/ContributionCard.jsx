@@ -32,7 +32,7 @@ function ContributionCard({ ideas }) {
       <Divider>
         <Chip
           label={displayDate}
-          className="bg-white border border-gray-400 border-solid font-bold text-lg p-1"
+          className="bg-white border border-gray-400 border-solid font-bold text-md text-secondary-600 p-1"
         />
       </Divider>
       {ideas &&
