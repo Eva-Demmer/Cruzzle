@@ -17,6 +17,7 @@ function IdeaTabs() {
     {
       title: t("pages.ideas.ideanew.tabs.goal.info"),
       label: t("pages.ideas.ideanew.tabs.goal.label"),
+      name: "goal",
       content: (
         <ul>
           <li>{t("pages.ideas.ideanew.tabs.goal.content1")}</li>
@@ -27,6 +28,7 @@ function IdeaTabs() {
     {
       title: t("pages.ideas.ideanew.tabs.profits.info"),
       label: t("pages.ideas.ideanew.tabs.profits.label"),
+      name: "profits",
       content: (
         <ul>
           <li>{t("pages.ideas.ideanew.tabs.profits.content1")}</li>
@@ -37,6 +39,7 @@ function IdeaTabs() {
     {
       title: t("pages.ideas.ideanew.tabs.risks.info"),
       label: t("pages.ideas.ideanew.tabs.risks.label"),
+      name: "risks",
       content: (
         <ul>
           <li>{t("pages.ideas.ideanew.tabs.risks.content1")}</li>
@@ -82,7 +85,7 @@ function IdeaTabs() {
               {tab.content}
             </Alert>
             <Controller
-              name={tab.label.toLowerCase()}
+              name={tab.name.toLowerCase()}
               control={control}
               defaultValue=""
               render={({ field: { onChange, value } }) => (
