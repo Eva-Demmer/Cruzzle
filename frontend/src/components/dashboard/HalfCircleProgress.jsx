@@ -50,8 +50,16 @@ export default function HalfCircleProgress({ userGamification }) {
 
 HalfCircleProgress.propTypes = {
   userGamification: PropTypes.shape({
-    currentLevel: PropTypes.number.isRequired,
-    currentScore: PropTypes.number.isRequired,
-    nextLevelScore: PropTypes.number.isRequired,
-  }).isRequired,
+    currentLevel: PropTypes.number,
+    currentScore: PropTypes.number,
+    nextLevelScore: PropTypes.number,
+  }),
+};
+
+HalfCircleProgress.defaultProps = {
+  userGamification: {
+    currentLevel: 0,
+    currentScore: 0,
+    nextLevelScore: 0,
+  },
 };
