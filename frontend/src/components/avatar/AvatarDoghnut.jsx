@@ -1,13 +1,13 @@
-import { useState, useEffect, useRef, useContext } from "react";
+import { useEffect, useRef, useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
+import { getUserLevelObject } from "../../utils/gamification";
 
 function AvatarDoghnut() {
-  const barRef = useRef();
-  const [counter, setCounter] = useState(0);
-  const [ratio, setRatio] = useState(0);
+  const { user, userGamification, setUserGamification } =
+    useContext(UserContext);
 
-  const { score } = useContext(UserContext);
-  const nextScore = 1000; // TODO: add context when db is ok
+  const barRef = useRef();
+  let ratio = 0;
 
   const animeProgressBar = (rat) => {
     const bar = barRef.current;
@@ -19,10 +19,16 @@ function AvatarDoghnut() {
   };
 
   useEffect(() => {
-    setCounter(score);
-    setRatio(counter / nextScore);
+    if (user) {
+      setUserGamification(getUserLevelObject(user));
+    }
+  }, []);
+
+  useEffect(() => {
+    const { currentScore, nextLevelScore } = userGamification;
+    ratio = currentScore / nextLevelScore;
     animeProgressBar(ratio);
-  }, [score, nextScore, counter, ratio]);
+  }, [userGamification]);
 
   const strokeWidth = 24;
   const radius = 130;

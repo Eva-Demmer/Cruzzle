@@ -9,9 +9,10 @@ import medalGold from "../../assets/dashboard/Medal_gold.png";
 import medalSilver from "../../assets/dashboard/Medal_silver.png";
 import medalBronze from "../../assets/dashboard/Medal_bronze.png";
 import puzzlePieces from "../../assets/dashboard/PuzzlePieces_1.svg";
-import { HalfCircleProgress, pointsNextLevel } from "./HalfCircleProgress";
+import HalfCircleProgress from "./HalfCircleProgress";
 import CountAnimation from "../animations/CounterAnimation";
 import { UserContext } from "../../contexts/UserContext";
+import { getUserLevelObject } from "../../utils/gamification";
 import { apiLeaderboard } from "../../services/api.users";
 import { apiTotalIdeasCount } from "../../services/api.ideas";
 import { apiGetTotalLikesReceivedByUserId } from "../../services/api.ideaLikes";
@@ -20,7 +21,8 @@ import { apiGetTotalCommentsReceivedByUserId } from "../../services/api.comments
 function InspirationCards() {
   const { t } = useTranslation();
 
-  const { user } = useContext(UserContext);
+  const { user, userGamification, setUserGamification } =
+    useContext(UserContext);
   const { id } = user;
   const [leaderboard, setLeaderboard] = useState([]);
   const [totalLikes, setTotalLikes] = useState(0);
@@ -43,6 +45,13 @@ function InspirationCards() {
     fetchData();
   }, []);
 
+  // update the user gamification object into context
+  useEffect(() => {
+    if (user) {
+      setUserGamification(getUserLevelObject(user));
+    }
+  }, []);
+
   // fetch number of total likes and comments received by specific user
   useEffect(() => {
     const fetchData = async () => {
@@ -63,7 +72,7 @@ function InspirationCards() {
     };
 
     fetchData();
-  }, [user]);
+  }, []);
 
   // fetch number of ideas created on platform
   useEffect(() => {
@@ -125,9 +134,11 @@ function InspirationCards() {
       >
         <div className="flex flex-col px-5 mt-5">
           <div className="h-20 flex justify-center">
-            <span className="text-3xl mt-6 pt-3 flex">{pointsNextLevel}</span>
+            <span className="text-3xl mt-6 pt-3 flex">
+              {userGamification.currentScore}
+            </span>
             <div className="absolute left-1/2 transform -translate-x-1/2">
-              <HalfCircleProgress />
+              <HalfCircleProgress userGamification={userGamification} />
             </div>
           </div>
           <span className="pl-3 pb-5 xl:px-0 text-secondary-600">
