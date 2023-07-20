@@ -4,20 +4,25 @@ import {
   HandThumbUpIcon,
   ChatBubbleBottomCenterTextIcon,
 } from "@heroicons/react/24/solid";
+import { useTranslation } from "react-i18next";
 import medalGold from "../../assets/dashboard/Medal_gold.png";
 import medalSilver from "../../assets/dashboard/Medal_silver.png";
 import medalBronze from "../../assets/dashboard/Medal_bronze.png";
 import puzzlePieces from "../../assets/dashboard/PuzzlePieces_1.svg";
-import { HalfCircleProgress, pointsNextLevel } from "./HalfCircleProgress";
+import HalfCircleProgress from "./HalfCircleProgress";
 import CountAnimation from "../animations/CounterAnimation";
 import { UserContext } from "../../contexts/UserContext";
+import { getUserLevelObject } from "../../utils/gamification";
 import { apiLeaderboard } from "../../services/api.users";
 import { apiTotalIdeasCount } from "../../services/api.ideas";
 import { apiGetTotalLikesReceivedByUserId } from "../../services/api.ideaLikes";
 import { apiGetTotalCommentsReceivedByUserId } from "../../services/api.comments";
 
 function InspirationCards() {
-  const { user } = useContext(UserContext);
+  const { t } = useTranslation();
+
+  const { user, userGamification, setUserGamification } =
+    useContext(UserContext);
   const { id } = user;
   const [leaderboard, setLeaderboard] = useState([]);
   const [totalLikes, setTotalLikes] = useState(0);
@@ -40,6 +45,13 @@ function InspirationCards() {
     fetchData();
   }, []);
 
+  // update the user gamification object into context
+  useEffect(() => {
+    if (user) {
+      setUserGamification(getUserLevelObject(user));
+    }
+  }, []);
+
   // fetch number of total likes and comments received by specific user
   useEffect(() => {
     const fetchData = async () => {
@@ -60,7 +72,7 @@ function InspirationCards() {
     };
 
     fetchData();
-  }, [user]);
+  }, []);
 
   // fetch number of ideas created on platform
   useEffect(() => {
@@ -87,7 +99,7 @@ function InspirationCards() {
         className="h-80 w-56 xl:h-72 xl:w-48 rounded-2xl relative flex-shrink-0 my-2"
       >
         <h3 className="text-black text-lg md:text-xl px-5 pt-6 text-center relative z-10">
-          Top cruzzlers this month
+          {t("pages.home.inspirationCards.topCruzzlers")}
         </h3>
         <div className="flex flex-col px-5 mt-5">
           <div className="flex flex-row items-center">
@@ -122,23 +134,29 @@ function InspirationCards() {
       >
         <div className="flex flex-col px-5 mt-5">
           <div className="h-20 flex justify-center">
-            <span className="text-3xl mt-6 pt-3 flex">{pointsNextLevel}</span>
+            <span className="text-3xl mt-6 pt-3 flex">
+              {userGamification.currentScore}
+            </span>
             <div className="absolute left-1/2 transform -translate-x-1/2">
-              <HalfCircleProgress />
+              <HalfCircleProgress userGamification={userGamification} />
             </div>
           </div>
           <span className="pl-3 pb-5 xl:px-0 text-secondary-600">
-            points until next level
+            {t("pages.home.inspirationCards.pointsNextLevel")}
           </span>
           <div className="mb-8 xl:mb-4 flex flex-col items-center relative">
             <HandThumbUpIcon className="w-24 xl:w-16 text-primary-50 absolute top-[-18px] opacity-10" />
             <span className="text-4xl xl:text-3xl">{totalLikes}</span>
-            <span className="pl-3 text-secondary-600">likes received</span>
+            <span className="pl-3 text-secondary-600">
+              {t("pages.home.inspirationCards.likesReceived")}
+            </span>
           </div>
           <div className="flex flex-col items-center relative">
             <ChatBubbleBottomCenterTextIcon className="w-24 xl:w-14 text-primary-50 absolute top-[-4px] opacity-10" />
             <span className="text-4xl xl:text-3xl">{totalComments}</span>
-            <span className="pl-3 text-secondary-600">comments received</span>
+            <span className="pl-3 text-secondary-600">
+              {t("pages.home.inspirationCards.commentsReceived")}
+            </span>
           </div>
         </div>
       </Paper>
@@ -149,7 +167,7 @@ function InspirationCards() {
       >
         <div className="flex flex-col h-full items-center">
           <h3 className="text-black text-lg md:text-xl px-5 pt-6 text-center">
-            Team activity
+            {t("pages.home.inspirationCards.teamActivity")}
           </h3>
           <div className="flex flex-col items-center flex-grow justify-end">
             <img
@@ -160,7 +178,7 @@ function InspirationCards() {
             <div className="flex flex-col items-center py-[22px]">
               <CountAnimation targetCount={totalIdeas} />
               <span className="pt-4 text-secondary-600">
-                ideas created on Cruzzle
+                {t("pages.home.inspirationCards.createdIdea")}
               </span>
             </div>
           </div>

@@ -3,6 +3,7 @@ import {
   getUsersByAdmin,
   CreateUserByAdmin,
   updateUserByIdByAdmin,
+  updateUserRoleByIdBySuperAdmin,
 } from "../controllers/admin.users.controllers";
 import {
   getIdeasByAdmin,
@@ -58,6 +59,6 @@ router.delete("/categories/:id", deleteCategoryByIdByAdmin);
 // Protected Admin routes
 router.use(protectSuperAdminRoutes);
 
-router.put("/users/roles/:id", hashPassword, updateUserByIdByAdmin);
+router.put("/users/roles/:id", updateUserRoleByIdBySuperAdmin);
 
 export default router;

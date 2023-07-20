@@ -11,6 +11,7 @@ import adminpannel from "./pages/admin/index";
 import error from "./pages/error.json";
 import users from "./pages/users/index";
 import login from "./pages/login.json";
+import home from "./pages/home/index";
 
 const translationEN = {
   pages: {
@@ -20,6 +21,7 @@ const translationEN = {
     login,
     users,
     error,
+    home,
   },
   notifications,
   components,

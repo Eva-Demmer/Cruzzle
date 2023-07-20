@@ -38,6 +38,26 @@ const updateUserByIdByAdmin = async (req: Request, res: Response) => {
     delete updatedUser.role_id;
   }
 
+  try {
+    const data = await updateByIdByAdmin(id, updatedUser);
+    if (data.status === "success" && data.user) {
+      res.sendStatus(200);
+    } else if (data.status === "success" && !data.user) {
+      res.status(404).json({ message: "Not found, cannot update user" });
+    } else if (data.status === "conflict") {
+      res.status(409).json(data.message);
+    } else {
+      res.sendStatus(400);
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+const updateUserRoleByIdBySuperAdmin = async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id, 10);
+  const updatedUser = req.body;
+
   console.info(updatedUser);
   try {
     const data = await updateByIdByAdmin(id, updatedUser);
@@ -55,4 +75,9 @@ const updateUserByIdByAdmin = async (req: Request, res: Response) => {
   }
 };
 
-export { getUsersByAdmin, CreateUserByAdmin, updateUserByIdByAdmin };
+export {
+  getUsersByAdmin,
+  CreateUserByAdmin,
+  updateUserByIdByAdmin,
+  updateUserRoleByIdBySuperAdmin,
+};
