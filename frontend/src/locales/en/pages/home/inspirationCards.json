@@ -1,8 +1,8 @@
 {
   "topCruzzlers": "Top cruzzlers this month",
-  "pointsNextLevel": "Points until next level",
-  "likesReceived": "Likes Received",
-  "commentsReceived": "Comments Received",
-  "teamActivity": "Team Activity",
-  "createdIdea": "Ideas created on Cruzzle"
+  "pointsNextLevel": "points until next level",
+  "likesReceived": "likes received",
+  "commentsReceived": "comments received",
+  "teamActivity": "Team activity",
+  "createdIdea": "ideas created on cruzzle"
 }

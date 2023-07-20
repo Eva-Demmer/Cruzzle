@@ -99,7 +99,7 @@ export default function IdeaCard({ isMini, idea }) {
           } ${isDisabled ? "" : "group-hover:opacity-90"}`}
         >
           <img
-            className="w-full lg:scale-110"
+            className=" lg:scale-110 w-full h-full object-cover"
             src={primaryImg ?? noPictureIdea}
             alt={context}
           />
