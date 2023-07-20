@@ -29,7 +29,7 @@ const userPropTypes = PropTypes.shape({
   firstname: PropTypes.string,
   lastname: PropTypes.string,
   position: positionPropTypes,
-  avatar_url: PropTypes.string,
+  avatar_url: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])]),
   agency: agencyPropTypes,
 });
 
@@ -42,7 +42,7 @@ const ideaPropTypes = PropTypes.shape({
   archived_at: PropTypes.string,
   deleted_at: PropTypes.string,
   favorite: FavoritPropTypes,
-  primary_img: PropTypes.string.isRequired,
+  primary_img: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])]),
   views: PropTypes.number.isRequired,
   idea_category: PropTypes.arrayOf(categoryPropTypes).isRequired,
   idea_teams: PropTypes.arrayOf(userPropTypes),

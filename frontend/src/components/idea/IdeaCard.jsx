@@ -19,6 +19,7 @@ import { UserContext } from "../../contexts/UserContext";
 import IdeaCardActions from "./IdeaCardActions";
 import { IdeaPropTypes } from "../propTypes/ideaPropTypes";
 import { apiUpdateIdeaView } from "../../services/api.ideas";
+import { noPictureIdea, noPictureAvatar } from "../../utils/nopicture";
 
 export default function IdeaCard({ isMini, idea }) {
   const { t, i18n } = useTranslation();
@@ -38,12 +39,7 @@ export default function IdeaCard({ isMini, idea }) {
   const navigate = useNavigate();
 
   const { user: currentUser } = useContext(UserContext);
-  const {
-    id: userId,
-    firstname,
-    lastname,
-    avatar_url: avatarUrl,
-  } = currentUser;
+  const { id: userId } = currentUser;
   const {
     id,
     title,
@@ -102,7 +98,11 @@ export default function IdeaCard({ isMini, idea }) {
               : "h-40 w-full overflow-hidden opacity-100 duration-100 rounded-t-xl lg:h-48 lg:w-1/4 lg:rounded-l-xl lg:rounded-r-none flex items-center justify-center"
           } ${isDisabled ? "" : "group-hover:opacity-90"}`}
         >
-          <img className="w-full lg:scale-110" src={primaryImg} alt={context} />
+          <img
+            className=" lg:scale-110 w-full h-full object-cover"
+            src={primaryImg ?? noPictureIdea}
+            alt={context}
+          />
         </div>
         <div
           className={`${
@@ -241,15 +241,15 @@ export default function IdeaCard({ isMini, idea }) {
                 >
                   <Avatar
                     key={id}
-                    alt={`${firstname} ${lastname}`}
-                    src={avatarUrl}
+                    alt={`${idea.user.firstname} ${idea.user.lastname}`}
+                    src={idea.user.avatar_url ?? noPictureAvatar}
                     sx={{ width: 32, height: 32 }}
                   />
                   {ideaTeams.map((a) => (
                     <Avatar
                       key={a.user_id}
                       alt={`${a.firstname} ${a.lastname}`}
-                      src={a.user.avatar_url}
+                      src={a.user.avatar_url ?? noPictureAvatar}
                       sx={{ width: 32, height: 32 }}
                     />
                   ))}

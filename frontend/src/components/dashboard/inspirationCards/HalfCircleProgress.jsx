@@ -1,14 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 
-// TODO: add context when db is ok
-const score = 756;
-const nextScore = 1000;
-const pointsNextLevel = nextScore - score;
-
-function HalfCircleProgress() {
+export default function HalfCircleProgress({ userGamification }) {
   const barRef = useRef();
-  const [counter, setCounter] = useState(0);
-  const [ratio, setRatio] = useState(0);
+  let ratio = 0;
 
   const animeProgressBar = (rat) => {
     const bar = barRef.current;
@@ -20,10 +15,10 @@ function HalfCircleProgress() {
   };
 
   useEffect(() => {
-    setCounter(score);
-    setRatio(counter / 2 / nextScore);
+    const { currentScore, nextLevelScore } = userGamification;
+    ratio = currentScore / 2 / nextLevelScore;
     animeProgressBar(ratio);
-  }, [score, nextScore, counter, ratio]);
+  }, [userGamification]);
 
   const strokeWidth = 24;
   const radius = 130;
@@ -53,4 +48,18 @@ function HalfCircleProgress() {
   );
 }
 
-export { HalfCircleProgress, pointsNextLevel };
+HalfCircleProgress.propTypes = {
+  userGamification: PropTypes.shape({
+    currentLevel: PropTypes.number,
+    currentScore: PropTypes.number,
+    nextLevelScore: PropTypes.number,
+  }),
+};
+
+HalfCircleProgress.defaultProps = {
+  userGamification: {
+    currentLevel: 0,
+    currentScore: 0,
+    nextLevelScore: 0,
+  },
+};

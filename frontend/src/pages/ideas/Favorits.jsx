@@ -1,16 +1,21 @@
 /* eslint-disable no-param-reassign */
 import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "@mui/material";
 
 import IdeaDisplayer from "../../components/idea/IdeaDisplayer";
 import FilterbarFavorites from "../../components/Favorites/filters/FilterbarFavorites";
 import { UserContext } from "../../contexts/UserContext";
 import { FilterFavoritesContext } from "../../contexts/FilterFavoritesContext";
 import { fetchByQuery, fetchAll } from "../../services/api.services";
+import { sm } from "../../utils/mediaQueries";
+import { MenuContext } from "../../contexts/MenuContext";
 
 function Favorits() {
   const { t } = useTranslation();
   const [trendIdeas, setTrendIdeas] = useState();
+  const { activeMenu } = useContext(MenuContext);
+  const smallQuery = useMediaQuery(sm.query);
   const { user } = useContext(UserContext);
   const {
     id: userId,
@@ -109,7 +114,11 @@ function Favorits() {
 
   return (
     <div className="ideas-page w-full flex flex-col">
-      <header className="w-full px-6 sticky top-[66px] z-50 xl:w-8/12 sm:top-[62px] bg-white">
+      <header
+        className={`w-full px-6 sticky top-[66px] z-50 xl:w-8/12 sm:top-[62px] bg-white ${
+          activeMenu && !smallQuery ? "hidden" : ""
+        }`}
+      >
         <h2>{t("pages.ideas.favorites.title")}</h2>
         <FilterbarFavorites />
       </header>

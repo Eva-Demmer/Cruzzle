@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useMediaQuery } from "@mui/material";
 import FilterBarCommunity from "../../components/community/FilterBarCommunity";
 import FilterCommunityProvider from "../../contexts/FilterCommunityContext";
 import FilterPanelCommunity from "../../components/community/FilterPanelCommunity";
@@ -7,6 +8,8 @@ import CardsDisplayerCommunity from "../../components/community/CardsDisplayerCo
 import apiRoles from "../../services/api.roles";
 import apiPositions from "../../services/api.positions";
 import apiAgencies from "../../services/api.agencies";
+import { MenuContext } from "../../contexts/MenuContext";
+import { sm } from "../../utils/mediaQueries";
 
 function Community() {
   const { t } = useTranslation();
@@ -14,6 +17,8 @@ function Community() {
   const [positionFilter, setPositionFilter] = useState([]);
   const [locationFilter, setLocationFilter] = useState([]);
   const [agenciesFilter, setAgenciesFilter] = useState([]);
+  const { activeMenu } = useContext(MenuContext);
+  const smallQuery = useMediaQuery(sm.query);
 
   const positionsFetch = async () => {
     try {
@@ -68,11 +73,13 @@ function Community() {
   }, []);
 
   return (
-    <div className="w-full flex flex-col h-screen" aria-label="page">
+    <div className="w-full flex flex-col" aria-label="page">
       <FilterCommunityProvider>
         <div
           aria-label="header filter"
-          className="w-full sticky top-[66px] z-50 sm:top-[62px] bg-white"
+          className={`w-full sticky top-[66px] z-50 sm:top-[62px] bg-white ${
+            activeMenu && !smallQuery ? "hidden" : ""
+          }`}
         >
           <header className="w-full px-6">
             <h2>{t("pages.users.community.title")}</h2>

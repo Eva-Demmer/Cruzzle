@@ -39,14 +39,11 @@ export default function ContributionsTabs() {
 
   return (
     <div className="w-full">
-      {isLoading && <div />}
-      {!isLoading && userContributions.length > 0 && (
-        <>
-          {userContributions.map((item) => (
-            <ContributionCard ideas={item} key={item[0].created_at} />
-          ))}
-        </>
-      )}
+      {!isLoading &&
+        userContributions.length > 0 &&
+        userContributions.map((item) => (
+          <ContributionCard ideas={item} key={item[0].created_at} />
+        ))}
       {!isLoading && userContributions.length === 0 && (
         <div className="flex justify-center w-48">
           <img

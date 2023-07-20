@@ -18,6 +18,7 @@ import AvatarUserProfile from "../avatar/AvatarUserProfile";
 import ModalEditProfil from "./ModalEditProfil";
 import { UserProfileContext } from "../../contexts/UserProfile";
 import { UserContext } from "../../contexts/UserContext";
+import { noPictureBanner } from "../../utils/nopicture";
 
 function TopSectionProfil() {
   const { t } = useTranslation();
@@ -93,7 +94,7 @@ function TopSectionProfil() {
         <div
           className="w-full h-56 bg-center bg-no-repeat bg-cover"
           style={{
-            backgroundImage: `url(${bannerUrl})`,
+            backgroundImage: `url(${bannerUrl ?? noPictureBanner})`,
           }}
         />
       </div>

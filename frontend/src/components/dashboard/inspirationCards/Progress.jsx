@@ -4,7 +4,8 @@ import {
   HandThumbUpIcon,
   ChatBubbleBottomCenterTextIcon,
 } from "@heroicons/react/24/solid";
-import { HalfCircleProgress, pointsNextLevel } from "./HalfCircleProgress";
+import HalfCircleProgress from "./HalfCircleProgress";
+import { getUserLevelObject } from "../../../utils/gamification";
 import { UserContext } from "../../../contexts/UserContext";
 import { apiGetTotalLikesReceivedByUserId } from "../../../services/api.ideaLikes";
 import { apiGetTotalCommentsReceivedByUserId } from "../../../services/api.comments";
@@ -13,7 +14,8 @@ function Progress() {
   const { t } = useTranslation();
   const [totalLikes, setTotalLikes] = useState(0);
   const [totalComments, setTotalComments] = useState(0);
-  const { user } = useContext(UserContext);
+  const { user, userGamification, setUserGamification } =
+    useContext(UserContext);
   const { id } = user;
 
   useEffect(() => {
@@ -37,15 +39,23 @@ function Progress() {
     fetchData();
   }, [user]);
 
+  useEffect(() => {
+    if (user) {
+      setUserGamification(getUserLevelObject(user));
+    }
+  }, []);
+
   return (
     <>
       <div id="progress-bar" className="w-full flex flex-col items-center">
         <div id="progress-animation" className="flex flex-col">
           <div className="relative">
             <div className="absolute left-1/2 transform -translate-x-1/2">
-              <HalfCircleProgress />
+              <HalfCircleProgress userGamification={userGamification} />
             </div>
-            <span className="text-3xl mt-6 pt-3 flex">{pointsNextLevel}</span>
+            <span className="text-3xl mt-6 pt-3 flex">
+              {userGamification.currentScore}
+            </span>
           </div>
         </div>
         <span className="pl-3 pb-3 xl:px-2 text-secondary-600">

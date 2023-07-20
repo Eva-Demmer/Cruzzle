@@ -51,7 +51,7 @@ function Leaderboard() {
           <div className="flex flex-row items-center">
             <img
               src={medalSilver}
-              alt="gold medal"
+              alt="silver medal"
               className="h-10 xl:h-8 pl-2"
             />
             <span className="px-2 text-secondary-600">
@@ -65,7 +65,7 @@ function Leaderboard() {
           <div className="flex flex-row items-center">
             <img
               src={medalBronze}
-              alt="gold medal"
+              alt="bronze medal"
               className="h-10 xl:h-8 pl-2"
             />
             <span className="px-2 text-secondary-600">

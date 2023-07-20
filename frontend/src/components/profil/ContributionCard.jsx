@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import logoMobile from "../../assets/logo/logoMobile.svg";
 import { UserProfileContext } from "../../contexts/UserProfile";
 import IdeaCard from "../idea/IdeaCard";
+import { noPictureAvatar } from "../../utils/nopicture";
 
 function ContributionCard({ ideas }) {
   const { t, i18n } = useTranslation();
@@ -44,7 +45,10 @@ function ContributionCard({ ideas }) {
                   <div className="flex align-items-center w-full">
                     <div className="flex flex-col">
                       <ListItemAvatar>
-                        <Avatar alt={t("alts.description")} src={avatarUrl} />
+                        <Avatar
+                          alt={t("alts.avatar")}
+                          src={avatarUrl ?? noPictureAvatar}
+                        />
                       </ListItemAvatar>
                       {ideas.length - 1 !== index && (
                         <Divider
