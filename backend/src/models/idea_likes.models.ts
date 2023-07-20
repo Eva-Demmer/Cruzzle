@@ -27,12 +27,21 @@ const findById = async (id: number) => {
 
 const findTotalLikesReceivedByUserId = async (userId: number) => {
   try {
-    const data = await prisma.idea_like.count({
+    const userIdeas = await prisma.idea.findMany({
       where: {
         user_id: userId,
       },
+      include: {
+        idea_like: true,
+      },
     });
-    return data;
+
+    let totalLikes = 0;
+    userIdeas.forEach((idea) => {
+      totalLikes += idea.idea_like.length;
+    });
+
+    return totalLikes;
   } finally {
     await prisma.$disconnect();
   }

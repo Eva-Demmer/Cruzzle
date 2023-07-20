@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { UserContext } from "../../contexts/UserContext";
+import { UserContext } from "../../../contexts/UserContext";
 
 function Greeting() {
   const [greeting, setGreeting] = useState("Welcome back");

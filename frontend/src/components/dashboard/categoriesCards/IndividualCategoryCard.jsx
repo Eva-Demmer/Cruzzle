@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import CategoryIcon from "../../assets/dashboard/Category_icon.svg";
+import CategoryIcon from "../../../assets/dashboard/Category_icon.svg";
 
 function CategoryCards({ categoryName, categoryColor }) {
   // Change opacity of color which is in rgba format in db
