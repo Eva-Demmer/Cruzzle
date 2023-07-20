@@ -104,8 +104,8 @@ const findByFilter = async (filterQuery: IdeaFilterQuery) => {
       where: {
         deleted_at: null,
         created_at: {
-          gte: dayjs(publicationDateStart).toISOString(),
-          lte: dayjs(publicationDateEnd).add(1, "day").toISOString(),
+          gte: dayjs(publicationDateStart).add(-12, "hour").toISOString(),
+          lte: dayjs(publicationDateEnd).add(12, "hour").toISOString(),
         },
         title: {
           contains: titleContains !== null ? titleContains : undefined,
