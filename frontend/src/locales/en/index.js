@@ -1,4 +1,5 @@
 import buttons from "./buttons.json";
+import alts from "./alts.json";
 import datagrid from "./datagrid.json";
 import datepicker from "./datepicker.json";
 import menu from "./menu.json";
@@ -24,6 +25,7 @@ const translationEN = {
   components,
   menu,
   buttons,
+  alts,
   datagrid,
   datepicker,
 };

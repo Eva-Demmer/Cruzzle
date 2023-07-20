@@ -116,7 +116,6 @@ const apiUpdateUser = async (id, data) => {
   try {
     const response = await Axios.put(`${url}${route}${id}`, data);
     if (response.status === 200) {
-      console.info("back", response.data);
       return response;
     }
     throw new Error(`Unexpected response status: ${response.status}`);

@@ -91,6 +91,12 @@ interface FormattedUserLeaderboard {
   score: number;
 }
 
+interface FormatedDataActivities {
+  type: string;
+  created_at: Date;
+  title: string;
+}
+
 export {
   User,
   CreateUser,
@@ -100,4 +106,5 @@ export {
   FormatedDataItem,
   UserLeaderboard,
   FormattedUserLeaderboard,
+  FormatedDataActivities,
 };

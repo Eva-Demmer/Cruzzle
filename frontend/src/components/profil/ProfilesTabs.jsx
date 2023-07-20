@@ -15,7 +15,7 @@ import ActivityTab from "./ActivityTab";
 import ContributionsTabs from "./ContributionsTabs";
 
 export default function ProfilesTabs() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user } = useContext(UserProfileContext);
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
@@ -61,7 +61,9 @@ export default function ProfilesTabs() {
     user.share_birthdate && user.birthdate
       ? {
           title: t("pages.users.profile.tabs.general.birthday"),
-          content: dayjs(birthdate).locale("fr").format("YYYY-MM-DD"),
+          content: dayjs(birthdate)
+            .locale(i18n.language)
+            .format(t("pages.users.profile.dateFormats.short")),
         }
       : null,
     user.share_phone && user.phone
@@ -72,7 +74,9 @@ export default function ProfilesTabs() {
       : null,
     {
       title: t("pages.users.profile.tabs.general.joinedCompagny"),
-      content: dayjs(joinedAt).locale("fr").format("YYYY-MM-DD"),
+      content: dayjs(joinedAt)
+        .locale(i18n.language)
+        .format(t("pages.users.profile.dateFormats.short")),
     },
   ];
 
@@ -86,7 +90,7 @@ export default function ProfilesTabs() {
           <Tabs
             value={value}
             onChange={handleChange}
-            aria-label="basic tabs example"
+            aria-label={t("pages.users.profile.tabs.ariaLabel")}
             scrollButtons="auto"
             variant="scrollable"
           >
@@ -122,7 +126,7 @@ export default function ProfilesTabs() {
                 <div className="h-30 w-60 shadow-md rounded-2xl flex flex-col relative">
                   <img
                     className="h-10 w-10 absolute top-[-18px] left-[-18px]"
-                    alt=""
+                    alt={t("alts.puzzleIcon")}
                     src={PuzzleIcon}
                   />
                   <h3 className="text-black ml-5 mt-2">
