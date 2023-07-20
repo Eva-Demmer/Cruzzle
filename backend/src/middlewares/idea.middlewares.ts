@@ -20,7 +20,10 @@ const verifyAuthor = async (
     const payload = jwt.verify(token, JWT_SECRET as Secret) as JwtPayload;
     const getAuthorId = await findById(ideaId);
 
-    if (getAuthorId && payload.id === getAuthorId.user.id) {
+    if (
+      (getAuthorId && payload.id === getAuthorId.user.id) ||
+      payload.role_id !== 0
+    ) {
       return next();
     }
   } catch (error) {

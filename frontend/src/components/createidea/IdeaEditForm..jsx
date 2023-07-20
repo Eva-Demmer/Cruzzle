@@ -7,6 +7,7 @@ import { apiIdeas, apiUpdateIdeaById } from "../../services/api.ideas";
 import getNameFileToFirebaseLink from "../../utils/getNameFileToFirebaseLink";
 import DialogSave from "./DialogSave";
 import AlertOnSave from "./AlertOnSave";
+import { noPictureAvatar } from "../../utils/nopicture";
 
 function IdeaEditForm({ children }) {
   const { t } = useTranslation();
@@ -78,7 +79,7 @@ function IdeaEditForm({ children }) {
         setTeamSelect(
           getIdeaById.idea_teams.map((user) => ({
             id: user.user.id,
-            avatar_url: user.user.avatar_url,
+            avatar_url: user.user.avatar_url ?? noPictureAvatar,
             firstname: user.user.firstname,
             lastname: user.user.lastname,
           }))

@@ -6,6 +6,7 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Fab from "@mui/material/Fab";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { noPictureAvatar } from "../../utils/nopicture";
 
 export default function TeamBuilderList({ list, onChange }) {
   const handleRemove = (person) => {
@@ -20,7 +21,7 @@ export default function TeamBuilderList({ list, onChange }) {
           <ListItemAvatar>
             <Avatar
               alt={`${person.firstname} ${person.lastname}`}
-              src={person.avatar_url}
+              src={person.avatar_url ?? noPictureAvatar}
               sx={{ width: 40, height: 40 }}
             />
           </ListItemAvatar>

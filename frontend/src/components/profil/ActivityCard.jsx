@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import logoMobile from "../../assets/logo/logoMobile.svg";
 import { UserProfileContext } from "../../contexts/UserProfile";
+import { noPictureAvatar } from "../../utils/nopicture";
 
 function ActivityCard({ activities }) {
   const { user } = useContext(UserProfileContext);
@@ -53,7 +54,10 @@ function ActivityCard({ activities }) {
                   <div className="flex align-items-center w-full">
                     <div className="flex flex-col">
                       <ListItemAvatar>
-                        <Avatar alt={t("alts.avatar")} src={avatarUrl} />
+                        <Avatar
+                          alt={t("alts.avatar")}
+                          src={avatarUrl ?? noPictureAvatar}
+                        />
                       </ListItemAvatar>
                       {activities.length - 1 !== index && (
                         <Divider

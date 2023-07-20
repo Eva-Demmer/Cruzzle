@@ -17,6 +17,7 @@ import {
 } from "../../services/api.commentsLikes";
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
 import { apiGetCommentsByIdeaId } from "../../services/api.comments";
+import { noPictureAvatar } from "../../utils/nopicture";
 
 function CommentBox({ comment, tabComment = false }) {
   const { t, i18n } = useTranslation();
@@ -69,7 +70,7 @@ function CommentBox({ comment, tabComment = false }) {
           <Avatar
             alt="Remy Sharp"
             sx={{ width: 30, height: 30 }}
-            src={comment.user.avatar_url}
+            src={comment.user.avatar_url ?? noPictureAvatar}
           />
           <div className="flex items-center">
             <h4 className="mx-2 text-base">

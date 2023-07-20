@@ -15,6 +15,7 @@ import CustomChip from "../styledComponents/CustomChip";
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
 import ButtonsIdea from "./ButtonsIdea";
 import LikesView from "./LikesView";
+import { noPictureIdea } from "../../utils/nopicture";
 
 function HeaderIdeaPage() {
   const { t, i18n } = useTranslation();
@@ -57,7 +58,7 @@ function HeaderIdeaPage() {
 
       <div className="flex flex-col w-full lg:flex-row" aria-label="Context">
         <img
-          src={idea.primary_img}
+          src={idea.primary_img ?? noPictureIdea}
           alt="principal idea"
           className="w-full h-[214px] object-cover rounded md:w-[442px] md:h-[308px]"
         />

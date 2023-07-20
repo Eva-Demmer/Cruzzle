@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import "dayjs/locale/fr";
 import { useTranslation } from "react-i18next";
+import { noPictureAvatar, noPictureBanner } from "../../utils/nopicture";
 
 function UserCommunityCard({ user }) {
   const { t, i18n } = useTranslation();
@@ -27,12 +28,12 @@ function UserCommunityCard({ user }) {
     >
       <div className="w-full relative ">
         <img
-          src={bannerUrl}
+          src={bannerUrl ?? noPictureBanner}
           alt="banner profile"
           className="w-full h-20 rounded-t-xl object-cover"
         />
         <Avatar
-          src={avatarUrl}
+          src={avatarUrl ?? noPictureAvatar}
           onClick={() => navigate(`/users/${id}`)}
           alt="pic profile"
           className="mx-4 w-14 h-14 lg:w-16 lg:h-16 border-[1px] border-solid border-[#f7f7f7] shadow-sm hover:cursor-pointer absolute bottom-2"
@@ -89,8 +90,14 @@ function UserCommunityCard({ user }) {
 UserCommunityCard.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    avatar_url: PropTypes.string.isRequired,
-    banner_url: PropTypes.string.isRequired,
+    avatar_url: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.oneOf([null]),
+    ]),
+    banner_url: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.oneOf([null]),
+    ]),
     firstname: PropTypes.string.isRequired,
     lastname: PropTypes.string.isRequired,
     joined_at: PropTypes.string.isRequired,

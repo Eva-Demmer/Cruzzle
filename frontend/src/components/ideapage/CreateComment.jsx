@@ -12,6 +12,7 @@ import {
 } from "../../services/api.comments";
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
 import { createNotification } from "../../utils/notifications";
+import { noPictureAvatar } from "../../utils/nopicture";
 
 function CreateComment({ tabValue }) {
   const { t } = useTranslation();
@@ -107,7 +108,7 @@ function CreateComment({ tabValue }) {
         <Avatar
           alt="Remy Sharp"
           className="mx-4"
-          src={avatar}
+          src={avatar ?? noPictureAvatar}
           sx={{ width: 36, height: 36 }}
         />
         <div className="w-full relative p-0" aria-label="comment">

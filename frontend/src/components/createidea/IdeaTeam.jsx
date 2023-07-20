@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import TeamBuilder from "./TeamBuilder";
 import { IdeaFormContext } from "../../contexts/IdeaFormContext";
 import { apiUsers } from "../../services/api.users";
+import { noPictureAvatar } from "../../utils/nopicture";
 
 function IdeaTeam() {
   const { t } = useTranslation();
@@ -12,7 +13,7 @@ function IdeaTeam() {
     const response = apiUsers().then((res) => {
       return res.map((user) => ({
         id: user.id,
-        avatar_url: user.avatar_url,
+        avatar_url: user.avatar_url ?? noPictureAvatar,
         firstname: user.firstname,
         lastname: user.lastname,
       }));

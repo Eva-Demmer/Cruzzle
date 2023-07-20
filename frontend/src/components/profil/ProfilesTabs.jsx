@@ -90,7 +90,6 @@ export default function ProfilesTabs() {
           <Tabs
             value={value}
             onChange={handleChange}
-            aria-label={t("pages.users.profile.tabs.ariaLabel")}
             scrollButtons="auto"
             variant="scrollable"
           >

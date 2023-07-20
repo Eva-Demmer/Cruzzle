@@ -15,6 +15,7 @@ import {
   Divider,
 } from "@mui/material";
 import { useState, useContext } from "react";
+import { noPictureAvatar } from "../../utils/nopicture";
 import { UserContext } from "../../contexts/UserContext";
 
 function AccountSettings() {
@@ -96,7 +97,7 @@ function AccountSettings() {
           <ListItemIcon>
             <Avatar
               alt="profil-picture"
-              src={user.avatar_url}
+              src={user.avatar_url ?? noPictureAvatar}
               className="w-6 h-6"
             />
           </ListItemIcon>

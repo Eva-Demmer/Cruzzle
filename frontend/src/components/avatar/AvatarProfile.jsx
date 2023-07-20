@@ -4,6 +4,7 @@ import { Avatar, Paper } from "@mui/material";
 import { UserContext } from "../../contexts/UserContext";
 import AvatarDoghnut from "./AvatarDoghnut";
 import { getUserLevelObject } from "../../utils/gamification";
+import { noPictureAvatar } from "../../utils/nopicture";
 
 function AvatarProfile() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ function AvatarProfile() {
       >
         <Avatar
           alt="profil-picture"
-          src={user.avatar_url}
+          src={user.avatar_url ?? noPictureAvatar}
           className="w-28 h-28 z-10 shadow shadow-black border-solid border-black border sm:w-36 sm:h-36 lg:w-40 lg:h-40 cursor-pointer"
           onClick={() => navigate(`/users/${user.id}`)}
         />
