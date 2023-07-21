@@ -4,15 +4,16 @@ import {
   PencilIcon,
   SquaresPlusIcon,
 } from "@heroicons/react/24/solid";
-import puzzleIcon from "../../assets/PuzzleIcon.svg";
-import { apiIdeas } from "../../services/api.ideas";
-import { UserContext } from "../../contexts/UserContext";
+import { useTranslation } from "react-i18next";
+import puzzleIcon from "../../../assets/PuzzleIcon.svg";
+import { apiIdeas } from "../../../services/api.ideas";
+import { UserContext } from "../../../contexts/UserContext";
 import Card from "./IndividualOverviewCard";
-import { getUserPuzzlePercentageAchievementObject } from "../../utils/gamification";
+import { getUserPuzzlePercentageAchievementObject } from "../../../utils/gamification";
 
 function OverviewCards() {
   const { user } = useContext(UserContext);
-
+  const { t } = useTranslation();
   const [myIdeas, setMyIdeas] = useState(0);
   const [participation, setParticipation] = useState(0);
   const [ideasCreatedToday, setIdeasCreatedToday] = useState(0);
@@ -69,35 +70,38 @@ function OverviewCards() {
   }, [user]);
 
   return (
-    <div className="md:pl-5 max-w-xl grid grid-cols-2 gap-x-8 xl:gap-x-10 gap-y-12 xl:gap-y-8 ">
-      <Card
-        isIcon
-        icon={LightBulbIcon}
-        rotate={45}
-        cardTitle="Your ideas"
-        state={myIdeas}
-      />
-      <Card
-        isIcon
-        icon={PencilIcon}
-        rotate={0}
-        cardTitle="Today's ideas"
-        state={ideasCreatedToday}
-      />
-      <Card
-        isIcon
-        icon={SquaresPlusIcon}
-        rotate={0}
-        cardTitle="Participations"
-        state={participation}
-      />
-      <Card
-        isIcon={false}
-        icon={puzzleIcon}
-        rotate={0}
-        cardTitle="Puzzles"
-        state={finishedPuzzles}
-      />
+    <div className="flex flex-col">
+      <h4 className="text-black pb-5">{t("pages.home.dashboard.overview")}</h4>
+      <div className="md:pl-5 max-w-xl grid grid-cols-2 gap-x-8 xl:gap-x-10 gap-y-12 xl:gap-y-8 xl:pr-8">
+        <Card
+          isIcon
+          icon={LightBulbIcon}
+          rotate={45}
+          cardTitle="Your ideas"
+          state={myIdeas}
+        />
+        <Card
+          isIcon
+          icon={PencilIcon}
+          rotate={0}
+          cardTitle="Today's ideas"
+          state={ideasCreatedToday}
+        />
+        <Card
+          isIcon
+          icon={SquaresPlusIcon}
+          rotate={0}
+          cardTitle="Participations"
+          state={participation}
+        />
+        <Card
+          isIcon={false}
+          icon={puzzleIcon}
+          rotate={0}
+          cardTitle="Puzzles"
+          state={finishedPuzzles}
+        />
+      </div>
     </div>
   );
 }

@@ -47,14 +47,21 @@ const findByIdeaId = async (id: number) => {
 
 const findTotalCommentsReceivedByUserId = async (userId: number) => {
   try {
-    const data = await prisma.comment.count({
+    const userComments = await prisma.idea.findMany({
       where: {
-        idea: {
-          user_id: userId,
-        },
+        user_id: userId,
+      },
+      include: {
+        comment: true,
       },
     });
-    return data;
+
+    let totalComments = 0;
+    userComments.forEach((idea) => {
+      totalComments += idea.comment.length;
+    });
+
+    return totalComments;
   } finally {
     await prisma.$disconnect();
   }
