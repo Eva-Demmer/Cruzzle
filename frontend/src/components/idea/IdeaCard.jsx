@@ -185,7 +185,7 @@ export default function IdeaCard({ isMini, idea }) {
 
           <p
             className={`${isMini ? "text-gray-400" : "text-gray-600"}
-              mr-8 mt-2 line-clamp-2
+              mr-8 mt-2 line-clamp-1
             `}
           >
             {context}
