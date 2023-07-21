@@ -110,7 +110,7 @@ const findByFilter = async (filterQuery: IdeaFilterQuery) => {
         title: {
           contains: titleContains !== null ? titleContains : undefined,
         },
-        attachment: hasAttachment === "true" ? { some: {} } : { none: {} },
+        attachment: hasAttachment === "true" ? { some: {} } : undefined,
         comment: hasNoComment === "true" ? { none: {} } : {},
         idea_category: {
           ...(selectedCategories.length > 0 && {
