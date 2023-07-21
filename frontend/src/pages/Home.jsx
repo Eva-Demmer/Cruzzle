@@ -18,7 +18,7 @@ function Home() {
         >
           <div
             id="background"
-            className="absolute top-0 bottom-0 left-0 w-1/2 bg-purple-100"
+            className="absolute top-0 bottom-0 left-0 w-1/2 bg-primary-900 bg-opacity-5"
           />
           <div id="top" className="flex gap-5 w-full pt-5 z-10">
             <div id="greeting" className="w-full">
