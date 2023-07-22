@@ -1,6 +1,7 @@
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useContext, useLayoutEffect } from "react";
-import { useMediaQuery } from "react-responsive";
+
+import { useMediaQuery } from "@mui/material";
 import Sidebar from "../components/sidebar/Sidebar";
 import HeaderNav from "../components/topbar/HeaderNav";
 import { sm } from "../utils/mediaQueries";
@@ -12,7 +13,7 @@ import { LanguageContext } from "../contexts/LanguageContext";
 
 function Root() {
   const { user, setUser } = useContext(UserContext);
-  const smallQuery = useMediaQuery(sm);
+  const smallQuery = useMediaQuery(sm.query);
   const { activeMenu, setActiveMenu } = useContext(MenuContext);
   const { setLanguage } = useContext(LanguageContext);
   const { divRef } = useContext(ScrollContext);
@@ -27,11 +28,11 @@ function Root() {
         if (res.status === 200) {
           setUser(res.data);
         } else {
-          console.error("cannot get user by id");
+          navigate("/login");
         }
       })
-      .catch((err) => {
-        console.error("error get user by id", err);
+      .catch(() => {
+        navigate("/login");
       });
   };
 

@@ -4,68 +4,42 @@ import CategoryCards from "../components/dashboard/categoriesCards/CategoryCards
 import OverviewCards from "../components/dashboard/overviewCards/OverviewCards";
 import InspirationCards from "../components/dashboard/inspirationCards/InspirationCards";
 import TrendCards from "../components/dashboard/trendingIdeas/Trends";
-import { xl } from "../utils/mediaQueries";
+import { lg } from "../utils/mediaQueries";
 
 function Home() {
-  const xlQuery = useMediaQuery(xl.query);
+  const styleDash = {
+    background:
+      "linear-gradient(90deg, rgba(250,244,251,1) 0%, rgba(250,244,251,1) 55%, rgba(255,255,255,1) 55%, rgba(255,255,255,1) 100%)",
+  };
+
+  const lgQuery = useMediaQuery(lg.query);
 
   return (
-    <div>
-      {xlQuery && (
+    <div
+      id="dashboard-desktop"
+      className="h-full w-full flex flex-col relative no-scrollbar"
+      style={lgQuery ? styleDash : { background: "white" }}
+    >
+      <div className="flex flex-col lg:flex-row w-full lg:mx-6">
+        <div className="w-full lg:w-2/5 pt-4 lg:pt-8">
+          <Greeting />
+        </div>
+        <div className="w-full lg:w-3/5">
+          <InspirationCards />
+        </div>
+      </div>
+      <div className="flex flex-col lg:flex-row  h-full relative">
+        <div className="flex flex-col lg:w-[55%] justify-around px-6 xl:relative xl:top-[-50px]">
+          <CategoryCards />
+          <OverviewCards />
+        </div>
         <div
-          id="dashboard-desktop"
-          className="mt-[-62px] h-screen w-full p-10 flex flex-col justify-around relative"
+          id="bottom-right-trends"
+          className="w-full lg:w-[45%] flex items-center"
         >
-          <div
-            id="background"
-            className="absolute top-0 bottom-0 left-0 w-1/2 bg-purple-100"
-          />
-          <div id="top" className="flex gap-5 w-full pt-5 z-10">
-            <div id="greeting" className="w-full">
-              <Greeting />
-            </div>
-            <div
-              id="inspiration"
-              className="w-full h-[250px] xl:-mb-5 xl:-ml-36"
-            >
-              <InspirationCards />
-            </div>
-          </div>
-          <div id="bottom" className="flex gap-5 w-full z-10">
-            <div id="bottom-left" className="flex flex-col gap-5 w-full">
-              <div id="categories" className="w-full">
-                <CategoryCards />
-              </div>
-              <div id="overview" className="w-full">
-                <OverviewCards />
-              </div>
-            </div>
-            <div id="bottom-right-trends" className="w-full">
-              <TrendCards />
-            </div>
-          </div>
+          <TrendCards />
         </div>
-      )}
-
-      {!xlQuery && (
-        <div id="dashboard-mobile" className="w-full p-5 flex flex-col gap-10">
-          <div id="greeting" className="w-full">
-            <Greeting />
-          </div>
-          <div id="categories" className="w-full">
-            <CategoryCards />
-          </div>
-          <div id="overview" className="w-full">
-            <OverviewCards />
-          </div>
-          <div id="inspiration" className="w-full">
-            <InspirationCards />
-          </div>
-          <div id="bottom-right-trends" className="w-full">
-            <TrendCards />
-          </div>
-        </div>
-      )}
+      </div>
     </div>
   );
 }
