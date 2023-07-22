@@ -36,6 +36,11 @@ export default function LanguagesMenu() {
       value: "FR",
       language: "Français",
     },
+    {
+      code: "DE",
+      value: "DE",
+      language: "Deutsch",
+    },
   ];
 
   return (

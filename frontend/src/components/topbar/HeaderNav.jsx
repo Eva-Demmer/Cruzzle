@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
-import { Fab, IconButton, Button } from "@mui/material";
+
+import { Fab, IconButton, Button, useMediaQuery } from "@mui/material";
 import { PlusIcon } from "@heroicons/react/24/outline";
 
 import AvatarNavbar from "../avatar/AvatarNavbar";
@@ -9,7 +9,7 @@ import HambugerMenu from "./HamburgerMenu";
 
 import LogoMobile from "../../assets/logo/logoMobile.svg";
 
-import { sm } from "../../utils/mediaQueries";
+import { lg, sm } from "../../utils/mediaQueries";
 
 import { UserContext } from "../../contexts/UserContext";
 import AccountSettings from "./AccountSettings";
@@ -24,13 +24,22 @@ function HeaderNav() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const smallQuery = useMediaQuery(sm);
+  const smallQuery = useMediaQuery(sm.query);
+  const lgQuery = useMediaQuery(lg.query);
+
+  const styleDash = {
+    background:
+      "linear-gradient(90deg, rgba(250,244,251,1) 0%, rgba(250,244,251,1) 55%, rgba(255,255,255,1) 55%, rgba(255,255,255,1) 100%)",
+  };
 
   return (
     <div
-      className={`flex flex-col shadow-2 bg-primary-800 z-48 sticky top-0 right-0 ${
-        location.pathname === "/dashboard" ? "xl:bg-transparent" : "sm:bg-white"
-      }`}
+      className="flex flex-col shadow-2 bg-primary-800 z-48 sticky top-0 right-0 sm:bg-white"
+      style={
+        location.pathname === "/dashboard" && lgQuery
+          ? styleDash
+          : { bg: "transparent" }
+      }
     >
       <div className="w-full py-2 px-4 flex items-center justify-between md:px-6 2xl:px-11">
         <div className="mx-2">
@@ -109,9 +118,10 @@ function HeaderNav() {
           </div>
         )}
       </div>
-      {((!smallQuery && !activeMenu) || smallQuery) && (
-        <Progress heightpx={2} />
-      )}
+      {((((!smallQuery && !activeMenu) || smallQuery) &&
+        location.pathname === "/dashboard" &&
+        !lgQuery) ||
+        location.pathname !== "/dashboard") && <Progress heightpx={2} />}
     </div>
   );
 }

@@ -4,7 +4,8 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
+import { useMediaQuery } from "@mui/material";
+
 import { UserContext } from "../../contexts/UserContext";
 import { sm } from "../../utils/mediaQueries";
 
@@ -13,7 +14,7 @@ function LogoutLinks() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const smallQuery = useMediaQuery(sm);
+  const smallQuery = useMediaQuery(sm.query);
 
   const handleLogout = () => {
     console.info("logout");

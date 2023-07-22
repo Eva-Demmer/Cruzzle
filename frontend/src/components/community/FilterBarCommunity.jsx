@@ -35,7 +35,7 @@ function FilterBarCommunity({
             <Button
               variant="outlined"
               color="primary"
-              className="h-10 font-normal text-base normal-case rounded-full mx-2 min-w-[146px]"
+              className="h-10 font-normal text-base normal-case rounded-full mx-2 min-w-[160px]"
               onClick={() => setFilterPanelOpen(!filterPanelOpen)}
             >
               <FunnelIcon className="w-4 mr-2" />

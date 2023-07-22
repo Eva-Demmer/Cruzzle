@@ -7,8 +7,10 @@ import {
   DialogActions,
 } from "@mui/material";
 import PropTypes from "prop-types";
+import { Trans, useTranslation } from "react-i18next";
 
 function DialogArchive({ open, setOpen, handleAgree }) {
+  const { t } = useTranslation();
   return (
     <Dialog
       open={open}
@@ -16,15 +18,19 @@ function DialogArchive({ open, setOpen, handleAgree }) {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Confirm Archive</DialogTitle>
+      <DialogTitle id="alert-dialog-title">
+        {t("pages.ideas.idea.dialogArchive.title")}
+      </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Are you sure you want to archive this idea? This action is{" "}
-          <strong>irreversible</strong> and will permanently remove the idea
-          from the active list.
-          <br />
-          <br />
-          Please note that archived ideas cannot be restored.
+          <Trans i18nKey="pages.ideas.idea.dialogArchive.content">
+            Are you sure you want to archive this idea? This action is{" "}
+            <strong>irreversible</strong> and will permanently remove the idea
+            from the active list.
+            <br />
+            <br />
+            Please note that archived ideas cannot be restored.
+          </Trans>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -34,7 +40,7 @@ function DialogArchive({ open, setOpen, handleAgree }) {
           onClick={() => setOpen(false)}
           autoFocus
         >
-          Cancel
+          {t("buttons.cancel")}
         </Button>
         <Button
           variant="contained"
@@ -47,7 +53,7 @@ function DialogArchive({ open, setOpen, handleAgree }) {
             "&:active, &.Mui-focusVisible": { boxShadow: 4 },
           }}
         >
-          Agree
+          {t("buttons.agree")}
         </Button>
       </DialogActions>
     </Dialog>

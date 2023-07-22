@@ -6,9 +6,8 @@ import {
   PencilSquareIcon,
   BriefcaseIcon,
 } from "@heroicons/react/24/outline";
-import { Button, Snackbar, Alert } from "@mui/material";
+import { Button, Snackbar, Alert, useMediaQuery } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
 
 import { sm } from "../../utils/mediaQueries";
 
@@ -25,9 +24,7 @@ function TopSectionProfil() {
   const { user } = useContext(UserProfileContext);
   const { user: currentUser } = useContext(UserContext);
   const { id } = useParams();
-  const isCurrentUserProfile =
-    parseInt(id, 10) === parseInt(currentUser.id, 10);
-  const smallQuery = useMediaQuery(sm);
+  const smallQuery = useMediaQuery(sm.query);
 
   const [isOpenAvatar, setIsOpenAvatar] = useState(false);
   const [isOpenBanner, setIsOpenBanner] = useState(false);
@@ -38,6 +35,9 @@ function TopSectionProfil() {
   const [alert, setAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState(false);
   const [alertSeverity, setAlertSeverity] = useState(null);
+
+  const isCurrentUserProfile =
+    parseInt(id, 10) === parseInt(currentUser.id, 10);
 
   const handleAlert = () => {
     setAlert(!alert);
