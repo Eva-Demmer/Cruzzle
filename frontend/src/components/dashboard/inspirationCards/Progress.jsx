@@ -46,46 +46,44 @@ function Progress() {
   }, []);
 
   return (
-    <>
-      <div id="progress-bar" className="w-full flex flex-col items-center">
-        <div id="progress-animation" className="flex flex-col">
-          <div className="relative">
-            <div className="absolute left-1/2 transform -translate-x-1/2">
-              <HalfCircleProgress userGamification={userGamification} />
-            </div>
-            <span className="text-3xl mt-6 pt-3 flex">
-              {userGamification.currentScore}
-            </span>
-          </div>
-        </div>
-        <span className="pl-3 pb-3 xl:px-2 text-secondary-600">
-          {t("pages.home.inspirationCards.pointsNextLevel")}
-        </span>
-      </div>
+    <div
+      id="progress-bar"
+      className="w-full flex flex-col items-center h-full justify-around"
+    >
       <div
-        id="likes-and-comments-received"
-        className="w-full h-full flex flex-col justify-around xl:justify-between"
+        className="flex flex-col relative items-center h-24 w-full"
+        aria-label="score"
       >
-        <div id="likes-received" className="w-full flex justify-center">
-          <div className="flex flex-col justify-center items-center relative">
-            <HandThumbUpIcon className="w-20 xl:w-14 text-primary-50 absolute top-[-14px] opacity-10" />
-            <span className="text-4xl xl:text-2xl">{totalLikes}</span>
-            <span className="pl-3 text-secondary-600">
-              {t("pages.home.inspirationCards.likesReceived")}
-            </span>
-          </div>
-        </div>
-        <div id="comments-received" className="w-full flex justify-center">
-          <div className="flex flex-col justify-center items-center relative">
-            <ChatBubbleBottomCenterTextIcon className="w-16 xl:w-12 text-primary-50 absolute top-[-8px] opacity-10" />
-            <span className="text-4xl xl:text-2xl">{totalComments}</span>
-            <span className="pl-3 text-secondary-600">
-              {t("pages.home.inspirationCards.commentsReceived")}
-            </span>
-          </div>
+        <HalfCircleProgress userGamification={userGamification} />
+        <div className="flex flex-col items-center absolute bottom-0">
+          <span className="text-3xl">{userGamification.currentScore}</span>
+          <span className=" text-secondary-600">
+            {t("pages.home.inspirationCards.pointsNextLevel")}
+          </span>
         </div>
       </div>
-    </>
+
+      <div id="likes-and-comments-received" className="w-full flex flex-col">
+        <div className="flex flex-col justify-center items-center relative my-2">
+          <div className="w-full relative flex justify-center items-center my-1">
+            <HandThumbUpIcon className="h-12 text-primary-50 opacity-10 absolute mx-auto" />
+            <span className="text-2xl">{totalLikes}</span>
+          </div>
+          <span className="pl-3 text-secondary-600 mt-2">
+            {t("pages.home.inspirationCards.likesReceived")}
+          </span>
+        </div>
+        <div className="flex flex-col justify-center items-center relative my-1">
+          <div className="w-full relative flex justify-center items-center">
+            <ChatBubbleBottomCenterTextIcon className="h-12 text-primary-50 opacity-10 absolute mx-auto" />
+            <span className="text-2xl">{totalComments}</span>
+          </div>
+          <span className="pl-3 text-secondary-600 mt-2">
+            {t("pages.home.inspirationCards.commentsReceived")}
+          </span>
+        </div>
+      </div>
+    </div>
   );
 }
 

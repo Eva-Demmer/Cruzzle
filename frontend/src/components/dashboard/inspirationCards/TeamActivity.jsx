@@ -25,24 +25,25 @@ function TeamActivity() {
   }, []);
 
   return (
-    <>
-      <div id="title-team-activity" className="w-full flex justify-center">
-        <h3 className="text-black text-lg md:text-xl xl:text-lg text-center mb-5">
-          {t("pages.home.inspirationCards.teamActivity")}
-        </h3>
-      </div>
-      <div id="score" className="w-full flex flex-col items-center text-center">
+    <div className="w-full flex flex-col justify-around h-full">
+      <h3 className="text-black text-lg w-full text-center">
+        {t("pages.home.inspirationCards.teamActivity")}
+      </h3>
+      <div
+        id="score"
+        className="w-full flex flex-col items-center justify-center text-center h-full relative"
+      >
         <img
           src={puzzlePieces}
           alt="puzzle pieces"
-          className="w-fit absolute top-8 opacity-70"
+          className="w-fit absolute opacity-30"
         />
         <CountAnimation targetCount={totalIdeas} />
         <span className="pt-4 text-secondary-600">
           {t("pages.home.inspirationCards.createdIdea")}
         </span>
       </div>
-    </>
+    </div>
   );
 }
 

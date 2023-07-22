@@ -18,11 +18,11 @@ function Trends() {
   }, []);
 
   return (
-    <div>
+    <div className="w-full ">
       <h4 className="pl-5 text-black">{t("pages.home.dashboard.trends")}</h4>
-      <div className="overflow-y-auto h-96">
+      <div className="overflow-y-auto">
         {trendIdeas !== undefined ? (
-          <IdeaDisplayer ideas={trendIdeas} isMini />
+          <IdeaDisplayer ideas={trendIdeas.slice(0, 2)} isMini />
         ) : (
           ""
         )}

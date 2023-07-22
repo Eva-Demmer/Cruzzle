@@ -23,7 +23,7 @@ function CountAnimation({ targetCount }) {
     };
   }, [targetCount]);
 
-  return <div className="text-5xl text-primary-900">{count}</div>;
+  return <div className="text-5xl font-medium text-primary-900">{count}</div>;
 }
 
 CountAnimation.propTypes = {

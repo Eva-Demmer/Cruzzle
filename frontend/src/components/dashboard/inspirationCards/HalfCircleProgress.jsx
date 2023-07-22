@@ -25,7 +25,7 @@ export default function HalfCircleProgress({ userGamification }) {
   const viewBoxSize = radius * 2 + strokeWidth * 2;
 
   return (
-    <div className="progressBar w-[8.7rem] md:w-[8.5rem] h-[8.7rem] md:h-[8.5rem] sm:h-44 sm:w-44 lg:h-32 lg:w-36">
+    <div className="progressBar h-32 w-36 absolute top-0">
       <svg
         className="h-full w-full"
         viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
