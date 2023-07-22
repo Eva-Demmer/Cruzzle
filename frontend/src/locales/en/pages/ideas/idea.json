@@ -4,6 +4,10 @@
     "title": "Confirm Modify",
     "content": "Are you sure you want to modify this idea?"
   },
+  "dialogArchive": {
+    "title": "Confirm Archive",
+    "content": "Are you sure you want to archive this idea? This action is <strong>irreversible</strong> and will permanently remove the idea from the active list. <br /> <br /> Please note that archived ideas cannot be restored."
+  },
   "headerIdea": {
     "published": "Published on",
     "dateFormats": {

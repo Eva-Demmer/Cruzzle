@@ -13,12 +13,13 @@
       },
       "textfield": {
         "mail": {
-          "label": "E-mail"
+          "label": "E-mail",
+          "placeholder": "Saisissez votre nom d'utilisateur"
         },
         "password": {
           "label": "Mot de passe",
           "placeholder": "Veuillez entrer votre mot de passe",
-          "helperText": "Mail incorrect"
+          "helperText": "Saisie incorrecte."
         }
       }
     }
@@ -42,7 +43,7 @@
         "placeholder": "Entrez votre mot de passe"
       },
       "passwordConfirm": {
-        "label": "Confirmer le mot de passe",
+        "label": "Confirmez le mot de passe",
         "placeholder": "Confirmez votre mot de passe"
       }
     }
