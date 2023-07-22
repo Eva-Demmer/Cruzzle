@@ -20,6 +20,10 @@ import {
   verifyPassword,
   protectRoutes,
 } from "../middlewares/auth.middlewares";
+import {
+  verifyUser,
+  verifyUserByIdBody,
+} from "../middlewares/user.middlewares";
 
 const router = express.Router();
 
@@ -42,10 +46,15 @@ router.get("/contributions/:id", getContributionsByUserId);
 router.get("/image", getImageHighRes);
 router.get("/leaderboard", getLeaderboard);
 router.get("/:id", getUserById);
-router.post("/image/:id", uploadImage, updateImage);
+router.post("/image/:id", verifyUser, uploadImage, updateImage);
 router.post("/verifyPassword", verifyPasswordUser);
 
-router.put("/updatePassword", hashPassword, updatePasswordUser);
-router.put("/:id", hashPassword, updateUser);
+router.put(
+  "/updatePassword",
+  verifyUserByIdBody,
+  hashPassword,
+  updatePasswordUser
+);
+router.put("/:id", verifyUser, hashPassword, updateUser);
 
 export default router;
