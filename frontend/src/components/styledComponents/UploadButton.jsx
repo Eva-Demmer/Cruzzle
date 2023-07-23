@@ -21,7 +21,7 @@ function UploadButton({ children, accept, multiple = false, onChange, id }) {
           component="span"
           variant="contained"
           color="primary"
-          className="w-[110px] rounded-full mx-2 my-2 sm:w-[174px]"
+          className="w-[130px] rounded-full mx-2 my-2 sm:w-[174px]"
           sx={{
             boxShadow: 1,
             "&:hover": { boxShadow: 2 },
