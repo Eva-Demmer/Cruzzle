@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
+import dayjs from "dayjs";
 import {
   getIdeas,
   getTotalIdeasCount,
@@ -20,7 +21,7 @@ import { verifyAuthor } from "../middlewares/idea.middlewares";
 const router = express.Router();
 
 const timeLog = (req: Request, res: Response, next: NextFunction) => {
-  console.info("use /api/ideas/ at time: ", Date.now());
+  console.info("use /api/ideas/ at time: ", dayjs().format("HH:mm:ss"));
   next();
 };
 router.use(timeLog);

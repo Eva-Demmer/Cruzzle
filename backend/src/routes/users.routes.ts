@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
+import dayjs from "dayjs";
 import { uploadImage } from "../middlewares/multer.middlewares";
 import {
   login,
@@ -28,7 +29,7 @@ import {
 const router = express.Router();
 
 const timeLog = (req: Request, res: Response, next: NextFunction) => {
-  console.info("use /api/users/ at time: ", Date.now());
+  console.info("use /api/users/ at time: ", dayjs().format("HH:mm:ss"));
   next();
 };
 router.use(timeLog);

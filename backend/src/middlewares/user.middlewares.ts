@@ -30,7 +30,6 @@ const verifyUserByIdBody = async (
   next: NextFunction
 ) => {
   const token = req.headers.authorization?.split(" ")[1];
-  console.info(req.body);
   const userId = parseInt(req.body.id, 10);
 
   if (!token) {

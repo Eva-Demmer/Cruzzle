@@ -73,7 +73,7 @@ const getIdeasTrends = async (req: Request, res: Response) => {
 
 const getIdeasTrendsFavorits = async (req: Request, res: Response) => {
   const id: number = parseInt(req.params.id, 10);
-  console.info(id);
+
   try {
     const data = await findTrendsFavorits(id);
     res.status(200).json(data[0]);
