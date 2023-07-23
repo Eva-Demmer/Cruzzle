@@ -42,8 +42,18 @@ export default function ModalEditProfil({ open, close }) {
   }, []);
 
   const onSubmit = async (data) => {
+    const {
+      link: linkUpdate,
+      phone: phoneUpdate,
+      birthdate: birthdateUpdate,
+      biography: biographyUpdate,
+    } = data;
+
     const updatedData = {
-      ...data,
+      biography: biographyUpdate || null,
+      link: linkUpdate || null,
+      birthdate: birthdateUpdate || null,
+      phone: phoneUpdate || null,
       share_phone: sharePhone,
       share_birthdate: displayBirthday,
     };
@@ -189,7 +199,7 @@ export default function ModalEditProfil({ open, close }) {
             <div className=" bg-black bg-opacity-5 sm:w-2/4 sm:h-1/5 w-64 rounded-3xl sm:mt-28 relative">
               <img
                 className="absolute top-[-18px] sm:right-[-50px] w-52 right-[-60px]"
-                alt={t("alts.contactadmin")}
+                alt={t("alts.contactAdmin")}
                 src={EditProfil1}
               />
               <div className="flex flex-col w-72 gap-8 p-4">
