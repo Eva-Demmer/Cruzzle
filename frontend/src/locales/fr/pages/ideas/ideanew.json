@@ -3,7 +3,7 @@
   "description": "Créer une idée, ajouter des fichiers et des images",
   "header": {
     "title": "En-tête",
-    "fileserror": "<>Le fichier <strong>{file.name}</strong> dépasse la taille maximale autorisée de {formatBytes(maxSizeInKB * 1024)} !</>"
+    "fileserror": "Le fichier <strong>{{ fileName }}</strong> dépasse la taille maximale autorisée de {{ maxSize }} !"
   },
   "textfield": {
     "title": {
@@ -45,10 +45,10 @@
   "upload": {
     "title": "Télécharger des fichiers",
     "or": "OU",
-    "drag": "Glisser-déposer les fichiers ici",
-    "supportedfiles": "Formats de fichier pris en charge",
-    "maxand": "maximum et",
-    "filesmax": "fichiers maximum",
+    "drag": "Glisser-déposer ici",
+    "supportedfiles": "Formats de fichier",
+    "maxand": "max et",
+    "filesmax": "fichiers max",
     "numberfiles_zero": "Nombre de fichier : <strong>{{nbAttachements}}</strong>",
     "numberfiles_one": "Nombre de fichier : <strong>{{nbAttachements}}</strong>",
     "numberfiles_other": "Nombre de fichiers : <strong>{{nbAttachements}}</strong>"
@@ -82,7 +82,10 @@
     },
     "error": {
       "message": "Échec de la création de l'idée. Veuillez réessayer.",
-      "title": "Erreur"
+      "title": "Erreur",
+      "fileexceed": "Le fichier <strong>{{ fileName }}</strong> dépasse la taille maximale autorisée de {{ maxSize }} !",
+      "fileexist": "Le fichier <strong>{{ fileName }}</strong> existe déjà !",
+      "maxfiles": "Le(s) fichier(s) suivant(s) dépasse(nt) le nombre maximum autorisé de <strong>{{maxFiles}}</strong> !"
     }
   },
   "dialog": {

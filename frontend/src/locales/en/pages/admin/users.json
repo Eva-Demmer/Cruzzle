@@ -5,6 +5,16 @@
     "long": "YYYY-MM-DD HH:mm:ss",
     "short": "MM-DD-YYYY"
   },
+  "alert": {
+    "success": {
+      "update": "User updated successfully",
+      "updateRole": "Role updated successfully"
+    },
+    "error": {
+      "update": "Cannot update user",
+      "updateRole": "Cannot update user role"
+    }
+  },
   "tableOfUsers": {
     "columns": {
       "firstname": "First Name",
@@ -21,7 +31,8 @@
     "tooltip": {
       "active": {
         "title": "Acivate/Unactivate user",
-        "alert": "User active status updated successfully"
+        "alert": "User active status updated successfully",
+        "error": "Cannot setting user Active/Unactive"
       },
       "visitprofil": "Visit user profile",
       "updateuser": "Update user",
@@ -123,7 +134,9 @@
           "message": "User credentials updated successfully"
         },
         "error": {
-          "message": "Email not available"
+          "message": "Email not available",
+          "user": "Cannot update user login",
+          "update": "error updating user"
         }
       }
     }

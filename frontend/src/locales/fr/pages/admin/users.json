@@ -5,6 +5,16 @@
     "long": "YYYY-MM-DD HH:mm:ss",
     "short": "DD-MM-YYYY"
   },
+  "alert": {
+    "success": {
+      "update": "Utilisateur mis à jour avec succès",
+      "updateRole": "Rôle mis à jour avec succès"
+    },
+    "error": {
+      "update": "Impossible de mettre à jour l'utilisateur",
+      "updateRole": "Impossible de mettre à jour le rôle de l'utilisateur"
+    }
+  },
   "tableOfUsers": {
     "columns": {
       "firstname": "Prénom",
@@ -21,7 +31,8 @@
     "tooltip": {
       "active": {
         "title": "Activer/Désactiver l'utilisateur",
-        "alert": "Statut actif de l'utilisateur mis à jour avec succès"
+        "alert": "Statut actif de l'utilisateur mis à jour avec succès",
+        "error": "Impossible de changer l'état de l'utilisateur (Actif/Inactif)"
       },
       "visitprofil": "Visiter le profil de l'utilisateur",
       "updateuser": "Modifier l'utilisateur",
@@ -96,7 +107,9 @@
           "message": "Utilisateur créé avec succès"
         },
         "error": {
-          "message": "Adresse e-mail non disponible"
+          "message": "Adresse e-mail non disponible",
+          "user": "Impossible de mettre à jour l'utilisateur",
+          "update": "Erreur lors de la mise à jour de l'utilisateur"
         }
       }
     },
