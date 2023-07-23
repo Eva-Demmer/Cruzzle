@@ -1,30 +1,27 @@
 import { Alert, Snackbar, AlertTitle } from "@mui/material";
-import PropTypes from "prop-types";
+import { useContext } from "react";
+import { AlertOnSaveContext } from "../../contexts/AlertOnSaveContext";
 
-function AlertOnSave({
-  open,
-  setOpen,
-  severity = "success",
-  message,
-  title,
-  onClose = () => {},
-}) {
+function AlertOnSave() {
+  const { open, setOpen, severity, message, title, onCloseAction } =
+    useContext(AlertOnSaveContext);
+
+  const handleClose = () => {
+    onCloseAction();
+    setOpen(false);
+  };
+
   return (
     <Snackbar
       open={open}
       autoHideDuration={3000}
-      onClose={() => {
-        onClose();
-        setOpen(false);
-      }}
+      onClose={handleClose}
       anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
     >
       <Alert
         severity={severity}
-        onClose={() => {
-          onClose();
-          setOpen(false);
-        }}
+        variant="filled"
+        onClose={handleClose}
         sx={{ width: "100%" }}
       >
         <AlertTitle>{title}</AlertTitle>
@@ -33,19 +30,5 @@ function AlertOnSave({
     </Snackbar>
   );
 }
-
-AlertOnSave.propTypes = {
-  open: PropTypes.bool.isRequired,
-  setOpen: PropTypes.func.isRequired,
-  onClose: PropTypes.func,
-  severity: PropTypes.oneOf(["error", "success", "info", "warning"]),
-  message: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-};
-
-AlertOnSave.defaultProps = {
-  onClose: () => {},
-  severity: "success",
-};
 
 export default AlertOnSave;

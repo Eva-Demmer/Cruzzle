@@ -37,6 +37,7 @@ import FilterFavoritesProvider from "./contexts/FilterFavoritesContext";
 import ScrollProvider from "./contexts/ScrollContext";
 import IdeaPageProvider from "./contexts/IdeaPageContext";
 import IdeaEdit from "./pages/ideas/IdeaEdit";
+import AlertOnSaveProvider from "./contexts/AlertOnSaveContext";
 
 const router = createBrowserRouter([
   {
@@ -45,11 +46,18 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
+    path: "/error/*",
+    element: <ErrorPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
     path: "/",
     element: (
       <MenuProvider>
         <ScrollProvider>
-          <Root />
+          <AlertOnSaveProvider>
+            <Root />
+          </AlertOnSaveProvider>
         </ScrollProvider>
       </MenuProvider>
     ),

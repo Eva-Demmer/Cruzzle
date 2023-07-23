@@ -10,6 +10,7 @@ import { ScrollContext } from "../contexts/ScrollContext";
 import { UserContext } from "../contexts/UserContext";
 import { apiUserById } from "../services/api.users";
 import { LanguageContext } from "../contexts/LanguageContext";
+import AlertOnSave from "../components/createidea/AlertOnSave";
 
 function Root() {
   const { user, setUser } = useContext(UserContext);
@@ -84,6 +85,7 @@ function Root() {
         <main className="grow h-full">
           <Outlet />
         </main>
+        <AlertOnSave />
       </div>
     </div>
   );
