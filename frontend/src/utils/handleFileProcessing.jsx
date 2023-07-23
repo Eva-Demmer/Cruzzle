@@ -1,3 +1,4 @@
+import { Trans } from "react-i18next";
 import formatBytes from "./formatBytes";
 
 function handleFileProcessing(
@@ -6,7 +7,6 @@ function handleFileProcessing(
   maxFiles,
   filesAttachment,
   setErrorFiles,
-  setOpen,
   setFilesAttachment
 ) {
   const addingFiles = [];
@@ -28,13 +28,18 @@ function handleFileProcessing(
 
     // Check if file size exceeds the maximum allowed size
     if (fileSizeInKB > maxSizeInKB) {
+      const maxSize = formatBytes(maxSizeInKB * 1024);
+      const fileName = file.name;
       newErrorFiles.push({
         id: i,
         message: (
-          <>
-            The file <strong>{file.name}</strong> exceeds the maximum allowed
-            size of {formatBytes(maxSizeInKB * 1024)}!
-          </>
+          <Trans
+            i18nKey="pages.ideas.ideanew.header.fileserror"
+            values={{ fileName, maxSize }}
+          >
+            The file <strong>{{ fileName }}</strong> exceeds the maximum allowed
+            size of {{ maxSize }}!
+          </Trans>
         ),
       });
     } else {
@@ -43,12 +48,16 @@ function handleFileProcessing(
         (attachedFile) => attachedFile.file.name === file.name
       );
       if (fileExists) {
+        const fileName = file.name;
         newErrorFiles.push({
           id: i,
           message: (
-            <>
-              The file <strong>{file.name}</strong> already exists!
-            </>
+            <Trans
+              i18nKey="pages.ideas.ideanew.alert.error.fileexist"
+              values={{ fileName }}
+            >
+              The file <strong>{{ fileName }}</strong> already exists!
+            </Trans>
           ),
         });
       } else {
@@ -63,20 +72,21 @@ function handleFileProcessing(
     newErrorFiles.push({
       id: 9999,
       message: (
-        <>
+        <Trans
+          i18nKey="pages.ideas.ideanew.alert.error.maxfiles"
+          values={{ maxFiles }}
+        >
           The following file(s) exceed(s) the maximum allowed count of{" "}
-          <strong>{maxFiles}</strong>!
-        </>
+          <strong>{{ maxFiles }}</strong>!
+        </Trans>
       ),
     });
   }
 
   if (newErrorFiles.length > 0) {
     setErrorFiles(newErrorFiles);
-    setOpen(true);
   } else {
     setErrorFiles([]);
-    setOpen(false);
     setFilesAttachment((prevFiles) => [...prevFiles, ...addingFiles]);
   }
 }
