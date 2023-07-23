@@ -4,6 +4,7 @@ import LoginForm from "../components/forms/LoginForm";
 import fullLogo from "../assets/logo/fullLogo.svg";
 import login from "../assets/images/login.svg";
 import { sm } from "../utils/mediaQueries";
+import AlertOnSave from "../components/alerttoast/AlertOnSave";
 
 function Login() {
   const smallQuery = useMediaQuery(sm.query);
@@ -49,6 +50,7 @@ function Login() {
           </div>
         </div>
       )}
+      <AlertOnSave />
     </div>
   );
 }

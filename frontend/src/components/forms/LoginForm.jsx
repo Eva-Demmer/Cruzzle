@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Paper,
@@ -9,13 +9,12 @@ import {
   InputAdornment,
   IconButton,
   Button,
-  Snackbar,
-  Alert,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { apiUsersLogin } from "../../services/api.users";
 import OverlayLogin from "../overlays/OverlayLogin";
+import { AlertToastContext } from "../../contexts/AlertToastContext";
 
 function LoginForm() {
   const { t } = useTranslation();
@@ -23,8 +22,9 @@ function LoginForm() {
   const [mailError, setMailError] = useState(false);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
+
+  const { setOpen, setMessage, setAnchor, setSeverity, setDirection } =
+    useContext(AlertToastContext);
   const navigate = useNavigate();
 
   const validateMail = (mailInput) => {
@@ -51,8 +51,11 @@ function LoginForm() {
     e.preventDefault();
     // Check if all fields are filled out
     if (mail === "" || password === "") {
-      setAlertMessage(t("pages.login.alert.error.email"));
-      setShowAlert(true);
+      setAnchor({ vertical: "top", horizontal: "center" });
+      setMessage(t("pages.login.alert.error.email"));
+      setSeverity("error");
+      setDirection("down");
+      setOpen(true);
     } else {
       try {
         const { token } = await apiUsersLogin(mail, password);
@@ -62,28 +65,25 @@ function LoginForm() {
         if (error.response) {
           const { status } = error.response;
           if (status === 401) {
-            setAlertMessage(t("pages.login.alert.error.wrong"));
-            setShowAlert(true);
+            setMessage(t("pages.login.alert.error.wrong"));
           } else if (status === 404) {
-            setAlertMessage(t("pages.login.alert.error.wrong"));
-            setShowAlert(true);
+            setMessage(t("pages.login.alert.error.wrong"));
           } else {
-            setAlertMessage(t("pages.login.alert.error.server"));
-            setShowAlert(true);
+            setMessage(t("pages.login.alert.error.server"));
           }
+          setDirection("down");
+          setAnchor({ vertical: "top", horizontal: "center" });
+          setSeverity("error");
+          setOpen(true);
         } else {
-          setAlertMessage(t("pages.login.alert.error.server"));
-          setShowAlert(true);
+          setDirection("down");
+          setAnchor({ vertical: "top", horizontal: "center" });
+          setSeverity("error");
+          setMessage(t("pages.login.alert.error.server"));
+          setOpen(true);
         }
       }
     }
-  };
-
-  const handleCloseAlert = (e, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setShowAlert(false);
   };
 
   return (
@@ -151,16 +151,6 @@ function LoginForm() {
           </Button>
         </Paper>
       </form>
-      <Snackbar
-        open={showAlert}
-        autoHideDuration={3000}
-        onClose={handleCloseAlert}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert variant="filled" severity="error" onClose={handleCloseAlert}>
-          {alertMessage}
-        </Alert>
-      </Snackbar>
     </div>
   );
 }
