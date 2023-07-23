@@ -8,19 +8,19 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/solid";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DialogConfirm from "../DialogConfirm";
-import { AlertToastContext } from "../../../contexts/AlertToastContext";
 import {
   apiAdminArchiveIdea,
   apiAdminDeleteIdea,
 } from "../../../services/api.admin.ideas";
+import { AlertToastContext } from "../../../contexts/AlertToastContext";
 
 export default function ActionIcons(props) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { idea, setUpdateList } = props;
-  const { setAlertAdminOpen, setAlertAdminMessage } =
-    useContext(AlertToastContext);
+  const { setOpen, setMessage, setSeverity } = useContext(AlertToastContext);
   const [dialConfirmArchiveIsOpen, setDialConfirmArchiveIsOpen] =
     useState(false);
   const [isConfirmedArchiveIdea, setIsConfirmedArchiveIdea] = useState(false);
@@ -31,38 +31,52 @@ export default function ActionIcons(props) {
     apiAdminArchiveIdea(id)
       .then((res) => {
         if (res.status === 200) {
-          setAlertAdminMessage(
-            t("pages.adminpannel.ideas.alert.succes.archive")
-          );
-          setAlertAdminOpen(true);
+          setMessage(t("pages.adminpannel.ideas.alert.succes.archive"));
+          setOpen(true);
           setUpdateList(true);
         } else {
-          console.error("Cannot archive idea");
+          setSeverity("error");
+          setMessage(t("pages.adminpannel.ideas.alert.error.archive"));
+          setOpen(true);
         }
       })
       .finally(() => setIsConfirmedArchiveIdea(false))
-      .catch((error) =>
-        console.error("error from admin, archiving idea", error)
-      );
+      .catch((error) => {
+        navigate("/error", {
+          state: {
+            error: {
+              status: 500,
+            },
+          },
+        });
+        console.error("error from admin, archiving idea", error);
+      });
   };
 
   const handleDelete = (id) => {
     apiAdminDeleteIdea(id)
       .then((res) => {
         if (res.status === 200) {
-          setAlertAdminMessage(
-            t("pages.adminpannel.ideas.alert.succes.delete")
-          );
-          setAlertAdminOpen(true);
+          setMessage(t("pages.adminpannel.ideas.alert.succes.delete"));
+          setOpen(true);
           setUpdateList(true);
         } else {
-          console.error("Cannot delete idea");
+          setSeverity("error");
+          setMessage(t("pages.adminpannel.ideas.alert.error.delete"));
+          setOpen(true);
         }
       })
       .finally(() => setIsConfirmedArchiveIdea(false))
-      .catch((error) =>
-        console.error("error from admin, archiving idea", error)
-      );
+      .catch((error) => {
+        navigate("/error", {
+          state: {
+            error: {
+              status: 500,
+            },
+          },
+        });
+        console.error("error from admin, archiving idea", error);
+      });
   };
 
   useEffect(() => {
