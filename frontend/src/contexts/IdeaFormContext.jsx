@@ -6,7 +6,6 @@ export const IdeaFormContext = createContext({});
 
 function IdeaFormProvider({ children }) {
   const formMethods = useForm();
-  const [open, setOpen] = useState(false);
   const [filesAttachment, setFilesAttachment] = useState([]);
   const [errorFiles, setErrorFiles] = useState([]);
   const [primaryImg, setPrimaryImg] = useState(null);
@@ -19,8 +18,6 @@ function IdeaFormProvider({ children }) {
   const contextValue = useMemo(
     () => ({
       ...formMethods,
-      open,
-      setOpen,
       filesAttachment,
       setFilesAttachment,
       errorFiles,
@@ -39,8 +36,6 @@ function IdeaFormProvider({ children }) {
       setCategoriesInput,
     }),
     [
-      open,
-      setOpen,
       filesAttachment,
       setFilesAttachment,
       errorFiles,
