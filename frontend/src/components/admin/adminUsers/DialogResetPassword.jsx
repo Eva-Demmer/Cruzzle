@@ -13,6 +13,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { apiAdminUpdateUserById } from "../../../services/api.admin.users";
+
 import { AlertToastContext } from "../../../contexts/AlertToastContext";
 
 export default function DialogResetPassword({
@@ -22,9 +23,8 @@ export default function DialogResetPassword({
   setUpdateList,
 }) {
   const { t } = useTranslation();
-  const { setAlertAdminOpen, setAlertAdminMessage } =
-    useContext(AlertToastContext);
 
+  const { setMessage, setOpen, setSeverity } = useContext(AlertToastContext);
   // Fields values
   const { firstname, lastname } = user;
   const [email, setEmail] = useState(user.mail);
@@ -74,7 +74,11 @@ export default function DialogResetPassword({
     setEmailError(false);
     setPassword("");
     setPasswordError(false);
-    setEmailErrorMessage("Incorrect entry");
+    setEmailErrorMessage(
+      t(
+        "pages.adminpannel.users.tableOfUsers.dialogResetPassword.textfield.password.helpertext"
+      )
+    );
     setPasswordConfirmation("");
     setPasswordConfirmationError(false);
     setOpenDialogPassword(false);
@@ -101,15 +105,21 @@ export default function DialogResetPassword({
         .then((res) => {
           if (res.status === 200) {
             setUpdateList(true);
-            setAlertAdminMessage(
+            setMessage(
               t(
                 "pages.adminpannel.users.tableOfUsers.dialogResetPassword.alert.success.message"
               )
             );
-            setAlertAdminOpen(true);
+            setOpen(true);
             handleClose();
           } else {
-            console.error("Cannot update user login");
+            setSeverity("error");
+            setMessage(
+              t(
+                "pages.adminpannel.users.tableOfUsers.dialogResetPassword.alert.error.user"
+              )
+            );
+            setOpen(true);
           }
         })
         .catch((err) => {
@@ -121,6 +131,13 @@ export default function DialogResetPassword({
               )
             );
           } else {
+            setSeverity("error");
+            setMessage(
+              t(
+                "pages.adminpannel.users.tableOfUsers.dialogResetPassword.alert.error.update"
+              )
+            );
+            setOpen(true);
             console.error("error updating user", err);
           }
         });
