@@ -40,7 +40,6 @@ function ModalEditImage({
   setAlertSeverity,
   handleAlert,
 }) {
-  console.info(fieldName);
   const { t } = useTranslation();
   const [slideScaleValue, setSlideScaleValue] = useState(10);
   const [slideRotateValue, setSlideRotateValue] = useState(0);
@@ -93,7 +92,6 @@ function ModalEditImage({
   };
 
   useEffect(() => {
-    console.info(id);
     if (isOpen && !blobImg) {
       fetchImage();
     } else {
@@ -266,7 +264,7 @@ ModalEditImage.propTypes = {
   setIsOpen: PropTypes.func.isRequired,
   blobImg: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])]),
   setBlobImg: PropTypes.func.isRequired,
-  src: PropTypes.string.isRequired,
+  src: PropTypes.string,
   radius: PropTypes.string.isRequired,
   width: PropTypes.string.isRequired,
   height: PropTypes.string.isRequired,
@@ -276,6 +274,7 @@ ModalEditImage.propTypes = {
 
 ModalEditImage.defaultProps = {
   blobImg: null,
+  src: null,
 };
 
 export default ModalEditImage;

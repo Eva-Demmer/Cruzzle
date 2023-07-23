@@ -117,7 +117,9 @@ export default function ProfilesTabs() {
               <h3 className="text-black">
                 {t("pages.users.profile.tabs.general.aboutme")}
               </h3>
-              <p className="text-base mb-5  text-secondary-600">{biography}</p>
+              <p className="text-base mb-5  text-secondary-600">
+                {biography || t("pages.users.profile.tabs.general.biography")}
+              </p>
               <h3 className="text-black mb-5">
                 {t("pages.users.profile.tabs.general.overview")}
               </h3>

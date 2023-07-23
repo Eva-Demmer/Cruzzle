@@ -74,6 +74,7 @@
     },
     "general": {
       "aboutme": "À propos de moi",
+      "biography": "Pas de biographie",
       "overview": "Aperçu",
       "puzzles": "Énigmes résolues",
       "ideas": "Total d'idées",
@@ -91,7 +92,8 @@
         "comment": " a ajouté un commentaire à ",
         "idea": " une idée.",
         "today": "Aujourd'hui",
-        "yesterday": "Hier"
+        "yesterday": "Hier",
+        "logo": "Logo activité"
       }
     },
     "puzzles": {
