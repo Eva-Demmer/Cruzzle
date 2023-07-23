@@ -117,7 +117,7 @@
       },
       "puzzlesImages": {
         "treasure": "Treasure discovering",
-        "collectionImg": "Collection",
+        "collection": "Collection",
         "geoImg": "Geometric"
       }
     },
