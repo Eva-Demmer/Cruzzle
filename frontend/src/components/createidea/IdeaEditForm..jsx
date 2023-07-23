@@ -6,8 +6,8 @@ import { IdeaFormContext } from "../../contexts/IdeaFormContext";
 import { apiIdeas, apiUpdateIdeaById } from "../../services/api.ideas";
 import getNameFileToFirebaseLink from "../../utils/getNameFileToFirebaseLink";
 import DialogSave from "./DialogSave";
-import AlertOnSave from "./AlertOnSave";
 import { noPictureAvatar } from "../../utils/nopicture";
+import { AlertToastContext } from "../../contexts/AlertToastContext";
 
 function IdeaEditForm({ children }) {
   const { t } = useTranslation();
@@ -27,10 +27,8 @@ function IdeaEditForm({ children }) {
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogData, setDialogData] = useState(false);
 
-  const [alertMessage, setAlertMessage] = useState("message");
-  const [alertSeverity, setAlertSeverity] = useState("success");
-  const [alertTitle, setAlertTitle] = useState("title");
-  const [alertOpen, setAlertOpen] = useState(false);
+  const { setMessage, setSeverity, setTitle, setOpen } =
+    useContext(AlertToastContext);
   const [idIdea, setIdIdea] = useState();
 
   const params = useParams();
@@ -142,14 +140,16 @@ function IdeaEditForm({ children }) {
       setOpenDialog(false);
       if (updateIdea) {
         setIdIdea(updateIdea.id);
-        setAlertMessage(t("pages.ideas.ideaedit.alert.success.message"));
-        setAlertTitle(t("pages.ideas.ideaedit.alert.success.title"));
-        setAlertOpen(true);
+        setMessage(t("pages.ideas.ideaedit.alert.success.message"));
+        setSeverity("success");
+        setTitle(t("pages.ideas.ideaedit.alert.success.title"));
+        setOpen(true);
+        navigate(`/ideas/${idIdea}`, { replace: true });
       } else {
-        setAlertMessage(t("pages.ideas.ideaedit.alert.error.message"));
-        setAlertTitle(t("pages.ideas.ideaedit.alert.error.title"));
-        setAlertSeverity("error");
-        setAlertOpen(true);
+        setMessage(t("pages.ideas.ideaedit.alert.error.message"));
+        setSeverity("error");
+        setTitle(t("pages.ideas.ideaedit.alert.error.title"));
+        setOpen(true);
       }
     } catch (error) {
       console.error(error);
@@ -163,14 +163,6 @@ function IdeaEditForm({ children }) {
         open={openDialog}
         setOpen={setOpenDialog}
         handleAgree={() => onUpdate(dialogData)}
-      />
-      <AlertOnSave
-        open={alertOpen}
-        setOpen={setAlertOpen}
-        severity={alertSeverity}
-        message={alertMessage}
-        title={alertTitle}
-        onClose={() => navigate(`/ideas/${idIdea}`, { replace: true })}
       />
     </>
   );
