@@ -3,14 +3,7 @@ import {
   HandThumbUpIcon,
   PencilSquareIcon,
 } from "@heroicons/react/24/outline";
-import {
-  Button,
-  IconButton,
-  useMediaQuery,
-  Divider,
-  Alert,
-  Snackbar,
-} from "@mui/material";
+import { Button, IconButton, useMediaQuery, Divider } from "@mui/material";
 import { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { HandThumbUpIcon as HandThumbUpIconSolid } from "@heroicons/react/24/solid";
@@ -30,6 +23,7 @@ import {
   createNotification,
   deleteManyNotification,
 } from "../../utils/notifications";
+import { AlertToastContext } from "../../contexts/AlertToastContext";
 
 function ButtonsIdea() {
   const { t } = useTranslation();
@@ -41,7 +35,8 @@ function ButtonsIdea() {
 
   const [openDialogArchive, setOpenDialogArchive] = useState(false);
   const [openDialogModify, setOpenDialogModify] = useState(false);
-  const [openAlert, setOpenAlert] = useState(false);
+
+  const { setOpen, setMessage } = useContext(AlertToastContext);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -54,13 +49,15 @@ function ButtonsIdea() {
   };
 
   const handleClickArchive = async () => {
+    if (idea.archived_at !== null || idea.deleted_at !== null) return;
     try {
       const archiveIdea = await apiArchiveIdeas(idea.id);
       if (archiveIdea) {
         const { archived_at: archivedIdea, ...restOfIdea } = idea;
         setIdea({ ...restOfIdea, archived_at: archiveIdea.archived_at });
         setOpenDialogArchive(false);
-        setOpenAlert(true);
+        setMessage(t("pages.ideas.idea.alert"));
+        setOpen(true);
       }
     } catch (error) {
       console.error(error);
@@ -68,6 +65,7 @@ function ButtonsIdea() {
   };
 
   const handleClickModify = async () => {
+    if (idea.archived_at !== null || idea.deleted_at !== null) return;
     try {
       setOpenDialogModify(false);
       navigate(`${location.pathname}/edit`);
@@ -77,6 +75,7 @@ function ButtonsIdea() {
   };
 
   const handleClickLike = async () => {
+    if (idea.archived_at !== null || idea.deleted_at !== null) return;
     try {
       const getIdeaLikesByIdea = await apiGetIdeaLikesByIdeaId(idea.id);
 
@@ -106,7 +105,7 @@ function ButtonsIdea() {
 
   return (
     <div className="flex justify-center mb-2 xl:flex-col xl:absolute xl:top-20 xl:right-10">
-      {!smallQuery && (
+      {!smallQuery && idea.archived_at === null && idea.deleted_at === null && (
         <div className="flex justify-between items-center py-2">
           {userId === userIdea.id && (
             <>
@@ -121,7 +120,7 @@ function ButtonsIdea() {
               <Divider orientation="vertical" className="mt-1" />
             </>
           )}
-          {userId === userIdea.id && idea.archived_at === null && (
+          {userId === userIdea.id && (
             <>
               <IconButton
                 color="warning"
@@ -133,6 +132,7 @@ function ButtonsIdea() {
               <Divider orientation="vertical" className="mt-1" />
             </>
           )}
+
           <IconButton
             color="info"
             variant={isUserLikeIdea() ? "contained" : "outlined"}
@@ -147,41 +147,44 @@ function ButtonsIdea() {
           </IconButton>
         </div>
       )}
-      {smallQuery && userId === userIdea.id && (
-        <Button
-          variant="outlined"
-          color="primary"
-          startIcon={<PencilSquareIcon className="h-6 w-6" />}
-          className="rounded-full mx-2 my-2 sm:w-[136px]"
-          onClick={() => setOpenDialogModify(true)}
-        >
-          {t("buttons.modify")}
-        </Button>
+      {smallQuery && idea.archived_at === null && idea.deleted_at === null && (
+        <>
+          {userId === userIdea.id && (
+            <Button
+              variant="outlined"
+              color="primary"
+              startIcon={<PencilSquareIcon className="h-6 w-6" />}
+              className="rounded-full mx-2 my-2 sm:w-[136px]"
+              onClick={() => setOpenDialogModify(true)}
+            >
+              {t("buttons.modify")}
+            </Button>
+          )}
+          {userId === userIdea.id && (
+            <Button
+              variant="outlined"
+              color="warning"
+              startIcon={<ArchiveBoxArrowDownIcon className="h-6 w-6" />}
+              className="rounded-full mx-2 my-2 sm:w-[136px]"
+              onClick={() => {
+                setOpenDialogArchive(true);
+              }}
+            >
+              {t("buttons.archive")}
+            </Button>
+          )}
+          <Button
+            variant={isUserLikeIdea() ? "contained" : "outlined"}
+            color="info"
+            startIcon={<HandThumbUpIcon className="h-6 w-6" />}
+            className="rounded-full mx-2 my-2 sm:w-[136px]"
+            onClick={() => handleClickLike()}
+          >
+            {isUserLikeIdea() ? t("buttons.unlike") : t("buttons.like")}
+          </Button>
+        </>
       )}
-      {smallQuery && userId === userIdea.id && idea.archived_at === null && (
-        <Button
-          variant="outlined"
-          color="warning"
-          startIcon={<ArchiveBoxArrowDownIcon className="h-6 w-6" />}
-          className="rounded-full mx-2 my-2 sm:w-[136px]"
-          onClick={() => {
-            setOpenDialogArchive(true);
-          }}
-        >
-          {t("buttons.archive")}
-        </Button>
-      )}
-      {smallQuery && (
-        <Button
-          variant={isUserLikeIdea() ? "contained" : "outlined"}
-          color="info"
-          startIcon={<HandThumbUpIcon className="h-6 w-6" />}
-          className="rounded-full mx-2 my-2 sm:w-[136px]"
-          onClick={() => handleClickLike()}
-        >
-          {isUserLikeIdea() ? t("buttons.unlike") : t("buttons.like")}
-        </Button>
-      )}
+
       <DialogArchive
         open={openDialogArchive}
         setOpen={setOpenDialogArchive}
@@ -193,19 +196,6 @@ function ButtonsIdea() {
         setOpen={setOpenDialogModify}
         handleAgree={handleClickModify}
       />
-      <Snackbar
-        open={openAlert}
-        autoHideDuration={3000}
-        onClose={() => setOpenAlert(false)}
-      >
-        <Alert
-          onClose={() => setOpenAlert(false)}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
-          {t("pages.ideas.idea.alert")}
-        </Alert>
-      </Snackbar>
     </div>
   );
 }
