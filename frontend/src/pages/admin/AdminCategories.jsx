@@ -1,36 +1,18 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Square3Stack3DIcon } from "@heroicons/react/24/solid";
 import { PlusIcon } from "@heroicons/react/24/outline";
-import { Snackbar, Alert } from "@mui/material";
 import CounterCard from "../../components/admin/CounterCard";
 import ActionButton from "../../components/admin/ActionButton";
 import TableOfCategories from "../../components/admin/adminCategories/TableOfCategories";
 import { apiAdminCategories } from "../../services/api.admin.categories";
 import DialogCreateCategory from "../../components/admin/adminCategories/DialogCreateCategory";
-import { AlertToastContext } from "../../contexts/AlertToastContext";
 
 function AdminCategories() {
   const { t } = useTranslation();
-  const {
-    alertAdminOpen,
-    setAlertAdminOpen,
-    alertAdminMessage,
-    setAlertAdminMessage,
-  } = useContext(AlertToastContext);
   const [categoriesList, setCategorieslist] = useState([]);
   const [updateList, setUpdateList] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
-
-  const handleCloseToast = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setAlertAdminMessage(
-      t("pages.adminpannel.categories.alert.success.message")
-    );
-    setAlertAdminOpen(false);
-  };
 
   const handleAddCategory = () => {
     setOpenDialog(true);
@@ -84,21 +66,6 @@ function AdminCategories() {
         setOpenDialog={setOpenDialog}
         setUpdateList={setUpdateList}
       />
-
-      <Snackbar
-        open={alertAdminOpen}
-        autoHideDuration={4000}
-        onClose={handleCloseToast}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-      >
-        <Alert
-          onClose={handleCloseToast}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
-          {alertAdminMessage}
-        </Alert>
-      </Snackbar>
     </div>
   );
 }

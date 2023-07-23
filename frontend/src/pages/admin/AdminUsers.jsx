@@ -1,34 +1,20 @@
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { UserIcon } from "@heroicons/react/24/solid";
 import { PlusIcon } from "@heroicons/react/24/outline";
-import { Snackbar, Alert } from "@mui/material";
 import CounterCard from "../../components/admin/CounterCard";
 import ActionButton from "../../components/admin/ActionButton";
 import { apiAdminUsers } from "../../services/api.admin.users";
 import TableOfUsers from "../../components/admin/adminUsers/TableOfUsers";
 import DialogCreateUser from "../../components/admin/adminUsers/DialogCreateUser";
-import { AlertToastContext } from "../../contexts/AlertToastContext";
 
 function AdminUsers() {
   const { t } = useTranslation();
-  const {
-    alertAdminOpen,
-    setAlertAdminOpen,
-    alertAdminMessage,
-    setAlertAdminMessage,
-  } = useContext(AlertToastContext);
+  const navigate = useNavigate();
   const [userList, setUserlist] = useState([]);
   const [updateList, setUpdateList] = useState(false);
   const [openDialogAddUser, setOpenDialogAddUser] = useState(false);
-
-  const handleCloseToast = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setAlertAdminMessage("Success");
-    setAlertAdminOpen(false);
-  };
 
   useEffect(() => {
     apiAdminUsers()
@@ -36,13 +22,27 @@ function AdminUsers() {
         if (res.status === 200) {
           setUserlist(res.data);
         } else {
+          navigate("/error", {
+            state: {
+              error: {
+                status: res.status,
+              },
+            },
+          });
           console.error("Cannot get users from panel admin");
         }
       })
       .finally(() => setUpdateList(false))
-      .catch((error) =>
-        console.error("Error getting users from panel admin", error)
-      );
+      .catch((error) => {
+        navigate("/error", {
+          state: {
+            error: {
+              status: 500,
+            },
+          },
+        });
+        console.error("Error getting users from panel admin", error);
+      });
   }, [updateList]);
 
   return (
@@ -75,21 +75,6 @@ function AdminUsers() {
         setOpenDialogAddUser={setOpenDialogAddUser}
         setUpdateList={setUpdateList}
       />
-
-      <Snackbar
-        open={alertAdminOpen}
-        autoHideDuration={4000}
-        onClose={handleCloseToast}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-      >
-        <Alert
-          onClose={handleCloseToast}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
-          {alertAdminMessage}
-        </Alert>
-      </Snackbar>
     </div>
   );
 }
