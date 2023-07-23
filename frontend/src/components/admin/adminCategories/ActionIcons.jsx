@@ -10,8 +10,7 @@ import { AlertToastContext } from "../../../contexts/AlertToastContext";
 
 export default function ActionIcons({ category, setUpdateList }) {
   const { t } = useTranslation();
-  const { setAlertAdminOpen, setAlertAdminMessage } =
-    useContext(AlertToastContext);
+  const { setOpen, setMessage } = useContext(AlertToastContext);
   const [openDialog, setOpenDialog] = useState(false);
   const [dialConfirmDeleteIsOpen, setDialConfirmDeleteIsOpen] = useState(false);
   const [isConfirmedDeleteCategory, setIsConfirmedDeleteCategory] =
@@ -26,10 +25,8 @@ export default function ActionIcons({ category, setUpdateList }) {
       .then((res) => {
         if (res.status === 200) {
           setUpdateList(true);
-          setAlertAdminMessage(
-            t("pages.adminpannel.categories.alert.success.delete")
-          );
-          setAlertAdminOpen(true);
+          setMessage(t("pages.adminpannel.categories.alert.success.delete"));
+          setOpen(true);
         } else {
           console.error("Cannot delete category");
         }

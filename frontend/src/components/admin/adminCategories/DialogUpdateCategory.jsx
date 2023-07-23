@@ -21,8 +21,7 @@ export default function DialogUpdateColor({
   setUpdateList,
 }) {
   const { t } = useTranslation();
-  const { setAlertAdminOpen, setAlertAdminMessage } =
-    useContext(AlertToastContext);
+  const { setOpen, setMessage } = useContext(AlertToastContext);
   const [label, setLabel] = useState(category.label);
   const [labelError, setLabelError] = useState(false);
   const [color, setColor] = useState(category.color);
@@ -50,10 +49,10 @@ export default function DialogUpdateColor({
         .then((res) => {
           if (res.status === 200) {
             setUpdateList(true);
-            setAlertAdminMessage(
+            setMessage(
               t("pages.adminpannel.categories.alert.success.updatecategory")
             );
-            setAlertAdminOpen(true);
+            setOpen(true);
             handleClose();
           } else {
             console.error("Cannot update category");
