@@ -8,7 +8,10 @@ function UserProvider({ children }) {
   const [userGamification, setUserGamification] = useState({
     currentLevel: 0,
     currentScore: 0,
-    NextLevelScore: 0,
+    currentLevelMinMaxScore: {
+      min: 0,
+      max: 0,
+    },
   });
 
   const value = useMemo(

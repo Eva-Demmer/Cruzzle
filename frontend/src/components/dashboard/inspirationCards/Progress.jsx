@@ -43,7 +43,7 @@ function Progress() {
     if (user) {
       setUserGamification(getUserLevelObject(user));
     }
-  }, []);
+  }, [user]);
 
   return (
     <div
@@ -56,7 +56,10 @@ function Progress() {
       >
         <HalfCircleProgress userGamification={userGamification} />
         <div className="flex flex-col items-center absolute bottom-0">
-          <span className="text-3xl">{userGamification.currentScore}</span>
+          <span className="text-3xl">
+            {userGamification.currentLevelMinMaxScore.max -
+              userGamification.currentScore}
+          </span>
           <span className=" text-secondary-600">
             {t("pages.home.inspirationCards.pointsNextLevel")}
           </span>

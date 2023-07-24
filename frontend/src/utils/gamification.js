@@ -27,13 +27,20 @@ const getUserLevelObject = (user) => {
 
   const currentLevel = Math.min(Math.floor(0.5 * Math.sqrt(currentScore)), 100);
 
+  const currentLevelMinScore =
+    currentLevel < 100 ? 4 * currentLevel ** 2 : currentScore;
   const nextLevelScore =
     currentLevel < 100 ? 4 * (currentLevel + 1) ** 2 : currentScore;
+
+  const currentLevelMinMaxScore = {
+    min: currentLevelMinScore,
+    max: nextLevelScore,
+  };
 
   return {
     currentLevel,
     currentScore,
-    nextLevelScore,
+    currentLevelMinMaxScore,
   };
 };
 
