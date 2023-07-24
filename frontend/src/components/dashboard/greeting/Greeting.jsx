@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { UserContext } from "../../../contexts/UserContext";
 import { FilterContext } from "../../../contexts/FilterContext";
+import { LanguageContext } from "../../../contexts/LanguageContext";
 
 function Greeting() {
   const { user } = useContext(UserContext);
@@ -12,6 +13,7 @@ function Greeting() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [greeting, setGreeting] = useState(t("pages.home.greetings.welcome"));
+  const { language } = useContext(LanguageContext);
 
   const handleClick = () => {
     setSelectedCategories([]);
@@ -30,7 +32,7 @@ function Greeting() {
       updatedGreeting = t("pages.home.greetings.goodevening");
     }
     setGreeting(updatedGreeting);
-  }, []);
+  }, [language]);
 
   return (
     <div className="flex flex-col h-full justify-between lg:justify-normal px-6">
