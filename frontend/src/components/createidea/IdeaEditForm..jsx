@@ -29,7 +29,6 @@ function IdeaEditForm({ children }) {
 
   const { setMessage, setSeverity, setTitle, setOpen } =
     useContext(AlertToastContext);
-  const [idIdea, setIdIdea] = useState();
 
   const params = useParams();
   const navigate = useNavigate();
@@ -139,12 +138,11 @@ function IdeaEditForm({ children }) {
       const updateIdea = await apiUpdateIdeaById(params.id, formData);
       setOpenDialog(false);
       if (updateIdea) {
-        setIdIdea(updateIdea.id);
         setMessage(t("pages.ideas.ideaedit.alert.success.message"));
         setSeverity("success");
         setTitle(t("pages.ideas.ideaedit.alert.success.title"));
         setOpen(true);
-        navigate(`/ideas/${idIdea}`, { replace: true });
+        navigate(`/ideas/${updateIdea.id}`, { replace: true });
       } else {
         setMessage(t("pages.ideas.ideaedit.alert.error.message"));
         setSeverity("error");
