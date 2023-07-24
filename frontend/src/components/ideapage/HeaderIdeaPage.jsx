@@ -15,7 +15,7 @@ import CustomChip from "../styledComponents/CustomChip";
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
 import ButtonsIdea from "./ButtonsIdea";
 import LikesView from "./LikesView";
-import { noPictureIdea } from "../../utils/nopicture";
+import { noPictureIdea, noPictureAvatar } from "../../utils/nopicture";
 
 function HeaderIdeaPage() {
   const { t, i18n } = useTranslation();
@@ -107,7 +107,7 @@ function HeaderIdeaPage() {
                           <Avatar
                             sx={{ width: 30, height: 30 }}
                             alt={`${team.user.firstname} ${team.user.lastname}`}
-                            src={team.user.avatar_url}
+                            src={team.user.avatar_url ?? noPictureAvatar}
                             className="cursor-pointer"
                           />
                         </Link>
@@ -186,7 +186,7 @@ function HeaderIdeaPage() {
                           sx={{ width: 30, height: 30 }}
                           className="cursor-pointer"
                           alt={`${team.user.firstname} ${team.user.lastname}`}
-                          src={team.user.avatar_url}
+                          src={team.user.avatar_url ?? noPictureAvatar}
                         />
                       </ListItemIcon>
                       {team.user.firstname} {team.user.lastname}
