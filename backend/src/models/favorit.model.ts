@@ -25,7 +25,6 @@ const findByFilter = async (filterQuery: IdeaFilterQuery) => {
     hasAttachment,
     hasNoComment,
   } = filterQuery;
-  console.info("from model ", filterQuery);
 
   let { selectedCategories } = filterQuery;
 

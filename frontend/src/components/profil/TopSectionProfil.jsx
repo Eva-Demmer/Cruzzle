@@ -6,9 +6,8 @@ import {
   PencilSquareIcon,
   BriefcaseIcon,
 } from "@heroicons/react/24/outline";
-import { Button, Snackbar, Alert } from "@mui/material";
+import { Button, useMediaQuery } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
 
 import { sm } from "../../utils/mediaQueries";
 
@@ -19,15 +18,14 @@ import ModalEditProfil from "./ModalEditProfil";
 import { UserProfileContext } from "../../contexts/UserProfile";
 import { UserContext } from "../../contexts/UserContext";
 import { noPictureBanner } from "../../utils/nopicture";
+import { AlertToastContext } from "../../contexts/AlertToastContext";
 
 function TopSectionProfil() {
   const { t } = useTranslation();
   const { user } = useContext(UserProfileContext);
   const { user: currentUser } = useContext(UserContext);
   const { id } = useParams();
-  const isCurrentUserProfile =
-    parseInt(id, 10) === parseInt(currentUser.id, 10);
-  const smallQuery = useMediaQuery(sm);
+  const smallQuery = useMediaQuery(sm.query);
 
   const [isOpenAvatar, setIsOpenAvatar] = useState(false);
   const [isOpenBanner, setIsOpenBanner] = useState(false);
@@ -35,12 +33,14 @@ function TopSectionProfil() {
   const [blobAvatar, setBloblobAvatar] = useState(null);
   const [blobBanner, setBloblobBanner] = useState(null);
 
-  const [alert, setAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState(false);
-  const [alertSeverity, setAlertSeverity] = useState(null);
+  const { setMessage, setOpen, setSeverity, open } =
+    useContext(AlertToastContext);
+
+  const isCurrentUserProfile =
+    parseInt(id, 10) === parseInt(currentUser.id, 10);
 
   const handleAlert = () => {
-    setAlert(!alert);
+    setOpen(!open);
   };
 
   const {
@@ -143,8 +143,8 @@ function TopSectionProfil() {
       {isOpenAvatar && (
         <ModalEditImage
           handleAlert={handleAlert}
-          setAlertSeverity={setAlertSeverity}
-          setAlertMessage={setAlertMessage}
+          setAlertSeverity={setSeverity}
+          setAlertMessage={setMessage}
           isOpen={isOpenAvatar}
           setIsOpen={setIsOpenAvatar}
           src={avatarUrl}
@@ -160,8 +160,8 @@ function TopSectionProfil() {
       {isOpenBanner && (
         <ModalEditImage
           handleAlert={handleAlert}
-          setAlertSeverity={setAlertSeverity}
-          setAlertMessage={setAlertMessage}
+          setAlertSeverity={setSeverity}
+          setAlertMessage={setMessage}
           isOpen={isOpenBanner}
           setIsOpen={setIsOpenBanner}
           src={bannerUrl}
@@ -180,16 +180,6 @@ function TopSectionProfil() {
           close={() => toggleModal(openEdit, setOpenEdit)}
         />
       )}
-      <Snackbar
-        open={alert}
-        autoHideDuration={3000}
-        onClose={handleAlert}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-      >
-        <Alert variant="filled" severity={alertSeverity} onClose={handleAlert}>
-          {alertMessage}
-        </Alert>
-      </Snackbar>
     </div>
   );
 }

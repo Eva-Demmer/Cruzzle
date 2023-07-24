@@ -58,7 +58,6 @@ const updateUserRoleByIdBySuperAdmin = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, 10);
   const updatedUser = req.body;
 
-  console.info(updatedUser);
   try {
     const data = await updateByIdByAdmin(id, updatedUser);
     if (data.status === "success" && data.user) {

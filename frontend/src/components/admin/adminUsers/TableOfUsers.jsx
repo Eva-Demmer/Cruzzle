@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
@@ -13,6 +14,7 @@ import localeText from "../../../locales/datagridlocaletext";
 
 export default function TableOfUsers({ userList, setUpdateList }) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const [roleList, setRoleList] = useState(null);
 
@@ -22,10 +24,26 @@ export default function TableOfUsers({ userList, setUpdateList }) {
         if (res.status === 200) {
           setRoleList(res.data);
         } else {
+          navigate("/error", {
+            state: {
+              error: {
+                status: res.status,
+              },
+            },
+          });
           console.error("Cannot get roles");
         }
       })
-      .catch((error) => console.error("Error getting roles", error));
+      .catch((error) => {
+        navigate("/error", {
+          state: {
+            error: {
+              status: 500,
+            },
+          },
+        });
+        console.error("Error getting roles", error);
+      });
   }, []);
 
   const rows = userList;

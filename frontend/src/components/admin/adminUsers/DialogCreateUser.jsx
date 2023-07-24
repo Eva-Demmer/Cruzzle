@@ -26,9 +26,7 @@ export default function DialogCreateUser({
   setUpdateList,
 }) {
   const { t } = useTranslation();
-  const { setAlertAdminOpen, setAlertAdminMessage } =
-    useContext(AlertToastContext);
-
+  const { setOpen, setMessage } = useContext(AlertToastContext);
   // Fields values
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -160,12 +158,12 @@ export default function DialogCreateUser({
         .then((res) => {
           if (res.status === 201) {
             setUpdateList(true);
-            setAlertAdminMessage(
+            setMessage(
               t(
                 "pages.adminpannel.users.tableOfUsers.dialogCreateUser.alert.success.message"
               )
             );
-            setAlertAdminOpen(true);
+            setOpen(true);
             handleClose();
           } else {
             console.error("Cannot create new user");

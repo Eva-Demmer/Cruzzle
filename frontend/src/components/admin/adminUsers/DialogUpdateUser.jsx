@@ -23,9 +23,8 @@ export default function DialogUpdateUser({
   setUpdateList,
 }) {
   const { t } = useTranslation();
-  const { setAlertAdminOpen, setAlertAdminMessage } =
-    useContext(AlertToastContext);
 
+  const { setMessage, setOpen, setSeverity } = useContext(AlertToastContext);
   // Fields values
   const [firstname, setFirstname] = useState(user.firstname);
   const [lastname, setLastname] = useState(user.lastname);
@@ -96,14 +95,19 @@ export default function DialogUpdateUser({
         .then((res) => {
           if (res.status === 200) {
             setUpdateList(true);
-            setAlertAdminMessage("User updated successfully");
-            setAlertAdminOpen(true);
+            setMessage(t("pages.adminpannel.users.alert.success.update"));
+            setOpen(true);
             handleClose();
           } else {
-            console.error("Cannot update user");
+            setMessage(t("pages.adminpannel.users.alert.error.update"));
+            setSeverity("error");
+            setOpen(true);
           }
         })
         .catch((err) => {
+          setMessage(t("pages.adminpannel.users.alert.error.update"));
+          setSeverity("error");
+          setOpen(true);
           console.error("error updating user", err);
         });
     }

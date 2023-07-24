@@ -1,6 +1,7 @@
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useContext, useLayoutEffect } from "react";
-import { useMediaQuery } from "react-responsive";
+
+import { useMediaQuery } from "@mui/material";
 import Sidebar from "../components/sidebar/Sidebar";
 import HeaderNav from "../components/topbar/HeaderNav";
 import { sm } from "../utils/mediaQueries";
@@ -9,10 +10,11 @@ import { ScrollContext } from "../contexts/ScrollContext";
 import { UserContext } from "../contexts/UserContext";
 import { apiUserById } from "../services/api.users";
 import { LanguageContext } from "../contexts/LanguageContext";
+import AlertOnSave from "../components/alerttoast/AlertOnSave";
 
 function Root() {
   const { user, setUser } = useContext(UserContext);
-  const smallQuery = useMediaQuery(sm);
+  const smallQuery = useMediaQuery(sm.query);
   const { activeMenu, setActiveMenu } = useContext(MenuContext);
   const { setLanguage } = useContext(LanguageContext);
   const { divRef } = useContext(ScrollContext);
@@ -27,11 +29,11 @@ function Root() {
         if (res.status === 200) {
           setUser(res.data);
         } else {
-          console.error("cannot get user by id");
+          navigate("/login");
         }
       })
-      .catch((err) => {
-        console.error("error get user by id", err);
+      .catch(() => {
+        navigate("/login");
       });
   };
 
@@ -83,6 +85,7 @@ function Root() {
         <main className="grow h-full">
           <Outlet />
         </main>
+        <AlertOnSave />
       </div>
     </div>
   );

@@ -74,6 +74,7 @@
     },
     "general": {
       "aboutme": "About me",
+      "biography": "No biography",
       "overview": "Overview",
       "puzzles": "Finished puzzles",
       "ideas": "Total ideas",
@@ -91,7 +92,8 @@
         "comment": " added comment to ",
         "idea": " idea.",
         "today": "Today",
-        "yesterday": "Yesterday"
+        "yesterday": "Yesterday",
+        "logo": "Logo activity"
       }
     },
     "puzzles": {
@@ -117,7 +119,7 @@
       },
       "puzzlesImages": {
         "treasure": "Treasure discovering",
-        "collectionImg": "Collection",
+        "collection": "Collection",
         "geoImg": "Geometric"
       }
     },

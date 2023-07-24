@@ -1,8 +1,8 @@
-import { Avatar, TextField, IconButton, Snackbar, Alert } from "@mui/material";
+import { Avatar, TextField, IconButton } from "@mui/material";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { UserContext } from "../../contexts/UserContext";
@@ -13,13 +13,14 @@ import {
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
 import { createNotification } from "../../utils/notifications";
 import { noPictureAvatar } from "../../utils/nopicture";
+import { AlertToastContext } from "../../contexts/AlertToastContext";
 
 function CreateComment({ tabValue }) {
   const { t } = useTranslation();
   const { user } = useContext(UserContext);
   const [comment, setComment] = useState();
-  const [open, setOpen] = useState(false);
-  const [alert, setAlert] = useState();
+
+  const { setMessage, setSeverity, setOpen } = useContext(AlertToastContext);
   const { id: userId, avatar_url: avatar } = user;
   const { setIdea, idea } = useContext(IdeaPageContext);
   const params = useParams();
@@ -31,17 +32,6 @@ function CreateComment({ tabValue }) {
 
   const handleBlur = () => {
     setIsFocused(false);
-  };
-
-  useEffect(() => {
-    setOpen(true);
-  }, [alert]);
-
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
   };
 
   const handleChange = (event) => {
@@ -63,12 +53,11 @@ function CreateComment({ tabValue }) {
           } catch (error) {
             console.error(error);
           } finally {
-            setAlert({
-              message: t(
-                "pages.ideas.idea.tabsIdea.createComment.alert.success"
-              ),
-              severity: "success",
-            });
+            setMessage(
+              t("pages.ideas.idea.tabsIdea.createComment.alert.success")
+            );
+            setSeverity("success");
+            setOpen(true);
             const { comment: commendIdea, ...rest } = idea;
             const getComments = await apiGetCommentsByIdeaId(idea.id);
             if (getComments) {
@@ -80,17 +69,15 @@ function CreateComment({ tabValue }) {
             setComment("");
           }
         } else {
-          setAlert({
-            message: t("pages.ideas.idea.tabsIdea.createComment.alert.error"),
-            severity: "error",
-          });
+          setMessage(t("pages.ideas.idea.tabsIdea.createComment.alert.error"));
+          setSeverity("error");
+          setOpen(true);
         }
       } catch (error) {
         console.error(error);
-        setAlert({
-          message: t("pages.ideas.idea.tabsIdea.createComment.alert.error"),
-          severity: "error",
-        });
+        setMessage(t("pages.ideas.idea.tabsIdea.createComment.alert.error"));
+        setSeverity("error");
+        setOpen(true);
       }
     }
   };
@@ -103,62 +90,49 @@ function CreateComment({ tabValue }) {
   };
 
   return (
-    <>
-      <div className="flex w-full mt-4">
-        <Avatar
-          alt="Remy Sharp"
-          className="mx-4"
-          src={avatar ?? noPictureAvatar}
-          sx={{ width: 36, height: 36 }}
-        />
-        <div className="w-full relative p-0" aria-label="comment">
-          <TextField
-            autoFocus={tabValue === 2}
-            id="commentUser"
-            onChange={(e) => handleChange(e)}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            value={comment}
-            multiline
-            minRows={1}
-            maxRows={4}
-            onKeyDown={handleKeyPress}
-            placeholder={t(
-              "pages.ideas.idea.tabsIdea.createComment.textfield.placeholder"
-            )}
-            className="w-full"
-            sx={{
+    <div className="flex w-full mt-4">
+      <Avatar
+        alt="Remy Sharp"
+        className="mx-4"
+        src={avatar ?? noPictureAvatar}
+        sx={{ width: 36, height: 36 }}
+      />
+      <div className="w-full relative p-0" aria-label="comment">
+        <TextField
+          autoFocus={tabValue === 2}
+          id="commentUser"
+          onChange={(e) => handleChange(e)}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          value={comment}
+          multiline
+          minRows={1}
+          maxRows={4}
+          onKeyDown={handleKeyPress}
+          placeholder={t(
+            "pages.ideas.idea.tabsIdea.createComment.textfield.placeholder"
+          )}
+          className="w-full"
+          sx={{
+            borderRadius: "0.75rem",
+            "& .MuiOutlinedInput-root": {
               borderRadius: "0.75rem",
-              "& .MuiOutlinedInput-root": {
-                borderRadius: "0.75rem",
-                paddingBottom: "48px",
-              },
-            }}
-            InputLabelProps={{ shrink: true }}
-          />
-          <IconButton
-            aria-label="see more"
-            size="small"
-            color={`${isFocused ? "primary" : ""}`}
-            className="absolute right-2 bottom-1"
-            onClick={() => handleButtonClick()}
-          >
-            <PaperAirplaneIcon className="h-6 w-6" />
-          </IconButton>
-        </div>
+              paddingBottom: "48px",
+            },
+          }}
+          InputLabelProps={{ shrink: true }}
+        />
+        <IconButton
+          aria-label="see more"
+          size="small"
+          color={`${isFocused ? "primary" : ""}`}
+          className="absolute right-2 bottom-1"
+          onClick={() => handleButtonClick()}
+        >
+          <PaperAirplaneIcon className="h-6 w-6" />
+        </IconButton>
       </div>
-      {alert && (
-        <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-          <Alert
-            onClose={handleClose}
-            severity={alert.severity}
-            sx={{ width: "100%" }}
-          >
-            {alert.message}
-          </Alert>
-        </Snackbar>
-      )}
-    </>
+    </div>
   );
 }
 

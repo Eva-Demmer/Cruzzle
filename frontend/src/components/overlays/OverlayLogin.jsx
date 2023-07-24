@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   Button,
   Dialog,
@@ -8,18 +8,21 @@ import {
   TextField,
   Box,
   DialogActions,
-  Snackbar,
-  Alert,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { AlertToastContext } from "../../contexts/AlertToastContext";
 
 function OverlayLogin() {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
+
+  const {
+    setOpen: setOpenAlert,
+    setMessage,
+    setAnchor,
+  } = useContext(AlertToastContext);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -47,8 +50,9 @@ function OverlayLogin() {
     e.preventDefault();
 
     if (email && validateEmail(email)) {
-      setAlertMessage(t("pages.login.forgetpassword.alert.success.email"));
-      setShowAlert(true);
+      setMessage(t("pages.login.forgetpassword.alert.success.email"));
+      setAnchor({ vertical: "top", horizontal: "center" });
+      setOpenAlert(true);
       setOpen(false);
     } else {
       setEmailError(!validateEmail(email));
@@ -59,13 +63,6 @@ function OverlayLogin() {
     if (e.key === "Enter") {
       handleSubmit(e);
     }
-  };
-
-  const handleCloseAlert = (e, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setShowAlert(false);
   };
 
   const buttonText = t("pages.login.forgetpassword.button.forgetpassword");
@@ -144,16 +141,6 @@ function OverlayLogin() {
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar
-        open={showAlert}
-        autoHideDuration={4000}
-        onClose={handleCloseAlert}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert variant="filled" severity="success" onClose={handleCloseAlert}>
-          {alertMessage}
-        </Alert>
-      </Snackbar>
     </div>
   );
 }

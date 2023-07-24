@@ -1,4 +1,6 @@
 import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import PropTypes from "prop-types";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -7,8 +9,9 @@ import { apiAdminUpdateUserRoleById } from "../../../services/api.admin.users";
 import { AlertToastContext } from "../../../contexts/AlertToastContext";
 
 export default function TableSelectRole({ user, roleList }) {
-  const { setAlertAdminOpen, setAlertAdminMessage } =
-    useContext(AlertToastContext);
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { setOpen, setMessage, setSeverity } = useContext(AlertToastContext);
   const [selectedUserRole, setSelectedUserRole] = useState(user.role.id);
 
   const handleChange = (event) => {
@@ -17,15 +20,24 @@ export default function TableSelectRole({ user, roleList }) {
       .then((res) => {
         if (res.status === 200) {
           setSelectedUserRole(event.target.value);
-          setAlertAdminMessage("User role updated successfully");
-          setAlertAdminOpen(true);
+          setMessage(t("pages.adminpannel.users.alert.success.updateRole"));
+          setOpen(true);
         } else {
           setSelectedUserRole(user.role.id);
-          console.error("Cannot update user role");
+          setSeverity("error");
+          setMessage(t("pages.adminpannel.users.alert.error.updateRole"));
+          setOpen(true);
         }
       })
       .catch((error) => {
         setSelectedUserRole(user.role.id);
+        navigate("/error", {
+          state: {
+            error: {
+              status: 500,
+            },
+          },
+        });
         console.error("Error updating user role", error);
       });
   };

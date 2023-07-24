@@ -23,7 +23,10 @@ function TabsIdeaPage() {
 
   const tabsContent = [
     t("pages.ideas.idea.tabsIdea.content.general"),
-    t("pages.ideas.idea.tabsIdea.content.files"),
+
+    `${t("pages.ideas.idea.tabsIdea.content.files")} (${
+      idea.attachment.length
+    })`,
     `${t("pages.ideas.idea.tabsIdea.content.comments")} (${
       idea.comment.length
     })`,

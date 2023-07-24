@@ -7,8 +7,7 @@ import { AlertToastContext } from "../../../contexts/AlertToastContext";
 
 export default function CheckboxUserIsActive(props) {
   const { t } = useTranslation();
-  const { setAlertAdminOpen, setAlertAdminMessage } =
-    useContext(AlertToastContext);
+  const { setOpen, setMessage, setSeverity } = useContext(AlertToastContext);
   const { isActiveUser, setIsActiveUser, userId } = props;
 
   const handleChange = () => {
@@ -16,15 +15,24 @@ export default function CheckboxUserIsActive(props) {
       .then((res) => {
         if (res.status === 200) {
           setIsActiveUser(!isActiveUser);
-          setAlertAdminMessage(
+          setMessage(
             t("pages.adminpannel.users.tableOfUsers.tooltip.active.alert")
           );
-          setAlertAdminOpen(true);
+          setOpen(true);
         } else {
-          console.error("Cannot setting user Active/Unactive");
+          setSeverity("error");
+          setMessage(
+            t("pages.adminpannel.users.tableOfUsers.tooltip.active.error")
+          );
+          setOpen(true);
         }
       })
       .catch((error) => {
+        setSeverity("error");
+        setMessage(
+          t("pages.adminpannel.users.tableOfUsers.tooltip.active.error")
+        );
+        setOpen(true);
         console.error("Error setting user Active/Unactive", error);
       });
   };

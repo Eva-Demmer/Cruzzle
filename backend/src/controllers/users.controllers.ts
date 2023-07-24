@@ -199,7 +199,7 @@ const getImageHighRes = async (req: Request, res: Response) => {
         if (response.data) {
           const buffer = Buffer.from(response.data, "binary");
           const fileName = `${url.split("/")[url.split("/").length - 1]}`;
-          console.info(fileName);
+
           const mimeType = `image/${fileName.split(".")[1]}`;
 
           res.set({
@@ -232,7 +232,6 @@ const updateImage = async (req: Request, res: Response) => {
           const uploadBlob = uploads.filter(
             (item) => !item.fileName.includes("_img")
           );
-          console.info(files);
 
           const key = `${uploadBlob[0].fileName}_url`;
           const updatedImage = { [key]: uploadBlob[0].url };

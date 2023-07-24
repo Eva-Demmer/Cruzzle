@@ -12,7 +12,8 @@ import {
   StarIcon as StarIconSolid,
   HandThumbUpIcon as HandThumbUpIconSolid,
 } from "@heroicons/react/24/solid";
-import { useMediaQuery } from "react-responsive";
+
+import { useMediaQuery } from "@mui/material";
 import { ideaPropTypes } from "../propTypes/ideaPropTypes";
 
 import {
@@ -39,7 +40,7 @@ export default function IdeaCardActions({
   const { user } = useContext(UserContext);
   const location = useLocation();
 
-  const smallQuery = useMediaQuery(sm);
+  const smallQuery = useMediaQuery(sm.query);
 
   const handleFavoriteClick = () => {
     if (location.pathname === "/favorites" && favorite) {

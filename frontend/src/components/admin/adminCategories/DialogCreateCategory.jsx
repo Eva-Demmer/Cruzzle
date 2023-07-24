@@ -20,8 +20,7 @@ export default function DialogCreateCategory({
   setUpdateList,
 }) {
   const { t } = useTranslation();
-  const { setAlertAdminOpen, setAlertAdminMessage } =
-    useContext(AlertToastContext);
+  const { setOpen, setMessage } = useContext(AlertToastContext);
   const [label, setLabel] = useState("");
   const [labelError, setLabelError] = useState(false);
   const [color, setColor] = useState("rgba(64, 191, 191, 1)");
@@ -49,10 +48,10 @@ export default function DialogCreateCategory({
         .then((res) => {
           if (res.status === 201) {
             setUpdateList(true);
-            setAlertAdminMessage(
+            setMessage(
               t("pages.adminpannel.categories.alert.success.createcategory")
             );
-            setAlertAdminOpen(true);
+            setOpen(true);
             handleClose();
           } else {
             console.error("Cannot create category");

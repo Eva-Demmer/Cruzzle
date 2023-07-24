@@ -70,35 +70,35 @@ function OverviewCards() {
   }, [user]);
 
   return (
-    <div className="flex flex-col">
-      <h4 className="text-black pb-5">{t("pages.home.dashboard.overview")}</h4>
-      <div className="md:pl-5 max-w-xl grid grid-cols-2 gap-x-8 xl:gap-x-10 gap-y-12 xl:gap-y-8 xl:pr-8">
+    <div className="flex flex-col w-full pb-4">
+      <h4 className="text-black mb-4">{t("pages.home.dashboard.overview")}</h4>
+      <div className="grid grid-cols-2 gap-x-8 gap-y-12 w-full">
         <Card
           isIcon
           icon={LightBulbIcon}
           rotate={45}
-          cardTitle="Your ideas"
+          cardTitle={t("pages.home.overview.yourideas")}
           state={myIdeas}
         />
         <Card
           isIcon
           icon={PencilIcon}
           rotate={0}
-          cardTitle="Today's ideas"
+          cardTitle={t("pages.home.overview.todayideas")}
           state={ideasCreatedToday}
         />
         <Card
           isIcon
           icon={SquaresPlusIcon}
           rotate={0}
-          cardTitle="Participations"
+          cardTitle={t("pages.home.overview.participations")}
           state={participation}
         />
         <Card
           isIcon={false}
           icon={puzzleIcon}
           rotate={0}
-          cardTitle="Puzzles"
+          cardTitle={t("pages.home.overview.puzzles")}
           state={finishedPuzzles}
         />
       </div>

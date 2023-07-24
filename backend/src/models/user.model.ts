@@ -286,7 +286,6 @@ const findByMail = async (mail: string) => {
         role_id: true,
       },
     });
-    console.info("data", data);
     return data;
   } finally {
     await prisma.$disconnect();
@@ -316,7 +315,6 @@ interface UploadImage {
 
 const updateUserImage = async (imageData: UploadImage, id: number) => {
   try {
-    console.info(imageData);
     const data = await prisma.user.update({
       where: {
         id,

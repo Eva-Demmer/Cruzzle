@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import TextField from "@mui/material/TextField";
@@ -12,6 +13,7 @@ export default function DialogUserSelectPosition({
   positionError,
 }) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [positionList, setPositionList] = useState([]);
 
   useEffect(() => {
@@ -20,10 +22,26 @@ export default function DialogUserSelectPosition({
         if (res.status === 200) {
           setPositionList(res.data);
         } else {
+          navigate("/error", {
+            state: {
+              error: {
+                status: res.status,
+              },
+            },
+          });
           console.error("Cannot get positions");
         }
       })
-      .catch((error) => console.error("Error getting positions", error));
+      .catch((error) => {
+        navigate("/error", {
+          state: {
+            error: {
+              status: 500,
+            },
+          },
+        });
+        console.error("Error getting positions", error);
+      });
   }, []);
 
   return (

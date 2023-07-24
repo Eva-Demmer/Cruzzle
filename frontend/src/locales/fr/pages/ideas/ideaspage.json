@@ -21,15 +21,15 @@
     "allcategories": "Toutes les catégories"
   },
   "filterbarTrending": {
-    "recent": "Récent",
-    "viewed": "Consulté",
-    "commented": "Commenté",
-    "liked": "Apprécié",
+    "recent": "Récentes",
+    "viewed": "Les plus vues",
+    "commented": "Les plus commentées",
+    "liked": "Les plus aimées",
     "values": {
-      "mostrecent": "Le plus récent",
-      "mostviewed": "Le plus consulté",
-      "mostcommented": "Le plus commenté",
-      "mostliked": "Le plus apprécié"
+      "mostrecent": "Les plus récentes",
+      "mostviewed": "Les plus vues",
+      "mostcommented": "Les plus commentées",
+      "mostliked": "Les plus aimées"
     }
   },
   "filterpannel": {
@@ -39,10 +39,10 @@
     "fieldtext": {
       "textsearch": {
         "title": "Le titre contient",
-        "placeholder": "Recherche par mots-clés..."
+        "placeholder": "Rechercher par mots-clés..."
       },
       "datepicker": {
-        "title": "Publié entre"
+        "title": "Publiée entre"
       }
     }
   },
@@ -50,7 +50,7 @@
     "date": "Date",
     "status": {
       "title": "Statut",
-      "close": "Fermé",
+      "close": "Fermée",
       "inprogress": "En cours"
     },
     "replies": "réponses",

@@ -40,7 +40,7 @@ const updateNotificationIdea = async (req: Request, res: Response) => {
 
 const deleteNotificationIdea = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, 10);
-  console.info(id);
+
   try {
     const data = await deleteById(id);
     res.status(200).json(data);

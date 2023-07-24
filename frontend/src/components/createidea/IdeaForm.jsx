@@ -1,22 +1,20 @@
 import PropTypes from "prop-types";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { IdeaFormContext } from "../../contexts/IdeaFormContext";
 import { apiIdeasNew } from "../../services/api.ideas";
-import AlertOnSave from "./AlertOnSave";
+
+import { AlertToastContext } from "../../contexts/AlertToastContext";
 
 function IdeaForm({ children }) {
   const { t } = useTranslation();
   const { handleSubmit, filesAttachment, teamSelect, valueCategories } =
     useContext(IdeaFormContext);
 
-  const [alertMessage, setAlertMessage] = useState("message");
-  const [alertSeverity, setAlertSeverity] = useState("success");
-  const [alertTitle, setAlertTitle] = useState("title");
-  const [alertOpen, setAlertOpen] = useState(false);
-  const [idIdea, setIdIdea] = useState();
+  const { setMessage, setSeverity, setTitle, setOpen } =
+    useContext(AlertToastContext);
 
   const navigate = useNavigate();
 
@@ -60,34 +58,23 @@ function IdeaForm({ children }) {
       const newIdea = await apiIdeasNew(formData);
 
       if (newIdea) {
-        setIdIdea(newIdea.id);
-        setAlertMessage(t("pages.ideas.ideanew.alert.success.message"));
-        setAlertTitle(t("pages.ideas.ideanew.alert.success.title"));
-        setAlertOpen(true);
+        setMessage(t("pages.ideas.ideanew.alert.success.message"));
+        setTitle(t("pages.ideas.ideanew.alert.success.title"));
+        setOpen(true);
+        navigate(`/ideas/${newIdea.id}`, { replace: true });
       } else {
-        setAlertMessage(t("pages.ideas.ideanew.alert.error.message"));
-        setAlertTitle(t("pages.ideas.ideanew.alert.error.title"));
-        setAlertSeverity("error");
-        setAlertOpen(true);
+        setMessage(t("pages.ideas.ideanew.alert.error.message"));
+        setTitle(t("pages.ideas.ideanew.alert.error.title"));
+        setSeverity("error");
+        setOpen(true);
       }
     } catch (error) {
+      navigate(`/error/${error.response.status}`);
       console.error(error);
     }
   };
 
-  return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)}>{children}</form>
-      <AlertOnSave
-        open={alertOpen}
-        setOpen={setAlertOpen}
-        severity={alertSeverity}
-        message={alertMessage}
-        title={alertTitle}
-        onClose={() => navigate(`/ideas/${idIdea}`, { replace: true })}
-      />
-    </>
-  );
+  return <form onSubmit={handleSubmit(onSubmit)}>{children}</form>;
 }
 
 IdeaForm.propTypes = {

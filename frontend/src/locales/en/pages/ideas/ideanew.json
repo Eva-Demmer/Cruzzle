@@ -3,7 +3,7 @@
   "description": "Create idea, add files and pictures",
   "header": {
     "title": "Header",
-    "fileserror": "<>The file <strong>{file.name}</strong> exceeds the maximum allowed size of {formatBytes(maxSizeInKB * 1024)}!</>"
+    "fileserror": "The file <strong>{{ fileName }}</strong> exceeds the maximum allowed size of {{ maxSize }}!"
   },
   "textfield": {
     "title": {
@@ -82,7 +82,10 @@
     },
     "error": {
       "message": "Failed to create idea. Please try again.",
-      "title": "Error"
+      "title": "Error",
+      "fileexceed": "The file <strong>{file.name}</strong> exceeds the maximum allowed size of {formatBytes(maxSizeInKB * 1024)}!",
+      "fileexist": "The file <strong>{{ fileName }}</strong> already exists!",
+      "maxfiles": "The following file(s) exceed(s) the maximum allowed count of <strong>{{maxFiles}}</strong>!"
     }
   },
   "dialog": {

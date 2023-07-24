@@ -23,7 +23,6 @@ function IdeaHeader() {
     control,
     primaryImg,
     setPrimaryImg,
-    setOpen,
     setErrorFiles,
     valueCategories,
     setValueCategories,
@@ -59,14 +58,17 @@ function IdeaHeader() {
     const newErrorFiles = [];
 
     if (fileSizeInKB > maxSizeInKB) {
+      const maxSize = formatBytes(maxSizeInKB * 1024);
+      const fileName = file.name;
       newErrorFiles.push({
         id: 1,
         message: (
-          <Trans i18nKey={t("pages.ideas.ideanew.header.fileserror")}>
-            <>
-              The file <strong>{file.name}</strong> exceeds the maximum allowed
-              size of {formatBytes(maxSizeInKB * 1024)}!
-            </>
+          <Trans
+            i18nKey="pages.ideas.ideanew.header.fileserror"
+            values={{ fileName, maxSize }}
+          >
+            The file <strong>{{ fileName }}</strong> exceeds the maximum allowed
+            size of {{ maxSize }}!
           </Trans>
         ),
       });
@@ -74,7 +76,6 @@ function IdeaHeader() {
 
     if (newErrorFiles.length > 0) {
       setErrorFiles(newErrorFiles);
-      setOpen(true);
     } else {
       setPrimaryImg([file]);
     }
@@ -147,7 +148,7 @@ function IdeaHeader() {
             variant="outlined"
             color="error"
             startIcon={<TrashIcon className="h-6 w-6" />}
-            className="w-[110px] rounded-full mx-2 my-2 sm:w-[174px]"
+            className="w-[130px] rounded-full mx-2 my-2 sm:w-[174px]"
             onClick={() => {
               setPrimaryImg(null);
             }}

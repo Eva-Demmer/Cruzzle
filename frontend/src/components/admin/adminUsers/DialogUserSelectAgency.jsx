@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -13,6 +14,7 @@ export default function DialogUserSelectAgency({
 }) {
   const { t } = useTranslation();
   const [agencyList, setAgencyList] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     apiAdminAgencies()
@@ -20,10 +22,25 @@ export default function DialogUserSelectAgency({
         if (res.status === 200) {
           setAgencyList(res.data);
         } else {
-          console.error("Cannot get agencies");
+          navigate("/error", {
+            state: {
+              error: {
+                status: res.status,
+              },
+            },
+          });
         }
       })
-      .catch((error) => console.error("Error getting agencies", error));
+      .catch((error) => {
+        navigate("/error", {
+          state: {
+            error: {
+              status: 500,
+            },
+          },
+        });
+        console.error("Error getting agencies", error);
+      });
   }, []);
 
   return (

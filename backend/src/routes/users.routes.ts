@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
+import dayjs from "dayjs";
 import { uploadImage } from "../middlewares/multer.middlewares";
 import {
   login,
@@ -20,11 +21,15 @@ import {
   verifyPassword,
   protectRoutes,
 } from "../middlewares/auth.middlewares";
+import {
+  verifyUser,
+  verifyUserByIdBody,
+} from "../middlewares/user.middlewares";
 
 const router = express.Router();
 
 const timeLog = (req: Request, res: Response, next: NextFunction) => {
-  console.info("use /api/users/ at time: ", Date.now());
+  console.info("use /api/users/ at time: ", dayjs().format("HH:mm:ss"));
   next();
 };
 router.use(timeLog);
@@ -42,10 +47,15 @@ router.get("/contributions/:id", getContributionsByUserId);
 router.get("/image", getImageHighRes);
 router.get("/leaderboard", getLeaderboard);
 router.get("/:id", getUserById);
-router.post("/image/:id", uploadImage, updateImage);
+router.post("/image/:id", verifyUser, uploadImage, updateImage);
 router.post("/verifyPassword", verifyPasswordUser);
 
-router.put("/updatePassword", hashPassword, updatePasswordUser);
-router.put("/:id", hashPassword, updateUser);
+router.put(
+  "/updatePassword",
+  verifyUserByIdBody,
+  hashPassword,
+  updatePasswordUser
+);
+router.put("/:id", verifyUser, hashPassword, updateUser);
 
 export default router;

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useTranslation, Trans } from "react-i18next";
 
 import handleFileProcessing from "../../utils/handleFileProcessing";
@@ -11,11 +11,28 @@ import Dropzone from "../styledComponents/Dropzone";
 import nodata from "../../assets/idea/nodata2.svg";
 
 import { IdeaFormContext } from "../../contexts/IdeaFormContext";
+import { AlertToastContext } from "../../contexts/AlertToastContext";
 
 function IdeaUpload() {
   const { t } = useTranslation();
-  const { setOpen, filesAttachment, setFilesAttachment, setErrorFiles } =
+  const { filesAttachment, setFilesAttachment, setErrorFiles, errorFiles } =
     useContext(IdeaFormContext);
+  const { setOpen, setMessage, setSeverity, setTitle } =
+    useContext(AlertToastContext);
+
+  useEffect(() => {
+    if (errorFiles.length > 0) {
+      setSeverity("error");
+      setTitle(t("pages.ideas.ideanew.alert.error.title"));
+      const allErrorFiles = errorFiles.map((file) => (
+        <div key={file.id} className="w-full">
+          {file.message}
+        </div>
+      ));
+      setMessage(allErrorFiles);
+      setOpen(true);
+    }
+  }, [errorFiles]);
 
   const [isDragActive, setIsDragActive] = useState(false);
 
@@ -43,7 +60,6 @@ function IdeaUpload() {
       maxFiles,
       filesAttachment,
       setErrorFiles,
-      setOpen,
       setFilesAttachment
     );
   };
@@ -55,7 +71,6 @@ function IdeaUpload() {
       maxFiles,
       filesAttachment,
       setErrorFiles,
-      setOpen,
       setFilesAttachment
     );
   };

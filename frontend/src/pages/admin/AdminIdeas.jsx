@@ -1,33 +1,18 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LightBulbIcon } from "@heroicons/react/24/solid";
 import { PlusIcon } from "@heroicons/react/24/outline";
-import { Snackbar, Alert } from "@mui/material";
 import CounterCard from "../../components/admin/CounterCard";
 import ActionButton from "../../components/admin/ActionButton";
 import TableOfIdeas from "../../components/admin/adminIdeas/TableOfIdeas";
 import { apiAdminIdeas } from "../../services/api.admin.ideas";
-import { AlertToastContext } from "../../contexts/AlertToastContext";
 
 function AdminIdeas() {
   const { t } = useTranslation();
-  const {
-    alertAdminOpen,
-    setAlertAdminOpen,
-    alertAdminMessage,
-    setAlertAdminMessage,
-  } = useContext(AlertToastContext);
+  const navigate = useNavigate();
   const [ideaList, setIdealist] = useState([]);
   const [updateList, setUpdateList] = useState(false);
-
-  const handleCloseToast = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setAlertAdminMessage("Success");
-    setAlertAdminOpen(false);
-  };
 
   useEffect(() => {
     apiAdminIdeas()
@@ -35,12 +20,29 @@ function AdminIdeas() {
         if (res.status === 200) {
           setIdealist(res.data);
         } else {
+          navigate("/error", {
+            state: {
+              error: {
+                status: res.status,
+              },
+            },
+          });
           console.error("Cannot get the list of Ideas");
         }
       })
-      .catch((error) =>
-        console.error("error from admin_ideas getting the list of Ideas", error)
-      );
+      .catch((error) => {
+        navigate("/error", {
+          state: {
+            error: {
+              status: 500,
+            },
+          },
+        });
+        console.error(
+          "error from admin_ideas getting the list of Ideas",
+          error
+        );
+      });
     setUpdateList(false);
   }, [updateList]);
 
@@ -66,21 +68,6 @@ function AdminIdeas() {
       <main className="admin-user-board my-4 grow">
         <TableOfIdeas ideaList={ideaList} setUpdateList={setUpdateList} />
       </main>
-
-      <Snackbar
-        open={alertAdminOpen}
-        autoHideDuration={4000}
-        onClose={handleCloseToast}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-      >
-        <Alert
-          onClose={handleCloseToast}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
-          {alertAdminMessage}
-        </Alert>
-      </Snackbar>
     </div>
   );
 }

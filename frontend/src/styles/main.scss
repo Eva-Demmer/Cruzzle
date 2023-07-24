@@ -35,7 +35,7 @@
     @apply text-zinc-500 text-lg py-2;
   }
 
-  @variants responsive {
+  @layer responsive {
     .no-scrollbar::-webkit-scrollbar {
       display: none;
     }
@@ -84,5 +84,5 @@
 }
 
 .MuiAutocomplete-popper {
-    z-index: 999999 !important;
+  z-index: 999999 !important;
 }

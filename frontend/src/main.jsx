@@ -45,6 +45,10 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
+    path: "/error",
+    element: <ErrorPage />,
+  },
+  {
     path: "/",
     element: (
       <MenuProvider>
@@ -61,11 +65,7 @@ const router = createBrowserRouter([
       },
       {
         path: "ideas/",
-        element: (
-          <FilterProvider>
-            <Ideas />
-          </FilterProvider>
-        ),
+        element: <Ideas />,
       },
       {
         path: "ideas/:id",
@@ -127,7 +127,9 @@ root.render(
         <UserProvider>
           <AlertToastProvider>
             <LanguageProvider>
-              <RouterProvider router={router} />
+              <FilterProvider>
+                <RouterProvider router={router} />
+              </FilterProvider>
             </LanguageProvider>
           </AlertToastProvider>
         </UserProvider>

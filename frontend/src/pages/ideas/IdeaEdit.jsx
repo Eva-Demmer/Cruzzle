@@ -9,7 +9,6 @@ import IdeaCloud from "../../components/createidea/IdeaCloud";
 
 import IdeaFormProvider from "../../contexts/IdeaFormContext";
 import IdeaButtons from "../../components/createidea/IdeaButtons";
-import IdeaError from "../../components/createidea/IdeaError";
 import IdeaTeam from "../../components/createidea/IdeaTeam";
 
 function IdeaEdit() {
@@ -35,7 +34,6 @@ function IdeaEdit() {
           <Divider />
           <IdeaTeam />
           <IdeaButtons />
-          <IdeaError />
         </IdeaEditForm>
       </IdeaFormProvider>
     </div>

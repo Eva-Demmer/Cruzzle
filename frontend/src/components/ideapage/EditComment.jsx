@@ -1,31 +1,21 @@
 import { useTranslation } from "react-i18next";
-import { TextField, IconButton, Snackbar, Alert } from "@mui/material";
+import { TextField, IconButton } from "@mui/material";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import PropTypes from "prop-types";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 
 import {
   apiGetCommentsByIdeaId,
   apiUpdateComments,
 } from "../../services/api.comments";
 import { IdeaPageContext } from "../../contexts/IdeaPageContext";
+import { AlertToastContext } from "../../contexts/AlertToastContext";
 
 function EditComment({ commentId, content, setContent, setModify }) {
   const { t } = useTranslation();
-  const [open, setOpen] = useState(false);
-  const [alert, setAlert] = useState();
+
   const { setIdea, idea } = useContext(IdeaPageContext);
-
-  useEffect(() => {
-    setOpen(true);
-  }, [alert]);
-
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
-  };
+  const { setOpen, setMessage, setSeverity } = useContext(AlertToastContext);
 
   const handleChange = (event) => {
     setContent(event.target.value);
@@ -39,10 +29,9 @@ function EditComment({ commentId, content, setContent, setModify }) {
       try {
         const req = await apiUpdateComments(commentId, data);
         if (req) {
-          setAlert({
-            message: t("pages.ideas.idea.tabsIdea.editComment.alert.success"),
-            severity: "success",
-          });
+          setMessage(t("pages.ideas.idea.tabsIdea.editComment.alert.success"));
+          setSeverity("success");
+          setOpen(true);
           const { comment, ...rest } = idea;
           const getComments = await apiGetCommentsByIdeaId(idea.id);
           if (getComments) {
@@ -52,23 +41,20 @@ function EditComment({ commentId, content, setContent, setModify }) {
             });
             setModify(false);
           } else {
-            setAlert({
-              message: t("pages.ideas.idea.tabsIdea.editComment.alert.error"),
-              severity: "error",
-            });
+            setMessage(t("pages.ideas.idea.tabsIdea.editComment.alert.error"));
+            setSeverity("error");
+            setOpen(true);
           }
         } else {
-          setAlert({
-            message: t("pages.ideas.idea.tabsIdea.editComment.alert.error"),
-            severity: "error",
-          });
+          setMessage(t("pages.ideas.idea.tabsIdea.editComment.alert.error"));
+          setSeverity("error");
+          setOpen(true);
         }
       } catch (error) {
         console.error(error);
-        setAlert({
-          message: t("pages.ideas.idea.tabsIdea.editComment.alert.error"),
-          severity: "error",
-        });
+        setMessage(t("pages.ideas.idea.tabsIdea.editComment.alert.error"));
+        setSeverity("error");
+        setOpen(true);
       }
     }
   };
@@ -81,54 +67,41 @@ function EditComment({ commentId, content, setContent, setModify }) {
   };
 
   return (
-    <>
-      <div className="flex w-full">
-        <div className="w-full relative p-0" aria-label="comment">
-          <TextField
-            id="commentUser"
-            onChange={(e) => handleChange(e)}
-            value={content}
-            multiline
-            minRows={1}
-            maxRows={4}
-            onKeyDown={handleKeyPress}
-            placeholder={t(
-              "pages.ideas.idea.tabsIdea.editComment.textfield.placeholder"
-            )}
-            className="w-full"
-            sx={{
+    <div className="flex w-full">
+      <div className="w-full relative p-0" aria-label="comment">
+        <TextField
+          id="commentUser"
+          onChange={(e) => handleChange(e)}
+          value={content}
+          multiline
+          minRows={1}
+          maxRows={4}
+          onKeyDown={handleKeyPress}
+          placeholder={t(
+            "pages.ideas.idea.tabsIdea.editComment.textfield.placeholder"
+          )}
+          className="w-full"
+          sx={{
+            borderRadius: "0.75rem",
+            paddingBottom: "48px",
+            "& .MuiOutlinedInput-root": {
               borderRadius: "0.75rem",
               paddingBottom: "48px",
-              "& .MuiOutlinedInput-root": {
-                borderRadius: "0.75rem",
-                paddingBottom: "48px",
-              },
-            }}
-            InputLabelProps={{ shrink: true }}
-          />
-          <IconButton
-            aria-label="see more"
-            size="small"
-            color="primary"
-            className="absolute right-2 bottom-[54px]"
-            onClick={() => handleButtonClick()}
-          >
-            <PaperAirplaneIcon className="h-6 w-6" />
-          </IconButton>
-        </div>
+            },
+          }}
+          InputLabelProps={{ shrink: true }}
+        />
+        <IconButton
+          aria-label="see more"
+          size="small"
+          color="primary"
+          className="absolute right-2 bottom-[54px]"
+          onClick={() => handleButtonClick()}
+        >
+          <PaperAirplaneIcon className="h-6 w-6" />
+        </IconButton>
       </div>
-      {alert && (
-        <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-          <Alert
-            onClose={handleClose}
-            severity={alert.severity}
-            sx={{ width: "100%" }}
-          >
-            {alert.message}
-          </Alert>
-        </Snackbar>
-      )}
-    </>
+    </div>
   );
 }
 

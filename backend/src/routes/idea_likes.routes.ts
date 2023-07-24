@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
+import dayjs from "dayjs";
 import {
   getIdeaLikes,
   getIdeaLikesById,
@@ -11,7 +12,7 @@ import { protectRoutes } from "../middlewares/auth.middlewares";
 const router = express.Router();
 
 const timeLog = (req: Request, res: Response, next: NextFunction) => {
-  console.info("use /api/ideas/likes at time: ", Date.now());
+  console.info("use /api/ideas/likes at time: ", dayjs().format("HH:mm:ss"));
   next();
 };
 router.use(timeLog);
