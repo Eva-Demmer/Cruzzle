@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Avatar, Paper } from "@mui/material";
 import { UserContext } from "../../contexts/UserContext";
@@ -8,8 +8,14 @@ import { noPictureAvatar } from "../../utils/nopicture";
 
 function AvatarProfile() {
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
-  const userGamification = getUserLevelObject(user);
+  const { user, userGamification, setUserGamification } =
+    useContext(UserContext);
+
+  useEffect(() => {
+    if (user) {
+      setUserGamification(getUserLevelObject(user));
+    }
+  }, [user]);
 
   return (
     <div className="flex flex-col items-center mt-6 -mx-2">
