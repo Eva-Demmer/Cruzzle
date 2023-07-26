@@ -1,6 +1,6 @@
 {
   "title": "Users",
-  "countercard": "Total Users",
+  "countercard": "Total users",
   "dateFormats": {
     "long": "YYYY-MM-DD HH:mm:ss",
     "short": "MM-DD-YYYY"
@@ -17,11 +17,11 @@
   },
   "tableOfUsers": {
     "columns": {
-      "firstname": "First Name",
-      "lastname": "Last Name",
+      "firstname": "Firstname",
+      "lastname": "Lastname",
       "mail": "Mail",
-      "createdAt": "Created At",
-      "joinedAt": "Joined At",
+      "createdAt": "Created at",
+      "joinedAt": "Joined at",
       "agency": "Agency",
       "position": "Position",
       "role": "Role",
@@ -30,9 +30,9 @@
     },
     "tooltip": {
       "active": {
-        "title": "Acivate/Unactivate user",
-        "alert": "User active status updated successfully",
-        "error": "Cannot setting user Active/Unactive"
+        "title": "Acivate/Deactivate user",
+        "alert": "User status updated successfully",
+        "error": "Cannot change user status active/inactive"
       },
       "visitprofil": "Visit user profile",
       "updateuser": "Update user",
@@ -40,7 +40,7 @@
     },
     "dialogUpdateUser": {
       "title": "Update user",
-      "content": "You are about to edit {{firstname}} {{lastname}}'s informations. Please fill in the form below.",
+      "content": "You are about to edit {{firstname}} {{lastname}}'s information. Please fill in the form below.",
       "textfield": {
         "firstname": {
           "label": "Firstname",
@@ -89,7 +89,7 @@
           "helpertext": "required"
         },
         "email": {
-          "label": "Email Address",
+          "label": "Email address",
           "placeholder": "Enter an email address"
         },
         "password": {
@@ -116,7 +116,7 @@
       "content": "This action will remove the user's current login information and generate new credentials.",
       "textfield": {
         "email": {
-          "label": "Email Address",
+          "label": "Email address",
           "placeholder": "Please enter your email address"
         },
         "password": {

@@ -5,7 +5,7 @@
     "favorites": "Favorites",
     "community": "Community",
     "admin": {
-      "pannel": "Panel Admin",
+      "pannel": "Panel admin",
       "users": "Users",
       "ideas": "Ideas",
       "categories": "Categories"
@@ -15,9 +15,9 @@
   "topbar": {
     "accountsettings": {
       "tooltip": {
-        "title": "Account Settings"
+        "title": "Account settings"
       },
-      "profil": "Profil",
+      "profil": "Profile",
       "settings": "Settings",
       "logout": "Logout"
     },

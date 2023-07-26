@@ -49,8 +49,8 @@
     "supportedfiles": "Supported files",
     "maxand": "max and",
     "filesmax": "files max",
-    "numberfiles_zero": "Number of file : <strong>{{nbAttachements}}</strong>",
-    "numberfiles_one": "Number of file : <strong>{{nbAttachements}}</strong>",
+    "numberfiles_zero": "Number of files : <strong>{{nbAttachements}}</strong>",
+    "numberfiles_one": "Number of files : <strong>{{nbAttachements}}</strong>",
     "numberfiles_other": "Number of files : <strong>{{nbAttachements}}</strong>"
   },
   "cloud": {
@@ -89,7 +89,7 @@
     }
   },
   "dialog": {
-    "title": "Confirm Save Idea",
+    "title": "Confirm idea creation",
     "content": "Are you sure you want to save this idea? If you delete the files, you won't be able to retrieve them again!"
   }
 }

@@ -11,9 +11,9 @@
     "title": "Update your general information",
     "picture": {
       "alert": {
-        "avatar": "Your avatar is updated",
-        "banner": "Your banner is updated",
-        "error": "Something wrong happened"
+        "avatar": "Your avatar has been updated",
+        "banner": "Your banner has been updated",
+        "error": "Something went wrong. Please try again."
       }
     },
     "section": {
@@ -44,7 +44,7 @@
       },
       "general": {
         "title": "General",
-        "description": "Leave a few words for your colleagues. It's always nice to get to know the person a little.",
+        "description": "Leave a few words for your colleagues, so they can get to know you a little.",
         "textfield": {
           "biography": {
             "label": "About me",
