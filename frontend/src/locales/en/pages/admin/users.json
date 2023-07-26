@@ -17,8 +17,8 @@
   },
   "tableOfUsers": {
     "columns": {
-      "firstname": "Firstname",
-      "lastname": "Lastname",
+      "firstname": "First name",
+      "lastname": "Last name",
       "mail": "Mail",
       "createdAt": "Created at",
       "joinedAt": "Joined at",
@@ -43,8 +43,8 @@
       "content": "You are about to edit {{firstname}} {{lastname}}'s information. Please fill in the form below.",
       "textfield": {
         "firstname": {
-          "label": "Firstname",
-          "placeholder": "Enter a firstname",
+          "label": "First name",
+          "placeholder": "Enter a first name",
           "helpertext": "Incorrect entry"
         },
         "lastname": {
@@ -75,8 +75,8 @@
       "content": " You are about to add a new user. Please fill in the form below.",
       "textfield": {
         "firstname": {
-          "label": "Firstname",
-          "placeholder": "Enter a firstname",
+          "label": "First name",
+          "placeholder": "Enter a first name",
           "helpertext": "Incorrect entry"
         },
         "lastname": {

@@ -14,7 +14,7 @@
         "placeholder": "Lastname..."
       },
       "firstname": {
-        "placeholder": "Firstname..."
+        "placeholder": "First name..."
       }
     },
     "datepicker": {
