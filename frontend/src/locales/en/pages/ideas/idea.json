@@ -1,11 +1,11 @@
 {
-  "alert": "Idea archived !",
+  "alert": "Idea archived!",
   "dialogModify": {
-    "title": "Confirm Modify",
+    "title": "Confirm modification",
     "content": "Are you sure you want to modify this idea?"
   },
   "dialogArchive": {
-    "title": "Confirm Archive",
+    "title": "Confirm archive",
     "content": "Are you sure you want to archive this idea? This action is <strong>irreversible</strong> and will permanently remove the idea from the active list. <br /> <br /> Please note that archived ideas cannot be restored."
   },
   "headerIdea": {
@@ -37,7 +37,7 @@
     "editComment": {
       "alert": {
         "error": "Message can't be modified",
-        "success": "Message modifed !"
+        "success": "Message modifed!"
       },
       "textfield": {
         "placeholder": "Leave a few words"
@@ -45,7 +45,7 @@
     },
     "createComment": {
       "alert": {
-        "success": "Message created !",
+        "success": "Message created!",
         "error": "Message can't be created"
       },
       "textfield": {
