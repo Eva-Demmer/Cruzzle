@@ -25,8 +25,10 @@ function AvatarDoghnut() {
   }, []);
 
   useEffect(() => {
-    const { currentScore, nextLevelScore } = userGamification;
-    ratio = currentScore / nextLevelScore;
+    const { currentScore, currentLevelMinMaxScore } = userGamification;
+    ratio =
+      (currentScore - currentLevelMinMaxScore.min) /
+      (currentLevelMinMaxScore.max - currentLevelMinMaxScore.min);
     animeProgressBar(ratio);
   }, [userGamification]);
 

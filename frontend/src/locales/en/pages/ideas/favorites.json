@@ -1,4 +1,5 @@
 {
   "title": "Your Favorites",
-  "trends": "Trends"
+  "trends": "Trends",
+  "empty": "You have no favorites yet."
 }

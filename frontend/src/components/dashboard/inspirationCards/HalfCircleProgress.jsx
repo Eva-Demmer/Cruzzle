@@ -15,8 +15,11 @@ export default function HalfCircleProgress({ userGamification }) {
   };
 
   useEffect(() => {
-    const { currentScore, nextLevelScore } = userGamification;
-    ratio = currentScore / 2 / nextLevelScore;
+    const { currentScore, currentLevelMinMaxScore } = userGamification;
+    ratio =
+      (currentScore - currentLevelMinMaxScore.min) /
+      2 /
+      (currentLevelMinMaxScore.max - currentLevelMinMaxScore.min);
     animeProgressBar(ratio);
   }, [userGamification]);
 
@@ -52,7 +55,10 @@ HalfCircleProgress.propTypes = {
   userGamification: PropTypes.shape({
     currentLevel: PropTypes.number,
     currentScore: PropTypes.number,
-    nextLevelScore: PropTypes.number,
+    currentLevelMinMaxScore: PropTypes.shape({
+      min: PropTypes.number,
+      max: PropTypes.number,
+    }),
   }),
 };
 
@@ -60,6 +66,9 @@ HalfCircleProgress.defaultProps = {
   userGamification: {
     currentLevel: 0,
     currentScore: 0,
-    nextLevelScore: 0,
+    currentLevelMinMaxScore: {
+      min: 0,
+      max: 0,
+    },
   },
 };

@@ -184,7 +184,7 @@ const commentShape = PropTypes.shape({
   ),
   created_at: PropTypes.string.isRequired,
   user: PropTypes.shape({
-    avatar_url: PropTypes.string.isRequired,
+    avatar_url: PropTypes.string,
     firstname: PropTypes.string.isRequired,
     lastname: PropTypes.string.isRequired,
   }),

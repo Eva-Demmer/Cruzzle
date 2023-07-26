@@ -16,12 +16,10 @@ export default function SocketEvents({ setRefresh, setPlayNotificationSound }) {
 
   useEffect(() => {
     function onConnect() {
-      console.info("addUserId", user.id, socket.id);
       socket.emit("addUserId", user.id);
     }
 
-    function onNewNotification(notification) {
-      console.info(notification);
+    function onNewNotification() {
       setRefresh(true);
       setPlayNotificationSound(true);
     }
