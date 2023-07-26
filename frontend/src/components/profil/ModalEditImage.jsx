@@ -91,6 +91,11 @@ function ModalEditImage({
     }
   };
 
+  const handleClose = () => {
+    onClose();
+    setBlobImg(null);
+  };
+
   useEffect(() => {
     if (isOpen && !blobImg) {
       fetchImage();
@@ -150,7 +155,7 @@ function ModalEditImage({
   };
 
   return (
-    <Modal saveButton={false} isOpen={isOpen} onClose={onClose}>
+    <Modal saveButton={false} isOpen={isOpen} onClose={() => handleClose()}>
       <div className="flex flex-col items-center justify-center w-full">
         <form
           className="flex flex-col items-center w-full"

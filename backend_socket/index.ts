@@ -21,6 +21,7 @@ let isNotificationIntervalRunning = false;
 const usersIdDict: UserIdDict = {};
 
 io.on("connection", (socket) => {
+  console.info("A user connected", socket.id);
   if (!isNotificationIntervalRunning) {
     listenerNotificationByInterval((tuple) => {
       const [boolValue, notification] = tuple;
