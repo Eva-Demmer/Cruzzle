@@ -85,7 +85,7 @@ function Settings() {
                   </InputLabel>
                   <Select
                     id="languageSelect"
-                    value={language}
+                    value={language.toLowerCase()}
                     input={
                       <OutlinedInput
                         notched

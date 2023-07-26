@@ -70,13 +70,13 @@
       "general": "Général",
       "activity": "Activité",
       "contributions": "Contributions",
-      "puzzles": "Énigmes"
+      "puzzles": "Puzzles"
     },
     "general": {
       "aboutme": "À propos de moi",
       "biography": "Pas de biographie",
       "overview": "Aperçu",
-      "puzzles": "Énigmes résolues",
+      "puzzles": "Puzzles résolues",
       "ideas": "Total d'idées",
       "participations": "Participations",
       "title": "Titre",
@@ -98,24 +98,24 @@
     },
     "puzzles": {
       "puzzlesLikes": {
-        "title": "Énigme \"Likes\"",
-        "description": "(Augmentez le nombre de likes pour révéler l'énigme.)"
+        "title": "Puzzle \"Likes\"",
+        "description": "(Augmentez le nombre de likes pour révéler le puzzle.)"
       },
       "puzzlesComments": {
-        "title": "Énigme \"Commentaires\"",
-        "description": "(Augmentez le nombre de commentaires pour révéler l'énigme.)"
+        "title": "Puzzle \"Commentaires\"",
+        "description": "(Augmentez le nombre de commentaires pour révéler le puzzle.)"
       },
       "puzzlesIdeas": {
-        "title": "Énigme \"Idées\"",
-        "description": "(Pour débloquer l'énigme, augmentez le nombre d'idées.)"
+        "title": "Puzzle \"Idées\"",
+        "description": "(Pour débloquer le puzzle, augmentez le nombre d'idées.)"
       },
       "puzzlesFavorites": {
-        "title": "Énigme \"Favoris\"",
-        "description": "(Pour dévoiler l'énigme, augmentez le nombre d'idées que vous avez mises en favori.)"
+        "title": "Puzzle \"Favoris\"",
+        "description": "(Pour dévoiler le puzzle, augmentez le nombre d'idées que vous avez mises en favori.)"
       },
       "puzzlesTeams": {
-        "title": "Énigme \"Équipes\"",
-        "description": "(Pour dévoiler l'énigme, augmentez votre engagement en rejoignant plus d'équipes.)"
+        "title": "Puzzle \"Équipes\"",
+        "description": "(Pour dévoiler le puzzle, augmentez votre engagement en rejoignant plus d'équipes.)"
       },
       "puzzlesImages": {
         "treasure": "Découverte de trésor",
