@@ -3,7 +3,7 @@
   "part": {
     "language": {
       "title": "Language",
-      "buttonselect": "Select Language"
+      "buttonselect": "Select language"
     },
     "password": {
       "title": "Password",
@@ -28,11 +28,11 @@
     "alert": {
       "success": {
         "title": "Password updated!",
-        "message": "Password was updated successfully"
+        "message": "Password has been updated successfully"
       },
       "error": {
         "title": "Error",
-        "message": "Password was not updated"
+        "message": "Error updating password. Please try again."
       }
     },
     "title": "Change Password",
@@ -43,7 +43,7 @@
         "placeholder": "Enter your password"
       },
       "passwordConfirm": {
-        "label": "Confirm Password",
+        "label": "Confirm password",
         "placeholder": "Confirm your password"
       }
     }

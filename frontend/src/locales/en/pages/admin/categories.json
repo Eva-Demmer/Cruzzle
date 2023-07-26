@@ -27,27 +27,27 @@
   },
   "dialogUpdateCategory": {
     "title": "Edit category",
-    "content": "You are about to edit the label and color of the selected category. Please fill the form below.",
+    "content": "You are about to edit the label and color of the selected category. Please fill in the form below.",
     "textfield": {
       "label": {
         "label": "Label",
         "placeholder": "Enter a label",
-        "helpertext": "Please enter a word between 2 and 25 letters."
+        "helpertext": "Please enter a word between 2 and 25 characters."
       }
     }
   },
   "dialogCreateCategory": {
     "title": "Create new category",
-    "content": "You are about to add a new category. Please fill the form below.",
+    "content": "You are about to add a new category. Please fill in the form below.",
     "textfield": {
       "label": {
         "label": "Label",
         "placeholder": "Enter a label",
-        "helpertext": "Please enter a word between 2 and 25 letters."
+        "helpertext": "Please enter a word between 2 and 25 characters."
       }
     }
   },
   "dialogConfirm": {
-    "title": "Deleting category"
+    "title": "Delete category"
   }
 }
