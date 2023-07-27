@@ -37,7 +37,7 @@ export default function ModalEditProfil({ open, close }) {
 
   useEffect(() => {
     if (birthdate) {
-      setSelectedDate(dayjs(birthdate));
+      setSelectedDate(birthdate);
     }
   }, []);
 
@@ -45,19 +45,18 @@ export default function ModalEditProfil({ open, close }) {
     const {
       link: linkUpdate,
       phone: phoneUpdate,
-      birthdate: birthdateUpdate,
+
       biography: biographyUpdate,
     } = data;
 
     const updatedData = {
       biography: biographyUpdate || null,
       link: linkUpdate || null,
-      birthdate: birthdateUpdate || null,
+      birthdate: dayjs(selectedDate) || null,
       phone: phoneUpdate || null,
       share_phone: sharePhone,
       share_birthdate: displayBirthday,
     };
-    console.info(updatedData);
 
     const response = await apiUpdateUser(user.id, updatedData);
     if (response) {
@@ -161,7 +160,7 @@ export default function ModalEditProfil({ open, close }) {
                   control={control}
                   render={({ field }) => (
                     <DatePicker
-                      value={selectedDate}
+                      value={dayjs(selectedDate)}
                       defaultValue={dayjs(selectedDate)}
                       label={t(
                         "pages.users.profile.edit.section.information.textfield.birthday.label"

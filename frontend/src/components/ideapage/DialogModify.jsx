@@ -33,7 +33,7 @@ function DialogModify({ open, setOpen, handleAgree }) {
           onClick={() => setOpen(false)}
           autoFocus
         >
-          Cancel
+          {t("buttons.cancel")}
         </Button>
         <Button
           variant="contained"
@@ -46,7 +46,7 @@ function DialogModify({ open, setOpen, handleAgree }) {
             "&:active, &.Mui-focusVisible": { boxShadow: 4 },
           }}
         >
-          Agree
+          {t("buttons.agree")}
         </Button>
       </DialogActions>
     </Dialog>
