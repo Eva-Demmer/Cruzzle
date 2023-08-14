@@ -24,7 +24,7 @@ function Home() {
         <div className="w-full lg:w-2/5 pt-4 lg:pt-8">
           <Greeting />
         </div>
-        <div className="w-full lg:w-3/5">
+        <div className="w-full lg:w-3/5 mr-6">
           <InspirationCards />
         </div>
       </div>

@@ -15,6 +15,8 @@ function TabComments({ tabValue, index }) {
   const [selectValue, setSelectValue] = useState(0);
   const [allComments, setAllComments] = useState([]);
 
+  const tbLength = [...comment].length;
+
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -44,7 +46,7 @@ function TabComments({ tabValue, index }) {
         <div className="flex justify-between items-center mt-4">
           <h3 className="text-xl mb-2">{`${t(
             "pages.ideas.idea.tabsIdea.tabcomments.title"
-          )} (${allComments.length})`}</h3>
+          )} (${tbLength})`}</h3>
           {allComments.length > 0 && (
             <FormControl>
               <Select
